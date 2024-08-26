@@ -319,11 +319,21 @@ tbody tr:hover {
 												<th>${user.loginId}</th>
 												<th>${user.socialId}</th>
 												<th>${user.name}</th>
-												<th>${user.role}</th>
-												<th>${user.subscribe}</th>
-												<th>${user.wave}</th>
-												<th>${user.mileage}</th>
-												<th>${user.status}</th>
+												<th>${user.role == 'admin' ? '관리자' : '유저'}</th>
+												<th>${user.subscribe == 1 ? 'Subscribed' : 'Not Subscribed'}</th>
+												<th><fmt:formatNumber value="${user.wave}" pattern="#,#00"></fmt:formatNumber></th>
+												<th><fmt:formatNumber value="${user.mileage}" pattern="#,#00"></fmt:formatNumber></th>
+												<c:choose>
+													<c:when test="${user.status == 0}">
+														<th>정상</th>
+													</c:when>
+													<c:when test="${user.status == 1}">
+														<th>탈퇴예정</th>
+													</c:when>
+													<c:otherwise>
+														<th>탈퇴</th>
+													</c:otherwise>
+												</c:choose>
 												<th><fmt:formatDate value="${user.createdAt}" type="both" /></th>
 											</tr>
 										</c:forEach>
