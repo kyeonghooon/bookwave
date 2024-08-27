@@ -1,4 +1,3 @@
--- 샘플 데이터 sql
 INSERT INTO user_tb VALUES (1, 'slowman', NULL, '1234', '석지웅', 'admin', 1, 10000, 5000, 0, NOW());
 
 -- 도석 목록 샘플 데이터 주입
