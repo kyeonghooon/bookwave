@@ -1,0 +1,21 @@
+@charset "UTF-8";
+* {
+   margin: 0;
+   padding: 0;
+}
+html, body {
+   height: 100%;
+}
+
+body {
+   display: flex;
+   flex-direction: column;
+}
+
+main.flex-fill {
+   flex: 1 0 auto;
+}
+
+footer {
+   flex-shrink: 0;
+}
