@@ -68,22 +68,21 @@ tbody tr:hover {
 			<li class="nav-item"><a class="nav-link" href="/admin/user"> <i class="fas fa-fw fa-table"></i> <span>유저 관리</span></a></li>
 			<li class="nav-item active"><a class="nav-link" href="/admin/book"> <i class="fas fa-fw fa-table"></i> <span>도서 관리</span></a></li>
 
+			<!-- Nav Item - Pages Collapse Menu -->
+			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i>
+					<span>고객 지원</span>
+			</a>
+				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<a class="collapse-item active" href="/support/faq">FAQ 관리</a> <a class="collapse-item" href="/support/qna">1:1 문의 관리</a>
+					</div>
+				</div></li>
+
 			<!-- Divider -->
 			<hr class="sidebar-divider">
 
 			<!-- Heading -->
 			<div class="sidebar-heading">Interface</div>
-
-			<!-- Nav Item - Pages Collapse Menu -->
-			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i>
-					<span>Components</span>
-			</a>
-				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">Custom Components:</h6>
-						<a class="collapse-item" href="buttons.html">Buttons</a> <a class="collapse-item" href="cards.html">Cards</a>
-					</div>
-				</div></li>
 
 			<!-- Nav Item - Utilities Collapse Menu -->
 			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities"> <i
@@ -144,11 +143,9 @@ tbody tr:hover {
 				<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
 					<!-- Sidebar Toggle (Topbar) -->
-					<form class="form-inline">
-						<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-							<i class="fa fa-bars"></i>
-						</button>
-					</form>
+					<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+						<i class="fa fa-bars"></i>
+					</button>
 
 					<!-- Topbar Search -->
 					<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
@@ -198,26 +195,6 @@ tbody tr:hover {
 										<div class="small text-gray-500">December 12, 2019</div>
 										<span class="font-weight-bold">A new monthly report is ready to download!</span>
 									</div>
-								</a> <a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="mr-3">
-										<div class="icon-circle bg-success">
-											<i class="fas fa-donate text-white"></i>
-										</div>
-									</div>
-									<div>
-										<div class="small text-gray-500">December 7, 2019</div>
-										$290.29 has been deposited into your account!
-									</div>
-								</a> <a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="mr-3">
-										<div class="icon-circle bg-warning">
-											<i class="fas fa-exclamation-triangle text-white"></i>
-										</div>
-									</div>
-									<div>
-										<div class="small text-gray-500">December 2, 2019</div>
-										Spending Alert: We've noticed unusually high spending for your account.
-									</div>
 								</a> <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
 							</div></li>
 
@@ -236,36 +213,8 @@ tbody tr:hover {
 										<div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
 										<div class="small text-gray-500">Emily Fowler Â· 58m</div>
 									</div>
-								</a> <a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="dropdown-list-image mr-3">
-										<img class="rounded-circle" src="/img/undraw_profile_2.svg" alt="...">
-										<div class="status-indicator"></div>
-									</div>
-									<div>
-										<div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
-										<div class="small text-gray-500">Jae Chun Â· 1d</div>
-									</div>
-								</a> <a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="dropdown-list-image mr-3">
-										<img class="rounded-circle" src="/img/undraw_profile_3.svg" alt="...">
-										<div class="status-indicator bg-warning"></div>
-									</div>
-									<div>
-										<div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
-										<div class="small text-gray-500">Morgan Alvarez Â· 2d</div>
-									</div>
-								</a> <a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="dropdown-list-image mr-3">
-										<img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="...">
-										<div class="status-indicator bg-success"></div>
-									</div>
-									<div>
-										<div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
-										<div class="small text-gray-500">Chicken the Dog Â· 2w</div>
-									</div>
 								</a> <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
 							</div></li>
-
 						<div class="topbar-divider d-none d-sm-block"></div>
 
 						<!-- Nav Item - User Information -->
@@ -281,9 +230,7 @@ tbody tr:hover {
 								<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
 								</a>
 							</div></li>
-
 					</ul>
-
 				</nav>
 				<!-- End of Topbar -->
 

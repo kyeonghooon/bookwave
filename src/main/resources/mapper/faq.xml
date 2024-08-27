@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.bookwave.repository.interfaces.SupportRepository">
+	<insert id="createFaq">
+		insert into faq_tb(title, content, category)
+		values (#{title}, #{content}, #{category})
+	</insert>
+
+	<select id="readAllFaq" resultType="com.library.bookwave.repository.model.Faq">
+		select * from faq_tb
+	</select>
+
+	<select id="readFaqById" resultType="com.library.bookwave.repository.model.Faq">
+		select * from faq_tb where id = #{id}
+	</select>
+
+	<select id="readAllCategory" resultType="String">
+		select distinct(category) from faq_tb
+	</select>
+	
+	<update id="updateFaqById">
+		update faq_tb set title = #{title}, content = #{content}, category = #{category} where id = #{id}
+	</update>
+	
+	<delete id="deleteFaqById">
+		delete from faq_tb where id = #{id}
+	</delete>
+
+</mapper>

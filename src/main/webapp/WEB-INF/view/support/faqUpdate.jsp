@@ -60,25 +60,25 @@ tbody tr:hover {
 				<div class="sidebar-brand-text mx-3">LOGO 넣는곳</div>
 			</a>
 
+
+
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0">
 
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item"><a class="nav-link" href="/admin/main"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>대시보드</span></a></li>
-			<li class="nav-item active"><a class="nav-link" href="/admin/user"> <i class="fas fa-fw fa-table"></i> <span>유저 관리</span></a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/user"> <i class="fas fa-fw fa-table"></i> <span>유저 관리</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="/admin/book"> <i class="fas fa-fw fa-table"></i> <span>도서 관리</span></a></li>
 
 			<!-- Nav Item - Pages Collapse Menu -->
-			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i>
-					<span>고객 지원</span>
+			<li class="nav-item active"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"> <i
+					class="fas fa-fw fa-cog"></i> <span>고객 지원</span>
 			</a>
-				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+				<div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<a class="collapse-item active" href="/support/faq">FAQ 관리</a> <a class="collapse-item" href="/support/qna">1:1 문의 관리</a>
 					</div>
 				</div></li>
-
-
 			<!-- Divider -->
 			<hr class="sidebar-divider">
 
@@ -216,7 +216,6 @@ tbody tr:hover {
 									</div>
 								</a> <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
 							</div></li>
-
 						<div class="topbar-divider d-none d-sm-block"></div>
 
 						<!-- Nav Item - User Information -->
@@ -232,9 +231,7 @@ tbody tr:hover {
 								<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
 								</a>
 							</div></li>
-
 					</ul>
-
 				</nav>
 				<!-- End of Topbar -->
 
@@ -242,56 +239,27 @@ tbody tr:hover {
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">유저 목록</h1>
-
-					<!-- DataTales Example -->
-					<div class="card shadow mb-4">
-						<div class="card-body">
-							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-									<thead>
-										<tr>
-											<th>id</th>
-											<th>login_id</th>
-											<th>social_id</th>
-											<th>name</th>
-											<th>role</th>
-											<th>subscribe</th>
-											<th>wave</th>
-											<th>mileage</th>
-											<th>status</th>
-											<th>created_at</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="user" items="${userList}">
-											<tr data-url="/admin/user-detail?id=${user.id}">
-												<th>${user.id}</th>
-												<th>${user.loginId}</th>
-												<th>${user.socialId}</th>
-												<th>${user.name}</th>
-												<th>${user.role == 'admin' ? '관리자' : '유저'}</th>
-												<th>${user.subscribe == 1 ? 'Subscribed' : 'Not Subscribed'}</th>
-												<th><fmt:formatNumber value="${user.wave}" pattern="#,#00"></fmt:formatNumber></th>
-												<th><fmt:formatNumber value="${user.mileage}" pattern="#,#00"></fmt:formatNumber></th>
-												<c:choose>
-													<c:when test="${user.status == 0}">
-														<th>정상</th>
-													</c:when>
-													<c:when test="${user.status == 1}">
-														<th>탈퇴예정</th>
-													</c:when>
-													<c:otherwise>
-														<th>탈퇴</th>
-													</c:otherwise>
-												</c:choose>
-												<th><fmt:formatDate value="${user.createdAt}" type="both" /></th>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
+					<h1 class="h3 mb-2 text-gray-800">FAQ 수정하기</h1>
+					<div class="form-container">
+						<form action="/support/faq-update?id=${faq.id}" method="post">
+							<div class="form-group">
+								<label for="category">Category:</label> <select id="category" name="category">
+									<c:forEach var="category" items="${categoryList}">
+										<option value="${category}" ${category == faq.category ? 'selected' : ''}>${category}</option>
+									</c:forEach>
+								</select>
 							</div>
-						</div>
+							<div class="form-group">
+								<label for="title">Title:</label> <input type="text" id="title" name="title" value="${faq.title}" required>
+							</div>
+							<div class="form-group">
+								<label for="content">Content:</label>
+								<textarea id="content" name="content" required>${faq.content}</textarea>
+							</div>
+							<div class="form-actions">
+								<input type="submit" value="수정하기">
+							</div>
+						</form>
 					</div>
 
 				</div>

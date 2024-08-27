@@ -10,13 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.library.bookwave.repository.interfaces.AdminRepository;
 import com.library.bookwave.repository.model.User;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class AdminService {
 	private final AdminRepository adminRepository;
-
-	public AdminService(AdminRepository adminRepository) {
-		this.adminRepository = adminRepository;
-	}
 
 	@Transactional
 	public void createUser(User dto) {
