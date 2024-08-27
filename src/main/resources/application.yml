@@ -50,8 +50,3 @@ logging:
         ibatis: DEBUG #MyBatis 로깅 레벨을 DEBUG로 설정하여 실행되는 SQL 쿼리와 내부 로깅 정보를 콘솔에 출력한다.
     
 # 초기 파라미터 설정
-file:
-  upload-dir: ../upload/
-
-tenco:
-  oauth-password: 54d5cb2d332dbdb4850293caae4559ce88b65163f1ea5d4e4b3ac49d772ded14
