@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class EBookController {
 	
-	@GetMapping("/test")
+	@GetMapping("/ebook")
 	public String test(HttpServletResponse response) {
 		return "ebook/ebookRead";
 	}

@@ -1,0 +1,72 @@
+@charset "UTF-8";
+
+#viewer {
+	width: 100%;
+	max-width: 1080px;
+	height: 600px;
+	border: 1px solid #ccc;
+	margin-top: 10px;
+	position: relative;
+	overflow: hidden;
+	background-color: #e4f7ff;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.1); /* 입체감을 위한 그림자 추가 */
+}
+
+.nav--button {
+	position: absolute;
+	top: 47%;
+	transform: translateY(-50%) scale(1, 1.5);
+	background-color: transparent;
+	color: rgba(128, 128, 128, 0.8);
+	border: none;
+	font-size: 48px;
+	line-height: 1.8;
+	padding: 10px;
+	cursor: pointer;
+	z-index: 10; /* 콘텐츠보다 앞에 표시되도록 설정 */
+	opacity: 0; /* 기본적으로 숨김 */
+	transition: opacity 0.3s ease, color 0.3s ease; /* 색상 및 투명도 변화 애니메이션 */
+}
+
+.left--arrow {
+	left: 0;
+	border-radius: 0 5px 5px 0;
+}
+
+.right--arrow {
+	right: 0;
+	border-radius: 5px 0 0 5px;
+}
+
+#viewer::before {
+	content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 30px; /* 중앙 음영의 너비 */
+    height: 100%;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0)); 
+    transform: translateX(-50%);
+    z-index: 5;
+}
+
+.nav--button::before {
+	content: "";
+	position: absolute;
+	top: -30px; /* 위로 20px 확장 */
+	bottom: -30px; /* 아래로 20px 확장 */
+	left: -30px; /* 왼쪽으로 20px 확장 */
+	right: -30px; /* 오른쪽으로 20px 확장 */
+	z-index: -1; /* 실제 버튼 위에 그려지지 않도록 설정 */
+}
+
+.nav--button:hover {
+	opacity: 1;
+	color: rgba(64, 64, 64, 1);
+}
+
+#pageInput {
+	width: 60px;
+	padding-left: 5px;
+	margin-right: 10px;
+}
