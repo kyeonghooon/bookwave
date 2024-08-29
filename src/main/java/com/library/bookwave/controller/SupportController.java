@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.library.bookwave.dto.QnaDTO;
+import com.library.bookwave.repository.model.Answer;
 import com.library.bookwave.repository.model.Faq;
 import com.library.bookwave.service.SupportService;
 
@@ -25,7 +27,6 @@ public class SupportController {
 	@GetMapping("/faq")
 	public String faqPage(Model model) {
 		List<Faq> faqList = supportService.readAllFaq();
-
 		model.addAttribute("faqList", faqList);
 		return "support/faqList";
 	}
@@ -72,7 +73,50 @@ public class SupportController {
 
 	// qna 리스트 페이지로 이동
 	@GetMapping("/qna")
-	public String qnaPage(Model model) {
+	public String qnaPage(@RequestParam(name = "size", defaultValue = "10") int size, @RequestParam(name = "page", defaultValue = "1") int page, Model model) {
+
+		int totalRecords = supportService.countAllQna();
+		int totalPages = (int) Math.ceil((double) totalRecords / size);
+
+		List<QnaDTO> qnaList = supportService.readAllQna(page, size);
+		if (qnaList.isEmpty()) {
+			model.addAttribute("qnaList", null);
+		} else {
+			model.addAttribute("qnaList", qnaList);
+		}
+
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("size", size);
 		return "support/qnaList";
+	}
+
+	// qna 검색 기능
+	@PostMapping("/qna-search")
+	public String qnaSearch() {
+		return "redirect:/support/qna-search";
+	}
+
+	// qna 답변 페이지로 이동
+	@GetMapping("/answer-create")
+	public String createAnswerPage(@RequestParam(name = "id") Integer id, Model model) {
+		// session 에서 pricipal.getName() 불러오기
+
+		QnaDTO qnaDTO = supportService.readQnaById(id);
+		// model.addAttribute("aid", principal.getId());
+		model.addAttribute("aid", 1); // 임시로 번호 1이 답변하게 
+		// model.addAttribute("aname", principal.getName());
+		model.addAttribute("qna", qnaDTO);
+		return "support/answerCreate";
+	}
+
+	// qna 답변하기
+	@PostMapping("/answer-create")
+	public String updateQnaProc(@RequestParam(name = "id") Integer qid, @RequestParam(name = "aid") Integer aid, @RequestParam(name = "acontent") String acontent) {
+		Answer answer = Answer.builder().questionId(qid).userId(aid).content(acontent).build();
+		System.out.println(answer);
+		supportService.createAnswerByQid(answer);
+
+		return "redirect:/support/qna";
 	}
 }

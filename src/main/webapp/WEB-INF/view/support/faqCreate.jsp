@@ -24,22 +24,18 @@
 <!-- Custom styles for this page -->
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 <style>
-table {
+#title {
 	width: 100%;
-	border-collapse: collapse;
+	padding: 10px;
+	font-size: 16px;
 }
 
-th, td {
-	padding: 8px;
-	border: 1px solid #ddd;
-}
-/* 기본 행 스타일 */
-tbody tr {
-	transition: background-color 0.3s ease;
-}
-/* hover 스타일 */
-tbody tr:hover {
-	background-color: #99CCFF;
+#content {
+	width: 100%;
+	height: 200px; /* Adjust height as needed */
+	padding: 10px;
+	font-size: 16px;
+	resize: vertical; /* Allows users to resize the textarea vertically */
 }
 </style>
 </head>
@@ -269,13 +265,8 @@ tbody tr:hover {
 			<!-- End of Main Content -->
 
 			<!-- Footer -->
-			<footer class="sticky-footer bg-white">
-				<div class="container my-auto">
-					<div class="copyright text-center my-auto">
-						<span>Copyright &copy; Your Website 2020</span>
-					</div>
-				</div>
-			</footer>
+			<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
+
 			<!-- End of Footer -->
 
 		</div>

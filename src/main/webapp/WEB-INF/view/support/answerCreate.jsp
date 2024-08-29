@@ -23,6 +23,50 @@
 
 <!-- Custom styles for this page -->
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+<style>
+.form-container {
+	margin: 20px;
+}
+
+.form-group {
+	margin-bottom: 15px;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+
+.form-group input[type="text"], .form-group textarea {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ced4da;
+	border-radius: 0.25rem;
+}
+
+.form-group textarea {
+	height: 150px; /* 높이 조정 */
+	resize: vertical; /* 수직으로만 크기 조절 가능 */
+}
+
+.form-actions {
+	margin-top: 20px;
+}
+
+.form-actions input[type="submit"] {
+	background-color: #4e73df;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 0.25rem;
+	cursor: pointer;
+}
+
+.form-actions input[type="submit"]:hover {
+	background-color: #2e59d9;
+}
+</style>
 </head>
 
 <body id="page-top">
@@ -220,44 +264,30 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">FAQ 목록</h1>
-
-					<!-- Create Button -->
-					<div class="mb-4">
-						<a href="/support/faq-create" class="btn btn-primary">FAQ 등록하기</a>
-					</div>
-
-					<!-- DataTales Example -->
-					<div class="card shadow mb-4">
-						<div class="card-body">
-							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-									<thead>
-										<tr>
-											<th>id</th>
-											<th>category</th>
-											<th>title</th>
-											<th>content</th>
-											<th>수정</th>
-											<th>삭제</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="faq" items="${faqList}">
-											<tr>
-												<th>${faq.id}</th>
-												<th>[${faq.category}]</th>
-												<th>${faq.title}</th>
-												<th>${faq.content}</th>
-												<th><span class="update--faq"><a href="/support/faq-update?id=${faq.id}">수정</a></span></th>
-												<th><span class="delete--faq"><a href="/support/faq-delete?id=${faq.id}" onclick="confirmDelete(event)">삭제</a></span></th>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
+					<h1 class="h3 mb-2 text-gray-800">Q&A 답변하기</h1>
+					<div class="form-container">
+						<form action="/support/answer-create?id=${qna.qid}" method="post">
+							<input type="hidden" value="${aid}" name="aid">
+							<div class="form-group">
+								<label for="title">문의제목:</label> <input type="text" id="title" name="title" value="${qna.qtitle}" readonly>
 							</div>
-						</div>
+							<div class="form-group">
+								<label for="content">문의내용:</label>
+								<textarea id="content" name="content" readonly>${qna.qcontent}</textarea>
+							</div>
+							<div class="form-group">
+								<label for="aname">답변자</label> <input type="text" id="aname" name="aname" value="${aname}" readonly>
+							</div>
+							<div class="form-group">
+								<label for="content">답변내용:</label>
+								<textarea id="acontent" name="acontent"></textarea>
+							</div>
+							<div class="form-actions">
+								<input type="submit" value="답변하기">
+							</div>
+						</form>
 					</div>
+
 				</div>
 				<!-- /.container-fluid -->
 
@@ -297,20 +327,8 @@
 			</div>
 		</div>
 	</div>
-
 	<!-- custom JavaScript -->
-	<script type="text/javascript">
-		// JavaScript 함수 정의
-		function confirmDelete(event) {
-			// 확인 메시지 표시
-			var confirmed = confirm("정말 삭제하시겠습니까?");
-
-			// 사용자가 "취소"를 클릭하면 링크의 기본 동작을 막음
-			if (!confirmed) {
-				event.preventDefault(); // 링크 클릭 취소
-			}
-		}
-	</script>
+	<script src="/vendor/datatables/custom.js"></script>
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="/vendor/jquery/jquery.min.js"></script>
