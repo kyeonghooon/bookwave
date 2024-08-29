@@ -42,7 +42,7 @@ public class EbookController {
 		// 1. 해당 유저의 해당 ebook에 대한 내역 확인
 		UserEbook userEbook = ebookservice.readUserEbook(userId, bookId);
 		// TODO 현재 null이라 안됨 샘플 데이터
-		userEbook = UserEbook.builder().lastPoint(0.05).build();
+		userEbook = UserEbook.builder().lastPoint(0.0).build();
 		
 		// 2. 해당 ebook의 path 받아옴
 		// TODO 제목도 받아와야함 model 만들어 지면 추가
