@@ -1011,3 +1011,35 @@ INSERT INTO book_tb (title, description, author, publisher, cover, category, tot
 INSERT INTO book_tb (title, description, author, publisher, cover, category, total_stock, current_stock) VALUES ('신☆다!다!다! 애장판 1 - 초판한정 슬리브 커버 + 일러스트 책갈피 + 일러스트 카드 2종', '‘시공의 뒤틀림’에 빨려 들어가 지구에서 오토별에 오게 된 미우. 루우의 도움을 받아 지구로 돌아가기 위해 모험을 떠나게 되는데…?!', '카와무라 미카 (지은이), 심이슬 (옮긴이)', '서울미디어코믹스(서울문화사)', 'https://image.aladin.co.kr/product/34386/43/cover200/k782932508_1.jpg', '국내도서>만화>본격장르만화>판타지>드라마틱 판타지', 1, 1);
 INSERT INTO book_tb (title, description, author, publisher, cover, category, total_stock, current_stock) VALUES ('울어라, 펜 3', '', '시마모토 카즈히코 (지은이)', '미우(대원씨아이)', 'https://image.aladin.co.kr/product/34371/12/cover200/k832932101_1.jpg', '국내도서>만화>본격장르만화>프로의 세계', 1, 1);
 INSERT INTO book_tb (title, description, author, publisher, cover, category, total_stock, current_stock) VALUES ('가장 파란 눈', '흑인 여성 최초로 노벨문학상을 수상한 토니 모리슨의 데뷔작. 작가의 고향이기도 한 로레인을 배경으로, 파란 눈을 가지면 끔찍한 현실이 뒤바뀔 것이라고 믿은 흑인 소녀의 비극을 다룬 소설이다. 차별과 빈곤, 폭력이 대물림되는 흑인 사회의 슬픈 연대기가 어린아이들의 순수함과 대비되어 더욱 강렬하게 그려진다.', '토니 모리슨 (지은이), 정소영 (옮긴이)', '문학동네', 'https://image.aladin.co.kr/product/34369/47/cover200/k852932100_1.jpg', '국내도서>소설/시/희곡>영미소설', 1, 1);
+
+
+insert into lend_tb(user_id, book_id, status, lend_date, return_date, returned_date) values(1, 15, 0, now(), dateadd('DAY', 7, now()), null);
+insert into lend_tb(user_id, book_id, status, lend_date, return_date, returned_date) values(1, 16, 0, now(), dateadd('DAY', 7, now()), null);
+
+-- Inserting records into lend_tb
+INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date) 
+VALUES (1, 17, 0, NOW(), DATEADD(DAY, 7, NOW()));
+
+INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date) 
+VALUES (1, 18, 0, NOW(), DATEADD(DAY, 7, NOW()));
+
+-- Inserting reservations that are in progress (status = 0)
+INSERT INTO reservation_tb (user_id, book_id, status) 
+VALUES (1, 101, 0);
+
+INSERT INTO reservation_tb (user_id, book_id, status) 
+VALUES (1, 102, 0);
+
+INSERT INTO reservation_tb (user_id, book_id, status) 
+VALUES (1, 103, 0);
+
+-- Updating the reservation with id = 2
+UPDATE reservation_tb 
+SET status = 1, wait_date = DATEADD(DAY, 3, NOW())
+WHERE id = 2;
+
+-- Completing the reservation with id = 3
+UPDATE reservation_tb 
+SET status = -1 
+WHERE id = 3;
+
