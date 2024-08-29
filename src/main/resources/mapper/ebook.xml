@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.bookwave.repository.interfaces.EbookRepository">
+
+	<select
+		id="readUserEbook"
+		resultType="com.library.bookwave.repository.model.UserEbook">
+		select * from user_ebook_tb where user_id = #{userId} and book_id = #{bookId}
+	</select>
+	
+	<select
+		id="findEbookPathByBookId"
+		resultType="String">
+		select ebook_path from book_tb where id = #{bookId}
+	</select>
+</mapper>
