@@ -42,4 +42,7 @@ public interface SupportRepository {
 	// qna 카운트
 	public int countAllQna();
 
+	// qna 수정하기
+	public int updateQnaById(Answer answer);
+
 }

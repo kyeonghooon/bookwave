@@ -123,4 +123,19 @@ public class SupportService {
 	public int countAllQna() {
 		return supportRepository.countAllQna();
 	}
+
+	@Transactional
+	public void updateAnswerByQid(Answer answer) {
+		int result = 0;
+		try {
+			result = supportRepository.updateQnaById(answer);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result != 1) {
+			System.out.println("Q&A 수정 실패");
+		}
+	}
 }

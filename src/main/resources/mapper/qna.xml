@@ -42,4 +42,8 @@
 		insert into answer_tb(question_id, user_id, content)
 		values (#{questionId}, #{userId}, #{content})
 	</insert>
+
+	<update id="updateQnaById">
+		update answer_tb set user_id = #{userId}, content = #{content}, created_at = now() where question_id = #{questionId}
+	</update>
 </mapper>

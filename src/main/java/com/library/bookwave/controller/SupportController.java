@@ -100,22 +100,43 @@ public class SupportController {
 	// qna 답변 페이지로 이동
 	@GetMapping("/answer-create")
 	public String createAnswerPage(@RequestParam(name = "id") Integer id, Model model) {
-		// session 에서 pricipal.getName() 불러오기
+		// TODO session 에서 pricipal 불러오기
 
 		QnaDTO qnaDTO = supportService.readQnaById(id);
-		// model.addAttribute("aid", principal.getId());
+		// TODO model.addAttribute("aid", principal.getId());
 		model.addAttribute("aid", 1); // 임시로 번호 1이 답변하게 
-		// model.addAttribute("aname", principal.getName());
+		// TODO model.addAttribute("aname", principal.getName());
 		model.addAttribute("qna", qnaDTO);
 		return "support/answerCreate";
 	}
 
 	// qna 답변하기
 	@PostMapping("/answer-create")
+	public String createQnaProc(@RequestParam(name = "id") Integer qid, @RequestParam(name = "aid") Integer aid, @RequestParam(name = "acontent") String acontent) {
+		Answer answer = Answer.builder().questionId(qid).userId(aid).content(acontent).build();
+		supportService.createAnswerByQid(answer);
+
+		return "redirect:/support/qna";
+	}
+
+	// qna 수정 페이지로 이동
+	@GetMapping("/answer-update")
+	public String updateAnswerPage(@RequestParam(name = "id") Integer id, Model model) {
+		// TODO session 에서 pricipal 불러오기
+
+		QnaDTO qnaDTO = supportService.readQnaById(id);
+		// TODO model.addAttribute("aid", principal.getId());
+		model.addAttribute("aid", 1); // 임시로 번호 1이 답변하게 
+		// TODO model.addAttribute("aname", principal.getName());
+		model.addAttribute("qna", qnaDTO);
+		return "support/answerUpdate";
+	}
+
+	// qna 수정하기
+	@PostMapping("/answer-update")
 	public String updateQnaProc(@RequestParam(name = "id") Integer qid, @RequestParam(name = "aid") Integer aid, @RequestParam(name = "acontent") String acontent) {
 		Answer answer = Answer.builder().questionId(qid).userId(aid).content(acontent).build();
-		System.out.println(answer);
-		supportService.createAnswerByQid(answer);
+		supportService.updateAnswerByQid(answer);
 
 		return "redirect:/support/qna";
 	}

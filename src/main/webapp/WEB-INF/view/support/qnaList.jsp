@@ -61,6 +61,12 @@ tbody tr:hover {
 	background-color: #FF0033;
 	color: white;
 }
+.update--answer {
+	padding: 5px;
+	border-radius: 6px;
+	background-color: #0099FF;
+	color: white;
+}
 
 .answer {
 	text-decoration: none;
@@ -310,7 +316,7 @@ tbody tr:hover {
 														<th>${qna.qtitle}</th>
 														<c:choose>
 															<c:when test="${qna.aname != null}">
-																<th>답변완료</th>
+																<th>답변완료&nbsp;<span class="update--answer"><a class="answer" href="/support/answer-update?id=${qna.qid}">수정</a></span></th>
 															</c:when>
 															<c:otherwise>
 																<th><span class="create--answer"><a class="answer" href="/support/answer-create?id=${qna.qid}">답변하기</a></span></th>

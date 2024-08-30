@@ -264,9 +264,9 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">Q&A 답변하기 페이지</h1>
+					<h1 class="h3 mb-2 text-gray-800">Q&A 답변 수정 페이지</h1>
 					<div class="form-container">
-						<form action="/support/answer-create?id=${qna.qid}" method="post">
+						<form action="/support/answer-update?id=${qna.qid}" method="post">
 							<input type="hidden" value="${aid}" name="aid">
 							<div class="form-group">
 								<label for="title">문의제목:</label> <input type="text" id="title" name="title" value="${qna.qtitle}" readonly>
@@ -276,11 +276,11 @@
 								<textarea id="content" name="content" readonly>${qna.qcontent}</textarea>
 							</div>
 							<div class="form-group">
-								<label for="aname">답변자</label> <input type="text" id="aname" name="aname" value="${aname}" readonly>
+								<label for="aname">답변자</label> <input type="text" id="aname" name="aname" value="${qna.aname}" readonly>
 							</div>
 							<div class="form-group">
 								<label for="content">답변내용:</label>
-								<textarea id="acontent" name="acontent"></textarea>
+								<textarea id="acontent" name="acontent">${qna.acontent}</textarea>
 							</div>
 							<div class="form-actions">
 								<input type="submit" value="답변하기">
