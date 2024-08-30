@@ -19,4 +19,7 @@ public interface BookRepository {
 
 	// 필터링 걸린 책 갯수 조회하기
 	public int countByBook(@Param("category") String category, @Param("search") String search);
+
+	// 아이디로 책 조회하기
+	public Book readId(int id);
 }
