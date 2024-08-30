@@ -172,4 +172,15 @@
 #pageInput {
 	width: 60px;
 }
-
+#prevResult,
+#nextResult {
+  width: 30px;
+}
+#searchCounter {
+  margin-right: 5px;
+  height: 25px;
+  line-height: 13px;
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+}

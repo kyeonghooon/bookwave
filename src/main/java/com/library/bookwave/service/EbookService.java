@@ -36,6 +36,6 @@ public class EbookService {
 		String ebookPath = null;
 		ebookPath = ebookRepository.findEbookPathByBookId(bookId);
 		// TODO 테스트 코드 변경 예정
-		return ebookPath == null ? "/ebooks/2.epub" : ebookPath;
+		return ebookPath == null ? "/ebooks/2.epub/" : ebookPath;
 	}
 }
