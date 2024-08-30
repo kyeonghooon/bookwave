@@ -2,6 +2,13 @@
 
 INSERT INTO user_tb VALUES (1, 'slowman', null, '1234', '석지웅', 'admin', 1, 10000, 5000, 0, now());
 
+-- qna 샘플 데이터 추가
+INSERT INTO question_tb VALUES (1, 5, '문의제목1', '문의내용1', 1, now());
+INSERT INTO question_tb VALUES (2, 6, '문의제목2', '문의내용2', 2, now());
+INSERT INTO question_tb VALUES (3, 7, '문의제목3', '문의내용3', null, now());
+INSERT INTO answer_tb VALUES (1, 1, 1, '답변내용1', now());
+INSERT INTO answer_tb VALUES (2, 2, 1, '답변내용2', now());
+
 -- faq 샘플 데이터 추가
 INSERT INTO faq_tb (title, content, category) VALUES
 ('결제취소는 어떻게 하나요?','결제취소는 마이페이지> 결제내역 메뉴에서 확인가능합니다.
