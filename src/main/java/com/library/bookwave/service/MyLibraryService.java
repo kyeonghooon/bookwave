@@ -28,8 +28,7 @@ public class MyLibraryService {
 			e.printStackTrace();
 		}
 		if (list.isEmpty() || list == null) {
-			// TODO delete logging
-			System.err.println("list error");
+			System.err.println("list not found");
 		}
 
 		return list;
@@ -70,12 +69,6 @@ public class MyLibraryService {
 			// Convert LocalDateTime back to Timestamp
 			Timestamp returnDate = Timestamp.from(newReturnDate.atZone(ZoneId.systemDefault()).toInstant());
 
-			System.err.println(bookId);
-			System.err.println(bookId);
-			System.err.println(bookId);
-			System.err.println(returnDate);
-			System.err.println(returnDate);
-			System.err.println(returnDate);
 			// Update the return date in the database
 			result = lendRepository.updateReturnDateById(bookId, returnDate);
 		} catch (Exception e) {
@@ -83,6 +76,95 @@ public class MyLibraryService {
 		}
 		if (result == 0) {
 			System.err.println("Update error");
+		}
+
+		return result;
+	}
+
+	public Integer findFirstByBookIdAndStatus(Integer bookId) {
+		Integer result = null;
+		try {
+			result = lendRepository.findFirstByBookIdAndStatus(bookId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if (result == null) {
+			System.err.println("No reservation found for bookId: " + bookId);
+		}
+
+		return result;
+	}
+
+	public int findBookIdById(Integer id) {
+		int result = 0;
+		try {
+			result = lendRepository.findBookIdById(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result == 0) {
+			System.err.println("err");
+		}
+
+		return result;
+	}
+
+	@Transactional
+	public int updateStatusByIdReservation(Integer id) {
+		int result = 0;
+		try {
+			result = lendRepository.updateStatusByIdReservation(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result == 0) {
+			System.err.println("err");
+		}
+
+		return result;
+	}
+
+	@Transactional
+	public int updateReturnedDateById(Integer id) {
+		int result = 0;
+		try {
+			result = lendRepository.updateReturnedDateById(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result == 0) {
+			System.err.println("err");
+		}
+
+		return result;
+	}
+
+	@Transactional
+	public int updateWaitDateById(Integer id) {
+		int result = 0;
+		try {
+			result = lendRepository.updateWaitDateById(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result == 0) {
+			System.err.println("err");
+		}
+
+		return result;
+	}
+
+	@Transactional
+	public int updateStockByBookId(Integer id) {
+		int result = 0;
+		try {
+			result = lendRepository.updateStockByBookId(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result == 0) {
+			System.err.println("err");
 		}
 
 		return result;

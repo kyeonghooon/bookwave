@@ -24,12 +24,13 @@ CREATE TABLE user_detail_tb (
 
 CREATE TABLE book_tb (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(20) NOT NULL,
+    title VARCHAR(255) NOT NULL,
     description TEXT,
-    author VARCHAR(100) NOT NULL,
+    author VARCHAR(255) NOT NULL,
     publisher VARCHAR(100) NOT NULL,
-    img VARCHAR(255) COMMENT 'url',
-    category VARCHAR(20) NOT NULL,
+    cover VARCHAR(255) COMMENT 'url',
+    category VARCHAR(255) NOT NULL,
+    publish_date DATE NOT NULL,
     total_stock INT NOT NULL,
     current_stock INT NOT NULL,
     ebook INT DEFAULT 2 COMMENT '0:종이책 1:ebook 2:둘다',
@@ -156,4 +157,3 @@ CREATE TABLE subscribe_tb (
     start_date TIMESTAMP DEFAULT NOW(),
     end_date TIMESTAMP
 );
-

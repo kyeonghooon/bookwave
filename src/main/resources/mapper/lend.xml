@@ -5,6 +5,7 @@
 	<select id="findAllByUserId"
 		resultType="com.library.bookwave.repository.model.MyLibrary">
 		select * from lend_tb where user_id = #{userId}
+		AND status != -1
 	</select>
 	<update id="updateStatusById">
 		update lend_tb set status = -1 where id = #{id}
@@ -17,4 +18,32 @@
 		FROM lend_tb
 		WHERE id = #{id}
 	</select>
+	<select id="findFirstByBookIdAndStatus" resultType="Integer">
+		SELECT id
+		FROM reservation_tb
+		WHERE status = 0 AND book_id = #{bookId}
+		ORDER BY reservation_date ASC
+		LIMIT 1;
+	</select>
+	<select id="findBookIdById" resultType="Integer">
+		select book_id from lend_tb where id = #{id}
+	</select>
+	<update id="updateStatusByIdReservation">
+		update reservation_tb set status = 1 where id = #{id}
+	</update>
+	<update id="updateReturnedDateById">
+		UPDATE lend_tb
+		SET returned_date = CURRENT_TIMESTAMP
+		WHERE id = #{id}
+	</update>
+	<update id="updateWaitDateById">
+		UPDATE reservation_tb
+		SET wait_date = DATEADD(DAY, 3, NOW())
+		WHERE id = #{id}
+	</update>
+	<update id="updateStockByBookId">
+		UPDATE book_tb
+		SET current_stock = current_stock + 1
+		WHERE id = #{bookId}
+	</update>
 </mapper>
