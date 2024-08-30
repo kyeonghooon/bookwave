@@ -36,13 +36,19 @@ public interface SupportRepository {
 	// qna 아이디로 조회
 	public QnaDTO readQnaById(Integer id);
 
-	// qna 답변하기 (answer 추가)
+	// qna 답변 (answer 추가)
 	public int createAnswerByQid(Answer answer);
 
 	// qna 카운트
 	public int countAllQna();
 
-	// qna 수정하기
+	// qna 수정
 	public int updateQnaById(Answer answer);
+
+	// qna 검색
+	public List<QnaDTO> findQnaByKeyword(@Param("keyword") String keyword, @Param("limit") int limit, @Param("offset") int offset);
+
+	// qna 검색 카운트
+	public int countQnaByKeyword();
 
 }

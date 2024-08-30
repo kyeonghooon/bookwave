@@ -91,12 +91,6 @@ public class SupportController {
 		return "support/qnaList";
 	}
 
-	// qna 검색 기능
-	@PostMapping("/qna-search")
-	public String qnaSearch() {
-		return "redirect:/support/qna-search";
-	}
-
 	// qna 답변 페이지로 이동
 	@GetMapping("/answer-create")
 	public String createAnswerPage(@RequestParam(name = "id") Integer id, Model model) {
@@ -140,4 +134,26 @@ public class SupportController {
 
 		return "redirect:/support/qna";
 	}
+
+	// qna 검색하기
+	@GetMapping("/qna-find")
+	public String findQnaProc(@RequestParam(name = "keyword") String keyword, @RequestParam(name = "size", defaultValue = "10") int size, @RequestParam(name = "page", defaultValue = "1") int page,
+			Model model) {
+		int totalRecords = supportService.countQnaByKeyword(keyword);
+		int totalPages = (int) Math.ceil((double) totalRecords / size);
+
+		List<QnaDTO> qnaList = supportService.findQnaByKeyword(keyword, page, size);
+		if (qnaList.isEmpty()) {
+			model.addAttribute("qnaList", null);
+		} else {
+			model.addAttribute("qnaList", qnaList);
+		}
+
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("size", size);
+		return "support/qnaList";
+	}
+
 }

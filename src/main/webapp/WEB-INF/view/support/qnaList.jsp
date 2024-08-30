@@ -61,6 +61,7 @@ tbody tr:hover {
 	background-color: #FF0033;
 	color: white;
 }
+
 .update--answer {
 	padding: 5px;
 	border-radius: 6px;
@@ -285,8 +286,9 @@ tbody tr:hover {
 				<div class="container-fluid">
 					<!-- Page Heading -->
 					<h1 class="h3 mb-2 text-gray-800">Q&A 목록</h1>
-					<form action="/support/qna-search?name=${name}">
-						<input type="text" name="name"><a class="search" href="">이름으로 검색</a>
+					<form action="/support/qna-find?keyword=${keyword}" method="GET">
+						<input type="text" name="keyword" value="${keyword}">
+						<button type="submit">키워드 검색</button>
 					</form>
 					<div class="card shadow mb-4">
 						<div class="card-body">
