@@ -1,0 +1,116 @@
+
+/* 기본 스타일 초기화 */
+/* 임시 css 수정 필요 */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.signup-container {
+    background-color: #fff;
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    width: 800px;
+    text-align: center;
+}
+
+.signup-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label,
+.form-group2 {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+
+
+.check-id{
+	width: 15%
+}
+
+.form-group2{
+	
+	display: block;
+	outline: none;
+	font-weight: bold;
+	text-align: left;
+	width: 100%;
+	margin-bottom: 10px;
+	color: #555;
+
+	
+}
+
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #66afe9;
+    outline: none;
+    box-shadow: 0 0 5px rgba(102, 175, 233, 0.5);
+}
+
+button {
+    background-color:#6495ED;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+button:hover {
+    background-color:#00008B;
+}
+.phone{
+	display: flex;
+    justify-content: space-between;
+}
+select, input{
+	width: 32%;
+	height: 40px;
+	border-radius: 5px;
+	border: 1px solid #bababa;
+
+}
+
+
+
+.check {
+	height: 39px;
+    width: 10%;
+}
+
+@media (max-width: 500px) {
+    .signup-container {
+        width: 100%;
+        padding: 20px;
+    }
+}
