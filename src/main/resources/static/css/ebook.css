@@ -99,18 +99,23 @@
 /* 툴바 컨테이너 및 토글 버튼 */
 .toolbar--container {
   display: flex;
-  justify-content: flex-start; /* 왼쪽으로 정렬 */
+  justify-content: space-between;
   width: 100%; /* 컨테이너의 전체 너비를 차지 */
 }
 .toolbar--circle {
   display: flex;
   margin-top: 10px;
-  margin-left: calc(50% - 535px); /* 뷰어가 1080px일 때 중앙에 위치 */
+  margin-left: calc(50% - 535px); /* 뷰어가 1080px일 때 뷰어 아래에 위치 */
 }
 @media (max-width: 1080px) {
   .toolbar--circle {
     margin-left: 10px; /* 뷰어가 1080px 이하일 때 버튼을 왼쪽에 고정 */
   }
+}
+
+#savePage {
+  margin-top: 10px;
+  margin-right: calc(50% - 535px);
 }
 
 .toolbar--btn {

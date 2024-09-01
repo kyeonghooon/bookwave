@@ -13,4 +13,7 @@ public interface EbookRepository {
 	
 	// ebook path 조회
 	String findEbookPathByBookId(Integer bookId);
+	
+	// user_ebook lastPoint 업데이트
+	int updateUserEbookWithLastPoint(@Param("lastPoint") Double lastPoint, @Param("userId") Integer userId, @Param("bookId") Integer bookId);
 }

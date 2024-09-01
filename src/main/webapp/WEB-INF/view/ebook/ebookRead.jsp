@@ -33,11 +33,13 @@
 			</div>
 		</div>
 	</div>
+	<div class="toolbar--btn" id="savePage">저장</div>
 </div>
 
 <script type="text/javascript">
 	const ebookPath = "${ebookPath}";
 	const lastPoint = "${ebook.lastPoint}";
+	const bookId = "${ebook.bookId}";
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>

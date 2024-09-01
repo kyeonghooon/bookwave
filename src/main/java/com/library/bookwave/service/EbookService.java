@@ -38,4 +38,17 @@ public class EbookService {
 		// TODO 테스트 코드 변경 예정
 		return ebookPath == null ? "/ebooks/2.epub/" : ebookPath;
 	}
+	
+	public int updateUserEbookWithLastPoint(double lastPoint, int userId, int bookId) {
+		int result = 0;
+		try {
+			result = ebookRepository.updateUserEbookWithLastPoint(lastPoint, userId, bookId);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		if (result == 0) {
+			// TODO : 처리 필요
+		}
+		return result;
+	}
 }

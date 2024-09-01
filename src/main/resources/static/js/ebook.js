@@ -6,11 +6,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const searchNav = document.getElementById("searchNav");
   const searchCounter = document.getElementById("searchCounter");
   const endSearchBtn = document.getElementById("endSearch");
+  const saveBtn = document.getElementById("savePage");
   const book = ePub(ebookPath);
   let searchResults = [];
   let currentSearchIndex = 0;
   let isSearching = false;
   let loadedSections = {}; // 로드된 섹션을 저장하기 위한 객체
+  let currentPageProgress = 0; // 현재 페이지의 진행도를 저장하는 변수
 
   toggleToolbarBtn.addEventListener("click", function () {
     toolbarContainer.classList.toggle("active");
@@ -41,8 +43,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // 페이지가 바뀔 때마다 진행도 업데이트
       rendition.on("relocated", function (location) {
-        const progress = book.locations.percentageFromCfi(location.start.cfi);
-        updateProgress(progress);
+        currentPageProgress = book.locations.percentageFromCfi(
+          location.start.cfi
+        );
+        updateProgress(currentPageProgress);
       });
 
       // 진행도 바 클릭 시 해당 위치로 이동
@@ -81,6 +85,34 @@ document.addEventListener("DOMContentLoaded", function () {
           console.log(location);
           rendition.display(location); // 특정 페이지로 이동
         });
+
+      // 저장 버튼 클릭 시 동작
+      saveBtn.addEventListener("click", function () {
+        saveCurrentProgress(currentPageProgress);
+      });
+
+      function saveCurrentProgress(progress) {
+        const url = "/ebook/save/" + bookId;
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(progress),
+        })
+          .then(async (response) => {
+            if (response.ok) {
+              const message = await response.text();
+              alert(message);
+            } else {
+              const errorMessage = await response.text();
+              throw new Error(errorMessage || "저장 실패");
+            }
+          })
+          .catch((error) => {
+            alert(error.message);
+          });
+      }
 
       // 검색 버튼 클릭 시 동작
       document
@@ -146,7 +178,7 @@ document.addEventListener("DOMContentLoaded", function () {
         currentSearchIndex = 0;
         searchNav.style.display = "none"; // 검색 내비게이션 숨김
         rendition.annotations.remove(); // 모든 하이라이트 제거
-		  document.getElementById("searchInput").value = "";
+        document.getElementById("searchInput").value = "";
       });
       // 이전 검색 결과로 이동
       document
