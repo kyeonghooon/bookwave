@@ -105,6 +105,9 @@ CREATE TABLE favorites_tb (
 CREATE TABLE user_ebook_tb (
     user_id INT NOT NULL,
     book_id INT NOT NULL,
+    last_point DOUBLE DEFAULT 0,
+    last_read_date TIMESTAMP,
+    status INT DEFAULT 0 COMMENT '0: 읽는 중, -1: 종료',
     PRIMARY KEY (user_id , book_id)
 );
 
