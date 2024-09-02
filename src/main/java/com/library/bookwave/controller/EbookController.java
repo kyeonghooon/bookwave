@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.library.bookwave.dto.EbookDTO;
@@ -64,6 +65,9 @@ public class EbookController {
 		return "ebook/ebookRead";
 	}
 	
+	/**
+	 * 읽은 위치 저장
+	 */
 	@PostMapping("/save/{bookId}")
 	@ResponseBody
 	public ResponseEntity<?> savePage(@RequestBody Double progress, //
@@ -77,5 +81,14 @@ public class EbookController {
 		} else {
 			return ResponseEntity.ok().body("저장 성공");
 		}
+	}
+	
+	@GetMapping("/remove")
+	public String removeBook(@RequestParam(name = "bookId") Integer bookId) {
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
+		// TODO 테스트용 코드 로그인 구현되면 제거 예정
+		int userId = user == null ? 1 : user.getId();
+		ebookservice.updateUserEbookWithStatus(-1, userId, bookId);
+		return "redirect:/ebook";
 	}
 }

@@ -25,4 +25,8 @@
 		select b.id, b.title, b.cover, ue.last_read_date from book_tb b join user_ebook_tb ue on b.id = ue.book_id where ue.user_id = #{userId} and ue.status = 0 order by ue.last_read_date desc
 	</select>
 	
+	<update id="updateUserEbookWithStatus">
+		update user_ebook_tb set status = #{status} where user_id = #{userId} and book_id = #{bookId}
+	</update>
+	
 </mapper>

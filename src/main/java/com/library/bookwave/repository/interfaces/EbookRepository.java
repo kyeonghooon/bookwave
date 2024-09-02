@@ -22,4 +22,7 @@ public interface EbookRepository {
 	
 	// 해당 유저의 ebookList 조회
 	List<EbookDTO> findEbookListByUserId(Integer userId);
+	
+	// user_ebook status 업데이트
+	int updateUserEbookWithStatus(@Param("status") Integer status, @Param("userId") Integer userId, @Param("bookId") Integer bookId);
 }

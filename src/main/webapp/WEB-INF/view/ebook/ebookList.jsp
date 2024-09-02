@@ -30,7 +30,9 @@
 <script>
 function confirmRemove(bookId) {
     if (confirm("정말 이 책을 삭제하시겠습니까?")) {
-        window.location.href = `ebook/removeBook?bookId=${bookId}`;
+    	console.log('bookId',bookId);
+    	const url = "ebook/remove?bookId=" + bookId;
+        window.location.href = url;
     }
 }
 </script>

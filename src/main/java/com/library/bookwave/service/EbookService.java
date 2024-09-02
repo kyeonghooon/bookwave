@@ -60,6 +60,9 @@ public class EbookService {
 		return result;
 	}
 	
+	/**
+	 *  해당 유저의 ebook 목록 받아오기
+	 */
 	public List<EbookDTO> findEbookListByUserId(int userId){
 		List<EbookDTO> bookList = null;
 		try {
@@ -71,5 +74,22 @@ public class EbookService {
 			// TODO : 처리 필요
 		}
 		return bookList;
+	}
+	
+	/**
+	 *  user ebook의 상태값 변경
+	 */
+	@Transactional
+	public int updateUserEbookWithStatus(int status, int userId, int bookId) {
+		int result = 0;
+		try {
+			result = ebookRepository.updateUserEbookWithStatus(status, userId, bookId);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		if (result == 0) {
+			// TODO : 처리 필요
+		}
+		return result;
 	}
 }
