@@ -1,5 +1,7 @@
 package com.library.bookwave.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.library.bookwave.dto.EbookDTO;
 import com.library.bookwave.repository.model.User;
 import com.library.bookwave.repository.model.UserEbook;
 import com.library.bookwave.service.EbookService;
@@ -27,8 +30,13 @@ public class EbookController {
 	private final EbookService ebookservice;
 	private final HttpSession session;
 
+	@GetMapping
 	public String listPage(Model model) {
-		// TODO book 모델 필요
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
+		// TODO 테스트용 코드 로그인 구현되면 제거 예정
+		int userId = user == null ? 1 : user.getId();
+		List<EbookDTO> bookList = ebookservice.findEbookListByUserId(userId);
+		model.addAttribute("bookList", bookList);
 		return "ebook/ebookList";
 	}
 

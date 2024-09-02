@@ -18,4 +18,11 @@
 	<update id="updateUserEbookWithLastPoint">
 		update user_ebook_tb set last_point = #{lastPoint}, last_read_date = now() where user_id = #{userId} and book_id = #{bookId}
 	</update>
+	
+	<select
+		id="findEbookListByUserId"
+		resultType="com.library.bookwave.dto.EbookDTO">
+		select b.id, b.title, b.cover, ue.last_read_date from book_tb b join user_ebook_tb ue on b.id = ue.book_id where ue.user_id = #{userId} and ue.status = 0 order by ue.last_read_date desc
+	</select>
+	
 </mapper>

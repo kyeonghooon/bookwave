@@ -1,0 +1,97 @@
+@charset "UTF-8";
+
+.book--list {
+	flex: 1;
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	gap: 10px;
+	padding: 20px;
+	width: 100%;
+	justify-content: center;
+}
+
+.book--item {
+	width: 190px;
+	height: 389px;
+	text-align: center;
+	border: 1px solid #ddd;
+	padding: 10px;
+	border-radius: 5px;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	position: relative; /* 부모 요소에 상대적 위치 지정 */
+}
+
+.book--item img {
+	width: 170px;
+	height: 250px;
+	object-fit: cover;
+	border-radius: 5px;
+}
+
+.book--details {
+	flex: 1;
+}
+
+.book--title {
+	font-size: 14px;
+	margin-top: 10px;
+	display: inline-block;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.last--read--date {
+	height: 44px;
+	font-size: 14px;
+}
+
+.book--actions {
+	margin-top: 10px;
+}
+
+.book--actions a {
+	margin-left: 10px;
+	padding: 5px 10px;
+	cursor: pointer;
+	border-radius: 4px;
+	text-decoration: none;
+	background-color: #007BFF;
+	color: white;
+	font-size: 14px;
+}
+
+.book--actions a.remove {
+	background-color: #DC3545;
+}
+
+.text--none {
+	color: #ef6262;
+}
+
+.remove--button {
+	display: flex;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	background-color: #DC3545;
+	border: none;
+	border-radius: 50%;
+	width: 24px;
+	height: 24px;
+	cursor: pointer;
+	padding: 0;
+	justify-content: center;
+	align-items: center;
+}
+
+.remove--button span {
+	height: 31px;
+	color: white;
+	font-size: 18px;
+	font-weight: bold;
+}

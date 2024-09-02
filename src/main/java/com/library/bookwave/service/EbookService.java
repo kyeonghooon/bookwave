@@ -1,7 +1,11 @@
 package com.library.bookwave.service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.library.bookwave.dto.EbookDTO;
 import com.library.bookwave.repository.interfaces.EbookRepository;
 import com.library.bookwave.repository.model.UserEbook;
 
@@ -39,6 +43,10 @@ public class EbookService {
 		return ebookPath == null ? "/ebooks/2.epub/" : ebookPath;
 	}
 	
+	/**
+	 *  ebook의 마지막 읽은 위치 저장
+	 */
+	@Transactional
 	public int updateUserEbookWithLastPoint(double lastPoint, int userId, int bookId) {
 		int result = 0;
 		try {
@@ -50,5 +58,18 @@ public class EbookService {
 			// TODO : 처리 필요
 		}
 		return result;
+	}
+	
+	public List<EbookDTO> findEbookListByUserId(int userId){
+		List<EbookDTO> bookList = null;
+		try {
+			bookList = ebookRepository.findEbookListByUserId(userId);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		if (bookList.isEmpty()) {
+			// TODO : 처리 필요
+		}
+		return bookList;
 	}
 }
