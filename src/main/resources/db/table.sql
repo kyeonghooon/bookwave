@@ -30,6 +30,7 @@ CREATE TABLE book_tb (
     publisher VARCHAR(100) NOT NULL,
     cover VARCHAR(255) COMMENT 'url',
     category VARCHAR(255) NOT NULL,
+    publish_date DATE NOT NULL,
     total_stock INT NOT NULL,
     current_stock INT NOT NULL,
     ebook INT DEFAULT 2 COMMENT '0:종이책 1:ebook 2:둘다',

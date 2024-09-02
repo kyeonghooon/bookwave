@@ -74,7 +74,7 @@ tbody tr:hover {
 			</a>
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item active" href="/support/faq">FAQ 관리</a> <a class="collapse-item" href="/support/qna">1:1 문의 관리</a>
+						<a class="collapse-item" href="/support/faq">FAQ 관리</a> <a class="collapse-item" href="/support/qna">1:1 문의 관리</a>
 					</div>
 				</div></li>
 
@@ -287,13 +287,8 @@ tbody tr:hover {
 			<!-- End of Main Content -->
 
 			<!-- Footer -->
-			<footer class="sticky-footer bg-white">
-				<div class="container my-auto">
-					<div class="copyright text-center my-auto">
-						<span>Copyright &copy; Your Website 2020</span>
-					</div>
-				</div>
-			</footer>
+			<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
+		
 			<!-- End of Footer -->
 
 		</div>

@@ -24,22 +24,47 @@
 <!-- Custom styles for this page -->
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 <style>
-table {
-	width: 100%;
-	border-collapse: collapse;
+.form-container {
+	margin: 20px;
 }
 
-th, td {
-	padding: 8px;
-	border: 1px solid #ddd;
+.form-group {
+	margin-bottom: 15px;
 }
-/* 기본 행 스타일 */
-tbody tr {
-	transition: background-color 0.3s ease;
+
+.form-group label {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
 }
-/* hover 스타일 */
-tbody tr:hover {
-	background-color: #99CCFF;
+
+.form-group input[type="text"], .form-group textarea {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ced4da;
+	border-radius: 0.25rem;
+}
+
+.form-group textarea {
+	height: 150px; /* 높이 조정 */
+	resize: vertical; /* 수직으로만 크기 조절 가능 */
+}
+
+.form-actions {
+	margin-top: 20px;
+}
+
+.form-actions input[type="submit"] {
+	background-color: #4e73df;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 0.25rem;
+	cursor: pointer;
+}
+
+.form-actions input[type="submit"]:hover {
+	background-color: #2e59d9;
 }
 </style>
 </head>
@@ -269,13 +294,8 @@ tbody tr:hover {
 			<!-- End of Main Content -->
 
 			<!-- Footer -->
-			<footer class="sticky-footer bg-white">
-				<div class="container my-auto">
-					<div class="copyright text-center my-auto">
-						<span>Copyright &copy; Your Website 2020</span>
-					</div>
-				</div>
-			</footer>
+			<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
+
 			<!-- End of Footer -->
 
 		</div>
