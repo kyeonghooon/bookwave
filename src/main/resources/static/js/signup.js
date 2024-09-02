@@ -1,15 +1,19 @@
-const resultUid = document.querySelector(".result-uid"); // 에러 메세지
+const resultUid = document.querySelector(".result-uid"); // 에러 메세지(아이디)
+const resultUpw = document.querySelector(".result-upw"); // 에러 메세지(비밀번호)
+
+
 const btnId = document.querySelector(".check-id"); // 중복체크 버튼
 const inputId = document.querySelector(".loginId"); // 아이디
+const inputPw= document.querySelector(".password"); // 비밀번호
+const inputPwCheck= document.querySelector(".pwcheck"); // 비밀번호 체크
 
 const btnSubmit = document.getElementById("btn"); // 회원가입 버튼
 
 
-
+// 정규식 표현
 const reUid = /^[a-z]+[a-z0-9]{5,12}$/g; // 조건
+const rePass = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[~?!@#$%^&*_-]).{8,12}$/
 
-
-let isUidOk = false;
 
 btnId.addEventListener("click", function () {
   const inputId = loginId.value.trim(); // 입력 필드의 값 가져오기
@@ -33,4 +37,22 @@ btnId.addEventListener("click", function () {
       console.log("error ", error);
       resultUid.textContent = "잘못된 요청입니다.";
     });
-});
+  });
+  
+
+
+// // 이벤트리스너(삭제)
+//   document.getElementById('loginId').addEventListener('keydown',function(event2){
+//     if(event2.code == 'Enter'){
+//       event2.preventDefault();
+//       // document.getElementById('check-id').click();
+//     }
+//   });
+
+
+
+    
+ 
+
+
+

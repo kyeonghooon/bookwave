@@ -22,8 +22,8 @@ public class UserDetail {
 	private Date birthDate;
 	private Boolean gender;
 	private String phone;
-	private String zip;
-	private String addr1;
-	private String addr2;
+	private String zip; // 주소 - 우편번호
+	private String addr1; // 지번 주소
+	private String addr2; // 상세 주소
 
 }

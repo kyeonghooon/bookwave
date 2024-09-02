@@ -29,16 +29,17 @@ public class SignUpDTO {
 	private String email1; 
 	private String email2; 
 	
-	
 	private Integer year; // 생년월일 - 년
 	private Integer month; // 생년월일 - 월
 	private Integer day; // 생년월일 - 일
 	
 	private Boolean gender; // 성별 // 대문자, 소문자 구분!
+	
 	private String phone; // 전화번호
-	private String phone1; // 수정 -
-	private String phone2; // 수정 -
-	private String phone3; // 수정 -
+	private String phone1; 
+	private String phone2; 
+	private String phone3; 
+	
 	private String zip; // 우편번호
 	private String addr1; // 주소(시/도)
 	private String addr2; // 주소(상세주소)
