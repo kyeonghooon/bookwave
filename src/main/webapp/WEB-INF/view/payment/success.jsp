@@ -50,16 +50,14 @@
 		const urlParams = new URLSearchParams(window.location.search);
 
 		// 서버로 결제 승인에 필요한 결제 정보를 보내세요.
-		async
-		function confirm() {
+		async function confirm() {
 			var requestData = {
 				paymentKey : urlParams.get("paymentKey"),
 				orderId : urlParams.get("orderId"),
 				amount : urlParams.get("amount"),
 			};
 
-			const response = await
-			fetch("/confirm", {
+			const response = await fetch("/payment/confirm", {
 				method : "POST",
 				headers : {
 					"Content-Type" : "application/json",
@@ -67,8 +65,7 @@
 				body : JSON.stringify(requestData),
 			});
 
-			const json = await
-			response.json();
+			const json = await response.json();
 
 			if (!response.ok) {
 				// TODO: 결제 실패 비즈니스 로직을 구현하세요.
