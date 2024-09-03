@@ -13,7 +13,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 @ToString
-
 public class User {
 	private Integer id;
 	private String loginId;
