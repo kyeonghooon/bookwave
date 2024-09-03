@@ -37,7 +37,9 @@ public class EbookController {
 		// TODO 테스트용 코드 로그인 구현되면 제거 예정
 		int userId = user == null ? 1 : user.getId();
 		List<EbookDTO> bookList = ebookservice.findEbookListByUserId(userId);
+		String selectedCategory = null;
 		model.addAttribute("bookList", bookList);
+		model.addAttribute("selectedCategory", selectedCategory);
 		return "ebook/ebookList";
 	}
 
