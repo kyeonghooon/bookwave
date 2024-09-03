@@ -25,7 +25,6 @@ spring:
       - classpath:db/table.sql
       data-locations:
       - classpath:db/data.sql
-
   
   h2:
     console:

@@ -114,7 +114,8 @@ CREATE TABLE review_tb (
     book_id INT NOT NULL,
     score INT NOT NULL,
     content VARCHAR(255),
-    created_at TIMESTAMP DEFAULT NOW()
+    created_at TIMESTAMP DEFAULT NOW(),
+    edited_at TIMESTAMP
 );
 
 CREATE TABLE notice_tb (
