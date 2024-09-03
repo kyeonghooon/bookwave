@@ -39,6 +39,7 @@ public class GlobalControllerAdvice {
 	// 단, @ControllerAdvice 사용하고 있다면 @ResponseBody 를 붙여서 사용하면 된다.
 	@ResponseBody
 	@ExceptionHandler(DataDeliveryException.class)
+
 	public String dataDeleveryException(DataDeliveryException e) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" <script>");

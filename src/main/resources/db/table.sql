@@ -15,6 +15,7 @@ CREATE TABLE user_tb (
 CREATE TABLE user_detail_tb (
 	user_id INT PRIMARY KEY,
 	email VARCHAR(100) NOT NULL UNIQUE,
+    birth_date DATE NOT NULL,
     gender TINYINT NOT NULL COMMENT '0:남성 1:여성',
     phone VARCHAR(13) NOT NULL UNIQUE,
     zip VARCHAR(10) DEFAULT NULL,

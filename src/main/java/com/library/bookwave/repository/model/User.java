@@ -13,6 +13,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 @ToString
+
 public class User {
 	private Integer id;
 	private String loginId;
@@ -20,7 +21,7 @@ public class User {
 	private String password;
 	private String name;
 	private String role;
-	private Integer subscribe;
+	private Boolean subscribe;
 	private Integer wave;
 	private Integer mileage;
 	private Integer status;

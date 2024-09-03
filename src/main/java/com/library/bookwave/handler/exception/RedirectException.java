@@ -15,4 +15,5 @@ public class RedirectException extends RuntimeException {
 		super(message);
 		this.status = status;
 	}
+
 }
