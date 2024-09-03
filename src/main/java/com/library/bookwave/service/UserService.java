@@ -3,14 +3,16 @@ package com.library.bookwave.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.library.bookwave.dto.SignInDTO;
 import com.library.bookwave.dto.SignUpDTO;
 import com.library.bookwave.handler.exception.DataDeliveryException;
 import com.library.bookwave.handler.exception.RedirectException;
 import com.library.bookwave.repository.interfaces.MemberRepository;
-import com.library.bookwave.repository.interfaces.SignUpRepository;
+import com.library.bookwave.repository.interfaces.UserRepository;
 import com.library.bookwave.repository.model.User;
 import com.library.bookwave.repository.model.UserDetail;
 
@@ -21,10 +23,14 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
 	@Autowired
-	private final SignUpRepository signUpRepository;
+	private final UserRepository userRepository;
 
 	@Autowired
 	private final MemberRepository memberRepository;
+	
+	//@Autowired
+	// 비밀번호 암호화
+	//private final PasswordEncoder passwordEncoder;
 
 
 
@@ -40,7 +46,7 @@ public class UserService {
 			// dto에서 loginId 가져오기
 			String loginId = signUpDTO.getLoginId();
 			// loginId로 User 객체 조회
-			user = signUpRepository.findById(loginId);
+			user = userRepository.findById(loginId);
 			if (user == null) {
 				throw new DataDeliveryException("사용자를 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
 			}
@@ -69,7 +75,8 @@ public class UserService {
 	 */
 	private void createUser(SignUpDTO signUpDTO) {
 		try {
-			int result = signUpRepository.createUser(signUpDTO.toUser());
+		
+			int result = userRepository.createUser(signUpDTO.toUser());
 			if (result != 1) {
 				throw new DataDeliveryException("회원가입에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 			}
@@ -93,7 +100,7 @@ public class UserService {
 		try {
 			UserDetail userDetail = signUpDTO.detailUser();
 			System.err.println(userDetail);
-			int result = signUpRepository.createUserDetail(id, userDetail);
+			int result = userRepository.createUserDetail(id, userDetail);
 			if (result != 1) {
 				throw new DataDeliveryException("사용자 상세 정보 저장에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 			}
@@ -104,5 +111,31 @@ public class UserService {
 			throw new RedirectException("알 수 없는 오류가 발생했습니다.", HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
+	
+	
+	// 로그인
+	public User readUser(SignInDTO dto) {
+	
+		
+		User userEntity = null;
+		
+		try {
+			
+			//int result = userRepository.findAllByUser(dto.getLoginId());
+		userEntity = userRepository.findByUserId(dto.getLoginId());
+		userEntity = userRepository.findByUserPwd(dto.getPassword());
+		} catch (DataDeliveryException e) {
+			throw new DataDeliveryException("잘못된 처리 입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (Exception e) {
+			throw new RedirectException("알 수 없는 오류", HttpStatus.SERVICE_UNAVAILABLE);
+		}
+		if(userEntity == null) {
+			throw new DataDeliveryException("존재하지 않습니다.", HttpStatus.BAD_REQUEST);
+		}
+	
+		
+		return userEntity;
+	}
+	
 
 }// end of main

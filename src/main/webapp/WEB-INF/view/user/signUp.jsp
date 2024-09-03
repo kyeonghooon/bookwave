@@ -24,10 +24,12 @@
 				<button type="button" class="check-id" id="check-id">중복체크</button>
 				<p class="result-uid"></p>
 			</div>
+			
 			<div class="form-group">
 				<label for="password">비밀번호</label> <input type="password"
 					class="form-control" placeholder="비밀번호 입력" id="password"
 					name="password" required />
+					<p class="result-upw"></p>
 
 			</div>
 
@@ -35,7 +37,7 @@
 				<label for="pwcheck">비밀번호 확인</label> <input type="password"
 					class="form-control" placeholder="비밀번호 재입력" id="pwcheck"
 					name="pwcheck"  required />
-				<p class="result-upw"></p>
+				<p class="result-pw"></p>
 			</div>
 
 			<div class="form-group">

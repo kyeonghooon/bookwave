@@ -9,7 +9,7 @@ import com.library.bookwave.repository.model.User;
 import com.library.bookwave.repository.model.UserDetail;
 
 @Mapper
-public interface SignUpRepository {
+public interface UserRepository {
 	
 	// user 생성
 	public int createUser(User user);
@@ -18,10 +18,14 @@ public interface SignUpRepository {
 	// 
 	public List<UserDetail> findAll();
 	
-//	TODO 삭제 예정 (로그인 (아이디, 비밀번호))
-//	public int findAllByUser(User user);
+//	 (로그인 (아이디, 비밀번호))
+	public int findAllByUser(User user);
 
 	// 회원가입
 	public int createUserDetail(@Param("id") Integer id, @Param("userDetail") UserDetail userDetail);
+	
+	// 로그인 아이디
+	public User findByUserId(@Param("login") String loginId);
+	public User findByUserPwd(@Param("password") String password);
 
 }

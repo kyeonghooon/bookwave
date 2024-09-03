@@ -31,8 +31,8 @@
                 <!-- // 로그인 -->
 
                 <div class="btn_wrap justify">
-                    <button class="btn_lg btn_light_gray" id="loginBtn" disabled>
-                        <span class="text">로그인</span>
+                    <button class="btn_lg btn_light_gray" type="submit" id="loginBtn" >
+                       로그인
                     </button>
                 </div>
 

@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.library.bookwave.dto.SignInDTO;
 import com.library.bookwave.dto.SignUpDTO;
 import com.library.bookwave.handler.exception.DataDeliveryException;
+import com.library.bookwave.repository.model.User;
 import com.library.bookwave.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -81,5 +83,27 @@ public class UserController {
 	}
 
 	// 로그인 요청 처리
+	// 주소 설계: http://localhost:8080/user/sign-in
+	@PostMapping("/sign-in")
+	public String signInProc(SignInDTO dto) {
+		System.out.println("DTO:" + dto);
+		
+		if(dto.getLoginId() == null || dto.getLoginId().isEmpty()) {
+			throw new DataDeliveryException("아이디를 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
+		if(dto.getPassword() == null || dto.getPassword().isEmpty()) {
+			throw new DataDeliveryException("비밀번호를 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
+		
+		User principal = userService.readUser(dto);
+		
+		// 세션 메모리에 등록 처리
+		session.setAttribute("paincipal", principal);
+		
+		userService.readUser(dto);
+		
+		// TODO 수정
+		return "redirect:/user/sign-up";
+	}
 
 }//

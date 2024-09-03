@@ -62,6 +62,38 @@ body {
 
 	
 }
+/* 비밀번호 필드 컨테이너 */
+.password-container {
+    position: relative;
+}
+div.main{
+    position: relative;
+    padding: 20px;
+}
+div.main input{
+    width: 300px;
+    height: 30px;
+    background-color: black;
+    border: 0;
+    color: white;
+    text-indent: 10px;
+}
+div.main i{
+    position: absolute;
+    left: 75%;
+    top: 27px;
+    color: orange;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+}
+
 
 
 .form-group input,
