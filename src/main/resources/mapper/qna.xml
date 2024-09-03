@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.bookwave.repository.interfaces.SupportRepository">
+
+	<select id="readAllQna" resultType="com.library.bookwave.dto.QnaDTO">
+		select q.id qid, qu.name qname, q.user_id quserId, q.title qtitle, q.content qcontent, q.created_at qtime, au.name aname, a.content acontent,
+		a.created_at atime from question_tb q
+		left join answer_tb a
+		on q.id = a.question_id
+		left join user_tb qu
+		on q.user_id = qu.id
+		left join user_tb au
+		on a.user_id = au.id
+		order by q.id desc
+		limit ${limit} offset ${offset}
+	</select>
+
+	<select id="readQnaById" resultType="com.library.bookwave.dto.QnaDTO">
+		select q.id qid, qu.name qname, q.user_id quserId, q.title qtitle, q.content qcontent, q.created_at qtime, au.name aname, a.content acontent,
+		a.created_at atime from question_tb q
+		left join answer_tb a
+		on q.id = a.question_id
+		left join user_tb qu
+		on q.user_id = qu.id
+		left join user_tb au
+		on a.user_id = au.id
+		where q.id = #{id}
+		order by q.id desc
+	</select>
+
+	<select id="findQnaByKeyword" resultType="com.library.bookwave.dto.QnaDTO">
+		select q.id qid, qu.name qname, q.user_id quserId, q.title qtitle, q.content qcontent, q.created_at qtime, au.name aname, a.content acontent,
+		a.created_at atime from question_tb q
+		left join answer_tb a
+		on q.id = a.question_id
+		left join user_tb qu
+		on q.user_id = qu.id
+		left join user_tb au
+		on a.user_id = au.id
+		where q.id like concat('%', #{keyword}, '%') or q.user_id like concat('%', #{keyword}, '%') or qu.name like concat('%', #{keyword}, '%') or
+		q.title like concat('%', #{keyword}, '%') or q.content like concat('%', #{keyword}, '%') or au.name like concat('%', #{keyword}, '%')
+		order by q.id desc
+		limit ${limit} offset ${offset}
+	</select>
+
+	<select id="countAllQna" resultType="int">
+		select count(*) from question_tb q
+		left join answer_tb a
+		on q.id = a.question_id
+		left join user_tb qu
+		on q.user_id = qu.id
+		left join user_tb au
+		on a.user_id = au.id
+	</select>
+
+	<select id="countQnaByKeyword" resultType="int">
+		select count(*) from question_tb q
+		left join answer_tb a
+		on q.id = a.question_id
+		left join user_tb qu
+		on q.user_id = qu.id
+		left join user_tb au
+		on a.user_id = au.id
+		where q.id like concat('%', #{keyword}, '%') or q.user_id like concat('%', #{keyword}, '%') or qu.name like concat('%', #{keyword}, '%') or
+		q.title like concat('%', #{keyword}, '%') or q.content like concat('%', #{keyword}, '%') or au.name like concat('%', #{keyword}, '%')
+	</select>
+
+	<insert id="createAnswerByQid">
+		insert into answer_tb(question_id, user_id, content)
+		values (#{questionId}, #{userId}, #{content})
+	</insert>
+
+	<update id="updateQnaById">
+		update answer_tb set user_id = #{userId}, content = #{content}, created_at = now() where question_id = #{questionId}
+	</update>
+</mapper>

@@ -8,10 +8,9 @@ import lombok.Getter;
 public class DataDeliveryException extends RuntimeException {
 
 	private HttpStatus status;
-	
+
 	public DataDeliveryException(String message, HttpStatus status) {
 		super(message);
 		this.status = status;
 	}
-	
 }

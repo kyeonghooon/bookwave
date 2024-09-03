@@ -14,21 +14,16 @@ import lombok.ToString;
 @Builder
 @ToString
 
-// user_tb
 public class User {
-
-	private Integer id; //
+	private Integer id;
 	private String loginId;
 	private String socialId;
 	private String password;
 	private String name;
-	private String role; 
-	private boolean subscribe;
-	private int wave;
-	private int mileage;
-	private int status; 
+	private String role;
+	private Boolean subscribe;
+	private Integer wave;
+	private Integer mileage;
+	private Integer status;
 	private Timestamp createdAt;
-	
-	
-	
 }
