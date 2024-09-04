@@ -16,6 +16,6 @@ public class EbookDTO extends ValueFormatter {
 	private Integer id;
 	private String title; // 책 제목
 	private String cover; // 책 표지 URL
-	private Timestamp lastReadDate;
+	private Timestamp lastReadDate; // 마지막 읽은 날짜
 	
 }

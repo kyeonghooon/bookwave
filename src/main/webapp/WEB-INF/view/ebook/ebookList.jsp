@@ -1,9 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp"%>
 <link rel="stylesheet" type="text/css" href="/css/ebook_list.css">
-<div class="d-flex flex-row">
+<div class="d-flex">
 	<div class="sidebar">
-		<a href="/ebook" class="${empty selectedCategory ? 'active' : ''}">전체</a>
+		<a href="/ebook" class="${selectedCategory == -1 ? 'active' : ''}">전체</a>
+		<c:forEach var="category" items="${categoryList}">
+			<a href="/ebook?category=${category.id}" class="${category.id == selectedCategory ? 'active' : ''}">${category.name}</a>
+		</c:forEach>
+		<!-- 카테고리 추가 버튼 -->
+		<div class="category--add">
+			<button id="add--category--btn" class="btn btn-sm btn-primary">+</button>
+		</div>
+
+		<!-- 카테고리 추가 폼 (초기에는 숨김 처리) -->
+		<div id="category--form" class="category--form" style="display: none;">
+			<input type="text" id="category--name" class="form-control" placeholder="카테고리 이름" maxlength="10">
+			<button id="create--category--btn" class="btn btn-sm btn-success mt-2">생성</button>
+			<div id="message" class="text-danger mt-2"></div>
+		</div>
 	</div>
 	<div class="book--list">
 		<c:forEach var="book" items="${bookList}">
@@ -12,8 +26,7 @@
 					<span>X</span>
 				</div>
 				<div class="book--actions">
-					<a href="ebook/view/${book.id}">읽기</a>
-					<a href="#">상세보기</a>
+					<a href="ebook/view/${book.id}">읽기</a> <a href="#">상세보기</a>
 				</div>
 				<img src="${book.cover}" alt="책 표지">
 				<div class="book--details">
@@ -42,4 +55,5 @@ function confirmRemove(bookId) {
     }
 }
 </script>
+<script src="/js/ebook_list.js"></script>
 <%@ include file="../layout/footer.jsp"%>

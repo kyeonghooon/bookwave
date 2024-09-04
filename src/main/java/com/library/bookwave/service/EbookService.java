@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.library.bookwave.dto.EbookDTO;
 import com.library.bookwave.repository.interfaces.EbookRepository;
 import com.library.bookwave.repository.model.UserEbook;
+import com.library.bookwave.repository.model.UserEbookCategory;
 
 import lombok.RequiredArgsConstructor;
 
@@ -63,10 +64,10 @@ public class EbookService {
 	/**
 	 *  해당 유저의 ebook 목록 받아오기
 	 */
-	public List<EbookDTO> findEbookListByUserId(int userId){
+	public List<EbookDTO> findEbookListByUserIdAndCategory(int userId, int category){
 		List<EbookDTO> bookList = null;
 		try {
-			bookList = ebookRepository.findEbookListByUserId(userId);
+			bookList = ebookRepository.findEbookListByUserIdAndCategory(userId, category);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -74,6 +75,69 @@ public class EbookService {
 			// TODO : 처리 필요
 		}
 		return bookList;
+	}
+	
+	/**
+	 *  해당 유저의 ebook 카테고리 목록 받아오기
+	 */
+	public List<UserEbookCategory> findEbookCategoryListByUserId(int userId){
+		List<UserEbookCategory> categoryList = null;
+		try {
+			categoryList = ebookRepository.findEbookCategoryListByUserId(userId);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		if (categoryList.isEmpty()) {
+			// TODO : 처리 필요
+		}
+		return categoryList;
+	}
+	
+	/**
+	 *  최대 카테고리 수 조회 (없으면 3)
+	 */
+	public int findEbookCategoryLimitByUserId(int userId) {
+		int result = 0;
+		try {
+			result = ebookRepository.findEbookCategoryLimitByUserId(userId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		if (result == 0) {
+			// TODO : 처리 필요
+		}
+		return result;
+	}
+	
+	/**
+	 * 현재 카테고리 수 조회
+	 */
+	public int countEbookCategoryByUserId(int userId) {
+		int result = 0;
+		try {
+			result = ebookRepository.countEbookCategoryByUserId(userId);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		if (result == 0) {
+			// TODO : 처리 필요
+		}
+		return result;
+	}
+	
+	@Transactional
+	public boolean createUserEbookCategroy(int userId, String category) {
+		int result = 0;
+		try {
+			result = ebookRepository.createUserEbookCategroy(userId, category);
+		} catch (Exception e) {
+			return false;
+		}
+		if (result == 0) {
+			return false;
+		}
+		return true;
 	}
 	
 	/**

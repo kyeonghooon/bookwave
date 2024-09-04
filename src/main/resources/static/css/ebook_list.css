@@ -8,6 +8,7 @@
 	padding: 20px;
 	width: 100%;
 	justify-content: center;
+	overflow: auto;
 }
 
 .book--item {
@@ -121,6 +122,11 @@
 	border-right: 1px solid #ddd;
 	box-sizing: border-box;
 	flex-shrink: 0;
+	overflow-y: auto;
+	height: 100vh;
+	position: sticky;
+	top: 0;
+	background-color: #f8f9fa;
 }
 
 .sidebar a {

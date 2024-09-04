@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.library.bookwave.dto.EbookDTO;
 import com.library.bookwave.repository.model.UserEbook;
+import com.library.bookwave.repository.model.UserEbookCategory;
 
 @Mapper
 public interface EbookRepository {
@@ -20,8 +21,20 @@ public interface EbookRepository {
 	// user_ebook lastPoint 업데이트
 	int updateUserEbookWithLastPoint(@Param("lastPoint") Double lastPoint, @Param("userId") Integer userId, @Param("bookId") Integer bookId);
 	
-	// 해당 유저의 ebookList 조회
-	List<EbookDTO> findEbookListByUserId(Integer userId);
+	// 해당 유저의 ebookList 조회 (카테고리 필터 포함)
+	List<EbookDTO> findEbookListByUserIdAndCategory(@Param("userId") Integer userId, @Param("category") Integer category);
+	
+	// 해당 유저의 ebook_category_list 조회
+	List<UserEbookCategory> findEbookCategoryListByUserId(Integer userId);
+	
+	// 해당 유저의 user_ebook_category_limit 조회
+	Integer findEbookCategoryLimitByUserId(Integer userId);
+	
+	// 해당 유저의 현재 카테고리 수 조희
+	Integer countEbookCategoryByUserId(Integer userId);
+	
+	// ebook 카테고리 생성
+	Integer createUserEbookCategroy(@Param("userId") Integer userId, @Param("category") String category);
 	
 	// user_ebook status 업데이트
 	int updateUserEbookWithStatus(@Param("status") Integer status, @Param("userId") Integer userId, @Param("bookId") Integer bookId);

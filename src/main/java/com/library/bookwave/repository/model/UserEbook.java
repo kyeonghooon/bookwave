@@ -17,6 +17,6 @@ public class UserEbook {
 	private Integer bookId;
 	private Double lastPoint; // 마지막 읽은 위치
 	private Timestamp lastReadDate; // 마지막 읽은 날짜 + 시간
-	private Integer status; // 상태 0: 읽는 중 / -1: 종료
+	private Integer userEbookCategoryId; // 카테고리 id
 	
 }
