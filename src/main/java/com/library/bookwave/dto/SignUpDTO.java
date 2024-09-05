@@ -25,6 +25,8 @@ public class SignUpDTO {
 	private String password;
 	private String name;
 	
+	private String socialId; // 소셜 ID
+	
 	private String email; // 이메일
 	private String email1; 
 	private String email2; 
@@ -52,6 +54,7 @@ public class SignUpDTO {
 				   .loginId(this.loginId)
 				   .password(this.password)
 				   .name(this.name)
+				   .socialId(this.socialId)
 				   .build();
 	}
 	
@@ -67,6 +70,16 @@ public class SignUpDTO {
 				  		 .build();
 				  		 
 	}
+	
+	public User kakaoUser() {
+		return User.builder()
+				.socialId(this.getLoginId())
+				.name(this.name)
+				.password(this.password)
+				.build();
+	}
+
+
 	
 
 }

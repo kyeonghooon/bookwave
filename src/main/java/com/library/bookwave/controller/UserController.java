@@ -1,42 +1,56 @@
 package com.library.bookwave.controller;
 
+import java.net.URI;
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.library.bookwave.dto.SignInDTO;
 import com.library.bookwave.dto.SignUpDTO;
+import com.library.bookwave.dto.api.GoogleOAuthToken;
+import com.library.bookwave.dto.api.GoogleProfile;
+import com.library.bookwave.dto.api.KakaoProfile;
+import com.library.bookwave.dto.api.NaverProfile;
 import com.library.bookwave.handler.exception.DataDeliveryException;
 import com.library.bookwave.repository.model.User;
 import com.library.bookwave.service.UserService;
+import com.library.bookwave.utils.LoginAPIUtil;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/user") // 수정
+@RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
 
-//	@Autowired
-//	private MembersMapper mapper;
-
-	private UserService userService;
-	private final HttpSession session; // 이거 해주는 이유 찾아 보기
-
-	// 로그인 , 회원가입 화면 요청 기능 추가
-
-	public UserController(UserService service, HttpSession session) {
-		this.userService = service;
-		this.session = session;
-	}
+	private final UserService userService;
+	private final HttpSession session;
+	private final LoginAPIUtil loginAPI;
 
 	/*
-	 * 주소설계: http://localhost:8080/user/sign-up
+	 * 회원가입 주소설계: http://localhost:8080/user/sign-up
 	 */
+
 	// 회원가입 화면 요청
 	@GetMapping("/sign-up")
-	public String signUpPage() {
+	public String signUpPage(Model model) {
+		String socialId = (String) model.asMap().get("socialId");
+		model.addAttribute("socialId", socialId);
 		return "user/signUp";
 	}
 
@@ -67,14 +81,18 @@ public class UserController {
 			throw new DataDeliveryException("성별을 선택해 주세요", HttpStatus.BAD_REQUEST);
 		}
 
-//		if(dto.getPhone() == null || dto.getPhone().isEmpty()) {
-//			throw new DataDeliveryException("번호를 입력해 주세요", HttpStatus.BAD_REQUEST);
-//		}
+		if(dto.getLoginId().startsWith("kakao_")) {
+			dto.setSocialId(dto.getLoginId());
+		}
 		// 서비스 객체로 전달
 		userService.registerUser(dto);
 
 		return "redirect:/user/sign-in";
 	}
+
+	/*
+	 * 로그인 주소설계: http://localhost:8080/user/sign-in
+	 */
 
 	// 로그인 화면 요청
 	@GetMapping("/sign-in")
@@ -83,27 +101,230 @@ public class UserController {
 	}
 
 	// 로그인 요청 처리
-	// 주소 설계: http://localhost:8080/user/sign-in
 	@PostMapping("/sign-in")
 	public String signInProc(SignInDTO dto) {
 		System.out.println("DTO:" + dto);
-		
-		if(dto.getLoginId() == null || dto.getLoginId().isEmpty()) {
+
+		if (dto.getLoginId() == null || dto.getLoginId().isEmpty()) {
 			throw new DataDeliveryException("아이디를 입력해주세요.", HttpStatus.BAD_REQUEST);
 		}
-		if(dto.getPassword() == null || dto.getPassword().isEmpty()) {
+		if (dto.getPassword() == null || dto.getPassword().isEmpty()) {
 			throw new DataDeliveryException("비밀번호를 입력해주세요.", HttpStatus.BAD_REQUEST);
 		}
-		
+
 		User principal = userService.readUser(dto);
-		
+
 		// 세션 메모리에 등록 처리
-		session.setAttribute("paincipal", principal);
-		
-		userService.readUser(dto);
-		
+		session.setAttribute("principal", principal);
+
 		// TODO 수정
-		return "redirect:/user/sign-up";
+		return "redirect:/user/sign-in";
+	}
+
+	/*
+	 * 소셜 로그인
+	 * 
+	 */
+
+	// 구글
+	@GetMapping("/google")
+	public String google(@RequestParam(name = "code") String code) {
+		System.out.println("code : " + code);
+		System.out.println("구글 들어오세요");
+
+		// Header, body 구성
+		RestTemplate rt1 = new RestTemplate();
+		// Header
+		HttpHeaders header1 = new HttpHeaders();
+		header1.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		// body
+		MultiValueMap<String, String> params1 = new LinkedMultiValueMap<>();
+		params1.add("code", code);
+		params1.add("client_id", loginAPI.getGoogleClientId());
+		params1.add("client_secret", loginAPI.getGoogleClientSecret());
+		params1.add("redirect_uri", "http://localhost:8080/user/google");
+		params1.add("grant_type", "authorization_code");
+
+		// Header + body 결합
+		HttpEntity<MultiValueMap<String, String>> reqGoogleMessage = new HttpEntity<>(params1, header1);
+
+		// 통신 요청
+		ResponseEntity<GoogleOAuthToken> reponse1 = rt1.exchange("https://oauth2.googleapis.com/token", HttpMethod.POST,
+				reqGoogleMessage, GoogleOAuthToken.class);
+
+		System.out.println("GoogleAuthToken : " + reponse1.getBody().toString());
+
+		// 리소스서버 사용자 정보 가져오기
+		RestTemplate rt2 = new RestTemplate();
+		System.out.println("제발 들어와와" + rt2);
+		HttpHeaders headers2 = new HttpHeaders();
+		// Bearer 공백 확인!
+		headers2.add("Authorization", "Bearer " + reponse1.getBody().getAccessToken());
+		headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+		// HTTP Entity
+		HttpEntity<MultiValueMap<String, String>> reqGoogleInfoMessage = new HttpEntity<>(headers2);
+
+		// 통신 요청
+		ResponseEntity<GoogleProfile> resposne2 = rt2.exchange("https://www.googleapis.com/userinfo/v2/me",
+				HttpMethod.GET, reqGoogleInfoMessage, GoogleProfile.class);
+		System.out.println("googleProfile : " + resposne2.getBody().toString());
+
+		GoogleProfile googleProfile = resposne2.getBody();
+
+		return "redirect:/user/sign-in"; // TODO 수정 (임시)
+
+	}
+
+	@GetMapping("/social")
+	public String socialLogin(@RequestParam(name = "type") String type) {
+		switch (type) {
+		case "naver":
+			break;
+		case "kakao":
+			System.out.println("11카카오 왔삼");
+			URI uri = UriComponentsBuilder.fromUriString("https://kauth.kakao.com/oauth/authorize")
+					.query("client_id=" + loginAPI.getKakaoRestApt())
+					.query("redirect_uri=" + "http://localhost:8080/user/kakao").query("response_type=" + "code")
+					.build().toUri();
+			RestTemplate rt0 = new RestTemplate();
+			System.out.println("uri : " + uri);
+			return "redirect:" + uri;
+		case "google":
+//			System.out.println("22구글 왔삼");
+//			URI uri2 = UriComponentsBuilder.fromUriString("https://www.googleapis.com/auth/cloud-platform")
+//					.query("client_id=" + loginAPI.getGoogleClientId())
+//					.query("client_secret=" + loginAPI.getGoogleClientSecret())
+//					.query("redirect_uri=" + "http://localhost:8080/user/google")
+//					.query("grant_type=" + "authorization_code")
+//					.build().toUri();
+//			RestTemplate rt00 = new RestTemplate();
+//			System.out.println("uri : " + uri2);
+//			return "redirect:" + uri2;
+
+		default:
+			break;
+		}
+		return null;
+	}
+
+	// 카카오
+	@GetMapping("/kakao")
+	public String kakao(@RequestParam(name = "code") String code, RedirectAttributes redirectAttributes) {
+		System.out.println("카카오 들어오세요");
+
+		// Header, body 구성
+		RestTemplate rt1 = new RestTemplate();
+		// Header
+		HttpHeaders header1 = new HttpHeaders();
+		header1.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		// body
+		MultiValueMap<String, String> params1 = new LinkedMultiValueMap<>();
+		params1.add("code", code);
+		params1.add("client_id", loginAPI.getKakaoRestApt());
+		params1.add("redirect_uri", "http://localhost:8080/user/kakao");
+		params1.add("grant_type", "authorization_code");
+
+		// Header + body 결합
+		HttpEntity<MultiValueMap<String, String>> reqKakaoMessage = new HttpEntity<>(params1, header1);
+
+		// 통신 요청
+		ResponseEntity<GoogleOAuthToken> reponse1 = rt1.exchange("https://kauth.kakao.com/oauth/token", HttpMethod.POST,
+				reqKakaoMessage, GoogleOAuthToken.class);
+
+		System.out.println("KakaoAuthToken : " + reponse1.getBody().toString());
+
+		// 리소스서버 사용자 정보 가져오기
+		RestTemplate rt2 = new RestTemplate();
+
+		HttpHeaders headers2 = new HttpHeaders();
+		// Bearer 공백 확인!
+		headers2.add("Authorization", "Bearer " + reponse1.getBody().getAccessToken());
+		headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+		// HTTP Entity
+		HttpEntity<MultiValueMap<String, String>> reqKakaoInfoMessage = new HttpEntity<>(headers2);
+
+		// 통신 요청
+		ResponseEntity<KakaoProfile> resposne2 = rt2.exchange("https://kapi.kakao.com/v2/user/me", HttpMethod.POST,
+				reqKakaoInfoMessage, KakaoProfile.class);
+		System.out.println("KakaoProfile : " + resposne2.getBody().toString());
+
+		KakaoProfile kakaoProfile = resposne2.getBody();
+		String socialId = "kakao_" + kakaoProfile.getId();
+		System.out.println(socialId);
+		// TODO
+		// 1. 최초 로그인 확인
+		User principal = userService.searchLoginId(socialId);
+		System.out.println("최초 로그인 했니 안 했니");
+		if (principal == null) {
+			redirectAttributes.addFlashAttribute("socialId", socialId);
+			return "redirect:/user/sign-up";
+		} else {
+			return "redirect:/"; // TODO 수정 (임시)
+		}
+	
+	}
+
+	// 네이버
+	@GetMapping("/naver")
+	public String naver(@RequestParam(name = "code") String code, @RequestParam(name = "state") String state, RedirectAttributes redirectAttributes) {
+		System.out.println("네이버 들어오세요");
+		System.out.println("code : " + code);
+		System.out.println("state : " + state);
+
+		// Header, body 구성
+		RestTemplate rt1 = new RestTemplate();
+		// Header
+		HttpHeaders header1 = new HttpHeaders();
+		header1.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		// body
+		MultiValueMap<String, String> params1 = new LinkedMultiValueMap<>();
+		params1.add("code", code);
+		params1.add("state", state);
+		params1.add("client_id", loginAPI.getNaverClientId());
+		params1.add("client_secret", loginAPI.getNaverClientSecret());
+		params1.add("grant_type", "authorization_code");
+
+		// Header + body 결합
+		HttpEntity<MultiValueMap<String, String>> reqNaverMessage = new HttpEntity<>(params1, header1);
+
+		// 통신 요청
+		ResponseEntity<GoogleOAuthToken> reponse1 = rt1.exchange("https://nid.naver.com/oauth2.0/token",
+				HttpMethod.POST, reqNaverMessage, GoogleOAuthToken.class);
+
+		System.out.println("NaverAuthToken : " + reponse1.getBody().toString());
+
+		// 리소스서버 사용자 정보 가져오기
+		RestTemplate rt2 = new RestTemplate();
+
+		HttpHeaders headers2 = new HttpHeaders();
+		// Bearer 공백 확인!
+		headers2.add("Authorization", "Bearer " + reponse1.getBody().getAccessToken());
+		headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+		// HTTP Entity
+		HttpEntity<MultiValueMap<String, String>> reqNaverInfoMessage = new HttpEntity<>(headers2);
+
+		// 통신 요청
+		ResponseEntity<NaverProfile> resposne2 = rt2.exchange("https://openapi.naver.com/v1/nid/me", HttpMethod.GET,
+				reqNaverInfoMessage, NaverProfile.class);
+		System.out.println("NaverProfile : " + resposne2.getBody().toString());
+
+		NaverProfile naverProfile = resposne2.getBody();
+
+		return "redirect:/user/sign-in"; // TODO 수정 (임시)
+		
+//		// TODO
+//		// 1. 최초 로그인 확인
+//		User principal = userService.searchLoginId(socialId);
+//		System.out.println("최초 로그인 했니 안 했니");
+//		if (principal == null) {
+//			redirectAttributes.addFlashAttribute("socialId", socialId);
+//			return "redirect:/user/sign-up";
+//		} else {
+//			return "redirect:/"; // TODO 수정 (임시)
+//		}
 	}
 
 }//

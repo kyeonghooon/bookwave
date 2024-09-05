@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8" />
 <title>회원가입</title>
 
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <link rel="stylesheet" href="/css/signUp.css" type="text/css" />
 </head>
 <body>
@@ -14,29 +16,37 @@
 
 	<div class="signup-container">
 		<h2>회원가입</h2>
-
 		<form action="/user/sign-up" method="post">
 			<div class="form-group">
+			<c:choose>
+			<c:when test="${socialId != null }">
+				<label for="loginId">아이디</label> <input style="width: 81%"
+					type="text" class="loginId" placeholder="아이디 입력" id="loginId"
+					name="loginId" maxlength="12" readonly value="${socialId}" required />
+			</c:when>
+			<c:otherwise>
 				<label for="loginId">아이디</label> <input style="width: 81%"
 					type="text" class="loginId" placeholder="아이디 입력" id="loginId"
 					name="loginId" maxlength="12" required />
-
 				<button type="button" class="check-id" id="check-id">중복체크</button>
 				<p class="result-uid"></p>
+			</c:otherwise>
+			</c:choose>
+
 			</div>
-			
+
 			<div class="form-group">
 				<label for="password">비밀번호</label> <input type="password"
 					class="form-control" placeholder="비밀번호 입력" id="password"
 					name="password" required />
-					<p class="result-upw"></p>
+				<p class="result-upw"></p>
 
 			</div>
 
 			<div class="form-group">
 				<label for="pwcheck">비밀번호 확인</label> <input type="password"
 					class="form-control" placeholder="비밀번호 재입력" id="pwcheck"
-					name="pwcheck"  required />
+					name="pwcheck" required />
 				<p class="result-pw"></p>
 			</div>
 
@@ -98,20 +108,24 @@
 
 
 			<br />
-		
+
 			<div class="form-group">
-			<label for="zip">주소:</label>
-			
-					<input type="text" id="zip" style="width: 79%;" placeholder="우편번호" name="zip" readonly="readonly">
-					 <button type="button" class="btn btn-default" style="width: 19%" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>  
-			<br>
-				
+				<label for="zip">주소:</label> <input type="text" id="zip"
+					style="width: 79%;" placeholder="우편번호" name="zip"
+					readonly="readonly">
+				<button type="button" class="btn btn-default" style="width: 19%"
+					onclick="execPostCode();">
+					<i class="fa fa-search"></i> 우편번호 찾기
+				</button>
+				<br>
+
 			</div>
 			<div class="form-group">
-					<input class="form-control" style="top: 5px;" placeholder="도로명 주소" name="addr1" id="addr1" type="text" readonly="readonly" />
+				<input class="form-control" style="top: 5px;" placeholder="도로명 주소"
+					name="addr1" id="addr1" type="text" readonly="readonly" />
 			</div>
 			<div class="form-group">
-					<input type="text" id="addr2" placeholder="상세주소" name="addr2" >
+				<input type="text" id="addr2" placeholder="상세주소" name="addr2">
 			</div>
 
 			<br />

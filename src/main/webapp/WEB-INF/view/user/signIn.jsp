@@ -1,27 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
+<%@ include file="../layout/header.jsp"%>
     <meta charset="UTF-8">
     <title>로그인</title>
     <link rel="stylesheet" href="/css/signIn.css" type="text/css" />
-</head>
-<body>
+
+
     <main class="container_wrapper">
         <section class="contents_wrap login">
             <div class="login_form_wrap">
+				<form action="/user/sign-in" method = "post">
 
                 <!-- 로그인 -->
                 <div class="form_col_group valid_check">
                     <div class="col_box id">
-                        <input type="email" title="아이디 입력" class="form_ip" placeholder="아이디를 입력해 주세요." autocomplete="off">
+                        <input type="text" title="아이디 입력" class="form_ip" id="loginId" name="loginId" placeholder="아이디를 입력해 주세요." >
                         <!-- 아이디 상태값 -->
                         <span class="form_desc tip"></span>
                     </div>
                     <div class="col_box pw">
                         <div class="form_ip_pw">
-                            <input type="password" class="form_ip" placeholder="비밀번호를 입력해 주세요." title="비밀번호 입력">
+                            <input type="password" class="form_ip" id="password" name="password" placeholder="비밀번호를 입력해 주세요." title="비밀번호 입력">
                          
                         </div>
                     </div>
@@ -35,6 +34,7 @@
                        로그인
                     </button>
                 </div>
+                </form>
 
                 <!-- 아이디 저장 -->
                 <div class="save_id_box">
@@ -54,22 +54,30 @@
                 <div class="sns_login_box">
                     <ul class="sns_login_list">
                         <li class="sns_login">
-                            <button class="btn_sns_login naver">
-                                <span class="hidden">네이버로그인</span>
-                            </button>
+                                <div class="btn_sns_login naver" >
+                            <a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=fmaqeaXL29mt1hpPcVjt&state=test&redirect_uri=http://localhost:8080/user/sign-in">
+                            네이버 로그인
+                            </a>
+                        </div>
                         </li>
                         <li class="sns_login">
-                            <button class="btn_sns_login kakao">
-                                <span class="hidden">카카오로그인</span>
-                            </button>
+                               <div class="btn_sns_login kakao" >
+                            <a href="/user/social?type=kakao">
+                            카카오 로그인
+                            </a>
+                        </div>
                         </li>
                         <li class="sns_login">
-                            <button class="btn_sns_login google">
-                                <span class="hidden">구글 로그인</span>
-                            </button>
+                        <div class="btn_sns_login google" >
+                            <a href="https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=202693057051-amq7bn7fcoblosijrvt32o1nnq1bt879.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fuser%2Fgoogle&response_type=code&scope=email%20profile&service=lso&o2v=2&ddm=1&flowName=GeneralOAuthFlow">
+                            구글 로그인
+                            </a>
+                        </div>
                         </li>
                     </ul>
                 </div>
+                
+    
                 <!-- // SNS 로그인 -->
 
                 <!-- 회원가입 -->
@@ -83,5 +91,4 @@
             </div>
         </section>
     </main>
-</body>
-</html>
+<%@ include file="../layout/footer.jsp"%>

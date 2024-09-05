@@ -3,12 +3,12 @@ package com.library.bookwave.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.library.bookwave.dto.SignInDTO;
 import com.library.bookwave.dto.SignUpDTO;
+import com.library.bookwave.dto.api.GoogleProfile;
 import com.library.bookwave.handler.exception.DataDeliveryException;
 import com.library.bookwave.handler.exception.RedirectException;
 import com.library.bookwave.repository.interfaces.MemberRepository;
@@ -27,14 +27,12 @@ public class UserService {
 
 	@Autowired
 	private final MemberRepository memberRepository;
-	
-	//@Autowired
-	// 비밀번호 암호화
-	//private final PasswordEncoder passwordEncoder;
 
-
-
-// 회원 가입 처리	
+	/**
+	 * 회원가입 처리
+	 * 
+	 * @param signUpDTO
+	 */
 // 통합 메서드
 	@Transactional
 	public void registerUser(SignUpDTO signUpDTO) {
@@ -58,24 +56,14 @@ public class UserService {
 			throw new RedirectException("알 수 없는 오류가 발생했습니다.", HttpStatus.SERVICE_UNAVAILABLE);
 		}
 
-		//  user_detail_tb에 사용자 상세 정보 저장
+		// user_detail_tb에 사용자 상세 정보 저장
 		createUserDetail(user.getId(), signUpDTO);
 	}
 
-	// TODO ID 중복확인
-	public User readUserId(String loginId) {
-
-		return memberRepository.readUserId(loginId);
-	}
-
-	/**
-	 * user_tb에 사용자 정보 삽입 메서드
-	 *
-	 * @param signUpDTO 사용자 정보가 담긴 DTO
-	 */
+	// user_tb에 사용자 정보 삽입 메서드
 	private void createUser(SignUpDTO signUpDTO) {
 		try {
-		
+
 			int result = userRepository.createUser(signUpDTO.toUser());
 			if (result != 1) {
 				throw new DataDeliveryException("회원가입에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -90,12 +78,7 @@ public class UserService {
 		}
 	}
 
-	/**
-	 * user_detail_tb에 사용자 상세 정보 삽입 메서드
-	 *
-	 * @param userId    사용자 ID
-	 * @param signUpDTO 사용자 상세 정보가 담긴 DTO
-	 */
+	// user_detail_tb에 사용자 상세 정보 삽입 메서드
 	private void createUserDetail(Integer id, SignUpDTO signUpDTO) {
 		try {
 			UserDetail userDetail = signUpDTO.detailUser();
@@ -111,30 +94,72 @@ public class UserService {
 			throw new RedirectException("알 수 없는 오류가 발생했습니다.", HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
-	
-	// 로그인
+
+	/**
+	 * 로그인 처리
+	 * 
+	 * @param dto
+	 * @return
+	 */
 	public User readUser(SignInDTO dto) {
-	
-		
+
 		User userEntity = null;
-		
+
 		try {
-			
-			//int result = userRepository.findAllByUser(dto.getLoginId());
-		userEntity = userRepository.findByUserId(dto.getLoginId());
-		userEntity = userRepository.findByUserPwd(dto.getPassword());
+
+			userEntity = userRepository.findByUserIdAndPassword(dto.getLoginId(), dto.getPassword());
+
 		} catch (DataDeliveryException e) {
+			e.printStackTrace();
 			throw new DataDeliveryException("잘못된 처리 입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new RedirectException("알 수 없는 오류", HttpStatus.SERVICE_UNAVAILABLE);
 		}
-		if(userEntity == null) {
-			throw new DataDeliveryException("존재하지 않습니다.", HttpStatus.BAD_REQUEST);
+		if (userEntity == null) {
+			throw new DataDeliveryException("아이디 또는 비밀번호가 잘못되었습니다.", HttpStatus.BAD_REQUEST);
 		}
-	
-		
+
 		return userEntity;
+	}
+
+	// ID 중복확인
+	public User readUserId(String loginId) {
+
+		return memberRepository.readUserId(loginId);
+	}
+	
+	
+	
+	// 
+	@Transactional
+	private void createSocialKakao(SignUpDTO dto) {
+		System.out.println("카카오로그인 왔니???");
+		
+		try {
+			int result = userRepository.createSocialKakao(dto.kakaoUser());
+			System.out.println("kakao dto : " + dto);
+			if (result != 1) {
+				throw new DataDeliveryException("회원가입에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		} catch (DataAccessException e) {
+			System.out.println("createUser");
+			e.printStackTrace();
+			throw new DataDeliveryException("오류로 회원가입에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RedirectException("알 수 없는 오류가 발생했습니다.", HttpStatus.SERVICE_UNAVAILABLE);
+		}
+	}
+
+	/**
+	 * (소셜) 카카오 socialID 확인
+	 * 
+	 * @param dto
+	 */
+
+	public User searchLoginId(String socialId) {
+		return userRepository.findBySocialKakao(socialId);
 	}
 	
 

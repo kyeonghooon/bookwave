@@ -164,6 +164,11 @@ transform : scale(1.5);
     color: #3c1e1e;
 }
 
-.btn_sns_login.google {
+.btn_sns_login.google{
     background-color: #4285f4;
+}
+
+a{
+	color: white;
+	text-decoration: none;
 }
