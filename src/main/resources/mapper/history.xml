@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.library.bookwave.repository.interfaces.MyHistoryRepository">
+
+	<select id="findAllByUserId"
+		resultType="com.library.bookwave.repository.model.MyHistory">
+		SELECT b.*, l.user_id, l.lend_date, l.returned_date
+		FROM book_tb AS b
+		LEFT JOIN lend_tb AS l
+		ON b.id = l.book_id
+		WHERE l.user_id = #{userId}
+		AND l.status = -1;
+	</select>
+
+	<insert id="createReview" parameterType="com.library.bookwave.dto.ReviewDTO">
+		INSERT INTO review_tb (user_id, book_id, score, content)
+		VALUES (#{userId}, #{bookId}, #{score}, #{content});
+	</insert>
+
+</mapper>

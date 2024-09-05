@@ -1,3 +1,9 @@
+INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
+VALUES (1, 16, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+
+INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
+VALUES (1, 17, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+
 -- 샘플 데이터 sql
 
 INSERT INTO user_tb VALUES (1, 'slowman', null, '1234', '석지웅', 'admin', 0, now());
