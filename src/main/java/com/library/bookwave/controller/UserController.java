@@ -125,10 +125,43 @@ public class UserController {
 	 * 소셜 로그인
 	 * 
 	 */
+	@GetMapping("/social")
+	public String socialLogin(@RequestParam(name = "type") String type) {
+		URI uri = null;
+		switch (type) {
+		case "naver":
+			break;
+		case "kakao":
+			System.out.println("11카카오 왔삼");
+			uri = UriComponentsBuilder.fromUriString("https://kauth.kakao.com/oauth/authorize")
+					.query("client_id=" + loginAPI.getKakaoRestApt())
+					.query("redirect_uri=" + "http://localhost:8080/user/kakao").query("response_type=" + "code")
+					.build().toUri();
+			System.out.println("uri : " + uri);
+			return "redirect:" + uri;
+		case "google":
+			
+			System.out.println("22구글 왔삼");
+			uri = UriComponentsBuilder.fromUriString("https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount")
+					.query("client_id=" + loginAPI.getGoogleClientId())
+					//.query("client_secret=" + loginAPI.getGoogleClientSecret())
+					.query("redirect_uri=http://localhost:8080/user/google")
+					.query("response_type=code")
+					.query("scope=openid")
+					//.query("grant_type=" + "authorization_code")
+					.build().toUri();
+			System.out.println("uri : " + uri);
+			return "redirect:" + uri;
+			
+		default:
+			break;
+		}
+		return null;
+	}
 
 	// 구글
 	@GetMapping("/google")
-	public String google(@RequestParam(name = "code") String code) {
+	public String google(@RequestParam(name = "code") String code, RedirectAttributes redirectAttributes) {
 		System.out.println("code : " + code);
 		System.out.println("구글 들어오세요");
 
@@ -171,42 +204,22 @@ public class UserController {
 		System.out.println("googleProfile : " + resposne2.getBody().toString());
 
 		GoogleProfile googleProfile = resposne2.getBody();
-
-		return "redirect:/user/sign-in"; // TODO 수정 (임시)
-
-	}
-
-	@GetMapping("/social")
-	public String socialLogin(@RequestParam(name = "type") String type) {
-		switch (type) {
-		case "naver":
-			break;
-		case "kakao":
-			System.out.println("11카카오 왔삼");
-			URI uri = UriComponentsBuilder.fromUriString("https://kauth.kakao.com/oauth/authorize")
-					.query("client_id=" + loginAPI.getKakaoRestApt())
-					.query("redirect_uri=" + "http://localhost:8080/user/kakao").query("response_type=" + "code")
-					.build().toUri();
-			RestTemplate rt0 = new RestTemplate();
-			System.out.println("uri : " + uri);
-			return "redirect:" + uri;
-		case "google":
-//			System.out.println("22구글 왔삼");
-//			URI uri2 = UriComponentsBuilder.fromUriString("https://www.googleapis.com/auth/cloud-platform")
-//					.query("client_id=" + loginAPI.getGoogleClientId())
-//					.query("client_secret=" + loginAPI.getGoogleClientSecret())
-//					.query("redirect_uri=" + "http://localhost:8080/user/google")
-//					.query("grant_type=" + "authorization_code")
-//					.build().toUri();
-//			RestTemplate rt00 = new RestTemplate();
-//			System.out.println("uri : " + uri2);
-//			return "redirect:" + uri2;
-
-		default:
-			break;
+		String socialId = "google_" + googleProfile.getId();
+		System.out.println(socialId);
+		// TODO
+		// 1. 최초 로그인 확인
+		User principal = userService.searchLoginId(socialId);
+		System.out.println("최초 로그인 했니 안 했니");
+		if (principal == null) {
+			redirectAttributes.addFlashAttribute("socialId", socialId);
+			return "redirect:/user/sign-up";
+		} else {
+			session.setAttribute("principal", principal);
+			return "redirect:/"; // TODO 수정 (임시)
 		}
-		return null;
+
 	}
+
 
 	// 카카오
 	@GetMapping("/kakao")
@@ -261,6 +274,7 @@ public class UserController {
 			redirectAttributes.addFlashAttribute("socialId", socialId);
 			return "redirect:/user/sign-up";
 		} else {
+			session.setAttribute("principal", principal);
 			return "redirect:/"; // TODO 수정 (임시)
 		}
 	

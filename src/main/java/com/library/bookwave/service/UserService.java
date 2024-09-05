@@ -132,26 +132,7 @@ public class UserService {
 	
 	
 	// 
-	@Transactional
-	private void createSocialKakao(SignUpDTO dto) {
-		System.out.println("카카오로그인 왔니???");
-		
-		try {
-			int result = userRepository.createSocialKakao(dto.kakaoUser());
-			System.out.println("kakao dto : " + dto);
-			if (result != 1) {
-				throw new DataDeliveryException("회원가입에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-		} catch (DataAccessException e) {
-			System.out.println("createUser");
-			e.printStackTrace();
-			throw new DataDeliveryException("오류로 회원가입에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RedirectException("알 수 없는 오류가 발생했습니다.", HttpStatus.SERVICE_UNAVAILABLE);
-		}
-	}
-
+	
 	/**
 	 * (소셜) 카카오 socialID 확인
 	 * 
@@ -159,7 +140,7 @@ public class UserService {
 	 */
 
 	public User searchLoginId(String socialId) {
-		return userRepository.findBySocialKakao(socialId);
+		return userRepository.findBySocialId(socialId);
 	}
 	
 

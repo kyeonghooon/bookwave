@@ -31,7 +31,6 @@ public interface UserRepository {
 	 * 소셜
 	 */
 	// 카카오
-	public int createSocialKakao(User user); // 생성 (테스트)
-	public User findBySocialKakao(String social_id);
+	public User findBySocialId(String social_id);
 
 }

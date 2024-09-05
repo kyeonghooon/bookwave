@@ -69,7 +69,7 @@
                         </li>
                         <li class="sns_login">
                         <div class="btn_sns_login google" >
-                            <a href="https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=202693057051-amq7bn7fcoblosijrvt32o1nnq1bt879.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fuser%2Fgoogle&response_type=code&scope=email%20profile&service=lso&o2v=2&ddm=1&flowName=GeneralOAuthFlow">
+                            <a href="/user/social?type=google">
                             구글 로그인
                             </a>
                         </div>
