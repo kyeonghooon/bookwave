@@ -4,25 +4,34 @@
 <mapper
 	namespace="com.library.bookwave.repository.interfaces.BookRepository">
 
-	<!-- 전체 책을 조회하는 쿼리 -->
-	<select id="readAllBook"
-		resultType="com.library.bookwave.repository.model.Book">
-		SELECT * FROM book_tb
+	<!-- 필터링 걸린 도서 목록 조회  -->
+	<select id="readAllBook" resultType="com.library.bookwave.dto.BookListDTO">
+		SELECT b.*,
+		CASE
+		WHEN l.user_id IS NOT NULL THEN TRUE
+		ELSE FALSE END AS is_liked, 
+		CASE WHEN f.user_id IS NOT NULL THEN TRUE
+		ELSE
+		FALSE END AS is_favorited
+		FROM book_tb b
+		LEFT JOIN likes_tb l on
+		b.id = l.book_id AND l.user_id = #{userId}
+		LEFT JOIN favorites_tb f on b.id =
+		f.book_id AND f.user_id = #{userId}
+		WHERE category LIKE CONCAT('%',#{category}, '%')
+		AND
+		title LIKE CONCAT('%', #{search}, '%')
+		LIMIT #{limit} OFFSET #{offset}
 	</select>
-
-	<!-- 필터링 걸린 책을 조회하는 쿼리 -->
-	<select id="readBook"
-		resultType="com.library.bookwave.repository.model.Book">
-		SELECT * FROM book_tb
-		WHERE category LIKE CONCAT('%',
-		#{category}, '%')
-		AND title LIKE CONCAT('%', #{search}, '%')
-		LIMIT
-		#{limit} OFFSET #{offset}
+	
+	<!-- 카테고리를 조회하는 쿼리 -->
+	<select id="readAllBookCategory"
+		resultType="String">
+		select distinct category from book_tb
 	</select>
 
 	<!-- 필터링 걸린 책 갯수를 구하는쿼리 -->
-	<select id="countByBook" resultType="int">
+	<select id="countAllBook" resultType="int">
 		SELECT count(*) FROM book_tb
 		WHERE category LIKE CONCAT('%', #{category}, '%')
 		AND title LIKE
@@ -30,9 +39,110 @@
 	</select>
 
 	<!-- ID로 책을 조회하는 쿼리 -->
-	<select id="readId"
+	<select id="readBook"
 		resultType="com.library.bookwave.repository.model.Book">
-		SELECT * FROM book_tb WHERE id = #{id}
+		SELECT * FROM book_tb WHERE id = #{bookId}
+	</select>
+	
+	<!-- 책 좋아요 레코드 추가 -->
+	<insert id="createLike">
+		INSERT INTO likes_tb (user_id, book_id) VALUES
+		(#{userId}, #{bookId})
+	</insert>
+
+	<!-- 책 좋아요 수 증가 -->
+	<update id="updateBookLikeUp">
+		UPDATE book_tb SET likes = likes + 1 WHERE id = #{bookId}
+	</update>
+
+	<!-- 책 좋아요 여부 -->
+	<select id="readLike"
+		resultType="com.library.bookwave.repository.model.Like">
+		select * from likes_tb where user_id = #{userId} and
+		book_id = #{bookId}
+	</select>
+
+	<!-- 책 좋아요 레코드 삭제 -->
+	<delete id="deleteLike">
+		delete from likes_tb where user_id = #{userId} and
+		book_id = #{bookId}
+	</delete>
+
+	<!-- 책 좋아요 수 감소 -->
+	<update id="updateBookDown">
+		UPDATE book_tb SET likes = likes - 1 WHERE id = #{bookId}
+	</update>
+
+	<!-- 관심등록 추가 -->
+	<insert id="createFavorite">
+		INSERT INTO favorites_tb (user_id, book_id) VALUES
+		(#{userId}, #{bookId})
+	</insert>
+
+	<!-- 관심등록 제거 -->
+	<delete id="deleteFavorite">
+		delete from favorites_tb where user_id = #{userId}
+		and book_id = #{bookId}
+	</delete>
+
+	<!-- 책 관심등록 여부 -->
+	<select id="readFavorite"
+		resultType="com.library.bookwave.repository.model.Favorite">
+		select * from favorites_tb where user_id = #{userId} and
+		book_id = #{bookId}
+	</select>
+	
+	<!-- 책 예약하기 -->
+	<insert id="createReservation">
+		insert into reservation_tb (user_id, book_id ) values
+		(#{userId}, #{bookId})
+	</insert>
+
+	<!-- 예약 여부 조회 -->
+	<select id="findReservationByBookIdAndUserId"
+		resultType="com.library.bookwave.repository.model.Reservation">
+		select * from reservation_tb where book_id= #{bookId} and
+		user_id =
+		#{userId}
+	</select>
+
+	<!-- 예약 횟수 카운트조회 -->
+	<select id="countReservationByUserId" resultType="int">
+		SELECT count(*) FROM
+		reservation_tb WHERE status != -1 and user_id =
+		#{userId}
+	</select>
+	
+	<!-- 책 남은 갯수 구하는쿼리 -->
+	<select id="readBookCurrentStock"
+		resultType="int">
+		SELECT current_stock FROM book_tb WHERE id = #{bookId} FOR
+		UPDATE
+	</select>
+	
+	<!-- 책의 현재 재고를 업데이트합니다. -->
+	<update id="updateBookCurrentStock">
+		UPDATE book_tb
+		SET current_stock = current_stock - 1
+		WHERE id
+		= #{bookId} AND current_stock > 0
+	</update>
+
+	<!-- 대여 기록을 생성합니다. -->
+	<insert id="createLend">
+		INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date)
+    VALUES (#{userId}, #{bookId}, 0, NOW(), DATEADD('DAY', 7, NOW()))
+	</insert>
+	
+	<!-- 도서 대여 여부 조회 -->
+	<select id="readLend" resultType="com.library.bookwave.repository.model.Lend">
+		select * from lend_tb where book_Id = #{bookId} and user_Id = #{userId}
+	</select>
+	
+	<!-- 유저가 대여한 책 개수 구하는 쿼리 -->
+	<select id="countLendByUserId"
+		resultType="int">
+		SELECT count(*) FROM lend_tb WHERE status != -1 and user_id = #{userId}
 	</select>
 
 </mapper>
