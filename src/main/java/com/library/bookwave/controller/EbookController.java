@@ -98,9 +98,9 @@ public class EbookController {
 		// TODO 테스트용 코드 로그인 구현되면 제거 예정
 		int userId = principal == null ? 1 : principal.getId();
 		Map<String, Object> response = new HashMap<>();
-		if (!categoryName.matches("^[가-힣a-zA-Z0-9]+$") || categoryName.length() > 10) {
+		if (!categoryName.matches("^[가-힣a-zA-Z0-9]+$") || categoryName.length() > 8) {
 			response.put("success", false);
-			response.put("message", "이름은 10글자 이하의 한글, 영어, 숫자만 사용 가능합니다.");
+			response.put("message", "이름은 8글자 이하의 한글, 영어, 숫자만 사용 가능합니다.");
 			return ResponseEntity.badRequest().body(response);
 		}
 

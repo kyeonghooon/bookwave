@@ -7,19 +7,31 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 카테고리 추가 버튼을 클릭했을 때 폼을 보여줌
     addCategoryBtn.addEventListener('click', function() {
-        categoryForm.style.display = 'block';
-        categoryNameInput.value = ''; // 폼 초기화
-        messageBox.innerText = ''; // 메시지 초기화
+        if (categoryForm.style.display === 'none' || categoryForm.style.display === '') {
+            categoryForm.style.display = 'block';
+            categoryForm.classList.add('adding');
+            categoryNameInput.value = ''; // 폼 초기화
+            messageBox.innerText = ''; // 메시지 초기화
+            addCategoryBtn.innerText = '취소';
+            addCategoryBtn.classList.remove('btn-primary');
+            addCategoryBtn.classList.add('btn-danger');
+        } else {
+            addCategoryBtn.innerText = '추가';
+            categoryForm.classList.remove('adding');
+            addCategoryBtn.classList.remove('btn-danger');
+            addCategoryBtn.classList.add('btn-primary');
+            categoryForm.style.display = 'none'; // 폼 숨김
+        }
     });
-
+    
     // 카테고리 생성 버튼을 클릭했을 때
     createCategoryBtn.addEventListener('click', function() {
         const categoryName = categoryNameInput.value.trim();
 
-        // 유효성 검사 (한글, 영어, 숫자, 10글자 이하)
+        // 유효성 검사 (한글, 영어, 숫자, 8글자 이하)
         const isValidName = /^[가-힣a-zA-Z0-9]+$/.test(categoryName);
-        if (!isValidName || categoryName.length > 10) {
-            messageBox.innerText = '이름은 10글자 이하의 한글, 영어, 숫자만 사용 가능합니다.';
+        if (!isValidName || categoryName.length > 8) {
+            messageBox.innerText = '이름은 8글자 이하의 한글, 영어, 숫자만 사용 가능합니다.';
             return;
         }
 		const url = "/ebook/add-category?categoryName=" +  categoryName;

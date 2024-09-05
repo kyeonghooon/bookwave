@@ -96,6 +96,13 @@
   transition: width 0.3s ease; /* 진행도 변화 애니메이션 */
 }
 
+.progress--bar.completed {
+  width: 0%; /* 초기 상태에서 0%로 설정 */
+  height: 100%;
+  background-color: #4CAF50; /* 진행도를 나타낼 색상 */
+  transition: width 0.3s ease; /* 진행도 변화 애니메이션 */
+}
+
 /* 툴바 컨테이너 및 토글 버튼 */
 .toolbar--container {
   display: flex;

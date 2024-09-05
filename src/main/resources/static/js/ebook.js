@@ -255,5 +255,10 @@ document.addEventListener("DOMContentLoaded", function() {
 	// 진행도를 업데이트하는 함수
 	function updateProgress(percentage) {
 		progressBar.style.width = `${percentage * 100}%`;
+		if (percentage == 1){
+			progressBar.classList.add('completed');
+		} else {
+			progressBar.classList.remove('completed');
+		}
 	}
 });

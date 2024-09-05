@@ -13,7 +13,7 @@
 
 .book--item {
 	width: 190px;
-	height: 348px;
+	height: 373px;
 	text-align: center;
 	border: 1px solid #ddd;
 	padding: 10px;
@@ -146,4 +146,26 @@
 
 .sidebar a:hover {
 	background-color: #d5d5d5;
+}
+
+#category--name {
+	width: 159px
+}
+
+.progress--bar--container {
+    width: 100%;
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+}
+
+.progress--bar {
+    height: 100%;
+    background-color: #76c7c0;
+    border-radius: 5px;
+    transition: width 0.3s ease;
+}
+
+.progress--bar.completed {
+    background-color: #4CAF50;
 }

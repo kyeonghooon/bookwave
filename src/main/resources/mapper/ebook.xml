@@ -16,7 +16,7 @@
 	</update>
 
 	<select id="findEbookListByUserIdAndCategory" resultType="com.library.bookwave.dto.EbookDTO">
-		select b.id, b.title, b.cover, ue.last_read_date
+		select b.id, b.title, b.cover, ue.last_point as progress, ue.last_read_date,
 		from book_tb b
 		join user_ebook_tb ue on b.id = ue.book_id
 		where

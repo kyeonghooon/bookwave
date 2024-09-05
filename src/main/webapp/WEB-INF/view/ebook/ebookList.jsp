@@ -7,15 +7,23 @@
 		<c:forEach var="category" items="${categoryList}">
 			<a href="/ebook?category=${category.id}" class="${category.id == selectedCategory ? 'active' : ''}">${category.name}</a>
 		</c:forEach>
-		<!-- 카테고리 추가 버튼 -->
-		<div class="category--add">
-			<button id="add--category--btn" class="btn btn-sm btn-primary">+</button>
+		<div class="d-flex mt-2">
+			<div class="category--add d-flex justify-content-center mr-1">
+				<button id="add--category--btn" class="btn btn-sm btn-primary">추가</button>
+			</div>
+			<c:if test="${selectedCategory > 0}">
+				<div class="category--edit">
+					<button id="edit--category--btn" class="btn btn-sm btn-warning">수정</button>
+				</div>
+			</c:if>
 		</div>
 
 		<!-- 카테고리 추가 폼 (초기에는 숨김 처리) -->
-		<div id="category--form" class="category--form" style="display: none;">
-			<input type="text" id="category--name" class="form-control" placeholder="카테고리 이름" maxlength="10">
-			<button id="create--category--btn" class="btn btn-sm btn-success mt-2">생성</button>
+		<div id="category--form" class="category--form mt-3" style="display: none;">
+			<input type="text" id="category--name" class="form--control" placeholder="카테고리 이름" maxlength="8">
+			<div class="d-flex justify-content-end">
+				<button id="create--category--btn" class="btn btn-sm btn-success mt-2">생성</button>
+			</div>
 			<div id="message" class="text-danger mt-2"></div>
 		</div>
 	</div>
@@ -41,6 +49,9 @@
 							<div class="last--read--date text--none">읽지 않음</div>
 						</c:otherwise>
 					</c:choose>
+				</div>
+				<div class="progress--bar--container">
+					<div class="progress--bar ${book.progress == 1 ? 'completed' : ''}" style="width: ${book.progress * 100}%;"></div>
 				</div>
 			</div>
 		</c:forEach>
