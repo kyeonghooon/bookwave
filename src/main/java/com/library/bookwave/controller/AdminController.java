@@ -53,8 +53,8 @@ public class AdminController {
 	// 관리자 모든 결제 조회 페이지
 	@GetMapping("/payment")
 	public String paymentPage(Model model) {
-		// 샘플 결제내역 100개 생성
-		for (int i = 1; i <= 100; i++) {
+		// 샘플 결제내역 1개 생성
+		for (int i = 1; i <= 1; i++) {
 			Payment payment = Payment.builder().paymentKey(UUID.randomUUID().toString()).type("일반").userId(i).orderId(UUID.randomUUID().toString()).orderName("충전").method("카드")
 					.totalAmount((long) 5000).status("DONE").build();
 			paymentService.createPayment(payment, (long) 5000);

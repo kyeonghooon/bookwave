@@ -7,6 +7,9 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.UUID;
@@ -160,4 +163,43 @@ public class PaymentController {
 	//	- PARTIAL_CANCELED: 승인된 결제가 부분 취소된 상태입니다.
 	//	- ABORTED: 결제 승인이 실패한 상태입니다.
 	//	- EXPIRED: 결제 유효 시간 30분이 지나 거래가 취소된 상태입니다. IN_PROGRESS 상태에서 결제 승인 API를 호출하지 않으면 EXPIRED가 됩니다.
+
+	@PostMapping("/cancel")
+	public String cancelPaymentProc(@RequestParam(name = "id") Integer id, @RequestParam(name = "cancelReason") String cancelReason) {
+		Payment payment = paymentService.readPaymentById(id);
+		System.out.println(payment);
+		System.out.println("--------------------------------------------------");
+		String paymentKey = payment.getPaymentKey();
+		try {
+			// HTTP 클라이언트 생성
+			HttpClient client = HttpClient.newHttpClient();
+
+			// 요청 URL
+			URI uri = URI.create("https://api.tosspayments.com/v1/payments/" + paymentKey + "/cancel");
+
+			// Basic 인증 헤더
+			String auth = apiConfig.getSecretKey()+":";
+			String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
+			String authHeader = "Basic " + encodedAuth;
+
+			// 요청 데이터
+			String json = String.format("{\"cancelReason\":\"%s\"}", "단순 변심");
+
+			// HTTP 요청 생성
+			HttpRequest request = HttpRequest.newBuilder().uri(uri).header("Authorization", authHeader).header("Content-Type", "application/json").header("Idempotency-Key", "SAAABPQbcqjEXiDL")
+					.POST(HttpRequest.BodyPublishers.ofString(json)).build();
+
+			// HTTP 요청 보내기
+			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+			// 응답 출력
+			System.out.println("Response Code: " + response.statusCode());
+			System.out.println("Response Body: " + response.body());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

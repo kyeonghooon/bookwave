@@ -9,6 +9,10 @@
 	<select id="readAllPayment" resultType="com.library.bookwave.repository.model.Payment">
 		select * from payment_tb
 	</select>
+	
+	<select id="readPaymentById" resultType="com.library.bookwave.repository.model.Payment">
+		select * from payment_tb where id = #{id}
+	</select>
 
 	<update id="updateWaveById">
 		update user_tb set wave = wave + #{wave} where id = #{userId}

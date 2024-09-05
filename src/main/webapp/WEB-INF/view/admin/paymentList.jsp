@@ -244,6 +244,10 @@ tbody tr:hover {
 
 					<!-- Page Heading -->
 					<h1 class="h3 mb-2 text-gray-800">전체 결제 목록 조회</h1>
+					<form action="/payment/cancel" method="post">
+						<input type="hidden" value="1" name="id"> <input type="hidden" value="단순 변심" name="cancelReason">
+						<button type="submit">취소</button>
+					</form>
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
@@ -259,9 +263,9 @@ tbody tr:hover {
 											<th>결제금액</th>
 											<th>결제승인날짜</th>
 											<th>결제처리상태</th>
-											<th>취소처리상태</th>
 											<th>취소사유</th>
 											<th>취소시간</th>
+											<th>취소처리상태</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -274,9 +278,9 @@ tbody tr:hover {
 												<th>${payment.totalAmount}</th>
 												<th>${payment.approvedAt}</th>
 												<th>${payment.status}</th>
-												<th>${payment.cancelStatus}</th>
 												<th>${payment.cancelReason}</th>
 												<th>${payment.canceledAt}</th>
+												<th>${payment.cancelStatus}</th>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -293,7 +297,7 @@ tbody tr:hover {
 
 			<!-- Footer -->
 			<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
-		
+
 			<!-- End of Footer -->
 
 		</div>

@@ -13,5 +13,7 @@ public interface PaymentRepository {
 
 	public List<Payment> readAllPayment();
 
+	public Payment readPaymentById(Integer id);
+
 	public int updateWaveById(@Param("userId") Integer userId, @Param("wave") Long wave);
 }

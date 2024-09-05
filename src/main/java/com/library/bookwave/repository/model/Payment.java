@@ -12,6 +12,7 @@ import lombok.ToString;
 @Builder
 @ToString
 public class Payment {
+	private Integer id;
 	private String paymentKey; // 결제 키 (결제 승인, 조회, 취소 API에 사용)
 	private String type; // 결제 타입 (일반, 자동, 브랜드페이)
 	private Integer userId; // 주문고객 이름

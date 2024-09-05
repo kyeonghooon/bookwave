@@ -48,4 +48,9 @@ public class PaymentService {
 	public List<Payment> readAllPayment() {
 		return paymentRepository.readAllPayment();
 	}
+
+	@Transactional
+	public Payment readPaymentById(Integer id) {
+		return paymentRepository.readPaymentById(id);
+	}
 }
