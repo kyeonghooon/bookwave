@@ -36,7 +36,7 @@ public class EbookController {
 	private final HttpSession session;
 
 	@GetMapping
-	public String listPage(@RequestParam(name = "category", defaultValue = "-1") int category, //
+	public String listPage(@RequestParam(name = "category", defaultValue = "-1") Integer category, //
 			@SessionAttribute(value = Define.PRINCIPAL, required = false) User principal, //
 			Model model) {
 		User user = (User) session.getAttribute(Define.PRINCIPAL);
@@ -104,8 +104,6 @@ public class EbookController {
 			return ResponseEntity.badRequest().body(response);
 		}
 
-		// TODO 비지니스 로직
-		// 1. user_ebook_category_limit_tb 확인해서 limit 수랑 현재 카테고리 수 비교 후 넘기기
 		int limit = ebookservice.findEbookCategoryLimitByUserId(userId);
 		int current = ebookservice.countEbookCategoryByUserId(userId);
 		if (limit <= current) {
@@ -113,8 +111,8 @@ public class EbookController {
 			response.put("message", "결제가 필요합니다.");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 		}
-		
-		if(ebookservice.createUserEbookCategroy(userId, categoryName)) {
+
+		if (ebookservice.createUserEbookCategroy(userId, categoryName)) {
 			response.put("success", true);
 			response.put("message", "카테고리가 성공적으로 추가되었습니다.");
 			return ResponseEntity.ok(response);
@@ -123,18 +121,26 @@ public class EbookController {
 			response.put("message", "알수 없는 오류로 생성 실패");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 		}
-		
+
 	}
 
-	/**
-	 * TODO 없앨 메서드
-	 */
-	@GetMapping("/remove")
-	public String removeBook(@RequestParam(name = "bookId") Integer bookId) {
-		User user = (User) session.getAttribute(Define.PRINCIPAL);
+	@PostMapping("change-category")
+	public ResponseEntity<Map<String, Object>> changeEbookCategory(@RequestBody Map<String, Integer> request, //
+			@SessionAttribute(value = Define.PRINCIPAL, required = false) User principal) {
 		// TODO 테스트용 코드 로그인 구현되면 제거 예정
-		int userId = user == null ? 1 : user.getId();
-		ebookservice.updateUserEbookWithStatus(-1, userId, bookId);
-		return "redirect:/ebook";
+		int userId = principal == null ? 1 : principal.getId();
+		Integer bookId = request.get("bookId");
+		Integer categoryId = request.get("categoryId");
+
+		Map<String, Object> response = new HashMap<>();
+		if (ebookservice.updateUserEbookCategory(categoryId, userId, bookId) == 1) {
+			response.put("success", true);
+			return ResponseEntity.ok(response);
+		} else {
+			response.put("success", false);
+			response.put("message", "카테고리 변경에 실패했습니다.");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+		}
 	}
+
 }

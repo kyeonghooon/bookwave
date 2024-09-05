@@ -5,7 +5,18 @@
 	<div class="sidebar">
 		<a href="/ebook" class="${selectedCategory == -1 ? 'active' : ''}">전체</a>
 		<c:forEach var="category" items="${categoryList}">
-			<a href="/ebook?category=${category.id}" class="${category.id == selectedCategory ? 'active' : ''}">${category.name}</a>
+			<div class="category--item" 
+                 data-category-id="${category.id}"
+                 data-category-name="${category.name}"
+					  data-selectedCategory="${selectedCategory}"
+                 ondragenter="highlightCategory(event)" 
+                 ondragleave="unhighlightCategory(event)"
+                 ondragover="allowDrop(event)" 
+                 ondrop="drop(event)">
+                <a href="/ebook?category=${category.id}" class="${category.id == selectedCategory ? 'active' : ''}">
+                    ${category.name}
+                </a>
+            </div>
 		</c:forEach>
 		<div class="d-flex mt-2">
 			<div class="category--add d-flex justify-content-center mr-1">
@@ -29,10 +40,7 @@
 	</div>
 	<div class="book--list">
 		<c:forEach var="book" items="${bookList}">
-			<div class="book--item" data-book-id="${book.id}">
-				<div class="remove--button" onclick="confirmRemove(${book.id})">
-					<span>X</span>
-				</div>
+			<div class="book--item" data-book-id="${book.id}" draggable="true" ondragstart="drag(event)">
 				<div class="book--actions">
 					<a href="ebook/view/${book.id}">읽기</a> <a href="#">상세보기</a>
 				</div>
@@ -57,14 +65,5 @@
 		</c:forEach>
 	</div>
 </div>
-<script>
-function confirmRemove(bookId) {
-    if (confirm("정말 이 책을 삭제하시겠습니까?")) {
-    	console.log('bookId',bookId);
-    	const url = "ebook/remove?bookId=" + bookId;
-        window.location.href = url;
-    }
-}
-</script>
 <script src="/js/ebook_list.js"></script>
 <%@ include file="../layout/footer.jsp"%>

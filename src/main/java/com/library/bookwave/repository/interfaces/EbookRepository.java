@@ -36,6 +36,6 @@ public interface EbookRepository {
 	// ebook 카테고리 생성
 	Integer createUserEbookCategroy(@Param("userId") Integer userId, @Param("category") String category);
 	
-	// user_ebook status 업데이트
-	int updateUserEbookWithStatus(@Param("status") Integer status, @Param("userId") Integer userId, @Param("bookId") Integer bookId);
+	// user_ebook category_id 변경
+	Integer updateUserEbookCategory(@Param("categoryId") Integer categoryId, @Param("userId") Integer userId, @Param("bookId") Integer bookId);
 }

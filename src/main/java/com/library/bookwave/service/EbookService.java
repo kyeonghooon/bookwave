@@ -141,13 +141,13 @@ public class EbookService {
 	}
 	
 	/**
-	 *  user ebook의 상태값 변경
+	 *  user ebook의 카테고리 변경
 	 */
 	@Transactional
-	public int updateUserEbookWithStatus(int status, int userId, int bookId) {
+	public int updateUserEbookCategory(int categoryId, int userId, int bookId) {
 		int result = 0;
 		try {
-			result = ebookRepository.updateUserEbookWithStatus(status, userId, bookId);
+			result = ebookRepository.updateUserEbookCategory(categoryId, userId, bookId);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
