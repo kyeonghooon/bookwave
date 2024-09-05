@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <link rel="icon" href="https://static.toss.im/icons/png/4x/icon-toss-logo.png" />
@@ -21,15 +22,15 @@
 			<!-- 이용약관 UI -->
 			<div id="agreement"></div>
 			<!-- 쿠폰 체크박스 -->
-			<div style="padding-left: 25px">
+			<!-- <div style="padding-left: 25px">
 				<div class="checkable typography--p">
 					<label for="coupon-box" class="checkable__label typography--regular"><input id="coupon-box" class="checkable__input" type="checkbox" aria-checked="true" /><span
 						class="checkable__label-text">5,000원 쿠폰 적용</span></label>
 				</div>
-			</div>
+			</div> -->
 			<!-- 결제하기 버튼 -->
 			<div class="result wrapper">
-				<button class="button" id="payment-button" style="margin-top: 30px">결제하기</button>
+				<button class="button" id="payment-button" style="margin-top: 30px"><fmt:formatNumber value="${payment.price}" type="currency"/> 결제하기</button>
 			</div>
 		</div>
 		<script>
@@ -37,17 +38,17 @@
 
       async function main() {
         const button = document.getElementById("payment-button");
-        const coupon = document.getElementById("coupon-box");
+        //const coupon = document.getElementById("coupon-box");
         const amount = {
           currency: "KRW",
-          value: parseInt("${price}"),
+          value: parseInt("${payment.price}"),
         };
         // ------  결제위젯 초기화 ------
         // TODO: clientKey는 개발자센터의 결제위젯 연동 키 > 클라이언트 키로 바꾸세요.
         // TODO: 구매자의 고유 아이디를 불러와서 customerKey로 설정하세요. 이메일・전화번호와 같이 유추가 가능한 값은 안전하지 않습니다.
         // @docs https://docs.tosspayments.com/sdk/v2/js#토스페이먼츠-초기화
-        const clientKey = "${clientKey}";
-        const customerKey = "${customerKey}";
+        const clientKey = "${payment.clientKey}";
+        const customerKey = "${payment.customerKey}";
         const tossPayments = TossPayments(clientKey);
         // 회원 결제
         const widgets = tossPayments.widgets({
@@ -77,7 +78,7 @@
 
         // ------  주문서의 결제 금액이 변경되었을 경우 결제 금액 업데이트 ------
         // @docs https://docs.tosspayments.com/sdk/v2/js#widgetssetamount
-        coupon.addEventListener("change", async function () {
+        /* coupon.addEventListener("change", async function () {
           if (coupon.checked) {
             await widgets.setAmount({
               currency: "KRW",
@@ -91,7 +92,7 @@
             currency: "KRW",
             value: amount,
           });
-        });
+        }); */
 
         // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
         // @docs https://docs.tosspayments.com/sdk/v2/js#widgetsrequestpayment
@@ -99,20 +100,20 @@
           // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
           // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
           await widgets.requestPayment({
-            orderId: generateRandomString(),
-            orderName: "토스 티셔츠 외 2건",
+            orderId: "${payment.orderId}",
+            orderName: "${payment.orderName}",
             successUrl: window.location.origin + "/payment/success",
             failUrl: window.location.origin + "/payment/fail",
-            customerEmail: "${customerEmail}",
-            customerName: "${customerName}",
-            customerMobilePhone: "${customerMobilePhone}",
+            customerEmail: "${payment.customerEmail}",
+            customerName: "${payment.customerName}",
+            customerMobilePhone: "${payment.customerMobilePhone}",
           });
         });
       }
 
-      function generateRandomString() {
+     /*  function generateRandomString() {
         return window.btoa(Math.random()).slice(0, 20);
-      }
+      } */
     </script>
 </body>
 </html>

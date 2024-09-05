@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="kr">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <link rel="icon" href="https://static.toss.im/icons/png/4x/icon-toss-logo.png" />

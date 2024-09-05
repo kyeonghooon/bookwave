@@ -27,6 +27,7 @@ repositories {
 
 dependencies {
 	implementation 'com.googlecode.json-simple:json-simple:1.1'
+	implementation 'com.google.code.gson:gson:2.10.1'
 
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
 	implementation group: 'org.glassfish.web', name: 'jakarta.servlet.jsp.jstl', version: '3.0.0'

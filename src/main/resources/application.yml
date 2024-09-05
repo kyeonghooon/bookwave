@@ -23,6 +23,7 @@ spring:
     init:
       schema-locations:
       - classpath:db/table.sql
+      - classpath:db/paymentTable.sql
       data-locations:
       - classpath:db/data.sql
 

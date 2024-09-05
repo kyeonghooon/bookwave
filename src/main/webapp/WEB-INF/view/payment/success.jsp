@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <link rel="icon" href="https://static.toss.im/icons/png/4x/icon-toss-logo.png" />
@@ -57,7 +57,8 @@
 				amount : urlParams.get("amount"),
 			};
 
-			const response = await fetch("/payment/confirm", {
+			const response = await
+			fetch("/payment/confirm", {
 				method : "POST",
 				headers : {
 					"Content-Type" : "application/json",
@@ -65,16 +66,18 @@
 				body : JSON.stringify(requestData),
 			});
 
-			const json = await response.json();
+			const json = await
+			response.json();
 
 			if (!response.ok) {
 				// TODO: 결제 실패 비즈니스 로직을 구현하세요.
-				console.log(json);
-				window.location.href = `/fail?message=${json.message}&code=${json.code}`;
+				console.log(json.message);
+				console.log(json.code);
+				window.location.href = `/payment/fail?message=${json.message}&code=${json.code}`;
 			}
 
 			// TODO: 결제 성공 비즈니스 로직을 구현하세요.
-			// console.log(json);
+			console.log(json);
 			return json;
 		}
 		confirm()

@@ -39,7 +39,7 @@
 								class="dropdown-item" href="#">읽은 내역 통계</a>
 						</div></li>
 					<li class="nav-item"><a class="nav-link" href="#">eBook</a></li>
-					<li class="nav-item"><a class="nav-link" href="/payment/checkout" onclick="window.open(this.href, '_blank', 'width=800, height=760'); return false">충전하기</a></li>
+					<li class="nav-item"><a class="nav-link" href="/payment/charge" onclick="window.open(this.href, '_blank', 'width=800, height=760'); return false">충전하기</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">로그인</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">회원가입</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">로그아웃</a></li>
