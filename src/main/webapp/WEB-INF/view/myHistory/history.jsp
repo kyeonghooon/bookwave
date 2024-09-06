@@ -149,7 +149,9 @@ body {
 		<div class="sidebar">
 			<!-- 카테고리 버튼들 -->
 			<c:set var="selectedCategory" value="${param.category}" />
-			<a href="/book/list?page=1&category=" class="${empty selectedCategory ? 'active' : ''}">전체</a>
+			<a href="/book/list?page=1&category=" class="${empty selectedCategory ? 'active' : ''}">전체 목록</a>
+			<a href="/book/list?page=1&category=" class="${empty selectedCategory ? 'active' : ''}">월 별 통계</a>
+			<a href="/book/list?page=1&category=" class="${empty selectedCategory ? 'active' : ''}">카테고리 별 통계</a>
 			<c:forEach var="category" items="${categories}">
 				<a href="/book/list?page=1&category=${category}" class="${category == selectedCategory ? 'active' : ''}">${category}</a>
 			</c:forEach>
