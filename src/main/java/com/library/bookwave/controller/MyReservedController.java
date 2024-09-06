@@ -1,7 +1,9 @@
 package com.library.bookwave.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,12 +38,20 @@ public class MyReservedController {
 
 		List<MyReserved> list = new ArrayList<>();
 
-		// TODO 테스트용으로 하드코딩
-		// 로그인기능 완성시 세션 id로 변경
+		// TODO: 테스트용으로 하드코딩. 로그인기능 완성시 세션 id로 변경
 		// int id = (int) session.getAttribute("userId");
 		list = reservedService.readAllById(1);
 
+		Map<Integer, Integer> countBeforeMap = new HashMap<>();
+
+		for (MyReserved reserved : list) {
+			int bookId = reserved.getBookId();
+			int before = reservedService.findCountBeforeByUserIdAndBookId(1, bookId);
+			countBeforeMap.put(bookId, before);
+		}
+
 		model.addAttribute("myReservedList", list);
+		model.addAttribute("countBeforeMap", countBeforeMap);
 
 		return "myLibrary/reservedBooks";
 	}

@@ -11,11 +11,11 @@
 		<thead>
 			<tr>
 				<th>Book ID</th>
-				<th>RESERVATION_DATE</th>
-				<th>WAIT_DATE</th>
-				<th>STATUS</th>
-				<th>취소</th>
-				<th>대출</th>
+				<th>Reservation Date</th>
+				<th>Wait Date</th>
+				<th>Status</th>
+				<th>Cancel</th>
+				<th>Lend</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -25,19 +25,26 @@
 					<td><c:out value="${books.reservationDate}" /></td>
 					<td><c:out value="${books.waitDate}" /></td>
 					<td><c:out value="${books.status}" /></td>
+
 					<td>
 						<form action="/my-reserved/cancel/${books.id}" method="post">
-							<button type="submit">취소</button>
+							<button type="submit">Cancel</button>
 						</form>
 					</td>
-					<c:if test="${books.status eq 1}">
-						<td>
-							<form action="/my-reserved/lend/${books.id}" method="post">
-								<input type="hidden" name="userId" value="${books.userId}" /> <input type="hidden" name="bookId" value="${books.bookId}" />
-								<button type="submit">대출</button>
-							</form>
-						</td>
-					</c:if>
+
+					<c:choose>
+						<c:when test="${books.status eq 1}">
+							<td>
+								<form action="/my-reserved/lend/${books.id}" method="post">
+									<input type="hidden" name="userId" value="${books.userId}" /> <input type="hidden" name="bookId" value="${books.bookId}" />
+									<button type="submit">Lend</button>
+								</form>
+							</td>
+						</c:when>
+						<c:when test="${books.status eq 0}">
+							<td><c:out value="${countBeforeMap[books.bookId]}" /></td>
+						</c:when>
+					</c:choose>
 				</tr>
 			</c:forEach>
 		</tbody>

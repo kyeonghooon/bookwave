@@ -17,4 +17,16 @@
 		returned_date)
 		VALUES (#{userId}, #{bookId}, NOW(), DATEADD('DAY', 7, NOW()), NULL);
 	</insert>
+	<select id="findCountBeforeByUserIdAndBookId" resultType="int">
+		SELECT COUNT(*)
+		FROM reservation_tb
+		WHERE book_id = #{bookId}
+		AND reservation_date <![CDATA[<]]> (
+		SELECT reservation_date
+		FROM reservation_tb
+		WHERE user_id = #{userId}
+		AND book_id = #{bookId}
+		)
+		AND status = 0
+	</select>
 </mapper>

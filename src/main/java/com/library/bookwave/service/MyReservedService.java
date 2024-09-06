@@ -97,4 +97,16 @@ public class MyReservedService {
 		}
 	}
 
+	public int findCountBeforeByUserIdAndBookId(Integer userId, Integer bookId) {
+
+		int result = 0;
+		try {
+			result = reservedRepository.findCountBeforeByUserIdAndBookId(userId, bookId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
 }
