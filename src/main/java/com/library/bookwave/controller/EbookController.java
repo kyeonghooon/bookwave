@@ -33,15 +33,13 @@ import lombok.RequiredArgsConstructor;
 public class EbookController {
 
 	private final EbookService ebookservice;
-	private final HttpSession session;
 
 	@GetMapping
 	public String listPage(@RequestParam(name = "category", defaultValue = "-1") Integer category, //
 			@SessionAttribute(value = Define.PRINCIPAL, required = false) User principal, //
 			Model model) {
-		User user = (User) session.getAttribute(Define.PRINCIPAL);
 		// TODO 테스트용 코드 로그인 구현되면 제거 예정
-		int userId = user == null ? 1 : user.getId();
+		int userId = principal == null ? 1 : principal.getId();
 		List<EbookDTO> bookList = ebookservice.findEbookListByUserIdAndCategory(userId, category);
 		List<UserEbookCategory> categoryList = ebookservice.findEbookCategoryListByUserId(userId);
 		model.addAttribute("bookList", bookList);
@@ -112,18 +110,45 @@ public class EbookController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 		}
 
-		if (ebookservice.createUserEbookCategroy(userId, categoryName)) {
+		if (ebookservice.createUserEbookCategory(userId, categoryName)) {
 			response.put("success", true);
 			response.put("message", "카테고리가 성공적으로 추가되었습니다.");
 			return ResponseEntity.ok(response);
 		} else {
 			response.put("success", false);
-			response.put("message", "알수 없는 오류로 생성 실패");
+			response.put("message", "알 수 없는 오류로 생성 실패");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 		}
 
 	}
+	
+	@GetMapping("/edit-category")
+	public ResponseEntity<Map<String, Object>> editCategory(@RequestParam(name = "categoryName") String categoryName, //
+			@RequestParam(name = "categoryId") Integer categoryId, //
+			@SessionAttribute(value = Define.PRINCIPAL, required = false) User principal) {
+		// TODO 테스트용 코드 로그인 구현되면 제거 예정
+		int userId = principal == null ? 1 : principal.getId();
+		Map<String, Object> response = new HashMap<>();
+		if (!categoryName.matches("^[가-힣a-zA-Z0-9]+$") || categoryName.length() > 8) {
+			response.put("success", false);
+			response.put("message", "이름은 8글자 이하의 한글, 영어, 숫자만 사용 가능합니다.");
+			return ResponseEntity.badRequest().body(response);
+		}
+		if (ebookservice.updateUserEbookCategoryName(userId, categoryName, categoryId)) {
+			response.put("success", true);
+			response.put("message", "카테고리명이 성공적으로 변경되었습니다.");
+			return ResponseEntity.ok(response);
+		} else {
+			response.put("success", false);
+			response.put("message", "알 수 없는 오류로 변경 실패");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+		}
 
+	}
+	
+	/**
+	 *  ebook 카테고리 변경
+	 */
 	@PostMapping("change-category")
 	public ResponseEntity<Map<String, Object>> changeEbookCategory(@RequestBody Map<String, Integer> request, //
 			@SessionAttribute(value = Define.PRINCIPAL, required = false) User principal) {

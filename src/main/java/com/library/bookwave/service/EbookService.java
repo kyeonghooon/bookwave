@@ -126,11 +126,28 @@ public class EbookService {
 		return result;
 	}
 	
+	/**
+	 * ebook 카테고리 생성
+	 */
 	@Transactional
-	public boolean createUserEbookCategroy(int userId, String category) {
+	public boolean createUserEbookCategory(int userId, String category) {
 		int result = 0;
 		try {
-			result = ebookRepository.createUserEbookCategroy(userId, category);
+			result = ebookRepository.createUserEbookCategory(userId, category);
+		} catch (Exception e) {
+			return false;
+		}
+		if (result == 0) {
+			return false;
+		}
+		return true;
+	}
+	
+	@Transactional
+	public boolean updateUserEbookCategoryName(int userId, String categoryName, int categoryId) {
+		int result = 0;
+		try {
+			result = ebookRepository.updateUserEbookCategoryName(userId, categoryName, categoryId);
 		} catch (Exception e) {
 			return false;
 		}

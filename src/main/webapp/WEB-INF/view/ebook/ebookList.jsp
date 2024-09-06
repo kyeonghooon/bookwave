@@ -6,29 +6,12 @@
 		<a href="/ebook" class="${selectedCategory == -1 ? 'active' : ''}">전체</a>
 		<c:forEach var="category" items="${categoryList}">
 			<div class="category--item" 
-                 data-category-id="${category.id}"
-                 data-category-name="${category.name}"
-					  data-selectedCategory="${selectedCategory}"
-                 ondragenter="highlightCategory(event)" 
-                 ondragleave="unhighlightCategory(event)"
-                 ondragover="allowDrop(event)" 
-                 ondrop="drop(event)">
-                <a href="/ebook?category=${category.id}" class="${category.id == selectedCategory ? 'active' : ''}">
-                    ${category.name}
-                </a>
-            </div>
-		</c:forEach>
-		<div class="d-flex mt-2">
-			<div class="category--add d-flex justify-content-center mr-1">
-				<button id="add--category--btn" class="btn btn-sm btn-primary">추가</button>
+				data-category-id="${category.id}" 
+				data-category-name="${category.name}" 
+				data-selectedCategory="${selectedCategory}">
+				<a href="/ebook?category=${category.id}" class="${category.id == selectedCategory ? 'active' : ''}"> ${category.name} </a>
 			</div>
-			<c:if test="${selectedCategory > 0}">
-				<div class="category--edit">
-					<button id="edit--category--btn" class="btn btn-sm btn-warning">수정</button>
-				</div>
-			</c:if>
-		</div>
-
+		</c:forEach>
 		<!-- 카테고리 추가 폼 (초기에는 숨김 처리) -->
 		<div id="category--form" class="category--form mt-3" style="display: none;">
 			<input type="text" id="category--name" class="form--control" placeholder="카테고리 이름" maxlength="8">
@@ -37,10 +20,24 @@
 			</div>
 			<div id="message" class="text-danger mt-2"></div>
 		</div>
+		<div class="d-flex mt-2 flex-wrap">
+			<div class="category--add d-flex justify-content-center mr-1">
+				<button id="add--category--btn" class="m-1 btn btn-sm btn-primary">카테고리 추가</button>
+			</div>
+			<c:if test="${selectedCategory > 0}">
+				<div class="category--edit">
+					<button id="edit--category--btn" class="m-1 btn btn-sm btn-warning">카테고리 이름 변경</button>
+				</div>
+			</c:if>
+			<div class="category--reorder">
+				<button id="reorder--category--btn" class="m-1 btn btn-sm btn-info">카테고리 순서 변경</button>
+			</div>
+		</div>
+
 	</div>
 	<div class="book--list">
 		<c:forEach var="book" items="${bookList}">
-			<div class="book--item" data-book-id="${book.id}" draggable="true" ondragstart="drag(event)">
+			<div class="book--item" data-book-id="${book.id}" draggable="true" ondragstart="bookDrag(event)">
 				<div class="book--actions">
 					<a href="ebook/view/${book.id}">읽기</a> <a href="#">상세보기</a>
 				</div>

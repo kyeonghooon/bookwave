@@ -44,12 +44,16 @@
 		select count(*) from user_ebook_category_tb where user_id = #{userId}
 	</select>
 	
-	<insert id="createUserEbookCategroy">
+	<insert id="createUserEbookCategory">
 		insert into user_ebook_category_tb (user_id, name) values (#{userId}, #{category})
 	</insert>
 	
 	<update id="updateUserEbookCategory">
 		update user_ebook_tb set user_ebook_category_id = #{categoryId} where user_id = #{userId} and book_id = #{bookId}
+	</update>
+	
+	<update id="updateUserEbookCategoryName">
+		update user_ebook_category_tb set name = #{categoryName} where id = #{categoryId} and user_id = #{userId}
 	</update>
 
 </mapper>

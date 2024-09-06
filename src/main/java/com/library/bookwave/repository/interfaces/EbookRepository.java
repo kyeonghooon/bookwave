@@ -34,7 +34,10 @@ public interface EbookRepository {
 	Integer countEbookCategoryByUserId(Integer userId);
 	
 	// ebook 카테고리 생성
-	Integer createUserEbookCategroy(@Param("userId") Integer userId, @Param("category") String category);
+	Integer createUserEbookCategory(@Param("userId") Integer userId, @Param("category") String category);
+
+	// ebook 카테고리 이름 변경
+	Integer updateUserEbookCategoryName(@Param("userId") Integer userId, @Param("categoryName") String categoryName, @Param("categoryId") Integer categoryId);
 	
 	// user_ebook category_id 변경
 	Integer updateUserEbookCategory(@Param("categoryId") Integer categoryId, @Param("userId") Integer userId, @Param("bookId") Integer bookId);
