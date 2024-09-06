@@ -1,0 +1,179 @@
+@charset "UTF-8";
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f4f4f4;
+	margin: 0;
+	padding: 20px;
+}
+
+.container {
+	max-width: 900px;
+	margin: 0 auto;
+	background: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	position: relative;
+}
+
+.book--cover {
+	width: 200px;
+	height: auto;
+	border-radius: 5px;
+	margin-right: 20px;
+	float: left;
+}
+
+.book--details {
+	overflow: hidden;
+}
+
+.book--title {
+	font-size: 24px;
+	margin-top: 0;
+}
+
+.book--info {
+	margin-top: 10px;
+}
+
+.book--info dt {
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+.book--info dd {
+	margin: 0 0 10px 0;
+}
+
+.description {
+	margin-top: 20px;
+}
+
+.back--link {
+	display: inline-block;
+	margin-top: 20px;
+	font-size: 14px;
+	color: #007bff;
+	text-decoration: none;
+}
+
+.back--link:hover {
+	text-decoration: underline;
+}
+
+.lend--button, .sub--ebook--button, .ebook--button, .read--ebook--button{
+	background-color: #218838;
+	display: inline-block;
+	margin-top: 20px;
+	padding: 10px 20px;
+	font-size: 14px;
+	color: #fff;
+	text-decoration: none;
+	border-radius: 5px;
+	cursor: pointer;
+	border: none; /* Remove default border */
+}
+
+.lend--button:hover {
+	background-color: #218838;
+}
+
+.lend--button.disabled {
+	background-color: #6c757d;
+	cursor: not-allowed;
+	pointer-events: none;
+	border: none; /* Remove default border */
+	cursor: default;
+}
+
+.lend--button.renting {
+	background-color: #FFA500; /* 대여 중 색상 */
+	cursor: default;
+}
+
+.lend--button.unavailable {
+	background-color: #6c757d; /* 대여 불가 색상 */
+	cursor: default;
+}
+
+.reserve--button {
+    background-color: #218838; /* 기본 색상 */
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none; /* Remove default border */
+}
+
+.reserve--button:hover {
+    background-color: #1e7e34; /* 예약 버튼 호버 색상 */
+}
+
+.reserve--button.reserving {
+    background-color: #FFA500; /* 예약 중 색상 */
+    cursor: default;
+}
+
+.reserve--button.unavailable {
+    background-color: #dc3545; /* 예약 불가 색상 (빨간색) */
+    cursor: default;
+}
+
+.button--group {
+	margin-top: 20px;
+}
+
+.button--group button {
+	margin-right: 10px; /* 버튼 사이에 간격 추가 */
+}
+
+.favorite--button {
+    position: absolute;
+    bottom: 20px;
+    right: 80px;
+    width: 40px;
+    height: 40px;
+    background-color: #fff; /* 노란색 배경 */
+    border: 2px solid #FFD700; /* 노란색 테두리 */
+    border-radius: 50%;
+    color: #222; /* 흰색 글씨 */
+    font-size: 20px;
+    text-align: center;
+    line-height: 36px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.favorite--button.favorited {
+    background-color: #FFC107; /* 선택된 상태의 노란색 */
+    color: #fff; /* 흰색 글씨 */
+    border-color: #FFC107; /* 선택된 상태의 노란색 테두리 */
+}
+
+.like--button {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	width: 40px;
+	height: 40px;
+	background-color: #fff;
+	border: 2px solid #007bff;
+	border-radius: 50%;
+	color: #007bff;
+	font-size: 20px;
+	text-align: center;
+	line-height: 36px;
+	cursor: pointer;
+	transition: background-color 0.3s, color 0.3s;
+}
+
+.like--button.liked {
+	background-color: #007bff;
+	color: #fff;
+	border-color: #007bff;
+}

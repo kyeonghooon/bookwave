@@ -1,0 +1,237 @@
+@charset "UTF-8";
+
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+}
+
+/* .header {
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+} */
+
+/* 사이드바에 맞춰 검색 폼을 조정 */
+.search--form {
+    display: flex;
+    flex-direction: column; /* 세로 방향으로 정렬 */
+    align-items: stretch; /* 너비를 전체로 확장 */
+    width: 100%; /* 사이드바의 너비에 맞춤 */
+    max-width: 200px; /* 사이드바 너비와 동일하게 설정 */
+    margin: 10px auto; /* 중앙 정렬 */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    box-sizing: border-box; /* 패딩과 보더가 너비에 포함되도록 설정 */
+}
+
+.search--form input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s;
+    margin-bottom: 10px; /* 입력창과 버튼 사이에 여백 추가 */
+}
+
+.search--form input[type="text"]:focus {
+    border-color: #007bff;
+}
+
+.search--form input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s, opacity 0.3s;
+}
+
+.search--form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.search--form input[type="submit"]:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+
+.sidebar {
+    width: 200px;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.sidebar a {
+    display: block;
+    padding: 10px;
+    margin-bottom: 5px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar a.active {
+    background-color: #333;
+    color: white;
+}
+
+.sidebar a:hover {
+    background-color: #f0f0f0;
+}
+
+.container {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    padding: 20px;
+    width: 100%;
+    justify-content: center;
+}
+
+.book--item {
+    position: relative; /* 변경: 버튼 배치를 위해 상대 위치 설정 */
+    width: 190px;
+    height: 330px;
+    text-align: center;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.book--item img {
+    width: 170px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.book--title {
+    font-size: 14px;
+    margin-top: 10px;
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-top: 1px solid #ddd;
+}
+
+.pagination a {
+    padding: 8px 15px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    color: #333;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination a.active {
+    background-color: #333;
+    color: white;
+}
+
+.pagination a.disabled {
+    color: #ddd;
+    border-color: #ddd;
+    cursor: not-allowed;
+}
+
+.pagination .page-numbers {
+    display: flex;
+    gap: 5px;
+}
+
+.page--wrapper {
+    display: flex;
+    flex: 1;
+}
+
+.main--content {
+    flex: 1;
+}
+
+.favorite--button {
+    position: absolute;
+    bottom: 35px; /* 버튼을 이미지의 하단에 맞추기 */
+    right: 45px; /* 버튼을 이미지의 좌측에 맞추기 */
+    width: 30px;
+    height: 30px;
+    background-color: #fff; /* 노란색 배경 */
+    border: 2px solid #FFD700; /* 노란색 테두리 */
+    border-radius: 50%;
+    color: #FFD700; /* 노란색 글씨 */
+    font-size: 16px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    z-index: 10; /* 버튼이 이미지 위에 보이도록 설정 */
+}
+
+.favorite--button.favorited {
+    background-color: #FFC107; /* 선택된 상태의 노란색 */
+    color: #fff; /* 흰색 글씨 */
+    border-color: #FFC107; /* 선택된 상태의 노란색 테두리 */
+}
+
+.like--button {
+    position: absolute;
+    bottom: 35px; /* 버튼을 이미지의 하단에 맞추기 */
+    right: 10px; /* 좋아요 버튼을 관심등록 버튼 오른쪽에 배치 */
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    border: 2px solid #007bff;
+    border-radius: 50%;
+    color: #007bff;
+    font-size: 16px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    z-index: 10; /* 버튼이 이미지 위에 보이도록 설정 */
+}
+
+.like--button.liked {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
