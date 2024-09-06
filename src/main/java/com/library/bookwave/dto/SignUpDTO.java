@@ -47,7 +47,7 @@ public class SignUpDTO {
 	private String addr2; // 주소(상세주소)
 	
 
-	
+
 	
 	public User toUser() {
 		return User.builder()
@@ -71,15 +71,6 @@ public class SignUpDTO {
 				  		 
 	}
 	
-	public User kakaoUser() {
-		return User.builder()
-				.socialId(this.getLoginId())
-				.name(this.name)
-				.password(this.password)
-				.build();
-	}
-
-
 	
 
 }

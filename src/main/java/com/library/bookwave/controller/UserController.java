@@ -50,6 +50,9 @@ public class UserController {
 	@GetMapping("/sign-up")
 	public String signUpPage(Model model) {
 		String socialId = (String) model.asMap().get("socialId");
+//		//TODO 임시값
+//		String password = "298p3047y2w98p4uhtrle";
+//		model.addAttribute("socialPassword", password);
 		model.addAttribute("socialId", socialId);
 		return "user/signUp";
 	}
@@ -80,9 +83,12 @@ public class UserController {
 		if (dto.getGender() == null) {
 			throw new DataDeliveryException("성별을 선택해 주세요", HttpStatus.BAD_REQUEST);
 		}
-
-		if(dto.getLoginId().startsWith("kakao_")) {
-			dto.setSocialId(dto.getLoginId());
+		if (dto.getSocialId() == null) {
+			String loginId = dto.getLoginId();
+			if (loginId.startsWith("kakao_") || loginId.startsWith("naver_") || loginId.startsWith("google_")) {
+				String[] strs = loginId.split("_");
+				throw new DataDeliveryException("사용할 수 없는 형식입니다. (" + strs[0] + "_)", HttpStatus.BAD_REQUEST);
+			}
 		}
 		// 서비스 객체로 전달
 		userService.registerUser(dto);
@@ -111,6 +117,11 @@ public class UserController {
 		if (dto.getPassword() == null || dto.getPassword().isEmpty()) {
 			throw new DataDeliveryException("비밀번호를 입력해주세요.", HttpStatus.BAD_REQUEST);
 		}
+		String loginId = dto.getLoginId();
+		if (loginId.startsWith("kakao_") || loginId.startsWith("naver_") || loginId.startsWith("google_")) {
+			String[] strs = loginId.split("_");
+			throw new DataDeliveryException("사용할 수 없는 형식입니다. (" + strs[0] + "_)", HttpStatus.BAD_REQUEST);
+		}
 
 		User principal = userService.readUser(dto);
 
@@ -130,9 +141,17 @@ public class UserController {
 		URI uri = null;
 		switch (type) {
 		case "naver":
-			break;
+			System.out.println("11네이버 왔삼");
+			uri = UriComponentsBuilder.fromUriString("https://nid.naver.com/oauth2.0/authorize")
+					.query("response_type=code")
+					.query("client_id=" + loginAPI.getNaverClientId())
+					.query("redirect_uri=" + "http://localhost:8080/user/naver")
+					.query("state=STATE_STRING")
+					.build().toUri();
+			System.out.println("uri : " + uri);
+			return "redirect:" + uri;
 		case "kakao":
-			System.out.println("11카카오 왔삼");
+			System.out.println("22카카오 왔삼");
 			uri = UriComponentsBuilder.fromUriString("https://kauth.kakao.com/oauth/authorize")
 					.query("client_id=" + loginAPI.getKakaoRestApt())
 					.query("redirect_uri=" + "http://localhost:8080/user/kakao").query("response_type=" + "code")
@@ -141,7 +160,7 @@ public class UserController {
 			return "redirect:" + uri;
 		case "google":
 			
-			System.out.println("22구글 왔삼");
+			System.out.println("33구글 왔삼");
 			uri = UriComponentsBuilder.fromUriString("https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount")
 					.query("client_id=" + loginAPI.getGoogleClientId())
 					//.query("client_secret=" + loginAPI.getGoogleClientSecret())
@@ -326,19 +345,21 @@ public class UserController {
 		System.out.println("NaverProfile : " + resposne2.getBody().toString());
 
 		NaverProfile naverProfile = resposne2.getBody();
-
-		return "redirect:/user/sign-in"; // TODO 수정 (임시)
+		String socialId = "naver_" + naverProfile.getId();
+		System.out.println(socialId);
 		
-//		// TODO
-//		// 1. 최초 로그인 확인
-//		User principal = userService.searchLoginId(socialId);
-//		System.out.println("최초 로그인 했니 안 했니");
-//		if (principal == null) {
-//			redirectAttributes.addFlashAttribute("socialId", socialId);
-//			return "redirect:/user/sign-up";
-//		} else {
-//			return "redirect:/"; // TODO 수정 (임시)
-//		}
+		// TODO
+		// 1. 최초 로그인 확인
+		User principal = userService.searchLoginId(socialId);
+		System.out.println("최초 로그인 했니 안 했니");
+		if (principal == null) {
+			redirectAttributes.addFlashAttribute("socialId", socialId);
+			return "redirect:/user/sign-up";
+		} else {
+			session.setAttribute("principal", principal);
+			return "redirect:/"; // TODO 수정 (임시)
+		}
+
 	}
 
 }//

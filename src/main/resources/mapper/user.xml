@@ -47,7 +47,7 @@
 	</insert>
 	
 	<!-- 카카오톡 -->
-	<select id="findBySocialKakao" resultType="com.library.bookwave.repository.model.User">
+	<select id="findBySocialId" resultType="com.library.bookwave.repository.model.User">
 		select * from user_tb where social_id = #{loginId}
 	</select>
 	

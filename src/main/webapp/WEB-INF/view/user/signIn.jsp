@@ -21,11 +21,11 @@
                     <div class="col_box pw">
                         <div class="form_ip_pw">
                             <input type="password" class="form_ip" id="password" name="password" placeholder="비밀번호를 입력해 주세요." title="비밀번호 입력">
+                    <span class="valid_desc"></span>
                          
                         </div>
                     </div>
                     <!-- 로그인 페이지의 경고 문구는 모두 여기에 표시됩니다.  -->
-                    <span class="valid_desc"></span>
                 </div>
                 <!-- // 로그인 -->
 
@@ -55,7 +55,7 @@
                     <ul class="sns_login_list">
                         <li class="sns_login">
                                 <div class="btn_sns_login naver" >
-                            <a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=fmaqeaXL29mt1hpPcVjt&state=test&redirect_uri=http://localhost:8080/user/sign-in">
+                            <a href="/user/social?type=naver">
                             네이버 로그인
                             </a>
                         </div>

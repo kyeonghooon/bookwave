@@ -30,7 +30,9 @@ public interface UserRepository {
 	/**
 	 * 소셜
 	 */
-	// 카카오
+	// 
+	// 테스트
+	public int createSocialId(User user);
 	public User findBySocialId(String social_id);
 
 }

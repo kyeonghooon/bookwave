@@ -23,6 +23,7 @@
 				<label for="loginId">아이디</label> <input style="width: 81%"
 					type="text" class="loginId" placeholder="아이디 입력" id="loginId"
 					name="loginId" maxlength="12" readonly value="${socialId}" required />
+					<input type="hidden" name="socialId" value="${socialId}">
 			</c:when>
 			<c:otherwise>
 				<label for="loginId">아이디</label> <input style="width: 81%"

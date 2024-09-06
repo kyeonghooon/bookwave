@@ -59,6 +59,15 @@ public class UserService {
 		// user_detail_tb에 사용자 상세 정보 저장
 		createUserDetail(user.getId(), signUpDTO);
 	}
+	
+//	// TEST - 소셜 로그인
+//	public void createSocialKakao(SignUpDTO signUpDTO) {
+//		try {
+//			int result = userRepository.createSocialId(signUpDTO)
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
+//	}
 
 	// user_tb에 사용자 정보 삽입 메서드
 	private void createUser(SignUpDTO signUpDTO) {
@@ -134,7 +143,7 @@ public class UserService {
 	// 
 	
 	/**
-	 * (소셜) 카카오 socialID 확인
+	 * (소셜) socialID 확인
 	 * 
 	 * @param dto
 	 */

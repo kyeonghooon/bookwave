@@ -21,4 +21,7 @@ public class NaverProfile {
 	private String message;
 	private NaverProfileResponse response;
 	
+	public String getId() {
+		return response.getId();
+	}
 }
