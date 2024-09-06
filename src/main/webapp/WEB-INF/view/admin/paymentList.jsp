@@ -280,7 +280,14 @@ tbody tr:hover {
 												<th>${payment.status}</th>
 												<th>${payment.cancelReason}</th>
 												<th>${payment.canceledAt}</th>
-												<th>${payment.cancelStatus}</th>
+												<c:choose>
+													<c:when test="${payment.cancelStatus == 'REQUEST_CANCEL'}">
+														<th><a href="/payment/cancel?id=${payment.id}&userId=${payment.userId}&cancelReason=${payment.cancelReason}">결제취소 승인</a></th>
+													</c:when>
+													<c:otherwise>
+														<th>${payment.status}</th>
+													</c:otherwise>
+												</c:choose>
 											</tr>
 										</c:forEach>
 									</tbody>

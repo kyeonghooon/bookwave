@@ -53,4 +53,32 @@ public class PaymentService {
 	public Payment readPaymentById(Integer id) {
 		return paymentRepository.readPaymentById(id);
 	}
+
+	// 결제 취소 후 상태,wave 수정
+	@Transactional
+	public void updatePayment(Payment payment) {
+		int result1 = 0;
+		try {
+			result1 = paymentRepository.updatePaymentCancel(payment);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result1 != 1) {
+			System.out.println("결제상태 수정 실패");
+		}
+
+		int result2 = 0;
+		try {
+			result2 = paymentRepository.updateWaveById(payment.getUserId(), -payment.getTotalAmount());
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result2 != 1) {
+			System.out.println("유저 wave 업데이트 실패");
+		}
+	}
 }

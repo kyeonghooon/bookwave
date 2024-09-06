@@ -30,6 +30,7 @@ import com.google.gson.Gson;
 import com.library.bookwave.config.ApiConfig;
 import com.library.bookwave.dto.PaymentDTO;
 import com.library.bookwave.repository.model.Payment;
+import com.library.bookwave.service.AdminService;
 import com.library.bookwave.service.PaymentService;
 
 import jakarta.servlet.http.HttpSession;
@@ -41,6 +42,7 @@ import lombok.RequiredArgsConstructor;
 public class PaymentController {
 
 	private final ApiConfig apiConfig;
+	private final AdminService adminService;
 	private final PaymentService paymentService;
 	private final HttpSession session;
 
@@ -52,14 +54,13 @@ public class PaymentController {
 
 	// 결제 페이지
 	@GetMapping("/checkout")
-	public String checkoutPage(@RequestParam(name = "amount") Long amount, Model model) {
+	public String checkoutPage(@RequestParam(name = "amount") Long amount, @RequestParam(name = "orderName") String orderName, Model model) {
 		// TODO User principal = session.getAttribute("principal");
 		String customerName = "석지웅"; // TODO principal.getName();
 		String customerEmail = "slowman918@gmail.com"; // TODO principal.getEmail();
 		String customerMobilePhone = "01027203220"; // TODO principal.getPhone();
 		String customerKey = UUID.randomUUID().toString();
 		String orderId = UUID.randomUUID().toString();
-		String orderName = "충전";
 
 		PaymentDTO paymentDTO = PaymentDTO.builder().clientKey(apiConfig.getClientKey()).customerName(customerName).customerEmail(customerEmail).customerMobilePhone(customerMobilePhone)
 				.orderName(orderName).orderId(orderId).price(amount).customerKey(customerKey).build();
@@ -164,12 +165,15 @@ public class PaymentController {
 	//	- ABORTED: 결제 승인이 실패한 상태입니다.
 	//	- EXPIRED: 결제 유효 시간 30분이 지나 거래가 취소된 상태입니다. IN_PROGRESS 상태에서 결제 승인 API를 호출하지 않으면 EXPIRED가 됩니다.
 
-	@PostMapping("/cancel")
-	public String cancelPaymentProc(@RequestParam(name = "id") Integer id, @RequestParam(name = "cancelReason") String cancelReason) {
+	// - REQUEST_CANCEL: 결제 취소 요청
+
+	// 결제 취소 승인
+	@GetMapping("/cancel")
+	public String cancelPaymentProc(@RequestParam(name = "id") Integer id, @RequestParam(name = "userId") Integer userId, @RequestParam(name = "cancelReason") String cancelReason) {
 		Payment payment = paymentService.readPaymentById(id);
-		System.out.println(payment);
-		System.out.println("--------------------------------------------------");
+		cancelReason = "단순 변심"; // 샘플
 		String paymentKey = payment.getPaymentKey();
+
 		try {
 			// HTTP 클라이언트 생성
 			HttpClient client = HttpClient.newHttpClient();
@@ -178,12 +182,12 @@ public class PaymentController {
 			URI uri = URI.create("https://api.tosspayments.com/v1/payments/" + paymentKey + "/cancel");
 
 			// Basic 인증 헤더
-			String auth = apiConfig.getSecretKey()+":";
+			String auth = apiConfig.getSecretKey() + ":";
 			String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
 			String authHeader = "Basic " + encodedAuth;
 
 			// 요청 데이터
-			String json = String.format("{\"cancelReason\":\"%s\"}", "단순 변심");
+			String json = String.format("{\"cancelReason\":\"%s\"}", cancelReason);
 
 			// HTTP 요청 생성
 			HttpRequest request = HttpRequest.newBuilder().uri(uri).header("Authorization", authHeader).header("Content-Type", "application/json").header("Idempotency-Key", "SAAABPQbcqjEXiDL")
@@ -196,10 +200,14 @@ public class PaymentController {
 			System.out.println("Response Code: " + response.statusCode());
 			System.out.println("Response Body: " + response.body());
 
+			// if (response.statusCode() == 200) {
+			paymentService.updatePayment(payment);
+			// }
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return null; // TODO 결제목록으로 이동
 	}
 
 }

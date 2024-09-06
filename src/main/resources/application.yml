@@ -26,6 +26,7 @@ spring:
       - classpath:db/paymentTable.sql
       data-locations:
       - classpath:db/data.sql
+      - classpath:db/paymentData.sql
 
   h2:
     console:
