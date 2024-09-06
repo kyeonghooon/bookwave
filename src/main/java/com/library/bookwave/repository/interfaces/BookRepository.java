@@ -53,7 +53,6 @@ public interface BookRepository {
 
 	public int countReservationByUserId(Integer userId);
 
-	// 도서 대여
 	// 도서 남은 개수
 	public int readBookCurrentStock(Integer bookId);
 
@@ -61,6 +60,7 @@ public interface BookRepository {
 	public void updateBookCurrentStock(Integer bookId);
 
 	// 대여기록 생성
+	// TODO MySQL에서 작동하지 않는 쿼리문 사용
 	public void createLend(@Param("userId") Integer userId, @Param("bookId") Integer bookId);
 
 	// 대여 여부
@@ -68,5 +68,10 @@ public interface BookRepository {
 
 	// 대여 카운트
 	public int countLendByUserId(Integer userId);
+	
+	// eBook등록
+	public void createUserEbook(@Param("userId") Integer userId, @Param("bookId") Integer bookId, @Param("subscribe") Boolean subscribe);
 
+	// eBook여부조회
+	public int readUserEbook (@Param("userId") Integer userId, @Param("bookId") Integer bookId);
 }

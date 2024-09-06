@@ -35,8 +35,8 @@ public class BookController {
 	@GetMapping("/list")
 	public String showBooks(Model model, @RequestParam(name = "page", defaultValue = "1") int page,
 			@RequestParam(name = "size", defaultValue = "30") int size,
-			@RequestParam(name = "category", required = false) String category,
-			@RequestParam(name = "search", required = false) String search) {
+			@RequestParam(name = "category", defaultValue = "") String category,
+			@RequestParam(name = "search", defaultValue = "") String search) {
 		// TODO - 임시 userId 삭제예정
 		int userId = 1;
 
@@ -73,7 +73,7 @@ public class BookController {
 	 */
 	@GetMapping("/detail/{bookId}")
 	public String showBookDetail(@PathVariable("bookId") int bookId, Model model) {
-		// TODO 임시 userId 삭제예정
+		// TODO 임시 userId,user1 삭제예정
 		int userId = 1; // 임시
 		
 		// 책 상세보기
@@ -96,6 +96,10 @@ public class BookController {
 		// 유저가 도서를 예약한 횟수
 		int reservationCount = bookService.countReservationByUserId(userId);
 		
+		// ebook 등록 여부조회
+		int userEbook = bookService.readUserEbook(userId, bookId);
+		
+		model.addAttribute("userEbook",userEbook);
 		model.addAttribute("isFavorited", isFavorited);
 		model.addAttribute("isLiked", isLiked);
 		model.addAttribute("reservation",reservation);
@@ -141,6 +145,20 @@ public class BookController {
 	}
 
 	/*
+	 * eBook 등록
+	 */
+	@GetMapping("/ebook/{bookId}")
+	public String createUserEbook(@PathVariable("bookId") int bookId,  Model model) {
+		// TODO 임시 userId 삭제예정
+		int userId = 1;
+		
+		// TODO 유저 불리언값 받아오기
+		// bookService.createUserEbook(userId, bookId, principal.getSubcribe);
+		
+		return "redirect:/book/detail/" + bookId;
+	}
+	
+	/*
 	 * 좋아요 기능
 	 */
 	@PostMapping("/like/{bookId}")
@@ -179,6 +197,9 @@ public class BookController {
 			return "unfavorited";
 		}
 	}
+	
+	
+	
 	
 	
 }

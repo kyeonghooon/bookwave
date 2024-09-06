@@ -5,77 +5,7 @@
 <%@ include file="../layout/header.jsp"%>
 <link href="/css/book-list.css" rel="stylesheet" type="text/css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // 좋아요 버튼 클릭 이벤트 처리
-    document.querySelectorAll('.like--button').forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            var bookId = this.dataset.bookId;
-            var isLiked = this.dataset.liked === 'true';
-            var url = "/book/like/"+ bookId;
-
-         
-            console.log('Like button clicked. Is liked:', isLiked);
-            console.log('Sending request to:', url);
-
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-            .then(response => response.text())
-            .then(responseText => {
-                if (responseText === 'liked') {
-                    this.classList.add('liked');
-                    this.dataset.liked = 'true';
-                } else if (responseText === 'unliked') {
-                    this.classList.remove('liked');
-                    this.dataset.liked = 'false';
-                }
-            })
-            .catch(error => {
-                console.error('좋아요 처리 중 오류가 발생했습니다.', error);
-            });
-        });
-    });
-
-    // 관심등록 버튼 클릭 이벤트 처리
-    document.querySelectorAll('.favorite--button').forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            var bookId = this.dataset.bookId;
-            var isFavorited = this.dataset.favorited === 'true';
-            // var isFavorited = ${isFavorited};
-            var url = "/book/favorite/"+ bookId;
-
-            console.log('Favorite button clicked. Is favorited:', isFavorited);
-            console.log('Sending request to:', url);
-
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-            .then(response => response.text())
-            .then(responseText => {
-                if (responseText === 'favorited') {
-                    this.classList.add('favorited');
-                    this.dataset.favorited = 'true';
-                } else if (responseText === 'unfavorited') {
-                    this.classList.remove('favorited');
-                    this.dataset.favorited = 'false';
-                }
-            })
-            .catch(error => {
-                console.error('관심등록 처리 중 오류가 발생했습니다.', error);
-            });
-        });
-    });
-});
-</script>
+<script src="/js/book-list.js"></script>
 </head>
 <body>
 	<div class="page--wrapper">

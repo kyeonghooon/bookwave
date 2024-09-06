@@ -105,6 +105,7 @@ CREATE TABLE favorites_tb (
 CREATE TABLE user_ebook_tb (
     user_id INT NOT NULL,
     book_id INT NOT NULL,
+    subscribe TINYINT NOT NULL COMMENT '0: 구매 1: 구독',
     PRIMARY KEY (user_id , book_id)
 );
 

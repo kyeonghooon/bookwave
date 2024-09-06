@@ -62,7 +62,7 @@ body {
 	text-decoration: underline;
 }
 
-.lend--button, .ebook--button {
+.lend--button, .sub--ebook--button, .ebook--button, .read--ebook--button{
 	background-color: #218838;
 	display: inline-block;
 	margin-top: 20px;

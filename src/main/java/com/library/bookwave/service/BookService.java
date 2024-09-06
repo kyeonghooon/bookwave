@@ -80,7 +80,7 @@ public class BookService {
 		}
 		return like;
 	}
-	
+
 	@Transactional
 	public void createLike(Integer userId, Integer bookId) {
 		try {
@@ -90,7 +90,6 @@ public class BookService {
 			e.printStackTrace();
 		}
 	}
-
 
 	@Transactional
 	public void deleteLike(Integer userId, Integer bookId) {
@@ -112,7 +111,7 @@ public class BookService {
 		}
 		return favorite;
 	}
-	
+
 	public void createFavorite(Integer userId, Integer bookId) {
 		try {
 			bookRepository.createFavorite(userId, bookId);
@@ -139,7 +138,7 @@ public class BookService {
 		}
 		return reservation;
 	}
-	
+
 	public void createReservation(Integer userId, Integer bookId) {
 		try {
 			bookRepository.createReservation(userId, bookId);
@@ -157,28 +156,65 @@ public class BookService {
 		}
 		return count;
 	}
-	
-	
+
 	// 도서 대여
 	@Transactional
 	public boolean lendBook(Integer bookId, Integer userId) {
-		int currentStock = bookRepository.readBookCurrentStock(bookId);
-
-		if (currentStock > 0) {
-			bookRepository.updateBookCurrentStock(bookId);
-			bookRepository.createLend(userId, bookId);
-			return true;
-		} else {
-			return false;
+		boolean status = false;
+		try {
+			int currentStock = bookRepository.readBookCurrentStock(bookId);
+			if (currentStock > 0) {
+				bookRepository.updateBookCurrentStock(bookId);
+				bookRepository.createLend(userId, bookId);
+				status = true;
+			} else {
+				status = false;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
-	}
-	
-	public Lend readLend(Integer bookId,Integer userId) {
-		return bookRepository.readLend(bookId, userId);
-	}
-	
-	public int countLendByUserId(Integer userId) {
-		return bookRepository.countLendByUserId(userId);
+		return status;
 	}
 
+	public Lend readLend(Integer bookId, Integer userId) {
+		Lend lend = null;
+		try {
+			lend = bookRepository.readLend(bookId, userId);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return lend;
+	}
+
+	public int countLendByUserId(Integer userId) {
+		int count = 0;
+		try {
+			count = bookRepository.countLendByUserId(userId);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return count;
+	}
+
+	// eBook 등록
+	public void createUserEbook(Integer userId, Integer bookId, Boolean subscribe) {
+
+		try {
+			bookRepository.createUserEbook(userId, bookId, subscribe);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	// eBook 여부 조회
+	public int readUserEbook(Integer userId, Integer bookId) {
+		int userEbook = 0;
+		try {
+			userEbook = bookRepository.readUserEbook(userId, bookId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return userEbook;
+	}
 }

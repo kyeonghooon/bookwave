@@ -18,7 +18,7 @@
 		b.id = l.book_id AND l.user_id = #{userId}
 		LEFT JOIN favorites_tb f on b.id =
 		f.book_id AND f.user_id = #{userId}
-		WHERE category LIKE CONCAT('%',#{category}, '%')
+		WHERE category = #{category} or #{category} = ''
 		AND
 		title LIKE CONCAT('%', #{search}, '%')
 		LIMIT #{limit} OFFSET #{offset}
@@ -33,7 +33,7 @@
 	<!-- 필터링 걸린 책 갯수를 구하는쿼리 -->
 	<select id="countAllBook" resultType="int">
 		SELECT count(*) FROM book_tb
-		WHERE category LIKE CONCAT('%', #{category}, '%')
+		WHERE category = #{category} or #{category} = ''
 		AND title LIKE
 		CONCAT('%', #{search}, '%')
 	</select>
@@ -144,5 +144,13 @@
 		resultType="int">
 		SELECT count(*) FROM lend_tb WHERE status != -1 and user_id = #{userId}
 	</select>
-
+	
+	<!-- ebook 등록 -->
+	<insert id="createUserEbook">
+	insert into user_ebook_tb (user_id,book_id,subscribe)values (#{userId},#{bookId},#{subscribe})
+	</insert>
+	
+	<select id="readUserEbook" resultType="int">
+	select count(*) from user_ebook_tb where user_id = #{userId} and book_id = #{bookId}
+	</select>
 </mapper>
