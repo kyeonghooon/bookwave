@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.library.bookwave.dto.EbookDTO;
+import com.library.bookwave.dto.EbookReorderDTO;
 import com.library.bookwave.repository.model.UserEbook;
 import com.library.bookwave.repository.model.UserEbookCategory;
 
@@ -38,6 +39,9 @@ public interface EbookRepository {
 
 	// ebook 카테고리 이름 변경
 	Integer updateUserEbookCategoryName(@Param("userId") Integer userId, @Param("categoryName") String categoryName, @Param("categoryId") Integer categoryId);
+	
+	// ebook 카테고리 순서 변경
+	Integer updateUserEbookPriority(@Param("userId") Integer userId, @Param("ebookReorderList") List<EbookReorderDTO> ebookReorderList);
 	
 	// user_ebook category_id 변경
 	Integer updateUserEbookCategory(@Param("categoryId") Integer categoryId, @Param("userId") Integer userId, @Param("bookId") Integer bookId);

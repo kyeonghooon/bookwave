@@ -1,5 +1,6 @@
 package com.library.bookwave.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.library.bookwave.dto.EbookDTO;
+import com.library.bookwave.dto.EbookReorderDTO;
 import com.library.bookwave.repository.model.User;
 import com.library.bookwave.repository.model.UserEbook;
 import com.library.bookwave.repository.model.UserEbookCategory;
@@ -147,6 +149,33 @@ public class EbookController {
 	}
 	
 	/**
+	 * ebook 순서 변경 
+	 */
+	@PostMapping("reorder-category")
+	public ResponseEntity<Map<String, Object>> reorderEbookCategory(@RequestBody List<Map<String, Integer>> request, //
+			@SessionAttribute(value = Define.PRINCIPAL, required = false) User principal) {
+		// TODO 테스트용 코드 로그인 구현되면 제거 예정
+		int userId = principal == null ? 1 : principal.getId();
+		List<EbookReorderDTO> ebookReorderList = new ArrayList<>();
+		for (Map<String, Integer> map : request) {
+			ebookReorderList.add(EbookReorderDTO.builder()
+					.categoryId(map.get("categoryId"))
+					.priority(map.get("priority"))
+					.build());
+		}
+		
+		Map<String, Object> response = new HashMap<>();
+		if (ebookservice.updateUserEbookPriority(userId, ebookReorderList)) {
+			response.put("success", true);
+			return ResponseEntity.ok(response);
+		} else {
+			response.put("success", false);
+			response.put("message", "카테고리 순서 변경에 실패했습니다.");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+		}
+	}
+	
+	/**
 	 *  ebook 카테고리 변경
 	 */
 	@PostMapping("change-category")
@@ -167,5 +196,6 @@ public class EbookController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 		}
 	}
+	
 
 }

@@ -134,6 +134,11 @@
 	background-color: #d5d5d5;
 }
 
+.category--item.redLine {
+	border-top: 3px solid red;
+	padding-top: 3px;
+}
+
 #category--name {
   width: 159px;
 }
@@ -155,3 +160,4 @@
 .progress--bar.completed {
   background-color: #4caf50;
 }
+

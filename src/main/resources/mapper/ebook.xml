@@ -18,7 +18,8 @@
 	<select id="findEbookListByUserIdAndCategory" resultType="com.library.bookwave.dto.EbookDTO">
 		select b.id, b.title, b.cover, ue.last_point as progress, ue.last_read_date,
 		from book_tb b
-		join user_ebook_tb ue on b.id = ue.book_id
+		join user_ebook_tb ue on
+		b.id = ue.book_id
 		where
 		ue.user_id = #{userId}
 		and ( ue.user_ebook_category_id = #{category}
@@ -43,17 +44,25 @@
 	<select id="countEbookCategoryByUserId" resultType="int">
 		select count(*) from user_ebook_category_tb where user_id = #{userId}
 	</select>
-	
+
 	<insert id="createUserEbookCategory">
 		insert into user_ebook_category_tb (user_id, name) values (#{userId}, #{category})
 	</insert>
-	
+
 	<update id="updateUserEbookCategory">
 		update user_ebook_tb set user_ebook_category_id = #{categoryId} where user_id = #{userId} and book_id = #{bookId}
 	</update>
-	
+
 	<update id="updateUserEbookCategoryName">
 		update user_ebook_category_tb set name = #{categoryName} where id = #{categoryId} and user_id = #{userId}
+	</update>
+
+	<update id="updateUserEbookPriority" parameterType="java.util.List">
+		<foreach collection="ebookReorderList" item="category" index="index" separator=";">
+			update user_ebook_category_tb 
+			set priority = #{category.priority} 
+			where id = #{category.categoryId} and user_id = #{userId} 
+		</foreach>
 	</update>
 
 </mapper>

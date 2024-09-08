@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.library.bookwave.dto.EbookDTO;
+import com.library.bookwave.dto.EbookReorderDTO;
 import com.library.bookwave.repository.interfaces.EbookRepository;
 import com.library.bookwave.repository.model.UserEbook;
 import com.library.bookwave.repository.model.UserEbookCategory;
@@ -143,11 +144,32 @@ public class EbookService {
 		return true;
 	}
 	
+	/**
+	 * ebook 카테고리 명 변경
+	 */
 	@Transactional
 	public boolean updateUserEbookCategoryName(int userId, String categoryName, int categoryId) {
 		int result = 0;
 		try {
 			result = ebookRepository.updateUserEbookCategoryName(userId, categoryName, categoryId);
+		} catch (Exception e) {
+			return false;
+		}
+		if (result == 0) {
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * ebook 순서 변경
+	 */
+	@Transactional
+	public boolean updateUserEbookPriority(int userId, List<EbookReorderDTO> ebookReorderList) {
+		int result = 0;
+		try {
+			result = ebookRepository.updateUserEbookPriority(userId, ebookReorderList);
+			System.err.println(result);
 		} catch (Exception e) {
 			return false;
 		}

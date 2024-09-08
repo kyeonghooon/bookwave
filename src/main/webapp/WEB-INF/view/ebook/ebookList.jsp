@@ -20,7 +20,7 @@
 			</div>
 			<div id="message" class="text-danger mt-2"></div>
 		</div>
-		<div class="d-flex mt-2 flex-wrap">
+		<div class="d-flex mt-2 flex-wrap" id="btn--container">
 			<div class="category--add d-flex justify-content-center mr-1">
 				<button id="add--category--btn" class="m-1 btn btn-sm btn-primary">카테고리 추가</button>
 			</div>
