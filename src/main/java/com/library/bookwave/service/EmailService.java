@@ -2,6 +2,11 @@ package com.library.bookwave.service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.springframework.core.io.ClassPathResource;
@@ -18,6 +23,8 @@ import lombok.RequiredArgsConstructor;
 public class EmailService {
 
 	private final JavaMailSender mailSender;
+	private final ConcurrentHashMap<String, String> tokenStore = new ConcurrentHashMap<>();
+	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
 	// 이메일 인증 토큰 전송 메서드
 	public void sendVerificationEmail(String email, String token) {
@@ -25,7 +32,7 @@ public class EmailService {
 		String domain = "localhost:8080";
 		String emailContent = loadEmailTemplate(token, domain);
 		MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper;
+		MimeMessageHelper helper;
 		try {
 			helper = new MimeMessageHelper(message, true, "UTF-8");
 			helper.setTo(email);
@@ -36,12 +43,25 @@ public class EmailService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		// 토큰을 서버에 저장하고 5분 후 자동 삭제
+		storeToken(token, email);
+	}
+
+	public void storeToken(String token, String email) {
+		tokenStore.put(token, email);
+		scheduler.schedule(() -> tokenStore.remove(token), 5, TimeUnit.MINUTES);
 	}
 
 	// 토큰 생성 로직
 	public String generateVerificationToken() {
-		return java.util.UUID.randomUUID().toString();
+		return UUID.randomUUID().toString();
 	}
+	
+	// 토큰 확인 로직
+	public boolean validateToken(String token) {
+        return tokenStore.containsKey(token);
+    }
 
 	// JSP 템플릿을 로드하여 문자열로 변환하는 메서드
 	private String loadEmailTemplate(String token, String domain) {

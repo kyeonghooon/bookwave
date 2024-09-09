@@ -1,6 +1,6 @@
 package com.library.bookwave.controller;
 
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class EmailController {
 
 	private final EmailService emailService;
+	private final SimpMessagingTemplate messagingTemplate; // WebSocket 메시징을 위한 템플릿
 
 	@PostMapping("/sendVerification")
 	public String sendVerificationEmail(@RequestParam("email") String email) {
@@ -29,8 +30,15 @@ public class EmailController {
 		return "인증 이메일이 전송되었습니다.";
 	}
 	
-//	@GetMapping("validate")
-//	public String velidateEmail(@RequestParam("token") String token) {
-//		
-//	}
+	@GetMapping("/validate")
+    public String validateEmail(@RequestParam("token") String token) {
+        if (emailService.validateToken(token)) {
+            // 인증 성공 시 웹소켓을 통해 클라이언트로 전송
+            messagingTemplate.convertAndSend("/topic/verify", "ok");
+            return "인증 성공";
+        } else {
+            return "인증 실패 또는 토큰 만료";
+        }
+    }
+	
 }
