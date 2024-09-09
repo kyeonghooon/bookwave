@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
-	namespace="com.library.bookwave.repository.interfaces.SignUpRepository">
+	namespace="com.library.bookwave.repository.interfaces.UserRepository">
 
 	<insert id="createUser">
-		insert into user_tb(login_id, password, name)
-		values (#{loginId}, #{password}, #{name})
+		insert into user_tb(login_id, social_id, password, name)
+		values (#{loginId}, #{socialId}, #{password}, #{name})
 	</insert>
 
 	<select id="findById"
@@ -15,9 +15,9 @@
 	</select>
 
 	<insert id="createUserDetail">
-		insert into user_detail_tb (user_id, email, birth_date, gender,phone, zip, addr1, addr2)
+		insert into user_detail_tb (user_id,email, birth_date, gender,phone, zip, addr1, addr2)
 		values (#{id}, #{userDetail.email}, #{userDetail.birthDate},
-		#{userDetail.gender},  #{userDetail.phone}, #{userDetail.zip},
+		#{userDetail.gender}, #{userDetail.phone}, #{userDetail.zip},
 		#{userDetail.addr1}, #{userDetail.addr2})
 	</insert>
 
@@ -28,7 +28,7 @@
 
 
 	<!-- select 로그인 -->
-	<select id="findAllByUser"
+	<select id="findByUserIdAndPassword"
 		resultType="com.library.bookwave.repository.model.User">
 		select * from user_tb where login_id = #{loginId} and password = #{password}
 	</select>
@@ -39,5 +39,16 @@
 	</select>
 	
 	<!-- update, detete -->
-
+	
+	<!-- 카카오톡 로그인 -->
+	<insert id="createSocialKakao">
+		insert into user_tb(social_id, password, name)
+		values(#{socialId}, #{password}, #{name} )
+	</insert>
+	
+	<!-- 카카오톡 -->
+	<select id="findBySocialId" resultType="com.library.bookwave.repository.model.User">
+		select * from user_tb where social_id = #{loginId}
+	</select>
+	
 </mapper>

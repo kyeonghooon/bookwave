@@ -17,15 +17,21 @@ public interface UserRepository {
 	public User findById(String login_id);
 	// 
 	public List<UserDetail> findAll();
-	
-//	 (로그인 (아이디, 비밀번호))
-	public int findAllByUser(User user);
-
 	// 회원가입
 	public int createUserDetail(@Param("id") Integer id, @Param("userDetail") UserDetail userDetail);
 	
+
+//	 (로그인 (아이디, 비밀번호))
+	public int findAllByUser(User user);
+	
 	// 로그인 아이디
-	public User findByUserId(@Param("login") String loginId);
-	public User findByUserPwd(@Param("password") String password);
+	public User findByUserIdAndPassword(@Param("loginId") String loginId, @Param("password") String password);
+	
+	/**
+	 * 소셜
+	 */
+	// 
+	public int createSocialId(User user);
+	public User findBySocialId(String social_id);
 
 }
