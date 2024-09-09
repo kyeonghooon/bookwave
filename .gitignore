@@ -211,3 +211,4 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,eclipse,java,visualstudiocode
 
 !gradle/wrapper/gradle-wrapper.jar
+src/main/java/com/library/bookwave/utils/LoginAPIUtil.java

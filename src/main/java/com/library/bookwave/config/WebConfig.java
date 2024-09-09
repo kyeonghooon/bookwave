@@ -1,6 +1,9 @@
 package com.library.bookwave.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -17,4 +20,11 @@ public class WebConfig implements WebMvcConfigurer {
 			.maxAge(3600); // preflight 요청의 캐시 기간 (초 단위)
 	}
 
+	//
+	@Bean
+	 PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+	
+	
 }
