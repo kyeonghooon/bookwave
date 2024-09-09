@@ -59,6 +59,7 @@
 </main>
 
 <script>
+	// 수정 필요
     // Tab switching functionality
     document.getElementById('findIdTab').addEventListener('click', function() {
         switchTab('tabContentFindId', 'findIdTab');

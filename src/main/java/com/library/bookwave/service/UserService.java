@@ -3,6 +3,7 @@ package com.library.bookwave.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +30,7 @@ public class UserService {
 
 	@Autowired
 	private final MemberRepository memberRepository;
-	
+
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
@@ -64,7 +65,7 @@ public class UserService {
 		// user_detail_tb에 사용자 상세 정보 저장
 		createUserDetail(user.getId(), signUpDTO);
 	}
-	
+
 //	// TEST - 소셜 로그인
 //	public void createSocialKakao(SignUpDTO signUpDTO) {
 //		try {
@@ -78,7 +79,7 @@ public class UserService {
 	@Transactional
 	private void createUser(SignUpDTO signUpDTO) {
 		try {
-			
+
 			String hashPwd = passwordEncoder.encode(signUpDTO.getPassword());
 			System.out.println("hashPwd : " + hashPwd);
 			signUpDTO.setPassword(hashPwd);
@@ -125,8 +126,18 @@ public class UserService {
 
 		try {
 
-			
-			userEntity = userRepository.findByUserIdAndPassword(dto.getLoginId(), dto.getPassword());
+			userEntity = userRepository.findById(dto.getLoginId());
+
+			if (userEntity == null) {
+				throw new DataDeliveryException("아이디 잘못되었습니다.", HttpStatus.BAD_REQUEST);
+			}
+
+			// 암호화 때문에
+			boolean passwordMatches = BCrypt.checkpw(dto.getPassword(), userEntity.getPassword());
+
+			if (!passwordMatches) {
+				throw new DataDeliveryException("비밀번호가 잘못되었습니다.", HttpStatus.BAD_REQUEST);
+			}
 
 		} catch (DataDeliveryException e) {
 			e.printStackTrace();
@@ -134,9 +145,6 @@ public class UserService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RedirectException("알 수 없는 오류", HttpStatus.SERVICE_UNAVAILABLE);
-		}
-		if (userEntity == null) {
-			throw new DataDeliveryException("아이디 또는 비밀번호가 잘못되었습니다.", HttpStatus.BAD_REQUEST);
 		}
 
 		return userEntity;
@@ -147,21 +155,14 @@ public class UserService {
 
 		return memberRepository.readUserId(loginId);
 	}
-	
+
 	/**
 	 * 아이디, 비번 찾기
 	 */
 	// ID 찾기
-	
-	
+
 	// 비번 찾기
-	
-	
-	
-	
-	
-	
-	
+
 	/**
 	 * (소셜) socialID 확인
 	 * 
@@ -171,6 +172,5 @@ public class UserService {
 	public User searchLoginId(String socialId) {
 		return userRepository.findBySocialId(socialId);
 	}
-	
 
 }// end of main

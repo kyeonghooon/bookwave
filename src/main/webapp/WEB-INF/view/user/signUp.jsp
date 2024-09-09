@@ -164,6 +164,6 @@
 		</form>
 	</div>
 </body>
-<script src="/js/signup.js"></script>
+<script src="/js/sign-up.js"></script>
 <script src="/js/address.js"></script>
 </html>

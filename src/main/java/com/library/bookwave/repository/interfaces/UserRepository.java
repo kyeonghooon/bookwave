@@ -25,7 +25,7 @@ public interface UserRepository {
 	public int findAllByUser(User user);
 	
 	// 로그인 아이디
-	public User findByUserIdAndPassword(@Param("loginId") String loginId, @Param("password") String password);
+	public User findByUserIdAndPassword(@Param("loginId") String login_id, @Param("password") String password);
 	
 	/**
 	 * 소셜

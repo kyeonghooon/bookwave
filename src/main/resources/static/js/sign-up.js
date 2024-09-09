@@ -5,6 +5,7 @@ const inputId = document.querySelector(".loginId"); // 아이디
 const btnSubmit = document.getElementById("btn"); // 회원가입 버튼
 
 const reUid = /^[a-z]+[a-z0-9]{5,12}$/;
+let isIdChecked = false;
 if (btnId) {
 	btnId.addEventListener("click", function() {
 		const inputId = loginId.value.trim();
@@ -14,6 +15,7 @@ if (btnId) {
 			resultUid.style.color = 'red';
 			return;
 		}
+
 		const url = "/controller-user/check-userId?loginId=" + encodeURIComponent(inputId);
 		console.log("url", url);
 		fetch(url).then((response) => {
@@ -115,6 +117,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			event.preventDefault();
 			return;
 		}
+	
 		if (!nameRegex.test(name)) {
 			alert("이름은 한글 또는 영어로만 입력 가능합니다.");
 			event.preventDefault();
