@@ -43,11 +43,12 @@
                         <label for="formSaveId">아이디 저장</label>
                     </span>
                     <div class="right_area">
-                        <a href="#"><span class="text btn_text_id_link">아이디 찾기</span></a>
+                        <a href="/user/find-login"><span class="text btn_text_id_link">아이디 찾기</span></a>
                         <span class="gap">|</span>
                         <a href="#"><span class="text btn_text_pw_link">비밀번호 찾기</span></a>
                     </div>
                 </div>
+                
                 <!-- // 아이디 저장 -->
 
                 <!-- SNS 로그인 -->

@@ -37,19 +37,30 @@
 			</div>
 
 			<div class="form-group">
+					<c:choose>
+			<c:when test="${socialId != null }">
+				<label  for="password" style="display: none;">비밀번호</label> 
+				<input  type="password" class="form-control" placeholder="비밀번호 입력" id="password"
+					name="password" style="display: none;" readonly value="${password}" required />
+					<input type="hidden" name="password" value="${password}">
+			</c:when>
+			<c:otherwise>
 				<label for="password">비밀번호</label> <input type="password"
 					class="form-control" placeholder="비밀번호 입력" id="password"
 					name="password" required />
 				<p class="result-upw"></p>
-
-			</div>
-
+				
 			<div class="form-group">
 				<label for="pwcheck">비밀번호 확인</label> <input type="password"
 					class="form-control" placeholder="비밀번호 재입력" id="pwcheck"
 					name="pwcheck" required />
 				<p class="result-pw"></p>
 			</div>
+			</c:otherwise>
+			</c:choose>
+
+			</div>
+
 
 			<div class="form-group">
 				<label for="name">이름</label> <input type="text" class="form-control"
@@ -78,7 +89,7 @@
 					<select name="year" required>
 						<option>년도</option>
 						<%
-						for (int i = 1900; i <= 2024; i++) {
+						for (int i = 1920; i <= 2024; i++) {
 						%>
 						<option value="<%=i%>"><%=i%></option>
 						<%

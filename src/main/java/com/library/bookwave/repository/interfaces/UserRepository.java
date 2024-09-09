@@ -31,7 +31,6 @@ public interface UserRepository {
 	 * 소셜
 	 */
 	// 
-	// 테스트
 	public int createSocialId(User user);
 	public User findBySocialId(String social_id);
 

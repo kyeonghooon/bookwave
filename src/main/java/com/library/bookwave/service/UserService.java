@@ -3,9 +3,11 @@ package com.library.bookwave.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.library.bookwave.config.WebConfig;
 import com.library.bookwave.dto.SignInDTO;
 import com.library.bookwave.dto.SignUpDTO;
 import com.library.bookwave.dto.api.GoogleProfile;
@@ -27,6 +29,9 @@ public class UserService {
 
 	@Autowired
 	private final MemberRepository memberRepository;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	/**
 	 * 회원가입 처리
@@ -70,9 +75,13 @@ public class UserService {
 //	}
 
 	// user_tb에 사용자 정보 삽입 메서드
+	@Transactional
 	private void createUser(SignUpDTO signUpDTO) {
 		try {
-
+			
+			String hashPwd = passwordEncoder.encode(signUpDTO.getPassword());
+			System.out.println("hashPwd : " + hashPwd);
+			signUpDTO.setPassword(hashPwd);
 			int result = userRepository.createUser(signUpDTO.toUser());
 			if (result != 1) {
 				throw new DataDeliveryException("회원가입에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -116,6 +125,7 @@ public class UserService {
 
 		try {
 
+			
 			userEntity = userRepository.findByUserIdAndPassword(dto.getLoginId(), dto.getPassword());
 
 		} catch (DataDeliveryException e) {
@@ -138,9 +148,19 @@ public class UserService {
 		return memberRepository.readUserId(loginId);
 	}
 	
+	/**
+	 * 아이디, 비번 찾기
+	 */
+	// ID 찾기
 	
 	
-	// 
+	// 비번 찾기
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * (소셜) socialID 확인

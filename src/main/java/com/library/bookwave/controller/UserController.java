@@ -105,6 +105,26 @@ public class UserController {
 	public String signInPage() {
 		return "user/signIn";
 	}
+	
+	// 아이디, 비밀번호 찾기 화면 요청
+	@GetMapping("/find-login")
+	public String findLoginPage() {
+		return "user/findLogin";
+	}
+	
+//	@PostMapping("/sign-up")
+//	public String findLoginProc(SignUpDTO dto) {
+//		System.out.println("DTO:" + dto);
+//		if (dto.getName() == null || dto.getName().isEmpty()) {
+//			throw new DataDeliveryException("이름을 입력해주세요.", HttpStatus.BAD_REQUEST);
+//		}
+//		if (dto.getEmail() == null || dto.getEmail().isEmpty()) {
+//			throw new DataDeliveryException("email을 입력해주세요.", HttpStatus.BAD_REQUEST);
+//		}
+//
+//		// TODO 수정
+//		return "redirect:/user/sign-in";
+//	}
 
 	// 로그인 요청 처리
 	@PostMapping("/sign-in")

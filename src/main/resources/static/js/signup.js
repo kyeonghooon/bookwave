@@ -173,14 +173,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-// // 이벤트리스너(삭제)
-//   document.getElementById('loginId').addEventListener('keydown',function(event2){
-//     if(event2.code == 'Enter'){
-//       event2.preventDefault();
-//       // document.getElementById('check-id').click();
-//     }
-//   });
-
 
 
 
