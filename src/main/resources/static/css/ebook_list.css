@@ -1,0 +1,163 @@
+@charset "UTF-8";
+
+.book--list {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  padding: 20px;
+  width: 100%;
+  justify-content: center;
+  overflow: auto;
+}
+
+.book--item {
+  width: 190px;
+  height: 373px;
+  text-align: center;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative; /* 부모 요소에 상대적 위치 지정 */
+  transition: background-color 0.3s ease;
+  z-index: 1;
+}
+
+.book--item img {
+  width: 170px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 5px;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+.book--item:hover {
+  background-color: rgba(0, 0, 0, 0.3); /* 어두운 배경 */
+}
+
+.book--item:hover .book--actions {
+  display: flex;
+  justify-content: center;
+}
+
+.book--item:hover img {
+  opacity: 0.1;
+}
+
+.book--details {
+  flex: 1;
+}
+
+.book--title {
+  font-size: 14px;
+  margin-top: 10px;
+  display: inline-block;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.last--read--date {
+  height: 44px;
+  font-size: 14px;
+}
+
+.book--actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none; /* 기본적으로 숨김 */
+  z-index: 2;
+  align-items: center;
+}
+
+.book--actions a {
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  text-decoration: none;
+  background-color: #666;
+  color: white;
+  font-size: 14px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.text--none {
+  color: #ef6262;
+}
+
+.sidebar {
+  width: 200px;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  overflow-y: auto;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  background-color: #f8f9fa;
+}
+
+.sidebar a {
+  display: block;
+  padding: 10px;
+  margin-bottom: 5px;
+  text-decoration: none;
+  color: #333;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar a.active {
+  background-color: #333;
+  color: white;
+}
+
+.sidebar a:hover {
+  background-color: #d5d5d5;
+}
+
+/* 드래그 중에 카테고리 위로 진입했을 때 (호버 효과) */
+.category--item.highlight {
+	border-radius: 5px;
+	background-color: #d5d5d5;
+}
+
+.category--item.redLine {
+	border-top: 3px solid red;
+	padding-top: 3px;
+}
+
+#category--name {
+  width: 159px;
+}
+
+.progress--bar--container {
+  width: 100%;
+  height: 10px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+}
+
+.progress--bar {
+  height: 100%;
+  background-color: #76c7c0;
+  border-radius: 5px;
+  transition: width 0.3s ease;
+}
+
+.progress--bar.completed {
+  background-color: #4caf50;
+}
+

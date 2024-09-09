@@ -109,8 +109,20 @@ CREATE TABLE user_ebook_tb (
     subscribe TINYINT NOT NULL COMMENT '0: 구매 1: 구독',
     last_point DOUBLE DEFAULT 0,
     last_read_date TIMESTAMP,
-    status INT DEFAULT 0 COMMENT '0: 읽는 중, -1: 종료',
+    user_ebook_category_id INT DEFAULT 0 COMMENT '0: 미지정',
     PRIMARY KEY (user_id , book_id)
+);
+
+CREATE TABLE user_ebook_category_tb (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    name VARCHAR(10) NOT NULL,
+    priority INT DEFAULT 0
+);
+
+CREATE TABLE user_ebook_category_limit_tb (
+	user_id INT PRIMARY KEY,
+    limits INT DEFAULT 4
 );
 
 CREATE TABLE review_tb (
