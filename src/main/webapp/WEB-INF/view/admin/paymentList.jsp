@@ -277,7 +277,7 @@ tbody tr:hover {
 												<th>${payment.cancelReason}</th>
 												<c:choose>
 													<c:when test="${not empty payment.canceledAt}">
-														<th><fmt:formatDate value="${payment.canceledAt}" pattern="yyyy년 MM월 dd일 hh시 mm분 ss초"/></th>
+														<th><fmt:formatDate value="${payment.canceledAt}" pattern="yyyy-MM-dd hh:mm:ss"/></th>
 													</c:when>
 													<c:otherwise>
 														<th>${payment.canceledAt}</th>

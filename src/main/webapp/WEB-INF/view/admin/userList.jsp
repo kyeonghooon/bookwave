@@ -272,7 +272,7 @@ tbody tr:hover {
 												<th>${user.socialId}</th>
 												<th>${user.name}</th>
 												<th>${user.role == 'admin' ? '관리자' : '유저'}</th>
-												<th>${user.subscribe == 1 ? 'Subscribed' : 'Not Subscribed'}</th>
+												<th>${user.subscribe}</th>
 												<th><fmt:formatNumber value="${user.wave}" pattern="#,#00"></fmt:formatNumber></th>
 												<th><fmt:formatNumber value="${user.mileage}" pattern="#,#00"></fmt:formatNumber></th>
 												<c:choose>
