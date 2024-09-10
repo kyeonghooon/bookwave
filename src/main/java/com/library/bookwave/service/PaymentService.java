@@ -58,7 +58,7 @@ public class PaymentService {
 	@Transactional
 	public void updatePayment(Payment payment) {
 		int result1 = 0;
-		try {
+		try {	
 			result1 = paymentRepository.updatePaymentCancel(payment);
 		} catch (DataAccessException e) {
 			e.printStackTrace();

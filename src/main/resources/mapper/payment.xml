@@ -17,5 +17,9 @@
 	<update id="updateWaveById">
 		update user_tb set wave = wave + #{wave} where id = #{userId}
 	</update>
+	
+	<update id="updatePaymentCancel">
+		update payment_tb set cancel_reason = #{cancelReason}, canceled_at = now(), cancel_status = 'DONE' where id = #{id}
+	</update>
 
 </mapper>

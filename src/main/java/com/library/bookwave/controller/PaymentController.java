@@ -146,7 +146,7 @@ public class PaymentController {
 			payment.setUserId(1); // TODO payment.setUserId(principal.getId());
 			paymentService.createPayment(payment, Long.parseLong(approvedAmount));
 		} else {
-			// 결제 승인 실패시
+			// 결제승인 실패시
 			System.out.println("결제승인실패함");
 		}
 		System.out.println(ResponseEntity.status(code).body(jsonObject).toString());
@@ -165,21 +165,20 @@ public class PaymentController {
 	//	- ABORTED: 결제 승인이 실패한 상태입니다.
 	//	- EXPIRED: 결제 유효 시간 30분이 지나 거래가 취소된 상태입니다. IN_PROGRESS 상태에서 결제 승인 API를 호출하지 않으면 EXPIRED가 됩니다.
 
+	// cancel_status
 	// - REQUEST_CANCEL: 결제 취소 요청
 
 	// 결제 취소 승인
 	@GetMapping("/cancel")
 	public String cancelPaymentProc(@RequestParam(name = "id") Integer id, @RequestParam(name = "userId") Integer userId, @RequestParam(name = "cancelReason") String cancelReason) {
 		Payment payment = paymentService.readPaymentById(id);
-		cancelReason = "단순 변심"; // 샘플
-		String paymentKey = payment.getPaymentKey();
 
 		try {
 			// HTTP 클라이언트 생성
 			HttpClient client = HttpClient.newHttpClient();
 
 			// 요청 URL
-			URI uri = URI.create("https://api.tosspayments.com/v1/payments/" + paymentKey + "/cancel");
+			URI uri = URI.create("https://api.tosspayments.com/v1/payments/" + payment.getPaymentKey() + "/cancel");
 
 			// Basic 인증 헤더
 			String auth = apiConfig.getSecretKey() + ":";
@@ -190,8 +189,8 @@ public class PaymentController {
 			String json = String.format("{\"cancelReason\":\"%s\"}", cancelReason);
 
 			// HTTP 요청 생성
-			HttpRequest request = HttpRequest.newBuilder().uri(uri).header("Authorization", authHeader).header("Content-Type", "application/json").header("Idempotency-Key", "SAAABPQbcqjEXiDL")
-					.POST(HttpRequest.BodyPublishers.ofString(json)).build();
+			HttpRequest request = HttpRequest.newBuilder().uri(uri).header("Authorization", authHeader).header("Content-Type", "application/json")
+					.header("Idempotency-Key", apiConfig.getIdempotencyKey()).POST(HttpRequest.BodyPublishers.ofString(json)).build();
 
 			// HTTP 요청 보내기
 			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -201,13 +200,17 @@ public class PaymentController {
 			System.out.println("Response Body: " + response.body());
 
 			// if (response.statusCode() == 200) {
+			payment.setCancelAmount(payment.getTotalAmount());
+			payment.setCancelReason(cancelReason);
 			paymentService.updatePayment(payment);
+			// } else {
+			// 
 			// }
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null; // TODO 결제목록으로 이동
+		return "redirect:/admin/payment";
 	}
 
 }

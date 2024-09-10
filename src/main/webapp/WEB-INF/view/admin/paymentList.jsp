@@ -244,10 +244,6 @@ tbody tr:hover {
 
 					<!-- Page Heading -->
 					<h1 class="h3 mb-2 text-gray-800">전체 결제 목록 조회</h1>
-					<form action="/payment/cancel" method="post">
-						<input type="hidden" value="1" name="id"> <input type="hidden" value="단순 변심" name="cancelReason">
-						<button type="submit">취소</button>
-					</form>
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
@@ -279,13 +275,20 @@ tbody tr:hover {
 												<th>${payment.approvedAt}</th>
 												<th>${payment.status}</th>
 												<th>${payment.cancelReason}</th>
-												<th>${payment.canceledAt}</th>
 												<c:choose>
-													<c:when test="${payment.cancelStatus == 'REQUEST_CANCEL'}">
-														<th><a href="/payment/cancel?id=${payment.id}&userId=${payment.userId}&cancelReason=${payment.cancelReason}">결제취소 승인</a></th>
+													<c:when test="${not empty payment.canceledAt}">
+														<th><fmt:formatDate value="${payment.canceledAt}" pattern="yyyy년 MM월 dd일 hh시 mm분 ss초"/></th>
 													</c:when>
 													<c:otherwise>
-														<th>${payment.status}</th>
+														<th>${payment.canceledAt}</th>
+													</c:otherwise>
+												</c:choose>
+												<c:choose>
+													<c:when test="${payment.cancelStatus == 'REQUEST_CANCEL'}">
+														<th><a href="/payment/cancel?id=${payment.id}&userId=${payment.userId}&cancelReason=${payment.cancelReason}" onclick="confirmCancel(event)">결제취소 승인</a></th>
+													</c:when>
+													<c:otherwise>
+														<th>${payment.cancelStatus}</th>
 													</c:otherwise>
 												</c:choose>
 											</tr>
@@ -336,7 +339,15 @@ tbody tr:hover {
 		</div>
 	</div>
 	<!-- custom JavaScript -->
-	<script src="/vendor/datatables/custom.js"></script>
+	<!-- <script src="/vendor/datatables/custom.js"></script> -->
+	<script type="text/javascript">
+		function confirmCancel(event) {
+			var confirmed = confirm("정말 취소하시겠습니까?");
+			if (!confirmed) {
+				event.preventDefault();
+			}
+		}
+	</script>
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="/vendor/jquery/jquery.min.js"></script>

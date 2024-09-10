@@ -1,5 +1,7 @@
 package com.library.bookwave.repository.model;
 
+import java.sql.Timestamp;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,7 +27,7 @@ public class Payment {
 	private String status; // 결제 처리 상태
 	
 	private Long cancelAmount; // 취소 금액
-	private String canceledAt; // 취소 시간
+	private Timestamp canceledAt; // 취소 시간
 	private String cancelReason; // 취소 사유
 	private String cancelStatus; // 취소 처리 상태
 }

@@ -54,4 +54,5 @@ logging:
 payment:
   clientKey: test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm
   secretKey: test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6
+  IdempotencyKey: SAAABPQbcqjEXiDL
 # 초기 파라미터 설정

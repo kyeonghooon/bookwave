@@ -12,4 +12,6 @@ public class ApiConfig {
 	private String clientKey;
 	@Value("${payment.secretKey}")
 	private String secretKey;
+	@Value("${payment.IdempotencyKey")
+	private String IdempotencyKey;
 }
