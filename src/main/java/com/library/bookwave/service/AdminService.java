@@ -38,4 +38,5 @@ public class AdminService {
 		userList = adminRepository.readAllUser();
 		return userList;
 	}
+
 }
