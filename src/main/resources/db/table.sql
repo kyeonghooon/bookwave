@@ -70,6 +70,17 @@ CREATE TABLE item_tb (
     price INT NOT NULL
 );
 
+CREATE TABLE page_tb (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE page_item_tb (
+	item_id INT,
+    page_id INT,
+    PRIMARY KEY (item_id , page_id)
+);
+
 CREATE TABLE purchase_history_tb (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,

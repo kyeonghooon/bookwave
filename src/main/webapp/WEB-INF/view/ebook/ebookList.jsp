@@ -62,5 +62,8 @@
 		</c:forEach>
 	</div>
 </div>
+<script type="text/javascript">
+ const item
+</script>
 <script src="/js/ebook_list.js"></script>
 <%@ include file="../layout/footer.jsp"%>

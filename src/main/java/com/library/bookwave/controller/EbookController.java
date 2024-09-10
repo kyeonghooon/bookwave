@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.library.bookwave.dto.EbookDTO;
 import com.library.bookwave.dto.EbookReorderDTO;
+import com.library.bookwave.handler.exception.RedirectException;
 import com.library.bookwave.repository.model.User;
 import com.library.bookwave.repository.model.UserEbook;
 import com.library.bookwave.repository.model.UserEbookCategory;
 import com.library.bookwave.service.EbookService;
 import com.library.bookwave.utils.Define;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -37,13 +37,20 @@ public class EbookController {
 	private final EbookService ebookservice;
 
 	@GetMapping
-	public String listPage(@RequestParam(name = "category", defaultValue = "-1") Integer category, //
+	public String listPage(//
+			@RequestParam(name = "category", defaultValue = "-1") Integer category, //
 			@SessionAttribute(value = Define.PRINCIPAL, required = false) User principal, //
 			Model model) {
 		// TODO 테스트용 코드 로그인 구현되면 제거 예정
 		int userId = principal == null ? 1 : principal.getId();
 		List<EbookDTO> bookList = ebookservice.findEbookListByUserIdAndCategory(userId, category);
 		List<UserEbookCategory> categoryList = ebookservice.findEbookCategoryListByUserId(userId);
+		Map<String, Integer> items = ebookservice.findItemsByPageName("ebookList");
+		if (items == null) {
+			// TODO 에러 페이지 호출
+			new RedirectException("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		model.addAttribute("items", items);
 		model.addAttribute("bookList", bookList);
 		model.addAttribute("selectedCategory", category);
 		model.addAttribute("categoryList", categoryList);
@@ -123,7 +130,7 @@ public class EbookController {
 		}
 
 	}
-	
+
 	@GetMapping("/edit-category")
 	public ResponseEntity<Map<String, Object>> editCategory(@RequestParam(name = "categoryName") String categoryName, //
 			@RequestParam(name = "categoryId") Integer categoryId, //
@@ -147,9 +154,9 @@ public class EbookController {
 		}
 
 	}
-	
+
 	/**
-	 * ebook 순서 변경 
+	 * ebook 순서 변경
 	 */
 	@PostMapping("reorder-category")
 	public ResponseEntity<Map<String, Object>> reorderEbookCategory(@RequestBody List<Map<String, Integer>> request, //
@@ -158,12 +165,9 @@ public class EbookController {
 		int userId = principal == null ? 1 : principal.getId();
 		List<EbookReorderDTO> ebookReorderList = new ArrayList<>();
 		for (Map<String, Integer> map : request) {
-			ebookReorderList.add(EbookReorderDTO.builder()
-					.categoryId(map.get("categoryId"))
-					.priority(map.get("priority"))
-					.build());
+			ebookReorderList.add(EbookReorderDTO.builder().categoryId(map.get("categoryId")).priority(map.get("priority")).build());
 		}
-		
+
 		Map<String, Object> response = new HashMap<>();
 		if (ebookservice.updateUserEbookPriority(userId, ebookReorderList)) {
 			response.put("success", true);
@@ -174,9 +178,9 @@ public class EbookController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 		}
 	}
-	
+
 	/**
-	 *  ebook 카테고리 변경
+	 * ebook 카테고리 변경
 	 */
 	@PostMapping("change-category")
 	public ResponseEntity<Map<String, Object>> changeEbookCategory(@RequestBody Map<String, Integer> request, //
@@ -196,6 +200,5 @@ public class EbookController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 		}
 	}
-	
 
 }

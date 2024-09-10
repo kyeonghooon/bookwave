@@ -2,9 +2,11 @@ package com.library.bookwave.dto;
 
 import java.sql.Timestamp;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class PrincipalDTO {
 	
 	private Integer userId;

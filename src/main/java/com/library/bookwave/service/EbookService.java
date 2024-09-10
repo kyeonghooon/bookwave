@@ -1,6 +1,8 @@
 package com.library.bookwave.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.library.bookwave.dto.EbookDTO;
 import com.library.bookwave.dto.EbookReorderDTO;
 import com.library.bookwave.repository.interfaces.EbookRepository;
+import com.library.bookwave.repository.interfaces.ItemRepository;
+import com.library.bookwave.repository.model.Item;
 import com.library.bookwave.repository.model.UserEbook;
 import com.library.bookwave.repository.model.UserEbookCategory;
 
@@ -16,11 +20,12 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class EbookService {
-	
+
 	private final EbookRepository ebookRepository;
-	
+	private final ItemRepository itemRepository;
+
 	/**
-	 *  해당 ebook 상세 내역 조회
+	 * 해당 ebook 상세 내역 조회
 	 */
 	public UserEbook readUserEbook(int userId, int bookId) {
 		UserEbook userEbookEntity = null;
@@ -34,7 +39,7 @@ public class EbookService {
 		}
 		return userEbookEntity;
 	}
-	
+
 	/**
 	 * ebook path 조회
 	 */
@@ -44,9 +49,9 @@ public class EbookService {
 		// TODO 테스트 코드 변경 예정
 		return ebookPath == null ? "/ebooks/2.epub/" : ebookPath;
 	}
-	
+
 	/**
-	 *  ebook의 마지막 읽은 위치 저장
+	 * ebook의 마지막 읽은 위치 저장
 	 */
 	@Transactional
 	public int updateUserEbookWithLastPoint(double lastPoint, int userId, int bookId) {
@@ -61,11 +66,11 @@ public class EbookService {
 		}
 		return result;
 	}
-	
+
 	/**
-	 *  해당 유저의 ebook 목록 받아오기
+	 * 해당 유저의 ebook 목록 받아오기
 	 */
-	public List<EbookDTO> findEbookListByUserIdAndCategory(int userId, int category){
+	public List<EbookDTO> findEbookListByUserIdAndCategory(int userId, int category) {
 		List<EbookDTO> bookList = null;
 		try {
 			bookList = ebookRepository.findEbookListByUserIdAndCategory(userId, category);
@@ -77,11 +82,11 @@ public class EbookService {
 		}
 		return bookList;
 	}
-	
+
 	/**
-	 *  해당 유저의 ebook 카테고리 목록 받아오기
+	 * 해당 유저의 ebook 카테고리 목록 받아오기
 	 */
-	public List<UserEbookCategory> findEbookCategoryListByUserId(int userId){
+	public List<UserEbookCategory> findEbookCategoryListByUserId(int userId) {
 		List<UserEbookCategory> categoryList = null;
 		try {
 			categoryList = ebookRepository.findEbookCategoryListByUserId(userId);
@@ -93,9 +98,9 @@ public class EbookService {
 		}
 		return categoryList;
 	}
-	
+
 	/**
-	 *  최대 카테고리 수 조회 (없으면 3)
+	 * 최대 카테고리 수 조회 (없으면 3)
 	 */
 	public int findEbookCategoryLimitByUserId(int userId) {
 		int result = 0;
@@ -110,7 +115,7 @@ public class EbookService {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * 현재 카테고리 수 조회
 	 */
@@ -126,7 +131,7 @@ public class EbookService {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * ebook 카테고리 생성
 	 */
@@ -143,7 +148,7 @@ public class EbookService {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * ebook 카테고리 명 변경
 	 */
@@ -160,7 +165,7 @@ public class EbookService {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * ebook 순서 변경
 	 */
@@ -178,9 +183,9 @@ public class EbookService {
 		}
 		return true;
 	}
-	
+
 	/**
-	 *  user ebook의 카테고리 변경
+	 * user ebook의 카테고리 변경
 	 */
 	@Transactional
 	public int updateUserEbookCategory(int categoryId, int userId, int bookId) {
@@ -194,5 +199,24 @@ public class EbookService {
 			// TODO : 처리 필요
 		}
 		return result;
+	}
+
+	/**
+	 * ebook list 페이지에서 사용되는 item을 세팅
+	 */
+	public Map<String, Integer> findItemsByPageName(String pagename) {
+		List<Item> itemList = null;
+		try {
+			itemList = itemRepository.findItemListByPageName(pagename);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return null;
+		}
+		// 아이템 리스트를 Map구조로 변환
+		Map<String, Integer> items = new HashMap<>();
+		for (Item item : itemList) {
+			items.put(item.getName(), item.getId());
+		}
+		return items;
 	}
 }
