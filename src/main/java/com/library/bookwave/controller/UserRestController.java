@@ -23,13 +23,24 @@ public class UserRestController {
 	// http://localhost:8080/controller-user/check-userId
 	// ID 중복 확인
 	@GetMapping("/check-userId")
-	@ResponseBody
 	public boolean getUserId(@RequestParam(name = "loginId") String loginId) {
 		//return userService.confirmUid(loginId);
 		System.out.println(loginId);
 		boolean isUse = userService.readUserId(loginId) == null ? true : false;
 		return isUse;
 		
+	}
+	
+	// 아이디, 비밀번호 찾기 화면 요청
+	@GetMapping("/find-login")
+	public String findLoginRedirect(@RequestParam(name = "type") String type) {
+		// TOOD 도메인 변경시 바꿈
+		String domain = "localhost:8080";
+		if (type.equals("id")) {
+			return domain + "/user/find-login?type=id";
+		} else {
+			return domain + "/user/find-login?type=pw";
+		}
 	}
 	
 	

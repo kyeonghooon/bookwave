@@ -5,7 +5,7 @@ const inputId = document.querySelector(".loginId"); // 아이디
 const btnSubmit = document.getElementById("btn"); // 회원가입 버튼
 
 const reUid = /^[a-z]+[a-z0-9]{5,12}$/;
-let isIdChecked = false;
+let isIdChecked = false; // 중복체크 여부
 if (btnId) {
 	btnId.addEventListener("click", function() {
 		const inputId = loginId.value.trim();
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	// 비밀번호 정규식 (최소 8자 이상, 특수문자 포함)
 	const passwordRegex = /^(?=.*[\W_]).{8,}$/;
-
+	
 	function validatePasswordStrength(password) {
 		if (password.length === 0) {
 			return '';

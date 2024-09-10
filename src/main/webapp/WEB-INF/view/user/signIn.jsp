@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="/css/signIn.css" type="text/css" />
 
 
-    <main class="container_wrapper">
-        <section class="contents_wrap login">
-            <div class="login_form_wrap">
+    <main class="container--wrapper">
+        <section class="contents--wrap login">
+            <div class="login--form--wrap">
 				<form action="/user/sign-in" method = "post">
 
                 <!-- 로그인 -->
@@ -29,7 +29,7 @@
                 </div>
                 <!-- // 로그인 -->
 
-                <div class="btn_wrap justify">
+                <div class="btn--wrap justify">
                     <button class="btn_lg btn_light_gray" type="submit" id="loginBtn" >
                        로그인
                     </button>
@@ -52,26 +52,27 @@
                 <!-- // 아이디 저장 -->
 
                 <!-- SNS 로그인 -->
-                <div class="sns_login_box">
-                    <ul class="sns_login_list">
-                        <li class="sns_login">
-                                <div class="btn_sns_login naver" >
+                <div class="sns--login--box">
+                    <ul class="sns--login--list">
+                        <li class="sns--login">
+                                <div class="btn--sns--login--naver" >
                             <a href="/user/social?type=naver">
-                            네이버 로그인
+                            <img alt="네이버" src="/img/navericon.png" style="width: 50px; height: auto;">
+                       
                             </a>
                         </div>
                         </li>
-                        <li class="sns_login">
-                               <div class="btn_sns_login kakao" >
+                        <li class="sns--login">
+                               <div class="btn--sns--login--kakao" >
                             <a href="/user/social?type=kakao">
-                            카카오 로그인
+                             <img alt="카카오톡" src="/img/social_kakao.png" style="width: 50px; height: auto;">
                             </a>
                         </div>
                         </li>
-                        <li class="sns_login">
-                        <div class="btn_sns_login google" >
+                        <li class="sns--login">
+                        <div class="btn--sns--login--google" >
                             <a href="/user/social?type=google">
-                            구글 로그인
+                              <img alt="구글" src="/img/social_google.png" style="width: 50px; height: auto;">
                             </a>
                         </div>
                         </li>
@@ -82,7 +83,7 @@
                 <!-- // SNS 로그인 -->
 
                 <!-- 회원가입 -->
-                <div class="btn_wrap justify">
+                <div class="btn--wrap justify">
                     <a href="/user/sign-up" class="btn_lg btn_line_primary" id="join">
                         <span class="text">회원가입</span>
                     </a>

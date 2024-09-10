@@ -52,3 +52,16 @@ $(function () {
         return ""; // 일치하는 쿠키가 없으면 빈 문자열 반환
     }
 });
+
+// TODO 아이디 찾기 누르면 비동기 처리
+// 1. url = /controller-user/find-login?type=idorpw
+// 2. then((path) => { 창 오픈.href(path) } // window.open(path)
+<script>
+	$(function(){
+		// 버튼 누르면
+		$("right_area").click(function(){
+			// 팝업창 생성
+			window.open("/controller-user/find-login?type=idorpw","zipcode","width=600px, height=500px, top=200px, left=200px");
+		})
+	});
+</script>
