@@ -1,6 +1,6 @@
 // 아이디 (유효성, 중복확인)
-const resultUid = document.querySelector(".result-uid"); // 에러 메세지(아이디)
-const btnId = document.querySelector(".check-id"); // 중복체크 버튼
+const resultUid = document.querySelector(".result--uid"); // 에러 메세지(아이디)
+const btnId = document.querySelector(".check--id"); // 중복체크 버튼
 const inputId = document.querySelector(".loginId"); // 아이디
 const btnSubmit = document.getElementById("btn"); // 회원가입 버튼
 
@@ -45,8 +45,8 @@ if (btnId) {
 document.addEventListener('DOMContentLoaded', function() {
 	const passwordInput = document.getElementById('password');
 	const confirmPasswordInput = document.getElementById('pwcheck');
-	const passwordCheckMessage = document.querySelector('.result-upw');
-	const confirmPasswordCheckMessage = document.querySelector('.result-pw');
+	const passwordCheckMessage = document.querySelector('.result--upw');
+	const confirmPasswordCheckMessage = document.querySelector('.result--pw');
 
 	// 비밀번호 정규식 (최소 8자 이상, 특수문자 포함)
 	const passwordRegex = /^(?=.*[\W_]).{8,}$/;
@@ -169,6 +169,63 @@ document.addEventListener("DOMContentLoaded", function() {
 		const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		return re.test(email);
 	}
+});
+
+// 이메일 관련 기능
+document.addEventListener("DOMContentLoaded", function() {
+	const sendEmailBtn = document.getElementById('send--email--verification'); // 이메일 전송 버튼
+
+	sendEmailBtn.addEventListener('click', function() {
+		const email = document.getElementById('email').value + "@" + document.querySelector('select[name="email2"]').value;
+  		sendEmailBtn.innerText = "전송중";
+		// 이메일 인증 요청
+		fetch(`/email/sendVerification?email=${encodeURIComponent(email)}`, {
+			 method: 'POST'
+		})
+		.then(response => response.text())
+		.then(data => {
+			 // 카운트다운 시작
+			 startCountdown();
+		})
+		.catch(error => console.error('Error:', error));
+  });
+
+  // 카운트다운 시작 함수
+function startCountdown() {
+	sendEmailBtn.innerText = "대기중";
+	let countdown = 300; // 5분 (300초)
+	const statusElement = document.getElementById('email--verification--status');
+	statusElement.innerText = "5분 내에 인증을 완료해주세요.";
+	
+	const interval = setInterval(function() {
+		 countdown--;
+		 statusElement.innerText = `남은 시간: ${countdown}초`;
+		 
+		 if (countdown <= 0) {
+			  clearInterval(interval);
+			  statusElement.innerText = "인증 시간이 만료되었습니다.";
+			  sendEmailBtn.innerText = "재전송";
+		 }
+	}, 1000);
+
+	// 웹소켓을 통해 인증 결과 대기
+	const socket = new SockJS('/ws');
+	const stompClient = Stomp.over(socket);
+	stompClient.connect({}, function (frame) {
+		 stompClient.subscribe('/topic/verify', function (message) {
+			  if (message.body === 'ok') {
+					clearInterval(interval); // 카운트다운 중지
+					statusElement.innerText = "이메일 인증이 완료되었습니다.";
+					sendEmailBtn.innerText = "완료";
+					document.getElementById("send--email--verification").disabled = true; // 버튼 비활성화
+					alert('이메일 인증 성공!');
+					// TODO 인증 완료시 boolean 변수 처리
+			  } else {
+					statusElement.innerText = "인증 실패. 다시 시도해주세요.";
+			  }
+		 });
+	});
+}
 });
 
 
