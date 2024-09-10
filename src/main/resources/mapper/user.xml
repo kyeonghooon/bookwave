@@ -1,12 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.library.bookwave.repository.interfaces.AdminRepository">
-	<insert id="insert">
-		insert into user_tb(login_id, social_id, password, name, role, subscribe, wave, mileage, status)
-		values (#{loginId}, #{socialId}, #{password}, #{name}, #{role}, #{subscribe}, #{wave}, #{mileage}, #{status})
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.library.bookwave.repository.interfaces.UserRepository">
+
+	<insert id="createUser">
+		insert into user_tb(login_id, social_id, password, name)
+		values (#{loginId}, #{socialId}, #{password}, #{name})
+	</insert>
+
+	<select id="findById"
+		resultType="com.library.bookwave.repository.model.User">
+		select * from user_tb where login_id = #{loginId}
+	</select>
+
+	<insert id="createUserDetail">
+		insert into user_detail_tb (user_id,email, birth_date, gender,phone, zip, addr1, addr2)
+		values (#{id}, #{userDetail.email}, #{userDetail.birthDate},
+		#{userDetail.gender}, #{userDetail.phone}, #{userDetail.zip},
+		#{userDetail.addr1}, #{userDetail.addr2})
+	</insert>
+
+	<select id="findAll"
+		resultType="com.library.bookwave.repository.model.UserDetail">
+		select * from user_detail_tb
+	</select>
+
+
+	<!-- select 로그인 -->
+	<select id="findByUserIdAndPassword"
+		resultType="com.library.bookwave.repository.model.User">
+		select * from user_tb where login_id = #{loginId} and password = #{password}
+	</select>
+	
+	<!-- ID 찾기 -->
+	<select id="findByUserId" resultType="com.library.bookwave.repository.model.User">
+		select * from user_tb where name = #{loginId}
+	</select>
+	
+	<!-- update, detete -->
+	
+	<!-- 카카오톡 로그인 -->
+	<insert id="createSocialKakao">
+		insert into user_tb(social_id, password, name)
+		values(#{socialId}, #{password}, #{name} )
 	</insert>
 	
-	<select id="readAllUser" resultType="com.library.bookwave.repository.model.User">
-		select * from user_tb
+	<!-- 카카오톡 -->
+	<select id="findBySocialId" resultType="com.library.bookwave.repository.model.User">
+		select * from user_tb where social_id = #{loginId}
 	</select>
+	
 </mapper>

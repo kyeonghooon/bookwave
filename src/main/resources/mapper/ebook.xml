@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.bookwave.repository.interfaces.EbookRepository">
+
+	<select id="readUserEbook" resultType="com.library.bookwave.repository.model.UserEbook">
+		select * from user_ebook_tb where user_id = #{userId} and book_id = #{bookId}
+	</select>
+
+	<select id="findEbookPathByBookId" resultType="String">
+		select ebook_path from book_tb where id = #{bookId}
+	</select>
+
+	<update id="updateUserEbookWithLastPoint">
+		update user_ebook_tb set last_point = #{lastPoint}, last_read_date = now() where user_id = #{userId} and book_id = #{bookId}
+	</update>
+
+	<select id="findEbookListByUserIdAndCategory" resultType="com.library.bookwave.dto.EbookDTO">
+		select b.id, b.title, b.cover, ue.last_point as progress, ue.last_read_date,
+		from book_tb b
+		join user_ebook_tb ue on
+		b.id = ue.book_id
+		where
+		ue.user_id = #{userId}
+		and ( ue.user_ebook_category_id = #{category}
+		or #{category} = -1 )
+		order by ue.last_read_date desc
+	</select>
+
+	<select id="findEbookCategoryListByUserId" resultType="com.library.bookwave.repository.model.UserEbookCategory">
+		select * from user_ebook_category_tb
+		where user_id = #{userId}
+		union
+		select 0, #{userId}, '미지정', -1
+		order by priority desc
+	</select>
+
+	<select id="findEbookCategoryLimitByUserId" resultType="int">
+		select ifnull(uec.limits, 3)
+		from user_ebook_category_limit_tb uec
+		right join dual on #{userId} = uec.user_id
+	</select>
+
+	<select id="countEbookCategoryByUserId" resultType="int">
+		select count(*) from user_ebook_category_tb where user_id = #{userId}
+	</select>
+
+	<insert id="createUserEbookCategory">
+		insert into user_ebook_category_tb (user_id, name) values (#{userId}, #{category})
+	</insert>
+
+	<update id="updateUserEbookCategory">
+		update user_ebook_tb set user_ebook_category_id = #{categoryId} where user_id = #{userId} and book_id = #{bookId}
+	</update>
+
+	<update id="updateUserEbookCategoryName">
+		update user_ebook_category_tb set name = #{categoryName} where id = #{categoryId} and user_id = #{userId}
+	</update>
+
+	<update id="updateUserEbookPriority" parameterType="java.util.List">
+		<foreach collection="ebookReorderList" item="category" index="index" separator=";">
+			update user_ebook_category_tb 
+			set priority = #{category.priority} 
+			where id = #{category.categoryId} and user_id = #{userId} 
+		</foreach>
+	</update>
+
+</mapper>

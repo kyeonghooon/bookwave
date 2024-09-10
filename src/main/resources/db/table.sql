@@ -15,6 +15,7 @@ CREATE TABLE user_tb (
 CREATE TABLE user_detail_tb (
 	user_id INT PRIMARY KEY,
 	email VARCHAR(100) NOT NULL UNIQUE,
+    birth_date DATE NOT NULL,
     gender TINYINT NOT NULL COMMENT '0:남성 1:여성',
     phone VARCHAR(13) NOT NULL UNIQUE,
     zip VARCHAR(10) DEFAULT NULL,
@@ -105,7 +106,23 @@ CREATE TABLE favorites_tb (
 CREATE TABLE user_ebook_tb (
     user_id INT NOT NULL,
     book_id INT NOT NULL,
+    subscribe TINYINT NOT NULL COMMENT '0: 구매 1: 구독',
+    last_point DOUBLE DEFAULT 0,
+    last_read_date TIMESTAMP,
+    user_ebook_category_id INT DEFAULT 0 COMMENT '0: 미지정',
     PRIMARY KEY (user_id , book_id)
+);
+
+CREATE TABLE user_ebook_category_tb (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    name VARCHAR(10) NOT NULL,
+    priority INT DEFAULT 0
+);
+
+CREATE TABLE user_ebook_category_limit_tb (
+	user_id INT PRIMARY KEY,
+    limits INT DEFAULT 4
 );
 
 CREATE TABLE review_tb (
