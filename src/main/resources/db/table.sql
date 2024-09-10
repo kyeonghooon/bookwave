@@ -57,33 +57,35 @@ CREATE TABLE reservation_tb (
     status INT DEFAULT 0 COMMENT '0:진행중 -1: 완료 1: 대기'
 );
 
-CREATE TABLE items_tb (
+CREATE TABLE wallet_tb (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    wave INT DEFAULT 0,
+    mileage INT DEFAULT 0
+);
+
+CREATE TABLE item_tb (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    amount INT NOT NULL COMMENT '양수는 충전 음수는 소모'
+    price INT NOT NULL
 );
 
-CREATE TABLE item_history_tb (
+CREATE TABLE purchase_history_tb (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    items_id INT NOT NULL,
-    wave_id INT,
-    milage_id INT,
-    created_at TIMESTAMP DEFAULT NOW()
+    user_id INT NOT NULL,
+    item_id INT NOT NULL,
+    wave_used INT DEFAULT 0,
+    milage_used INT DEFAULT 0,
+    total_amount INT NOT NULL,
+    purchased_at TIMESTAMP DEFAULT NOW()
 );
 
-CREATE TABLE wave_tb (
+CREATE TABLE balance_history_tb (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    amount INT NOT NULL COMMENT '양수는 충전 음수는 소모',
-    balance INT NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW()
-);
-
-CREATE TABLE mileage_tb (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    amount INT NOT NULL COMMENT '양수는 증가 음수는 감소',
-    balance INT NOT NULL,
+    wave_change INT DEFAULT 0 COMMENT '+는 증가 -는 감소',
+    mileage_change INT DEFAULT 0 COMMENT '+는 증가 -는 감소',
+    description VARCHAR(255),
     created_at TIMESTAMP DEFAULT NOW()
 );
 
