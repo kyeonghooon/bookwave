@@ -1,7 +1,9 @@
 package com.library.bookwave.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,13 +30,20 @@ public class MyHistoryController {
 	@GetMapping("/list")
 	public String showList(Model model, HttpSession session) {
 
-		// int id = (int) session.getAttribute("id");
+//		Integer id = (Integer) session.getAttribute("id");
+//		if (id == null || id == 0) {
+//			return "redirect:/login";
+//		}
 
 		List<MyHistory> list = new ArrayList<>();
+		Map<String, Integer> categoryData = new HashMap<>();
 
 		list = historyService.readAllById(1);
 
+		categoryData = historyService.getCategoryDataByUserId(1);
+
 		model.addAttribute("myHistoryList", list);
+		model.addAttribute("categoryData", categoryData);
 
 		return "myHistory/history";
 	}

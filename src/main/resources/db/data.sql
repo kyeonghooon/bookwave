@@ -1,8 +1,19 @@
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
 VALUES (1, 16, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
-
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
 VALUES (1, 17, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
+VALUES (1, 18, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
+VALUES (1, 19, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
+VALUES (1, 20, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
+VALUES (1, 21, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
+VALUES (1, 22, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
+VALUES (1, 23, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
 
 -- 샘플 데이터 sql
 
