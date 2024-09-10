@@ -5,9 +5,6 @@ CREATE TABLE user_tb (
     password VARCHAR(255) NOT NULL,
     name VARCHAR(20) NOT NULL,
     role VARCHAR(20) DEFAULT 'USER' COMMENT 'user, admin',
-    subscribe TINYINT DEFAULT 0 COMMENT '0:비구독 1:구독',
-    wave INT DEFAULT 0,
-    mileage INT DEFAULT 0,
     status INT NOT NULL DEFAULT '0' COMMENT '0:정상 1:탈퇴예정 -1:탈퇴',
     created_at TIMESTAMP DEFAULT NOW()
 );
@@ -63,32 +60,31 @@ CREATE TABLE reservation_tb (
 CREATE TABLE items_tb (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    price INT NOT NULL
+    amount INT NOT NULL COMMENT '양수는 충전 음수는 소모'
 );
 
-CREATE TABLE item_purchase_tb (
+CREATE TABLE item_history_tb (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    mileage_amount INT DEFAULT 0,
-    mileage_balance INT,
-    wave_amount INT DEFAULT 0,
-    wave_balance INT,
+    items_id INT NOT NULL,
+    wave_id INT,
+    milage_id INT,
     created_at TIMESTAMP DEFAULT NOW()
 );
 
-CREATE TABLE charge_tb (
+CREATE TABLE wave_tb (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    amount INT,
-    status INT DEFAULT 0 COMMENT '0: 정상 -1: 환불됨',
+    amount INT NOT NULL COMMENT '양수는 충전 음수는 소모',
+    balance INT NOT NULL,
     created_at TIMESTAMP DEFAULT NOW()
 );
 
-CREATE TABLE refund_tb (
-	charge_id INT,
-    user_id INT,
-    created_at TIMESTAMP DEFAULT NOW(),
-    PRIMARY KEY (charge_id, user_id)
+CREATE TABLE mileage_tb (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    amount INT NOT NULL COMMENT '양수는 증가 음수는 감소',
+    balance INT NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE likes_tb (
