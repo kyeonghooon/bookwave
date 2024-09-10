@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>BookWave - BookList</title>
+<title>BookWave - UserList</title>
 
 <!-- Custom fonts for this template -->
 <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -66,8 +66,8 @@ tbody tr:hover {
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item"><a class="nav-link" href="/admin/main"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>대시보드</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="/admin/user"> <i class="fas fa-fw fa-table"></i> <span>유저 관리</span></a></li>
-			<li class="nav-item active"><a class="nav-link" href="/admin/book"> <i class="fas fa-fw fa-table"></i> <span>도서 관리</span></a></li>
-			<li class="nav-item"><a class="nav-link" href="/admin/payment"> <i class="fas fa-fw fa-table"></i> <span>결제 관리</span></a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/book"> <i class="fas fa-fw fa-table"></i> <span>도서 관리</span></a></li>
+			<li class="nav-item active"><a class="nav-link" href="/admin/payment"> <i class="fas fa-fw fa-table"></i> <span>결제 관리</span></a></li>
 
 			<!-- Nav Item - Pages Collapse Menu -->
 			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i>
@@ -78,6 +78,7 @@ tbody tr:hover {
 						<a class="collapse-item" href="/support/faq">FAQ 관리</a> <a class="collapse-item" href="/support/qna">1:1 문의 관리</a>
 					</div>
 				</div></li>
+
 
 			<!-- Divider -->
 			<hr class="sidebar-divider">
@@ -216,6 +217,7 @@ tbody tr:hover {
 									</div>
 								</a> <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
 							</div></li>
+
 						<div class="topbar-divider d-none d-sm-block"></div>
 
 						<!-- Nav Item - User Information -->
@@ -231,7 +233,9 @@ tbody tr:hover {
 								<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
 								</a>
 							</div></li>
+
 					</ul>
+
 				</nav>
 				<!-- End of Topbar -->
 
@@ -239,7 +243,7 @@ tbody tr:hover {
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">도서 목록</h1>
+					<h1 class="h3 mb-2 text-gray-800">전체 결제 목록 조회</h1>
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
@@ -248,31 +252,45 @@ tbody tr:hover {
 								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 									<thead>
 										<tr>
-											<th>id</th>
-											<th>login_id</th>
-											<th>social_id</th>
-											<th>name</th>
-											<th>role</th>
-											<th>subscribe</th>
-											<th>wave</th>
-											<th>mileage</th>
-											<th>status</th>
-											<th>created_at</th>
+											<th>결제방식</th>
+											<th>주문고객번호</th>
+											<th>주문상품</th>
+											<th>결제수단</th>
+											<th>결제금액</th>
+											<th>결제승인날짜</th>
+											<th>결제처리상태</th>
+											<th>취소사유</th>
+											<th>취소시간</th>
+											<th>취소처리상태</th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="user" items="${userList}">
-											<tr data-url="/admin/user-detail?id=${user.id}">
-												<th>${user.id}</th>
-												<th>${user.loginId}</th>
-												<th>${user.socialId}</th>
-												<th>${user.name}</th>
-												<th>${user.role}</th>
-												<th>${user.subscribe}</th>
-												<th>${user.wave}</th>
-												<th>${user.mileage}</th>
-												<th>${user.status}</th>
-												<th><fmt:formatDate value="${user.createdAt}" type="both" /></th>
+										<c:forEach var="payment" items="${paymentList}">
+											<tr>
+												<th>${payment.type}</th>
+												<th>${payment.userId}</th>
+												<th>${payment.orderName}</th>
+												<th>${payment.method}</th>
+												<th>${payment.totalAmount}</th>
+												<th>${payment.approvedAt}</th>
+												<th>${payment.status}</th>
+												<th>${payment.cancelReason}</th>
+												<c:choose>
+													<c:when test="${not empty payment.canceledAt}">
+														<th><fmt:formatDate value="${payment.canceledAt}" pattern="yyyy년 MM월 dd일 hh시 mm분 ss초"/></th>
+													</c:when>
+													<c:otherwise>
+														<th>${payment.canceledAt}</th>
+													</c:otherwise>
+												</c:choose>
+												<c:choose>
+													<c:when test="${payment.cancelStatus == 'REQUEST_CANCEL'}">
+														<th><a href="/payment/cancel?id=${payment.id}&userId=${payment.userId}&cancelReason=${payment.cancelReason}" onclick="confirmCancel(event)">결제취소 승인</a></th>
+													</c:when>
+													<c:otherwise>
+														<th>${payment.cancelStatus}</th>
+													</c:otherwise>
+												</c:choose>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -289,7 +307,7 @@ tbody tr:hover {
 
 			<!-- Footer -->
 			<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
-		
+
 			<!-- End of Footer -->
 
 		</div>
@@ -321,7 +339,15 @@ tbody tr:hover {
 		</div>
 	</div>
 	<!-- custom JavaScript -->
-	<script src="/vendor/datatables/custom.js"></script>
+	<!-- <script src="/vendor/datatables/custom.js"></script> -->
+	<script type="text/javascript">
+		function confirmCancel(event) {
+			var confirmed = confirm("정말 취소하시겠습니까?");
+			if (!confirmed) {
+				event.preventDefault();
+			}
+		}
+	</script>
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="/vendor/jquery/jquery.min.js"></script>

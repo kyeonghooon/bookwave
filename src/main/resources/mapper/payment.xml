@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.bookwave.repository.interfaces.PaymentRepository">
+	<insert id="createPayment">
+		insert into payment_tb(payment_key, type, user_id, order_id, order_name, method, total_amount, requested_at, approved_at, status, cancel_amount, canceled_at, cancel_reason, cancel_status)
+		values (#{paymentKey}, #{type}, #{userId}, #{orderId}, #{orderName}, #{method}, #{totalAmount}, #{requestedAt}, #{approvedAt}, #{status}, #{cancelAmount}, #{canceledAt}, #{cancelReason}, #{cancelStatus})
+	</insert>
+	
+	<select id="readAllPayment" resultType="com.library.bookwave.repository.model.Payment">
+		select * from payment_tb
+	</select>
+	
+	<select id="readPaymentById" resultType="com.library.bookwave.repository.model.Payment">
+		select * from payment_tb where id = #{id}
+	</select>
+
+	<update id="updateWaveById">
+		update user_tb set wave = wave + #{wave} where id = #{userId}
+	</update>
+	
+	<update id="updatePaymentCancel">
+		update payment_tb set cancel_reason = #{cancelReason}, canceled_at = now(), cancel_status = 'DONE' where id = #{id}
+	</update>
+
+</mapper>

@@ -23,11 +23,12 @@ spring:
     init:
       schema-locations:
       - classpath:db/table.sql
+      - classpath:db/paymentTable.sql
       data-locations:
       - classpath:db/data.sql
+      - classpath:db/paymentData.sql
       - classpath:db/ebookData.sql
 
-  
   h2:
     console:
       enabled: true #H2 데이터 베이스 콘솔을 활성화 합니다.
@@ -66,4 +67,9 @@ logging:
       apache:
         ibatis: DEBUG #MyBatis 로깅 레벨을 DEBUG로 설정하여 실행되는 SQL 쿼리와 내부 로깅 정보를 콘솔에 출력한다.
     
+# 결제 Key
+payment:
+  clientKey: test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm
+  secretKey: test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6
+  IdempotencyKey: SAAABPQbcqjEXiDL
 # 초기 파라미터 설정
