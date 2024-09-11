@@ -33,9 +33,14 @@
 		select * from user_tb where login_id = #{loginId} and password = #{password}
 	</select>
 	
-	<!-- ID 찾기 -->
+	<!-- ID -->
 	<select id="findByUserId" resultType="com.library.bookwave.repository.model.User">
-		select * from user_tb where name = #{loginId}
+		select * from user_tb where login_id  = #{loginId}
+	</select>
+	
+	<!-- PWD -->
+	<select id="findByUserPwd" resultType="com.library.bookwave.repository.model.User">
+		select * from user_tb where password = #{password}
 	</select>
 	
 	<!-- update, detete -->
