@@ -7,9 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.library.bookwave.dto.PrincipalDTO;
 import com.library.bookwave.repository.model.Lend;
 import com.library.bookwave.repository.model.Payment;
-import com.library.bookwave.repository.model.User;
 import com.library.bookwave.service.AdminService;
 import com.library.bookwave.service.PaymentService;
 
@@ -33,7 +33,7 @@ public class AdminController {
 	@GetMapping("/user")
 	public String userPage(Model model) {
 
-		List<User> userList = adminService.readAllUser();
+		List<PrincipalDTO> userList = adminService.readAllUser();
 		model.addAttribute("userList", userList);
 
 		return "admin/userList";

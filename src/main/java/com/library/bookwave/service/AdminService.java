@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.library.bookwave.dto.PrincipalDTO;
 import com.library.bookwave.repository.interfaces.AdminRepository;
 import com.library.bookwave.repository.model.Lend;
 import com.library.bookwave.repository.model.User;
@@ -37,8 +38,8 @@ public class AdminService {
 
 	// 모든 유저 목록 조회
 	@Transactional
-	public List<User> readAllUser() {
-		List<User> userList = new ArrayList<>();
+	public List<PrincipalDTO> readAllUser() {
+		List<PrincipalDTO> userList = new ArrayList<>();
 		userList = adminRepository.readAllUser();
 		return userList;
 	}

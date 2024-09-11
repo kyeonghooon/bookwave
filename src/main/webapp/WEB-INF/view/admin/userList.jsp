@@ -267,8 +267,8 @@ tbody tr:hover {
 									</thead>
 									<tbody>
 										<c:forEach var="user" items="${userList}">
-											<tr data-url="/admin/user-detail?id=${user.id}">
-												<th>${user.id}</th>
+											<tr data-url="/admin/user-detail?id=${user.userId}">
+												<th>${user.userId}</th>
 												<th>${user.loginId}</th>
 												<th>${user.socialId}</th>
 												<th>${user.name}</th>

@@ -75,7 +75,7 @@ CREATE TABLE purchase_history_tb (
     user_id INT NOT NULL,
     item_id INT NOT NULL,
     wave_used INT DEFAULT 0,
-    milage_used INT DEFAULT 0,
+    mileage_used INT DEFAULT 0,
     total_amount INT NOT NULL,
     purchased_at TIMESTAMP DEFAULT NOW()
 );
@@ -87,6 +87,24 @@ CREATE TABLE balance_history_tb (
     mileage_change INT DEFAULT 0 COMMENT '+는 증가 -는 감소',
     description VARCHAR(255),
     created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE payment_tb (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    payment_key VARCHAR(200),
+    type VARCHAR(20),
+    user_id INT,
+    order_id VARCHAR(64),
+    order_name VARCHAR(100),
+    method VARCHAR(20),
+    total_amount BIGINT,
+    requested_at TIMESTAMP,
+    approved_at TIMESTAMP,
+    status VARCHAR(30),
+    cancel_amount BIGINT,
+    canceled_at TIMESTAMP,
+    cancel_reason VARCHAR(255),
+    cancel_status VARCHAR(20)
 );
 
 CREATE TABLE likes_tb (
