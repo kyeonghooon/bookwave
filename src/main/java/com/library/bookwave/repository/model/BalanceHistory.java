@@ -13,13 +13,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 @ToString
-public class User {
+public class BalanceHistory {
+
 	private Integer id;
-	private String loginId;
-	private String socialId;
-	private String password;
-	private String name;
-	private String role;
-	private Integer status;
-	private Timestamp createdAt;
+    private Integer userId;
+    private Integer waveChange; // wave 변화량 (증가감소)
+    private Integer mileageChange; // mileage 변화량 (증가감소)
+    private String description; // 설명
+    private Timestamp createdAt;
+	
 }
