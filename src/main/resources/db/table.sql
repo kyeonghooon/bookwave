@@ -86,7 +86,7 @@ CREATE TABLE purchase_history_tb (
     user_id INT NOT NULL,
     item_id INT NOT NULL,
     wave_used INT DEFAULT 0,
-    milage_used INT DEFAULT 0,
+    mileage_used INT DEFAULT 0,
     total_amount INT NOT NULL,
     purchased_at TIMESTAMP DEFAULT NOW()
 );
@@ -131,7 +131,7 @@ CREATE TABLE user_ebook_category_tb (
 
 CREATE TABLE user_ebook_category_limit_tb (
 	user_id INT PRIMARY KEY,
-    limits INT DEFAULT 4
+    limits INT DEFAULT 8
 );
 
 CREATE TABLE review_tb (

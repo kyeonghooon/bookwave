@@ -47,6 +47,7 @@ public class PurchaseController {
 		}
 		if (purchaseService.purchaseItem(principal, itemId, wave, mileage)) {
 			response.put("success", true);
+			response.put("message", "구매 성공");
 		} else {
 			response.put("success", false);
 			response.put("message", "알 수 없는 오류");

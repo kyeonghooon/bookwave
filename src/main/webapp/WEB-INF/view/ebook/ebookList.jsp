@@ -5,10 +5,7 @@
 	<div class="sidebar">
 		<a href="/ebook" class="${selectedCategory == -1 ? 'active' : ''}">전체</a>
 		<c:forEach var="category" items="${categoryList}">
-			<div class="category--item" 
-				data-category-id="${category.id}" 
-				data-category-name="${category.name}" 
-				data-selectedCategory="${selectedCategory}">
+			<div class="category--item" data-category-id="${category.id}" data-category-name="${category.name}" data-selectedCategory="${selectedCategory}">
 				<a href="/ebook?category=${category.id}" class="${category.id == selectedCategory ? 'active' : ''}"> ${category.name} </a>
 			</div>
 		</c:forEach>
@@ -63,7 +60,8 @@
 	</div>
 </div>
 <script type="text/javascript">
- const item
+	const json = ${items};
+	const items = new Map(Object.entries(${items}));
 </script>
 <script src="/js/ebook_list.js"></script>
 <%@ include file="../layout/footer.jsp"%>

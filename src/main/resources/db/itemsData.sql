@@ -1,9 +1,9 @@
 -- 초기 필수 데이터
 INSERT INTO page_tb (name) VALUES ('ebookList');
-INSERT INTO item_tb (name, price) VALUES ('add-category');
+INSERT INTO item_tb (name, price) VALUES ('extend-category', 500);
 INSERT INTO page_item_tb VALUES (
 	(SELECT id FROM page_tb WHERE name = 'ebookList'),
-    (SELECT id FROM item_tb WHERE name = 'add-category')
+    (SELECT id FROM item_tb WHERE name = 'extend-category')
 );
 
 -- 샘플 데이터

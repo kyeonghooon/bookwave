@@ -29,7 +29,7 @@ public interface EbookRepository {
 	List<UserEbookCategory> findEbookCategoryListByUserId(Integer userId);
 	
 	// 해당 유저의 user_ebook_category_limit 조회
-	Integer findEbookCategoryLimitByUserId(Integer userId);
+	Integer readEbookCategoryLimit(Integer userId);
 	
 	// 해당 유저의 현재 카테고리 수 조희
 	Integer countEbookCategoryByUserId(Integer userId);
@@ -45,4 +45,10 @@ public interface EbookRepository {
 	
 	// user_ebook category_id 변경
 	Integer updateUserEbookCategory(@Param("categoryId") Integer categoryId, @Param("userId") Integer userId, @Param("bookId") Integer bookId);
+	
+	// user_ebook_cate_limit 한도 증가
+	Integer updateEbookCategoryLimit(@Param("userId") Integer userId, @Param("extend") Integer extend);
+	
+	// user_ebook_cate_limit insert
+	Integer createEbookCategoryLimit(Integer userId);
 }

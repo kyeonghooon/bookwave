@@ -105,7 +105,7 @@ public class EbookService {
 	public int findEbookCategoryLimitByUserId(int userId) {
 		int result = 0;
 		try {
-			result = ebookRepository.findEbookCategoryLimitByUserId(userId);
+			result = ebookRepository.readEbookCategoryLimit(userId);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

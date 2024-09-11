@@ -106,13 +106,19 @@ document.addEventListener("DOMContentLoaded", function() {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				if (data.success) {
+				if (data.success == "true") {
 					// 성공 시 성공 메시지를 표시하고 페이지 이동
 					alert(data.message);
-					window.location.href = "/ebook"; // /ebook으로 리다이렉트
-				} else {
+					window.location.href = `/ebook?category=${selectedCategory}`; // /ebook으로 리다이렉트
+				} else if (data.success == "false") {
 					// 실패 시 실패 메시지를 표시
 					messageBox.innerText = data.message;
+				} else {
+					// 결제 필요
+					messageBox.innerText = data.message;
+					if (confirm("결제하시겠습니까?")) {
+						purchaseExtendCategory();
+					}
 				}
 			})
 			.catch((error) => {
@@ -120,6 +126,38 @@ document.addEventListener("DOMContentLoaded", function() {
 				messageBox.innerText = "카테고리 생성 중 오류가 발생했습니다.";
 			});
 	});
+
+	function purchaseExtendCategory() {
+		const itemId = items.get("extend-category");
+		// TODO 테스트용
+		const params = new URLSearchParams({
+			wave: 500,
+			mileage: 0
+		});
+		const url = `/purchase/${itemId}?${params.toString()}`;
+		fetch(url, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data.success) {
+					// 성공 --> 카테고리 한도를 늘림
+					messageBox.innerText = "";
+					alert(data.message);
+				} else {
+					// 실패
+					messageBox.innerText = data.message;
+				}
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+				messageBox.innerText = "구매 중 오류가 발생했습니다.";
+			});
+	}
+
 
 	// 카테고리 항목들을 가져오는 함수
 	function getCategoryItems() {
@@ -305,17 +343,6 @@ document.addEventListener("DOMContentLoaded", function() {
 				});
 		}
 
-		// TODO 1. books의 draggable을 비활성화
-		// TODO 2. editCategoryBtn, addCategoryBtn는 숨김
-		// TODO 3. reorderCategoryBtn의 innerText = "완료"
-		// TODO 4. 위 버튼들을 담고 있는 id가 btn--container인 div에 취소 버튼을 추가
-		// 취소 버튼 기능 --> 모든걸 reorderCategoryBtn이 눌러지기 전으로 되돌아감
-		// TODO 5. 메인 로직
-		// --> categories를 드래그 가능한 상태로 만들고 위아래로 위치를 변할 수 있게함
-		// top은 "전체" bottom은 "미지정"으로 고정이라 바뀔 수 없음 드래그도 드랍도 불가능
-		// 완료 버튼이 눌러지면 해당 상태를 미지정 바로위의 카테고리에 priority 값으로 1을 주고
-		// 그 위로 2, 3, 4 이런식으로 할당해서 data-category-id에 담긴 값을 key 값으로 하는 map구조 형태로
-		// 비동기로 post 요청
 	});
 
 	// 책 항목들을 가져오는 함수

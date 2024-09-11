@@ -4,13 +4,13 @@
 <mapper namespace="com.library.bookwave.repository.interfaces.PurchaseRepository">
 	
 	<insert id="createPurchaseHistory">
-		insert into purchase_history_tb (user_id, item_id, wave_used, mileage_used) 
-		values (#{userId}, #{itemId}, #{waveUsed}, #{mileageUsed})
+		insert into purchase_history_tb (user_id, item_id, wave_used, mileage_used, total_amount) 
+		values (#{userId}, #{itemId}, #{waveUsed}, #{mileageUsed}, #{waveUsed} + #{mileageUsed})
 	</insert>
 	
 	<insert id="createBalanceHistory">
 		insert into balance_history_tb (user_id, wave_change, mileage_change, description) 
-		values (#{userId}, #{itemId}, #{waveChange}, #{mileageChange}, #{description})
+		values (#{userId}, #{waveChange}, #{mileageChange}, #{description})
 	</insert>
 	
 	<update id="updateWallet">
