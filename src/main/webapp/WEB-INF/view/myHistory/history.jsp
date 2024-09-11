@@ -14,6 +14,7 @@
 
 	// Set a callback to run when the Google Visualization API is loaded.
 	google.charts.setOnLoadCallback(drawChart);
+	google.charts.setOnLoadCallback(drawChart2);
 
 	// Callback that creates and populates a data table,
 	// instantiates the pie chart, passes in the data and
@@ -32,14 +33,38 @@
 
 		// Set chart options
 		var options = {
-			'title' : '카테고리 별 차트',
-			'width' : 800,
-			'height' : 600
+			'title' : '카테고리 별 차트 (총 데이터 수: ${totalCountCategory})',
+			'width' : 600,
+			'height' : 450
 		};
 
 		// Instantiate and draw our chart, passing in some options.
 		var chart = new google.visualization.PieChart(document
 				.getElementById('chart_div'));
+		chart.draw(data, options);
+	}
+	function drawChart2() {
+
+		// Create the data table.
+		var data = new google.visualization.DataTable();
+		data.addColumn('string', '월');
+		data.addColumn('number', '수');
+        data.addRows([
+            <c:forEach var="item" items="${monthlyData}">
+              ['${item.key}', ${item.value}],
+            </c:forEach>
+          ]);
+
+		// Set chart options
+		var options = {
+			'title' : '월 별 차트 (총 데이터 수: ${totalCountMonth})',
+			'width' : 600,
+			'height' : 450
+		};
+
+		// Instantiate and draw our chart, passing in some options.
+		var chart = new google.visualization.PieChart(document
+				.getElementById('chart_div2'));
 		chart.draw(data, options);
 	}
 </script>
@@ -185,14 +210,17 @@ body {
 </head>
 <body>
 	<div class="page--wrapper">
-		<div class="sidebar">
-			<c:set var="selectedCategory" value="${param.category}" />
-			<a href="/book/list?page=1&category=" class="${empty selectedCategory ? 'active' : ''}">전체 목록</a>
-			<a href="/book/list?page=1&category=" class="${empty selectedCategory ? 'active' : ''}">월 별 통계</a>
-			<a href="/book/list?page=1&category=" class="${empty selectedCategory ? 'active' : ''}">카테고리 별 통계</a>
-		</div>
 
 		<div class="main--content">
+			<div style="display: flex; flex-direction: row;">
+				<a href="/history/list?type=all">asdf</a>
+				<a href="/history/list?type=book">asdf</a>
+				<a href="/history/list?type=ebook">asdf</a>
+			</div>
+			<div style="display: flex; flex-direction: row;">
+				<div id="chart_div"></div>
+				<div id="chart_div2"></div>
+			</div>
 			<div class="container">
 				<c:forEach var="history" items="${myHistoryList}">
 					<div class="book--item">
@@ -202,55 +230,7 @@ body {
 					</div>
 				</c:forEach>
 			</div>
-			<div id="chart_div"></div>
 
-
-			<%-- 			<div class="pagination">
-				<!-- "맨앞으로 가기" 버튼 -->
-				<c:choose>
-					<c:when test="${currentPage > 1}">
-						<a href="?page=1&category=${selectedCategory}&search=${searchQuery}">맨앞으로 가기</a>
-					</c:when>
-					<c:otherwise>
-						<a class="disabled">맨앞으로 가기</a>
-					</c:otherwise>
-				</c:choose>
-
-				<!-- "이전 블록" 버튼 -->
-				<c:choose>
-					<c:when test="${startBlock > 1}">
-						<a href="?page=${startBlock - 1}&category=${selectedCategory}&search=${searchQuery}">이전 블록</a>
-					</c:when>
-					<c:otherwise>
-						<a class="disabled">이전 블록</a>
-					</c:otherwise>
-				</c:choose>
-
-				<!-- 페이지 블록들 -->
-				<c:forEach var="i" begin="${startBlock}" end="${endBlock}">
-					<a href="?page=${i}&category=${selectedCategory}&search=${searchQuery}" class="${i == currentPage ? 'active' : ''}">${i}</a>
-				</c:forEach>
-
-				<!-- "다음 블록" 버튼 -->
-				<c:choose>
-					<c:when test="${endBlock < totalPages}">
-						<a href="?page=${endBlock + 1}&category=${selectedCategory}&search=${searchQuery}">다음 블록</a>
-					</c:when>
-					<c:otherwise>
-						<a class="disabled">다음 블록</a>
-					</c:otherwise>
-				</c:choose>
-
-				<!-- "맨뒤로 가기" 버튼 -->
-				<c:choose>
-					<c:when test="${currentPage < totalPages}">
-						<a href="?page=${totalPages}&category=${selectedCategory}&search=${searchQuery}">맨뒤로 가기</a>
-					</c:when>
-					<c:otherwise>
-						<a class="disabled">맨뒤로 가기</a>
-					</c:otherwise>
-				</c:choose>
-			</div> --%>
 		</div>
 	</div>
 </body>

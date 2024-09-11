@@ -13,7 +13,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 @ToString
-public class MyHistory {
+public class MyEbookHistory {
 
 	private Integer id;
 	private String title;
@@ -24,7 +24,6 @@ public class MyHistory {
 	private String category;
 	private Integer likes;
 	private Integer userId;
-	private Timestamp lendDate;
-	private Timestamp returnedDate;
+	private Timestamp lastReadDate;
 
 }
