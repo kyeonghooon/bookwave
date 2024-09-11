@@ -43,9 +43,9 @@
                         <label for="saveId">아이디 저장</label>
                     </span>
                     <div class="right_area">
-                        <a href="/user/find-login"><span class="text btn_text_id_link">아이디 찾기</span></a>
+                        <a href="#" onclick="openWindow('id')"><span class="text btn_text_id_link">아이디 찾기</span></a>
                         <span class="gap">|</span>
-                        <a href="/user/find-login"><span class="text btn_text_pw_link">비밀번호 찾기</span></a>
+                        <a href="#" onclick="openWindow('pw')"><span class="text btn_text_pw_link">비밀번호 찾기</span></a>
                     </div>
                 </div>
                 

@@ -57,11 +57,6 @@
 
 
 <script>
-	const type = ${type};
-	if (type == "id"){
-		switchTab('tabContentFindId', 'findIdTab');
-	} else if {
-		switchTab('tabContentFindPw', 'findPwTab');
-	}
+	const type = `${type}`;
 </script>
 <script src="/js/find-login.js"></script>

@@ -108,6 +108,7 @@ public class UserController {
 	
 	@GetMapping("/find-login") // type 값을 받아온다?..
 	public String findLoginPage(@RequestParam(name = "type") String type, Model model) {
+		System.out.println("type : " + type);
 		// TODO 모델에 type 추가
 		model.addAttribute("type", type);
 		return "user/findLogin";

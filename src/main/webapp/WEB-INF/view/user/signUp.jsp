@@ -164,6 +164,9 @@
 		</form>
 	</div>
 </body>
+<script type="text/javascript">
+	const socialId = `${socialId}`;
+</script>
 <script src="/js/sign-up.js"></script>
 <script src="/js/address.js"></script>
 </html>
