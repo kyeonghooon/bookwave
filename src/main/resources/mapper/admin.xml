@@ -12,7 +12,10 @@
 	</select>
 	
 	<update id="updateLendStatus">
-		update lend_tb set status = 1 where EXTRACT(DAY FROM return_date) + 1 = EXTRACT(DAY FROM NOW())
+		update lend_tb set status = 1
+		where EXTRACT(DAY FROM return_date) = EXTRACT(DAY FROM NOW()) - 1
+		AND EXTRACT(MONTH FROM return_date) = EXTRACT(MONTH FROM NOW())
+		AND EXTRACT(YEAR FROM return_date) = EXTRACT(YEAR FROM NOW())
 	</update>
 	
 </mapper>

@@ -326,7 +326,7 @@ tbody tr:hover {
 		</div>
 	</div>
 	<!-- custom JavaScript -->
-	<script src="/vendor/datatables/custom.js"></script>
+	<!-- <script src="/vendor/datatables/custom.js"></script> -->
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="/vendor/jquery/jquery.min.js"></script>
