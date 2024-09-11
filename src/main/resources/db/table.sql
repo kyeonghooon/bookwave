@@ -97,11 +97,11 @@ CREATE TABLE payment_tb (
     order_id VARCHAR(64),
     order_name VARCHAR(100),
     method VARCHAR(20),
-    total_amount BIGINT,
+    total_amount INT,
     requested_at TIMESTAMP,
     approved_at TIMESTAMP,
     status VARCHAR(30),
-    cancel_amount BIGINT,
+    cancel_amount INT,
     canceled_at TIMESTAMP,
     cancel_reason VARCHAR(255),
     cancel_status VARCHAR(20)
