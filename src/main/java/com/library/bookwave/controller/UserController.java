@@ -104,8 +104,6 @@ public class UserController {
 		return "user/signIn";
 	}
 	
-
-	
 	@GetMapping("/find-login") // type 값을 받아온다?..
 	public String findLoginPage(@RequestParam(name = "type") String type, Model model) {
 		System.out.println("type : " + type);
@@ -113,7 +111,6 @@ public class UserController {
 		model.addAttribute("type", type);
 		return "user/findLogin";
 	}
-
 
 	// 로그인 요청 처리
 	@PostMapping("/sign-in")

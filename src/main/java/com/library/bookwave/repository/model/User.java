@@ -20,9 +20,6 @@ public class User {
 	private String password;
 	private String name;
 	private String role;
-	private Boolean subscribe;
-	private Integer wave;
-	private Integer mileage;
 	private Integer status;
 	private Timestamp createdAt;
 }

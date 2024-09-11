@@ -67,6 +67,8 @@ tbody tr:hover {
 			<li class="nav-item"><a class="nav-link" href="/admin/main"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>대시보드</span></a></li>
 			<li class="nav-item active"><a class="nav-link" href="/admin/user"> <i class="fas fa-fw fa-table"></i> <span>유저 관리</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="/admin/book"> <i class="fas fa-fw fa-table"></i> <span>도서 관리</span></a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/payment"> <i class="fas fa-fw fa-table"></i> <span>결제 관리</span></a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/lend"> <i class="fas fa-fw fa-table"></i> <span>대출 현황</span></a></li>
 
 			<!-- Nav Item - Pages Collapse Menu -->
 			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i>
@@ -271,7 +273,7 @@ tbody tr:hover {
 												<th>${user.socialId}</th>
 												<th>${user.name}</th>
 												<th>${user.role == 'admin' ? '관리자' : '유저'}</th>
-												<th>${user.subscribe == 1 ? 'Subscribed' : 'Not Subscribed'}</th>
+												<th>${user.subscribe}</th>
 												<th><fmt:formatNumber value="${user.wave}" pattern="#,#00"></fmt:formatNumber></th>
 												<th><fmt:formatNumber value="${user.mileage}" pattern="#,#00"></fmt:formatNumber></th>
 												<c:choose>

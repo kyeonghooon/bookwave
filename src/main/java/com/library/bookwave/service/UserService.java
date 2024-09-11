@@ -1,6 +1,5 @@
 package com.library.bookwave.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -8,10 +7,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.library.bookwave.config.WebConfig;
 import com.library.bookwave.dto.SignInDTO;
 import com.library.bookwave.dto.SignUpDTO;
-import com.library.bookwave.dto.api.GoogleProfile;
 import com.library.bookwave.handler.exception.DataDeliveryException;
 import com.library.bookwave.handler.exception.RedirectException;
 import com.library.bookwave.repository.interfaces.MemberRepository;
@@ -25,14 +22,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserService {
 
-	@Autowired
 	private final UserRepository userRepository;
 
-	@Autowired
 	private final MemberRepository memberRepository;
 
-	@Autowired
-	PasswordEncoder passwordEncoder;
+	private final PasswordEncoder passwordEncoder;
 
 	/**
 	 * 회원가입 처리
@@ -66,20 +60,10 @@ public class UserService {
 		createUserDetail(user.getId(), signUpDTO);
 	}
 
-//	// TEST - 소셜 로그인
-//	public void createSocialKakao(SignUpDTO signUpDTO) {
-//		try {
-//			int result = userRepository.createSocialId(signUpDTO)
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//	}
-
 	// user_tb에 사용자 정보 삽입 메서드
 	@Transactional
 	private void createUser(SignUpDTO signUpDTO) {
 		try {
-
 			String hashPwd = passwordEncoder.encode(signUpDTO.getPassword());
 			System.out.println("hashPwd : " + hashPwd);
 			signUpDTO.setPassword(hashPwd);
@@ -155,7 +139,6 @@ public class UserService {
 
 		return memberRepository.readUserId(loginId);
 	}
-
 	/**
 	 * 아이디, 비번 찾기
 	 */

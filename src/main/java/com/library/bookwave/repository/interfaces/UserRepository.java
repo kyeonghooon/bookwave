@@ -14,7 +14,7 @@ public interface UserRepository {
 	// user 생성
 	public int createUser(User user);
 	// userId 값 추출
-	public User findById(String login_id);
+	public User findById(String loginId);
 	// 
 	public List<UserDetail> findAll();
 	// 회원가입
@@ -25,13 +25,13 @@ public interface UserRepository {
 	public int findAllByUser(User user);
 	
 	// 로그인 아이디
-	public User findByUserIdAndPassword(@Param("loginId") String login_id, @Param("password") String password);
+	public User findByUserIdAndPassword(@Param("loginId") String loginId, @Param("password") String password);
 	
 	/**
 	 * 소셜
 	 */
 	// 
 	public int createSocialId(User user);
-	public User findBySocialId(String social_id);
+	public User findBySocialId(String socialId);
 
 }

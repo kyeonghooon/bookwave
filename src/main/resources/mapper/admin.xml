@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.library.bookwave.repository.interfaces.AdminRepository">
+
+	<select id="readAllUser" resultType="com.library.bookwave.repository.model.User">
+		select * from user_tb
+	</select>
+	
+	<select id="readAllLend" resultType="com.library.bookwave.repository.model.Lend">
+		select * from lend_tb
+	</select>
+	
+	<update id="updateLendStatus">
+		update lend_tb set status = 1
+		where EXTRACT(DAY FROM return_date) = EXTRACT(DAY FROM NOW()) - 1
+		AND EXTRACT(MONTH FROM return_date) = EXTRACT(MONTH FROM NOW())
+		AND EXTRACT(YEAR FROM return_date) = EXTRACT(YEAR FROM NOW())
+	</update>
+	
+</mapper>

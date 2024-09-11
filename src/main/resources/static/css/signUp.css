@@ -1,43 +1,27 @@
 
 /* 기본 스타일 초기화 */
 /* 임시 css 수정 필요 */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Noto Sans', sans-serif;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-}
-
-.signup-container {
+.signup--container {
     background-color: #fff;
     padding: 20px 40px;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     width: 800px;
-    text-align: center;
 }
 
-.signup-container h2 {
+.signup--container h2 {
     margin-bottom: 20px;
     color: #333;
 }
 
-.form-group {
+.form--group {
     margin-bottom: 15px;
     text-align: left;
+    width: 100%;
 }
 
-.form-group label,
-.form-group2 {
+.form--group label,
+.form--group2 {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
@@ -46,11 +30,11 @@ body {
 
 
 
-.check-id{
+.check--id{
 	width: 15%
 }
 
-.form-group2{
+.form--group2{
 	
 	display: block;
 	outline: none;
@@ -63,7 +47,7 @@ body {
 	
 }
 /* 비밀번호 필드 컨테이너 */
-.password-container {
+.password--container {
     position: relative;
 }
 div.main{
@@ -85,7 +69,7 @@ div.main i{
     color: orange;
 }
 
-.toggle-password {
+.toggle--password {
     position: absolute;
     right: 10px;
     top: 50%;
@@ -96,8 +80,8 @@ div.main i{
 
 
 
-.form-group input,
-.form-group select {
+.form--group input,
+.form--group select {
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -106,8 +90,8 @@ div.main i{
 
 
 
-.form-group input:focus,
-.form-group select:focus {
+.form--group input:focus,
+.form--group select:focus {
     border-color: #66afe9;
     outline: none;
     box-shadow: 0 0 5px rgba(102, 175, 233, 0.5);
@@ -152,10 +136,12 @@ select, input{
         padding: 20px;
     }
     
-    
+}
 
+#send--email--verification {
+    width: 150px;
+}
 
-    
-    
-    
+#email--verification--status {
+	width: 200px;
 }
