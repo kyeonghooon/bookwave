@@ -131,7 +131,7 @@ select, input{
 }
 
 @media (max-width: 500px) {
-    .signup-container {
+    .signup--container {
         width: 100%;
         padding: 20px;
     }

@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../layout/header.jsp"%>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -38,7 +37,7 @@
 					<c:otherwise>
 						<label for="password">비밀번호</label>
 						<input type="password" class="form--control" placeholder="비밀번호 입력" id="password" name="password" required />
-						<p class="result-upw"></p>
+						<p class="result--upw"></p>
 
 						<div class="form--group">
 							<label for="pwcheck">비밀번호 확인</label> <input type="password" class="form--control" placeholder="비밀번호 재입력" id="pwcheck" name="pwcheck" required />
@@ -48,6 +47,7 @@
 				</c:choose>
 
 			</div>
+
 
 
 			<div class="form--group">
@@ -119,7 +119,7 @@
 
 			</div>
 			<div class="form--group">
-				<input class="form-control" style="top: 5px;" placeholder="도로명 주소" name="addr1" id="addr1" type="text" readonly="readonly" />
+				<input class="form--control" style="top: 5px;" placeholder="도로명 주소" name="addr1" id="addr1" type="text" readonly="readonly" />
 			</div>
 			<div class="form--group">
 				<input type="text" id="addr2" placeholder="상세주소" name="addr2">
@@ -151,6 +151,9 @@
 		</form>
 	</div>
 </div>
-<script src="/js/signup.js"></script>
+<script type="text/javascript">
+	const socialId = `${socialId}`;
+</script>
+<script src="/js/sign-up.js"></script>
 <script src="/js/address.js"></script>
 <%@ include file="../layout/footer.jsp"%>

@@ -68,6 +68,7 @@ tbody tr:hover {
 			<li class="nav-item"><a class="nav-link" href="/admin/user"> <i class="fas fa-fw fa-table"></i> <span>유저 관리</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="/admin/book"> <i class="fas fa-fw fa-table"></i> <span>도서 관리</span></a></li>
 			<li class="nav-item active"><a class="nav-link" href="/admin/payment"> <i class="fas fa-fw fa-table"></i> <span>결제 관리</span></a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/lend"> <i class="fas fa-fw fa-table"></i> <span>대출 현황</span></a></li>
 
 			<!-- Nav Item - Pages Collapse Menu -->
 			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i>
@@ -277,7 +278,7 @@ tbody tr:hover {
 												<th>${payment.cancelReason}</th>
 												<c:choose>
 													<c:when test="${not empty payment.canceledAt}">
-														<th><fmt:formatDate value="${payment.canceledAt}" pattern="yyyy년 MM월 dd일 hh시 mm분 ss초"/></th>
+														<th><fmt:formatDate value="${payment.canceledAt}" pattern="yyyy-MM-dd hh:mm:ss"/></th>
 													</c:when>
 													<c:otherwise>
 														<th>${payment.canceledAt}</th>

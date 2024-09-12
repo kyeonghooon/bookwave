@@ -23,6 +23,25 @@
 
 <!-- Custom styles for this page -->
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+<style>
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 8px;
+	border: 1px solid #ddd;
+}
+/* 기본 행 스타일 */
+tbody tr {
+	transition: background-color 0.3s ease;
+}
+/* hover 스타일 */
+tbody tr:hover {
+	background-color: #99CCFF;
+}
+</style>
 </head>
 
 <body id="page-top">
@@ -41,8 +60,6 @@
 				<div class="sidebar-brand-text mx-3">LOGO 넣는곳</div>
 			</a>
 
-
-
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0">
 
@@ -51,17 +68,19 @@
 			<li class="nav-item"><a class="nav-link" href="/admin/user"> <i class="fas fa-fw fa-table"></i> <span>유저 관리</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="/admin/book"> <i class="fas fa-fw fa-table"></i> <span>도서 관리</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="/admin/payment"> <i class="fas fa-fw fa-table"></i> <span>결제 관리</span></a></li>
-			<li class="nav-item"><a class="nav-link" href="/admin/lend"> <i class="fas fa-fw fa-table"></i> <span>대출 현황</span></a></li>
+			<li class="nav-item active"><a class="nav-link" href="/admin/lend"> <i class="fas fa-fw fa-table"></i> <span>대출 현황</span></a></li>
 
 			<!-- Nav Item - Pages Collapse Menu -->
-			<li class="nav-item active"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"> <i
-					class="fas fa-fw fa-cog"></i> <span>고객 지원</span>
+			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i>
+					<span>고객 지원</span>
 			</a>
-				<div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item active" href="/support/faq">FAQ 관리</a> <a class="collapse-item" href="/support/qna">1:1 문의 관리</a>
+						<a class="collapse-item" href="/support/faq">FAQ 관리</a> <a class="collapse-item" href="/support/qna">1:1 문의 관리</a>
 					</div>
 				</div></li>
+
+
 			<!-- Divider -->
 			<hr class="sidebar-divider">
 
@@ -199,6 +218,7 @@
 									</div>
 								</a> <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
 							</div></li>
+
 						<div class="topbar-divider d-none d-sm-block"></div>
 
 						<!-- Nav Item - User Information -->
@@ -214,7 +234,9 @@
 								<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
 								</a>
 							</div></li>
+
 					</ul>
+
 				</nav>
 				<!-- End of Topbar -->
 
@@ -222,12 +244,7 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">FAQ 목록</h1>
-
-					<!-- Create Button -->
-					<div class="mb-4">
-						<a href="/support/faq-create" class="btn btn-primary">FAQ 등록하기</a>
-					</div>
+					<h1 class="h3 mb-2 text-gray-800">대출 현황 목록</h1>
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
@@ -237,22 +254,30 @@
 									<thead>
 										<tr>
 											<th>id</th>
-											<th>category</th>
-											<th>title</th>
-											<th>content</th>
-											<th>수정</th>
-											<th>삭제</th>
+											<th>user_id</th>
+											<th>book_id</th>
+											<th>status</th>
+											<th>대출일</th>
+											<th>반납일</th>
+											<th>반납된 날짜</th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="faq" items="${faqList}">
-											<tr>
-												<th>${faq.id}</th>
-												<th>[${faq.category}]</th>
-												<th>${faq.title}</th>
-												<th>${faq.content}</th>
-												<th><span class="update--faq"><a href="/support/faq-update?id=${faq.id}">수정</a></span></th>
-												<th><span class="delete--faq"><a href="/support/faq-delete?id=${faq.id}" onclick="confirmDelete(event)">삭제</a></span></th>
+										<c:forEach var="lend" items="${lendList}">
+											<tr data-url="/admin/lend-detail?id=${lend.id}">
+												<th>${lend.id}</th>
+												<th>${lend.userId}</th>
+												<th>${lend.bookId}</th>
+												<th><c:choose>
+														<c:when test="${lend.status == 1}">
+															<span style="color: red">연체</span>
+														</c:when>
+														<c:when test="${lend.status == -1}">반납완료</c:when>
+														<c:otherwise>정상</c:otherwise>
+													</c:choose></th>
+												<th><fmt:formatDate value="${lend.lendDate}" pattern="yyyy-MM-dd hh:mm:ss"/></th>
+												<th><fmt:formatDate value="${lend.returnDate}" pattern="yyyy-MM-dd hh:mm:ss"/></th>
+												<th><fmt:formatDate value="${lend.returnedDate}" pattern="yyyy-MM-dd hh:mm:ss"/></th>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -260,6 +285,7 @@
 							</div>
 						</div>
 					</div>
+
 				</div>
 				<!-- /.container-fluid -->
 
@@ -299,20 +325,8 @@
 			</div>
 		</div>
 	</div>
-
 	<!-- custom JavaScript -->
-	<script type="text/javascript">
-		// JavaScript 함수 정의
-		function confirmDelete(event) {
-			// 확인 메시지 표시
-			var confirmed = confirm("정말 삭제하시겠습니까?");
-
-			// 사용자가 "취소"를 클릭하면 링크의 기본 동작을 막음
-			if (!confirmed) {
-				event.preventDefault(); // 링크 클릭 취소
-			}
-		}
-	</script>
+	<!-- <script src="/vendor/datatables/custom.js"></script> -->
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="/vendor/jquery/jquery.min.js"></script>

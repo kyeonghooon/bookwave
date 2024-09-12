@@ -70,6 +70,7 @@ CREATE TABLE item_tb (
     price INT NOT NULL
 );
 
+
 CREATE TABLE page_tb (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL
