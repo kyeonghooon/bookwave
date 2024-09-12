@@ -7,6 +7,9 @@
 	select * from user_tb where login_id = #{loginId}
 </select>
 
+<select id="eFindByEmail"  resultType="String">
+	select u.login_id from user_detail_tb as ud join user_tb as u on u.id = ud.user_id where email = #{email}
+</select>
 
 
 </mapper>
