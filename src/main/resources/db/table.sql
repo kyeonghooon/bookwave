@@ -70,12 +70,24 @@ CREATE TABLE item_tb (
     price INT NOT NULL
 );
 
+
+CREATE TABLE page_tb (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE page_item_tb (
+	item_id INT,
+    page_id INT,
+    PRIMARY KEY (item_id , page_id)
+);
+
 CREATE TABLE purchase_history_tb (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     item_id INT NOT NULL,
     wave_used INT DEFAULT 0,
-    milage_used INT DEFAULT 0,
+    mileage_used INT DEFAULT 0,
     total_amount INT NOT NULL,
     purchased_at TIMESTAMP DEFAULT NOW()
 );
@@ -120,7 +132,7 @@ CREATE TABLE user_ebook_category_tb (
 
 CREATE TABLE user_ebook_category_limit_tb (
 	user_id INT PRIMARY KEY,
-    limits INT DEFAULT 4
+    limits INT DEFAULT 8
 );
 
 CREATE TABLE review_tb (
