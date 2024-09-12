@@ -32,6 +32,10 @@ table {
 th, td {
 	padding: 8px;
 	border: 1px solid #ddd;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	max-width: 150px;
 }
 /* 기본 행 스타일 */
 tbody tr {
@@ -250,30 +254,44 @@ tbody tr:hover {
 									<thead>
 										<tr>
 											<th>id</th>
-											<th>login_id</th>
-											<th>social_id</th>
-											<th>name</th>
-											<th>role</th>
-											<th>subscribe</th>
-											<th>wave</th>
-											<th>mileage</th>
-											<th>status</th>
-											<th>created_at</th>
+											<th>분류</th>
+											<th>제목</th>
+											<th>설명</th>
+											<th>작가</th>
+											<th>출판일</th>
+											<th>총재고</th>
+											<th>재고</th>
+											<th>전자책</th>
+											<th>좋아요</th>
+											<th>평점</th>
+											<th>createdAt</th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="user" items="${userList}">
-											<tr data-url="/admin/user-detail?id=${user.id}">
-												<th>${user.id}</th>
-												<th>${user.loginId}</th>
-												<th>${user.socialId}</th>
-												<th>${user.name}</th>
-												<th>${user.role}</th>
-												<th>${user.subscribe}</th>
-												<th>${user.wave}</th>
-												<th>${user.mileage}</th>
-												<th>${user.status}</th>
-												<th><fmt:formatDate value="${user.createdAt}" type="both" /></th>
+										<c:forEach var="book" items="${bookList}">
+											<tr data-url="/admin/book/detail/${book.id}">
+												<th>${book.id}</th>
+												<th>${book.category}</th>
+												<th>${book.title}</th>
+												<th>${book.description}</th>
+												<th>${book.author}</th>
+												<th>${book.publishDate}</th>
+												<th>${book.totalStock}</th>
+												<th>${book.currentStock}</th>
+												<c:choose>
+													<c:when test="${book.ebook == 0}">
+														<th>종이책</th>
+													</c:when>
+													<c:when test="${book.ebook == 1}">
+														<th>전자책</th>
+													</c:when>
+													<c:otherwise>
+														<th>O</th>
+													</c:otherwise>
+												</c:choose>
+												<th>${book.likes}</th>
+												<th>${book.score}</th>
+												<th><fmt:formatDate value="${book.createdAt}" pattern="yyyy-MM-dd" /></th>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -290,7 +308,7 @@ tbody tr:hover {
 
 			<!-- Footer -->
 			<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
-		
+
 			<!-- End of Footer -->
 
 		</div>

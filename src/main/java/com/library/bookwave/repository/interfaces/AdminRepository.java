@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.library.bookwave.dto.BookListDTO;
 import com.library.bookwave.dto.PrincipalDTO;
 import com.library.bookwave.repository.model.Lend;
 import com.library.bookwave.repository.model.User;
@@ -17,4 +18,6 @@ public interface AdminRepository {
 	public List<Lend> readAllLend();
 
 	public int updateLendStatus();
+
+	public List<BookListDTO> readAllBook();
 }

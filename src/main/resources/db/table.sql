@@ -36,6 +36,11 @@ CREATE TABLE book_tb (
     likes INT DEFAULT 0,
     score DOUBLE,
     created_at TIMESTAMP DEFAULT NOW()
+);  
+
+CREATE TABLE book_category_tb (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50)
 );
 
 CREATE TABLE lend_tb (

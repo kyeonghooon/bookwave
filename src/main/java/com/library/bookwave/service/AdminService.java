@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.library.bookwave.dto.BookListDTO;
 import com.library.bookwave.dto.PrincipalDTO;
 import com.library.bookwave.repository.interfaces.AdminRepository;
 import com.library.bookwave.repository.model.Lend;
@@ -76,5 +77,13 @@ public class AdminService {
 		if (result != 1) {
 			System.out.println("연체될 대출현황이 없습니다");
 		}
+	}
+
+	// 도서 목록 조회
+	@Transactional
+	public List<BookListDTO> readAllBook() {
+		List<BookListDTO> bookList = new ArrayList<>();
+		bookList = adminRepository.readAllBook();
+		return bookList;
 	}
 }

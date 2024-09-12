@@ -39,6 +39,31 @@ insert into payment_tb(id, payment_key, type, user_id, order_id, order_name, met
 values (1, 'ppppp11111', 'NORMAL', 1, 'ooooo11111', '충전', '카드', 10000, '2024-09-01 11:11:11', '2024-09-01 11:11:12', 'DONE', NULL, NULL, NULL),
              (2, 'ppppp22222', 'NORMAL', 1, 'ooooo22222', '충전', '카드', 30000, '2024-09-02 11:11:11', '2024-09-02 11:11:12', 'DONE', NULL, '단순 변심', 'REQUEST_CANCEL');
 
+-- 카테고리 추가
+INSERT INTO book_category_tb (name) VALUES
+('건강/취미'),
+('경제경영'),
+('과학'),
+('대학교재/전문서적'),
+('만화'),
+('사회과학'),
+('소설/시/희곡'),
+('수험서/자격증'),
+('어린이'),
+('에세이'),
+('여행'),
+('역사'),
+('예술/대중문화'),
+('외국어'),
+('요리/살림'),
+('유아'),
+('인문학'),
+('자기계발'),
+('종교/역학'),
+('좋은부모'),
+('청소년'),
+('컴퓨터/모바일');
+
 -- 도서 목록 샘플 데이터 주입
 insert into book_tb (title, description, author, publisher, cover, category, publish_date, total_stock, current_stock) values ('주술회전 27 트리플 특장판 - 양면 커버 + 티켓풍 책갈피 + 일러스트 카드 세트(PET), 바보 서바이버!!', '', '아쿠타미 게게 (지은이), 이정운 (옮긴이)', '서울미디어코믹스(서울문화사)', 'https://image.aladin.co.kr/product/34584/89/cover200/k042933479_1.jpg', '만화', '2024-08-29', 1, 1);
 insert into book_tb (title, description, author, publisher, cover, category, publish_date, total_stock, current_stock) values ('괴수 8호 13 (트리플 특장판) - 초판한정 일러스트 카드 + 한국한정 양면 일러스트 커버 + 한정 아크릴 포토 카드', '타치카와에 발생한 괴수 9호의  수중에 떨어진 아시로 미나. 미나를 구출하러 가려는 카프카를 도쿄 곳곳에서 나타난 대괴수들이 가로막는다.', '마츠모토 나오야 (지은이), 유유리 (옮긴이)', '서울미디어코믹스(서울문화사)', 'https://image.aladin.co.kr/product/34573/89/cover200/k382933360_1.jpg', '만화', '2024-09-03', 1, 1);

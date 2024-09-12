@@ -15,6 +15,10 @@
 		select * from lend_tb
 	</select>
 	
+	<select id="readAllBook" resultType="com.library.bookwave.dto.BookListDTO">
+		select * from book_tb
+	</select>
+	
 	<update id="updateLendStatus">
 		update lend_tb set status = 1
 		where EXTRACT(DAY FROM return_date) = EXTRACT(DAY FROM NOW()) - 1
