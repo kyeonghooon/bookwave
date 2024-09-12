@@ -133,4 +133,16 @@ public class MyHistoryService {
 		return monthlyLends;
 	}
 
+	public List<Integer> getReviewedBookIdsByUserId(Integer userId) {
+		return historyRepository.findReviewedBookIdsByUserId(userId);
+	}
+
+	public List<MyBookHistory> findBooksByTitle(int userId, String search) {
+		return historyRepository.findBooksByTitle(userId, search);
+	}
+
+	public List<MyEbookHistory> findEbooksByTitle(int userId, String search) {
+		return historyRepository.findEbooksByTitle(userId, search);
+	}
+
 }

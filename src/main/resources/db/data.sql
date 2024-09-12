@@ -15,6 +15,14 @@ VALUES (1, 22, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
 VALUES (1, 23, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
 
+INSERT INTO user_ebook_tb (user_id, book_id, last_read_date)
+VALUES 
+(1, 101, NOW()),
+(1, 202, NOW()),
+(1, 303, NOW()),
+(1, 404, NOW()),
+(1, 505, NOW());
+
 -- 샘플 데이터 sql
 
 INSERT INTO user_tb VALUES (1, 'slowman', null, '1234', '석지웅', 'admin', 0, now());

@@ -162,42 +162,6 @@ body {
 	text-overflow: ellipsis;
 }
 
-.pagination {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 5px;
-	padding: 10px;
-	background-color: #f8f8f8;
-	border-top: 1px solid #ddd;
-}
-
-.pagination a {
-	padding: 8px 15px;
-	text-decoration: none;
-	border: 1px solid #ddd;
-	border-radius: 5px;
-	color: #333;
-	font-size: 14px;
-	transition: background-color 0.3s, color 0.3s;
-}
-
-.pagination a.active {
-	background-color: #333;
-	color: white;
-}
-
-.pagination a.disabled {
-	color: #ddd;
-	border-color: #ddd;
-	cursor: not-allowed;
-}
-
-.pagination .page-numbers {
-	display: flex;
-	gap: 5px;
-}
-
 .page--wrapper {
 	display: flex;
 	flex: 1;
@@ -206,6 +170,12 @@ body {
 .main--content {
 	flex: 1;
 }
+
+.disabled-button {
+	pointer-events: none;
+	color: gray;
+	text-decoration: none;
+}
 </style>
 </head>
 <body>
@@ -213,20 +183,33 @@ body {
 
 		<div class="main--content">
 			<div style="display: flex; flex-direction: row;">
-				<a href="/history/list?type=all">asdf</a>
-				<a href="/history/list?type=book">asdf</a>
-				<a href="/history/list?type=ebook">asdf</a>
+				<a href="<c:url value='/history/list'><c:param name='type' value='all'/></c:url>">All</a> <a href="<c:url value='/history/list'><c:param name='type' value='book'/></c:url>">Books</a>
+				<a href="<c:url value='/history/list'><c:param name='type' value='ebook'/></c:url>">E-books</a>
+
+				<form action="<c:url value='/history/list'/>" method="get" style="display: flex; align-items: center;">
+					<input type="hidden" name="type" value="${param.type}"> <input type="text" id="searchInput" name="search" placeholder="Search..." value="${param.search}">
+					<button type="submit">Search</button>
+				</form>
 			</div>
+
 			<div style="display: flex; flex-direction: row;">
 				<div id="chart_div"></div>
 				<div id="chart_div2"></div>
 			</div>
+
 			<div class="container">
 				<c:forEach var="history" items="${myHistoryList}">
 					<div class="book--item">
 						<img src="${history.cover}" alt="${history.title}" />
 						<div class="book--title">${history.title}</div>
-						<a href="/history/review/${history.id}">리뷰 작성</a>
+						<c:choose>
+							<c:when test="${fn:contains(reviewedBookIds, history.id)}">
+								<a class="review-button disabled">이미 작성하셨습니다</a>
+							</c:when>
+							<c:otherwise>
+								<a href="/history/review/${history.id}">리뷰 작성</a>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</c:forEach>
 			</div>
@@ -234,4 +217,5 @@ body {
 		</div>
 	</div>
 </body>
+
 </html>

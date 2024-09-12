@@ -32,4 +32,10 @@ public interface MyHistoryRepository {
 
 	public List<Map<String, Object>> findMonthlyEbookLendsByUserId(Integer userId);
 
+	public List<Integer> findReviewedBookIdsByUserId(Integer userId);
+
+	public List<MyBookHistory> findBooksByTitle(@Param("userId") int userId, @Param("search") String search);
+
+	public List<MyEbookHistory> findEbooksByTitle(@Param("userId") int userId, @Param("search") String search);
+
 }

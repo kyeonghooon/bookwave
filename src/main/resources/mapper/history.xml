@@ -18,6 +18,17 @@
 		AND l.status = -1;
 	</select>
 
+	<select id="findBooksByTitle"
+		resultType="com.library.bookwave.repository.model.MyBookHistory">
+		SELECT b.*, l.user_id, l.lend_date, l.returned_date
+		FROM book_tb AS b
+		LEFT JOIN lend_tb AS l
+		ON b.id = l.book_id
+		WHERE l.user_id = #{userId}
+		AND title LIKE CONCAT('%', #{search}, '%')
+		AND l.status = -1;
+	</select>
+
 	<select id="findAllEbookByUserId"
 		resultType="com.library.bookwave.repository.model.MyEbookHistory">
 		SELECT b.*, e.user_id, e.last_read_date
@@ -25,6 +36,17 @@
 		LEFT JOIN user_ebook_tb AS e
 		ON b.id = e.book_id
 		WHERE e.user_id = #{userId}
+		AND e.last_read_date IS NOT NULL;
+	</select>
+
+	<select id="findEbooksByTitle"
+		resultType="com.library.bookwave.repository.model.MyEbookHistory">
+		SELECT b.*, e.user_id, e.last_read_date
+		FROM book_tb AS b
+		LEFT JOIN user_ebook_tb AS e
+		ON b.id = e.book_id
+		WHERE e.user_id = #{userId}
+		AND title LIKE CONCAT('%', #{search}, '%')
 		AND e.last_read_date IS NOT NULL;
 	</select>
 
@@ -82,6 +104,12 @@
 		AND e.last_read_date IS NOT NULL
 		GROUP BY FORMATDATETIME(e.last_read_date, 'yyyy-MM')
 		ORDER BY `month` ASC;
+	</select>
+
+	<select id="findReviewedBookIdsByUserId">
+		SELECT book_id
+		FROM review_tb
+		WHERE user_id = #{userId}
 	</select>
 
 </mapper>
