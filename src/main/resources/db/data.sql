@@ -1,6 +1,8 @@
 -- 샘플 데이터 sql
 
 INSERT INTO user_tb VALUES (1, 'slowman', null, '1234', '석지웅', 'admin', 0, now());
+INSERT INTO user_detail_tb VALUES (1, 'kred730036@gmail.com', now(), 0, '010-1111-1111', null, null, null);
+
 
 -- qna 샘플 데이터 추가
 INSERT INTO question_tb VALUES (1, 5, '문의제목1', '문의내용1', 1, now());

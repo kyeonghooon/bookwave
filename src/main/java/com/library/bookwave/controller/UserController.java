@@ -111,6 +111,7 @@ public class UserController {
 		model.addAttribute("type", type);
 		return "user/findLogin";
 	}
+	
 
 	// 로그인 요청 처리
 	@PostMapping("/sign-in")

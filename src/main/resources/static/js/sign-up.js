@@ -11,9 +11,8 @@ let isPasswordValid = false;
 let isEmailChecked = false;
 if (btnId) {
 	btnId.addEventListener("click", function() {
-		const inputId = loginId.value.trim();
-		console.log(inputId);
-		if (!reUid.test(inputId)) {
+		const loginId = inputId.value;
+		if (!reUid.test(loginId)) {
 			resultUid.textContent =
 				"아이디는 6-12자의 영문 소문자 및 숫자만 사용 가능합니다.";
 			resultUid.style.color = "red";
@@ -243,12 +242,13 @@ document.addEventListener("DOMContentLoaded", function() {
 		}
 	});
 
-	// Email validation helper function
-	function validateEmail(email) {
-		const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		return re.test(email);
-	}
+
 });
+// Email validation helper function
+function validateEmail(email) {
+	const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	return re.test(email);
+}
 
 // 이메일 관련 기능
 document.addEventListener("DOMContentLoaded", function() {
@@ -256,7 +256,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	sendEmailBtn.addEventListener('click', function() {
 		const email = document.getElementById('email').value + "@" + document.querySelector('select[name="email2"]').value;
+		if (!validateEmail(email)) {
+			alert("사용할 수 없는 이메일 형식");
+			return;
+		}
 		sendEmailBtn.innerText = "전송중";
+		sendEmailBtn.disabled = true;
 		// 이메일 인증 요청
 		fetch(`/email/sendVerification?email=${encodeURIComponent(email)}`, {
 			method: 'POST'
@@ -266,7 +271,10 @@ document.addEventListener("DOMContentLoaded", function() {
 				// 카운트다운 시작
 				startCountdown();
 			})
-			.catch(error => console.error('Error:', error));
+			.catch(error => {
+				console.error('Error:', error);
+				sendEmailBtn.disabled = false;
+			});
 	});
 
 	// 카운트다운 시작 함수
@@ -284,6 +292,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				clearInterval(interval);
 				statusElement.innerText = "인증 시간이 만료되었습니다.";
 				sendEmailBtn.innerText = "재전송";
+				sendEmailBtn.disabled = false;
 			}
 		}, 1000);
 
@@ -302,6 +311,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					isEmailChecked = true;
 				} else {
 					statusElement.innerText = "인증 실패. 다시 시도해주세요.";
+					sendEmailBtn.disabled = false;
 				}
 			});
 		});
