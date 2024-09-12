@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					// 결제 필요
 					messageBox.innerText = data.message;
 					if (confirm("결제하시겠습니까?")) {
-						purchaseExtendCategory();
+						openPurchaseModal();
 					}
 				}
 			})
@@ -127,12 +127,12 @@ document.addEventListener("DOMContentLoaded", function() {
 			});
 	});
 
-	function purchaseExtendCategory() {
+	function purchaseExtendCategory(waveInput, mileageInput) {
 		const itemId = items.get("extend-category");
 		// TODO 테스트용
 		const params = new URLSearchParams({
-			wave: 500,
-			mileage: 0
+			wave: waveInput,
+			mileage: mileageInput
 		});
 		const url = `/purchase/${itemId}?${params.toString()}`;
 		fetch(url, {
@@ -157,7 +157,12 @@ document.addEventListener("DOMContentLoaded", function() {
 				messageBox.innerText = "구매 중 오류가 발생했습니다.";
 			});
 	}
-
+	
+	function openPurchaseModal() {
+		openDynamicModal("결제하기", "500을 두 값으로 나누어 입력하세요.", 500, function(waveInput, mileageInput) {
+			purchaseExtendCategory(waveInput, mileageInput)
+        });
+	}
 
 	// 카테고리 항목들을 가져오는 함수
 	function getCategoryItems() {

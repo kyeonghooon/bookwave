@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp"%>
+<%@ include file="../modal/purchase.jsp"%>
 <link rel="stylesheet" type="text/css" href="/css/ebook_list.css">
 <div class="d-flex">
 	<div class="sidebar">
