@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.library.bookwave.dto.BookListDTO;
 import com.library.bookwave.repository.model.Book;
+import com.library.bookwave.repository.model.BookCategory;
 import com.library.bookwave.repository.model.Favorite;
 import com.library.bookwave.repository.model.Lend;
 import com.library.bookwave.repository.model.Like;
@@ -35,12 +36,12 @@ public class BookController {
 	 */
 	@GetMapping("/list")
 	public String showBooks(Model model, @RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "size", defaultValue = "30") int size,
-			@RequestParam(name = "category", defaultValue = "") String category, @RequestParam(name = "search", defaultValue = "") String search) {
+			@RequestParam(name = "category", defaultValue = "") Integer category, @RequestParam(name = "search", defaultValue = "") String search) {
 		// TODO - 임시 userId 삭제예정
 		int userId = 1;
 
 		// 카테고리 불러오기
-		List<String> categoryList = bookService.readAllBookCategory();
+		List<BookCategory> categoryList = bookService.readAllBookCategory();
 
 		// 책 조회
 		List<BookListDTO> books = bookService.readAllBook(userId, category, search, page, size);
@@ -62,7 +63,7 @@ public class BookController {
 		model.addAttribute("endBlock", endBlock);
 		model.addAttribute("selectedCategory", category);
 		model.addAttribute("searchQuery", search);
-		model.addAttribute("categories", categoryList);
+		model.addAttribute("categoryList", categoryList);
 
 		return "book/bookList";
 	}
@@ -77,7 +78,7 @@ public class BookController {
 
 		// 책 상세보기
 		Book bookDetail = bookService.readBook(bookId);
-
+		System.out.println("bookDeatil : "+bookDetail);
 		// 대여 조회 
 		Lend lend = bookService.readLend(bookId, userId);
 
@@ -200,7 +201,7 @@ public class BookController {
 	// 도서 등록 페이지
 	@GetMapping("/create")
 	public String bookCreatePage(Model model) {
-		List<String> categoryList = bookService.readAllBookCategory2();
+		List<BookCategory> categoryList = bookService.readAllBookCategory();
 		model.addAttribute("categoryList", categoryList);
 		return "book/bookCreate";
 	}
@@ -216,10 +217,9 @@ public class BookController {
 	@GetMapping("/update/{bookId}")
 	public String bookUpdatePage(@PathVariable("bookId") Integer bookId, Model model) {
 		Book book = bookService.readBook(bookId);
-		List<String> categoryList = bookService.readAllBookCategory2();
+		List<BookCategory> categoryList = bookService.readAllBookCategory();
 		model.addAttribute("book", book);
 		model.addAttribute("categoryList", categoryList);
-		System.out.println("커버이미지경로1" + book.getCover());
 		return "book/bookUpdate";
 	}
 
@@ -227,7 +227,6 @@ public class BookController {
 	@PostMapping("/update/{bookId}")
 	public String bookUpdateProc(@ModelAttribute Book book) {
 		bookService.updateBookById(book);
-		System.out.println("커버이미지경로2" + book.getCover());
 		return "redirect:/admin/book/detail/{bookId}";
 	}
 

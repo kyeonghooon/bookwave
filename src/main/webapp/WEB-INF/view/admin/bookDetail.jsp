@@ -326,7 +326,7 @@ body {
 								<strong>출판사:</strong> ${book.publisher}
 							</p>
 							<p>
-								<strong>분류:</strong> ${book.category}
+								<strong>분류:</strong> ${book.categoryName}
 							</p>
 							<p>
 								<strong>출판일:</strong> ${book.publishDate}
@@ -341,7 +341,7 @@ body {
 								<strong>재고:</strong> ${book.currentStock}
 							</p>
 							<p>
-								<strong>eBook:</strong> ${book.ebook != 0 ? 'Available' : 'Not Available'}
+								<strong>eBook:</strong> ${book.ebook != 0 ? '가능' : '불가능'}
 							</p>
 							<c:if test="${book.ebook == 1}">
 								<a href="${book.ebookPath}">eBook</a>

@@ -74,7 +74,7 @@ public class AdminService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (result != 1) {
+		if (result == 0) {
 			System.out.println("연체될 대출현황이 없습니다");
 		}
 	}
