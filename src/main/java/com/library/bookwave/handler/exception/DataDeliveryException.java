@@ -6,6 +6,7 @@ import lombok.Getter;
 
 @Getter
 public class DataDeliveryException extends RuntimeException {
+
 	private HttpStatus status;
 
 	public DataDeliveryException(String message, HttpStatus status) {

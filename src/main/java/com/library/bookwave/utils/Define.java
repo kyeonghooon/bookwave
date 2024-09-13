@@ -1,6 +1,7 @@
 package com.library.bookwave.utils;
 
 public class Define {
+
 	//  상수
 	public static final String PRINCIPAL = "principal";
 
@@ -22,4 +23,5 @@ public class Define {
 	public static final String INVALID_INPUT = "잘못된 입력입니다.";
 	public static final String UNKNOWN = "알 수 없는 동작입니다";
 	public static final String FAILED_PROCESSING = "정상 처리 되지 않았습니다.";
+
 }
