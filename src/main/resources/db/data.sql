@@ -1,7 +1,7 @@
 -- 샘플 데이터 sql
 
 INSERT INTO user_tb VALUES (1, 'slowman', null, '1234', '석지웅', 'admin', 0, now());
-INSERT INTO user_detail_tb VALUES (1, 'kred730036@gmail.com', now(), 0, '010-1111-1111', null, null, null);
+INSERT INTO user_detail_tb VALUES (1, 'kred73003@gmail.com', now(), 0, '010-1111-1111', null, null, null);
 
 
 -- qna 샘플 데이터 추가

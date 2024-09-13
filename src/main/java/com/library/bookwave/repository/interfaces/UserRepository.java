@@ -1,7 +1,5 @@
 package com.library.bookwave.repository.interfaces;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,11 +13,11 @@ public interface UserRepository {
 	public int createUser(User user);
 	// userId 값 추출
 	public User findById(String loginId);
-	// 
-	public List<UserDetail> findAll();
+
 	// 회원가입
 	public int createUserDetail(@Param("id") Integer id, @Param("userDetail") UserDetail userDetail);
 	
+	public int createWallet(Integer userId);
 
 //	 (로그인 (아이디, 비밀번호))
 	public int findAllByUser(User user);
