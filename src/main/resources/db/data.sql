@@ -3,6 +3,7 @@
 INSERT INTO user_tb VALUES (1, 'slowman', null, '1234', '석지웅', 'admin', 0, now());
 INSERT INTO wallet_tb VALUES (1, 1, 40000, 5000);
 INSERT INTO subscribe_tb VALUES (1, 1, '2024-09-01 15:00:00', '2024-10-01 14:59:59');
+INSERT INTO user_detail_tb VALUES (1, 'kred730036@gmail.com', now(), 0, '010-1111-1111', null, null, null);
 
 -- qna 샘플 데이터 추가
 INSERT INTO question_tb VALUES (1, 5, '문의제목1', '문의내용1', 1, now());

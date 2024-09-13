@@ -13,6 +13,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 @ToString
+
 public class PrincipalDTO {
 
 	private Integer userId;

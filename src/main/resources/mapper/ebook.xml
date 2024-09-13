@@ -35,7 +35,7 @@
 		order by priority desc
 	</select>
 
-	<select id="findEbookCategoryLimitByUserId" resultType="int">
+	<select id="readEbookCategoryLimit" resultType="int">
 		select ifnull(uec.limits, 3)
 		from user_ebook_category_limit_tb uec
 		right join dual on #{userId} = uec.user_id
@@ -64,5 +64,13 @@
 			where id = #{category.categoryId} and user_id = #{userId} 
 		</foreach>
 	</update>
+	
+	<update id="updateEbookCategoryLimit">
+		update user_ebook_category_limit_tb set limits = limits + #{extend} where user_id = #{userId}
+	</update>
+	
+	<insert id="createEbookCategoryLimit">
+		insert into user_ebook_category_limit_tb (user_id) values (#{userId})
+	</insert>
 
 </mapper>

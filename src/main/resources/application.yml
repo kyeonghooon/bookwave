@@ -26,6 +26,7 @@ spring:
       data-locations:
       - classpath:db/data.sql
       - classpath:db/ebookData.sql
+      - classpath:db/itemsData.sql
 
   h2:
     console:

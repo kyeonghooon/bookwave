@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -50,9 +51,6 @@ public class UserController {
 	@GetMapping("/sign-up")
 	public String signUpPage(Model model) {
 		String socialId = (String) model.asMap().get("socialId");
-//		//TODO 임시값
-//		String password = "298p3047y2w98p4uhtrle";
-//		model.addAttribute("socialPassword", password);
 		model.addAttribute("socialId", socialId);
 		return "user/signUp";
 	}
@@ -106,25 +104,14 @@ public class UserController {
 		return "user/signIn";
 	}
 	
-	// 아이디, 비밀번호 찾기 화면 요청
-	@GetMapping("/find-login")
-	public String findLoginPage() {
+	@GetMapping("/find-login") // type 값을 받아온다?..
+	public String findLoginPage(@RequestParam(name = "type") String type, Model model) {
+		System.out.println("type : " + type);
+		// TODO 모델에 type 추가
+		model.addAttribute("type", type);
 		return "user/findLogin";
 	}
 	
-//	@PostMapping("/sign-up")
-//	public String findLoginProc(SignUpDTO dto) {
-//		System.out.println("DTO:" + dto);
-//		if (dto.getName() == null || dto.getName().isEmpty()) {
-//			throw new DataDeliveryException("이름을 입력해주세요.", HttpStatus.BAD_REQUEST);
-//		}
-//		if (dto.getEmail() == null || dto.getEmail().isEmpty()) {
-//			throw new DataDeliveryException("email을 입력해주세요.", HttpStatus.BAD_REQUEST);
-//		}
-//
-//		// TODO 수정
-//		return "redirect:/user/sign-in";
-//	}
 
 	// 로그인 요청 처리
 	@PostMapping("/sign-in")

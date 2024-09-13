@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.bookwave.repository.interfaces.ItemRepository">
+
+	<select id="findItemListByPageName" resultType="com.library.bookwave.repository.model.Item">
+		select i.*
+		from item_tb i
+		join page_item_tb pi on i.id = pi.item_id
+		join page_tb p on p.id = pi.page_id
+		where p.name = #{pageName}
+	</select>
+
+	<select id="readItem" resultType="String">
+		select name
+		from item_tb
+		where id = #{itemId}
+	</select>
+
+</mapper>

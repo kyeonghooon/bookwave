@@ -20,6 +20,11 @@
 		#{userDetail.gender}, #{userDetail.phone}, #{userDetail.zip},
 		#{userDetail.addr1}, #{userDetail.addr2})
 	</insert>
+	
+	<!-- TODO wallet 수정 -->
+	<insert id="createWallet">
+		insert into wallet_tb (user_id) values (#{id})
+	</insert>
 
 	<select id="findAll"
 		resultType="com.library.bookwave.repository.model.UserDetail">
@@ -33,9 +38,14 @@
 		select * from user_tb where login_id = #{loginId} and password = #{password}
 	</select>
 	
-	<!-- ID 찾기 -->
+	<!-- ID -->
 	<select id="findByUserId" resultType="com.library.bookwave.repository.model.User">
-		select * from user_tb where name = #{loginId}
+		select * from user_tb where login_id  = #{loginId}
+	</select>
+	
+	<!-- PWD -->
+	<select id="findByUserPwd" resultType="com.library.bookwave.repository.model.User">
+		select * from user_tb where password = #{password}
 	</select>
 	
 	<!-- update, detete -->
