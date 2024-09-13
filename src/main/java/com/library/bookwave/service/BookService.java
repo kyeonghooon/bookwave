@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.library.bookwave.dto.BookListDTO;
 import com.library.bookwave.repository.interfaces.BookRepository;
 import com.library.bookwave.repository.model.Book;
+import com.library.bookwave.repository.model.BookCategory;
 import com.library.bookwave.repository.model.Favorite;
 import com.library.bookwave.repository.model.Lend;
 import com.library.bookwave.repository.model.Like;
@@ -24,12 +25,12 @@ public class BookService {
 	}
 
 	// 도서 목록 조회
-	public List<BookListDTO> readAllBook(Integer userId, String catgory, String search, Integer page, Integer size) {
+	public List<BookListDTO> readAllBook(Integer userId, Integer category, String search, Integer page, Integer size) {
 		List<BookListDTO> books = null;
 		try {
 			int limit = size;
 			int offset = (page - 1) * size;
-			books = bookRepository.readAllBook(userId, catgory, search, limit, offset);
+			books = bookRepository.readAllBook(userId, category, search, limit, offset);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -38,8 +39,8 @@ public class BookService {
 	}
 
 	// 카테고리 조회
-	public List<String> readAllBookCategory() {
-		List<String> categories = null;
+	public List<BookCategory> readAllBookCategory() {
+		List<BookCategory> categories = null;
 		try {
 			categories = bookRepository.readAllBookCategory();
 		} catch (Exception e) {
@@ -60,7 +61,7 @@ public class BookService {
 	}
 
 	// 필터링 걸린 도서 갯수 조회하기
-	public int countAllBook(String category, String search) {
+	public int countAllBook(Integer category, String search) {
 		int count = 0;
 		try {
 			count = bookRepository.countAllBook(category, search);

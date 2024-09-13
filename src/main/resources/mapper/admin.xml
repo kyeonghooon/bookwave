@@ -16,7 +16,8 @@
 	</select>
 	
 	<select id="readAllBook" resultType="com.library.bookwave.dto.BookListDTO">
-		select * from book_tb
+		select b.*, c.name categoryName from book_tb b
+		left join book_category_tb c on b.category_id = c.id
 	</select>
 	
 	<update id="updateLendStatus">
