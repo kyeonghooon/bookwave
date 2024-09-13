@@ -12,6 +12,8 @@ INSERT INTO question_tb VALUES (3, 7, '문의제목3', '문의내용3', null, no
 INSERT INTO answer_tb VALUES (1, 1, 1, '답변내용1', now());
 INSERT INTO answer_tb VALUES (2, 2, 1, '답변내용2', now());
 
+
+insert into review_tb(user_id, book_id, score, content) values(1, 15, 9, 'ㅁㄴㅇㄹ');
 -- faq 샘플 데이터 추가
 INSERT INTO faq_tb (title, content, category) VALUES
 ('결제취소는 어떻게 하나요?','결제취소는 마이페이지> 결제내역 메뉴에서 확인가능합니다.
