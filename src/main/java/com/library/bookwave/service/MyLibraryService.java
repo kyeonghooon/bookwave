@@ -13,11 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.library.bookwave.repository.interfaces.MyLibraryRepository;
 import com.library.bookwave.repository.model.MyLibrary;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class MyLibraryService {
 
-	@Autowired
-	MyLibraryRepository lendRepository;
+	private final MyLibraryRepository lendRepository;
 
 	public List<MyLibrary> readAllById(Integer userId) {
 		List<MyLibrary> list = new ArrayList<>();
