@@ -18,7 +18,7 @@
 				<dd></dd>
 				<dt>출판일: ${book.publishDate}</dt>
 				<dd></dd>
-				<dt>카테고리: ${book.category}</dt>
+				<dt>카테고리: ${book.categoryName}</dt>
 				<dd></dd>
 				<dt>출판사: ${book.publisher}</dt>
 				<dd></dd>
@@ -101,7 +101,7 @@
 
 		</div>
 
-		<a href="/book/list" class="back--link">돌아가기</a>
+		<a href="javascript:history.back()" class="back--link">돌아가기</a>
 
 		<!-- 관심등록 버튼 -->
 		<button type="button" class="favorite--button ${isFavorited ? 'favorited' : ''}" data-book-id="${book.id}" data-favorited="${isFavorited}">&#9733;</button>

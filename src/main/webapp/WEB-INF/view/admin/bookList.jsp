@@ -272,7 +272,7 @@ tbody tr:hover {
 										<c:forEach var="book" items="${bookList}">
 											<tr data-url="/admin/book/detail/${book.id}">
 												<th>${book.id}</th>
-												<th>${book.category}</th>
+												<th>${book.categoryName}</th>
 												<th>${book.title}</th>
 												<th>${book.description}</th>
 												<th>${book.author}</th>
@@ -287,7 +287,7 @@ tbody tr:hover {
 														<th>전자책</th>
 													</c:when>
 													<c:otherwise>
-														<th>O</th>
+														<th>가능</th>
 													</c:otherwise>
 												</c:choose>
 												<th>${book.likes}</th>

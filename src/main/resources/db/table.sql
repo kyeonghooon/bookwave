@@ -27,7 +27,7 @@ CREATE TABLE book_tb (
     author VARCHAR(255) NOT NULL,
     publisher VARCHAR(100) NOT NULL,
     cover TEXT COMMENT 'url',
-    category VARCHAR(255) NOT NULL,
+    category_id INT NOT NULL,
     publish_date DATE NOT NULL,
     total_stock INT NOT NULL,
     current_stock INT NOT NULL,
