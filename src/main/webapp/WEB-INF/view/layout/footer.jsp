@@ -40,7 +40,7 @@
 					<i class="fa fa-brands fa-github"></i> <a href="https://github.com/kyeonghooon/bookwave">GitHub Link</a>
 				</p>
 				<p>
-					<i class="fa fa-solid fa-n"></i> <a href="https://smoggy-mochi-e8a.notion.site/BookWave-facbe963db0642dbad7083bbc12e9696">Notion Link</a>
+					<i class="fa fa-solid fa-n"></i> <a href="https://bookwave.notion.site/">Notion Link</a>
 				</p>
 			</div>
 
@@ -59,7 +59,6 @@
 			<li><a href="http://webenlance.com">Contact</a></li>
 		</ul>
 		<p class="text-center">2024 BookWave. All rights reserved.</p>
-
 	</div>
 
 </footer>
