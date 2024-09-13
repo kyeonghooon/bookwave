@@ -1,5 +1,3 @@
--- 샘플 데이터 sql
-
 INSERT INTO user_tb VALUES (1, 'slowman', null, '1234', '석지웅', 'admin', 0, now());
 INSERT INTO wallet_tb VALUES (1, 1, 40000, 5000);
 INSERT INTO subscribe_tb VALUES (1, 1, '2024-09-01 15:00:00', '2024-10-01 14:59:59');
