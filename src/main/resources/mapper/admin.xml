@@ -3,12 +3,20 @@
 <mapper
 	namespace="com.library.bookwave.repository.interfaces.AdminRepository">
 
-	<select id="readAllUser" resultType="com.library.bookwave.repository.model.User">
-		select * from user_tb
+	<select id="readAllUser" resultType="com.library.bookwave.dto.PrincipalDTO">
+		select u.id userId, u.*,case
+        when s.end_date > now() THEN '활성화'
+        else '비활성화' end as subscribe, w.wave, w.mileage from user_tb u
+		left join subscribe_tb s on u.id = s.user_id
+		left join wallet_tb w on u.id = w.user_id
 	</select>
 	
 	<select id="readAllLend" resultType="com.library.bookwave.repository.model.Lend">
 		select * from lend_tb
+	</select>
+	
+	<select id="readAllBook" resultType="com.library.bookwave.dto.BookListDTO">
+		select * from book_tb
 	</select>
 	
 	<update id="updateLendStatus">

@@ -29,6 +29,12 @@
 		resultType="String">
 		select distinct category from book_tb
 	</select>
+	
+	<!-- (테이블구조 수정) 카테고리를 조회 -->
+	<select id="readAllBookCategory2"
+		resultType="String">
+		select name from book_category_tb
+	</select>
 
 	<!-- 필터링 걸린 책 갯수를 구하는쿼리 -->
 	<select id="countAllBook" resultType="int">
@@ -153,4 +159,22 @@
 	<select id="readUserEbook" resultType="int">
 	select count(*) from user_ebook_tb where user_id = #{userId} and book_id = #{bookId}
 	</select>
+	
+	<!-- 도서 등록 -->
+	<insert id="createBook">
+		insert into book_tb (title, description, author, publisher, cover, category, publish_date, total_stock, current_stock, ebook, ebook_path)
+		values (#{title}, #{description}, #{author}, #{publisher}, #{cover}, #{category}, #{publishDate}, #{totalStock}, #{currentStock}, #{ebook}, #{ebookPath})
+	</insert>
+	
+	<!-- 도서 수정 -->
+	<update id="updateBookById">
+		update book_tb set cover = #{cover}, title = #{title}, author = #{author}, publisher = #{publisher}, category = #{category},
+		publish_date = #{publishDate}, description = #{description}, total_stock = #{totalStock}, current_stock = #{currentStock},
+		ebook = #{ebook}, ebook_path = #{ebookPath} where id = #{id}
+	</update>
+	
+	<!-- 도서 삭제 -->
+	<delete id="deleteBookById">
+		delete from book_tb where id = #{bookId}
+	</delete>
 </mapper>

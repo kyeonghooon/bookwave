@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>BookWave - BookList</title>
+<title>도서 정보 수정 페이지</title>
 
 <!-- Custom fonts for this template -->
 <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -24,26 +24,97 @@
 <!-- Custom styles for this page -->
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 <style>
-table {
-	width: 100%;
-	border-collapse: collapse;
+/* General Container Styling */
+.container-fluid {
+	padding: 20px;
 }
 
-th, td {
-	padding: 8px;
+.container {
+	max-width: 1000px; /* Increase the max-width of the container */
+	margin: 0 auto;
+}
+
+/* Form Styling */
+.book-detail {
+	background: #f8f9fc;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Adjust the form width */
+.book-detail form {
+	width: 100%;
+}
+
+.book-detail h1 {
+	font-size: 24px;
+	margin-bottom: 20px;
+}
+
+.form-group {
+	margin-bottom: 15px;
+}
+
+.form-group label {
+	display: block;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+.form-group input[type="text"], .form-group input[type="date"],
+	.form-group input[type="number"], .form-group textarea, .form-group select
+	{
+	width: 100%;
+	padding: 10px; /* Increase padding for a better appearance */
+	border: 1px solid #ced4da;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+.form-group input[type="file"] {
+	border: none;
+}
+
+.form-group textarea {
+	resize: vertical;
+}
+
+.form-group select {
+	height: 45px; /* Increase height to make the select box taller */
+	padding: 8px; /* Add padding for better text visibility */
+}
+
+/* Button Styling */
+button[type="submit"] {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 12px 24px; /* Adjust padding for a wider button */
+	font-size: 16px;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+button[type="submit"]:hover {
+	background-color: #0056b3;
+}
+
+/* Image Preview Styling */
+#coverPreview, #newCoverPreview {
+	max-width: 200px; /* Increase max-width for wider image preview */
+	margin-top: 10px;
 	border: 1px solid #ddd;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	max-width: 150px;
+	border-radius: 4px;
 }
-/* 기본 행 스타일 */
-tbody tr {
-	transition: background-color 0.3s ease;
+
+#coverPreview {
+	display: block;
 }
-/* hover 스타일 */
-tbody tr:hover {
-	background-color: #99CCFF;
+
+#newCoverPreview {
+	display: none;
 }
 </style>
 </head>
@@ -242,70 +313,67 @@ tbody tr:hover {
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
+					<div class="container">
+						<div class="book-detail">
+							<h1>도서 정보 수정하기</h1>
+							<form action="/book/update/${book.id}" method="post">
+								<input type="hidden" value="${book.id}" name="id">
+								<div class="form-group">
+									<label for="title">제목:</label> <input type="text" id="title" name="title" value="${book.title}" required>
+								</div>
+								<div class="form-group">
+									<label for="author">작가:</label> <input type="text" id="author" name="author" value="${book.author}" required>
+								</div>
+								<div class="form-group">
+									<label for="publisher">출판사:</label> <input type="text" id="publisher" name="publisher" value="${book.publisher}" required>
+								</div>
 
-					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">도서 목록</h1>
-
-					<a href="/book/create" class="btn btn-danger">도서 등록하기</a>
-					<!-- DataTales Example -->
-					<div class="card shadow mb-4">
-						<div class="card-body">
-							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-									<thead>
-										<tr>
-											<th>ID</th>
-											<th>분류</th>
-											<th>제목</th>
-											<th>설명</th>
-											<th>작가</th>
-											<th>출판일</th>
-											<th>총재고</th>
-											<th>재고</th>
-											<th>전자책</th>
-											<th>좋아요</th>
-											<th>평점</th>
-											<th>등록일</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="book" items="${bookList}">
-											<tr data-url="/admin/book/detail/${book.id}">
-												<th>${book.id}</th>
-												<th>${book.category}</th>
-												<th>${book.title}</th>
-												<th>${book.description}</th>
-												<th>${book.author}</th>
-												<th>${book.publishDate}</th>
-												<th>${book.totalStock}</th>
-												<th>${book.currentStock}</th>
-												<c:choose>
-													<c:when test="${book.ebook == 0}">
-														<th>종이책</th>
-													</c:when>
-													<c:when test="${book.ebook == 1}">
-														<th>전자책</th>
-													</c:when>
-													<c:otherwise>
-														<th>O</th>
-													</c:otherwise>
-												</c:choose>
-												<th>${book.likes}</th>
-												<th>${book.score}</th>
-												<th><fmt:formatDate value="${book.createdAt}" pattern="yyyy-MM-dd" /></th>
-											</tr>
+								<div class="form-group">
+									<label for="category">분류:</label> <select id="category" name="category">
+										<c:forEach var="category" items="${categoryList}">
+											<option value="${category}" ${book.category == category ? 'selected' : ''}>${category}</option>
 										</c:forEach>
-									</tbody>
-								</table>
-							</div>
+									</select>
+								</div>
+
+								<div class="form-group">
+									<label for="publishDate">출판일:</label> <input type="date" id="publishDate" name="publishDate" value="${book.publishDate}" required>
+								</div>
+								<div class="form-group">
+									<label for="description">설명:</label>
+									<textarea id="description" name="description" rows="5" required>${book.description}</textarea>
+								</div>
+								<div class="form-group">
+									<label for="totalStock">총 재고:</label> <input type="number" id="totalStock" name="totalStock" value="${book.totalStock}" required>
+								</div>
+								<div class="form-group">
+									<label for="currentStock">재고:</label> <input type="number" id="currentStock" name="currentStock" value="${book.currentStock}" required>
+								</div>
+								<div class="form-group">
+									<label for="ebook">eBook 여부:</label> <select id="ebook" name="ebook">
+										<option value="2">둘다</option>
+										<option value="1">전자책</option>
+										<option value="0">종이책</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="ebookPath">eBook 경로:</label> <input type="text" id="ebookPath" name="ebookPath" value="${book.ebookPath}">
+								</div>
+								<div class="form-group">
+									<label for="cover">커버 이미지 경로:</label> <input type="text" id="cover" name="cover" value="${book.cover}">
+									<button type="button" id="previewButton" onclick="updateCoverPreview()">미리보기</button>
+									<div id="coverPreviewContainer" style="margin-top: 10px;">
+										<img id="coverPreview" src="${book.cover}" alt="Cover Preview" style="max-width: 150px; display: ${book.cover ? 'block' : 'none'};">
+									</div>
+								</div>
+								<button type="submit">수정하기</button>
+							</form>
 						</div>
 					</div>
-
 				</div>
-				<!-- /.container-fluid -->
-
+				<!-- End of Main Content -->
 			</div>
-			<!-- End of Main Content -->
+			<!-- /.container-fluid -->
 
 			<!-- Footer -->
 			<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
@@ -341,6 +409,34 @@ tbody tr:hover {
 		</div>
 	</div>
 	<!-- custom JavaScript -->
+	<script type="text/javascript">
+		// JavaScript 함수 정의
+		function confirmDelete(event) {
+			// 확인 메시지 표시
+			var confirmed = confirm("정말 삭제하시겠습니까?");
+
+			// 사용자가 "취소"를 클릭하면 링크의 기본 동작을 막음
+			if (!confirmed) {
+				event.preventDefault(); // 링크 클릭 취소
+			}
+		}
+
+		function updateCoverPreview() {
+			const coverInput = document.getElementById('cover');
+			const coverPreview = document.getElementById('coverPreview');
+			const coverUrl = coverInput.value;
+
+			if (coverUrl) {
+				coverInput.value = coverUrl;
+				coverPreview.src = coverUrl;
+				coverPreview.style.display = 'block';
+			} else {
+				coverPreview.style.display = 'none';
+			}
+		}
+
+		document.addEventListener('DOMContentLoaded', updateCoverPreview);
+	</script>
 	<script src="/vendor/datatables/custom.js"></script>
 
 	<!-- Bootstrap core JavaScript-->
@@ -359,7 +455,6 @@ tbody tr:hover {
 
 	<!-- Page level custom scripts -->
 	<script src="/js/demo/datatables-demo.js"></script>
-
 </body>
 
 </html>

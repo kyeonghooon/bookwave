@@ -26,6 +26,9 @@ VALUES
 -- 샘플 데이터 sql
 
 INSERT INTO user_tb VALUES (1, 'slowman', null, '1234', '석지웅', 'admin', 0, now());
+INSERT INTO wallet_tb VALUES (1, 1, 40000, 5000);
+INSERT INTO subscribe_tb VALUES (1, 1, '2024-09-01 15:00:00', '2024-10-01 14:59:59');
+INSERT INTO user_detail_tb VALUES (1, 'kred730036@gmail.com', now(), 0, '010-1111-1111', null, null, null);
 
 -- qna 샘플 데이터 추가
 INSERT INTO question_tb VALUES (1, 5, '문의제목1', '문의내용1', 1, now());
@@ -34,6 +37,8 @@ INSERT INTO question_tb VALUES (3, 7, '문의제목3', '문의내용3', null, no
 INSERT INTO answer_tb VALUES (1, 1, 1, '답변내용1', now());
 INSERT INTO answer_tb VALUES (2, 2, 1, '답변내용2', now());
 
+
+insert into review_tb(user_id, book_id, score, content) values(1, 15, 9, 'ㅁㄴㅇㄹ');
 -- faq 샘플 데이터 추가
 INSERT INTO faq_tb (title, content, category) VALUES
 ('결제취소는 어떻게 하나요?','결제취소는 마이페이지> 결제내역 메뉴에서 확인가능합니다.
@@ -56,6 +61,36 @@ INSERT INTO faq_tb (title, content, category) VALUES
 단, 은행업무 마감시간은 이체 및 입금확인이 불가능합니다.
 ※ 은행 마감 시간 : 22:00~24:00
 (은행별 차이가 있을 수 있음)2','입금');
+
+-- 결제내역 샘플 데이터 추가
+insert into payment_tb(id, payment_key, type, user_id, order_id, order_name, method, total_amount, requested_at, approved_at, status, canceled_at, cancel_reason, cancel_status)
+values (1, 'ppppp11111', 'NORMAL', 1, 'ooooo11111', '충전', '카드', 10000, '2024-09-01 11:11:11', '2024-09-01 11:11:12', 'DONE', NULL, NULL, NULL),
+             (2, 'ppppp22222', 'NORMAL', 1, 'ooooo22222', '충전', '카드', 30000, '2024-09-02 11:11:11', '2024-09-02 11:11:12', 'DONE', NULL, '단순 변심', 'REQUEST_CANCEL');
+
+-- 카테고리 추가
+INSERT INTO book_category_tb (name) VALUES
+('건강/취미'),
+('경제경영'),
+('과학'),
+('대학교재/전문서적'),
+('만화'),
+('사회과학'),
+('소설/시/희곡'),
+('수험서/자격증'),
+('어린이'),
+('에세이'),
+('여행'),
+('역사'),
+('예술/대중문화'),
+('외국어'),
+('요리/살림'),
+('유아'),
+('인문학'),
+('자기계발'),
+('종교/역학'),
+('좋은부모'),
+('청소년'),
+('컴퓨터/모바일');
 
 -- 도서 목록 샘플 데이터 주입
 insert into book_tb (title, description, author, publisher, cover, category, publish_date, total_stock, current_stock) values ('주술회전 27 트리플 특장판 - 양면 커버 + 티켓풍 책갈피 + 일러스트 카드 세트(PET), 바보 서바이버!!', '', '아쿠타미 게게 (지은이), 이정운 (옮긴이)', '서울미디어코믹스(서울문화사)', 'https://image.aladin.co.kr/product/34584/89/cover200/k042933479_1.jpg', '만화', '2024-08-29', 1, 1);

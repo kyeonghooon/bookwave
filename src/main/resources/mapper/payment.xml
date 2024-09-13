@@ -14,12 +14,17 @@
 		select * from payment_tb where id = #{id}
 	</select>
 
-	<update id="updateWaveById">
-		update user_tb set wave = wave + #{wave} where id = #{userId}
+	<update id="updateWalletById">
+		update wallet_tb set wave = wave + #{wave} where id = #{userId}
+	</update>
+	
+	<update id="updateBalanceHistoryById">
+		insert into balance_history_tb(user_id, wave_change, description)
+		values (#{userId}, #{waveChange}, #{description})
 	</update>
 	
 	<update id="updatePaymentCancel">
-		update payment_tb set cancel_reason = #{cancelReason}, canceled_at = now(), cancel_status = 'DONE' where id = #{id}
+		update payment_tb set cancel_amount = #{cancelAmount}, cancel_reason = #{cancelReason}, canceled_at = now(), cancel_status = 'DONE' where id = #{id}
 	</update>
 
 </mapper>
