@@ -2,6 +2,7 @@ package com.library.bookwave.service;
 
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +42,17 @@ public class BookService {
 		List<String> categories = null;
 		try {
 			categories = bookRepository.readAllBookCategory();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return categories;
+	}
+
+	// (테이블구조 수정) 카테고리 조회
+	public List<String> readAllBookCategory2() {
+		List<String> categories = null;
+		try {
+			categories = bookRepository.readAllBookCategory2();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -217,4 +229,54 @@ public class BookService {
 		}
 		return userEbook;
 	}
+
+	// 도서 등록
+	@Transactional
+	public void createBook(Book book) {
+		int result = 0;
+		try {
+			result = bookRepository.createBook(book);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result != 1) {
+			System.out.println("도서 수정 실패");
+		}
+	}
+
+	// 도서 수정
+	@Transactional
+	public void updateBookById(Book book) {
+		int result = 0;
+		try {
+			result = bookRepository.updateBookById(book);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result != 1) {
+			System.out.println("도서 수정 실패");
+		}
+	}
+
+	// 도서 삭제
+	@Transactional
+	public void deleteBookById(Integer bookId) {
+		int result = 0;
+		try {
+			result = bookRepository.deleteBookById(bookId);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result != 1) {
+			System.out.println("도서 삭제 실패");
+		}
+
+	}
+
 }

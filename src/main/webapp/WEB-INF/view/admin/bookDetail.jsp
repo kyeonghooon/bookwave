@@ -24,26 +24,95 @@
 <!-- Custom styles for this page -->
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 <style>
-table {
-	width: 100%;
-	border-collapse: collapse;
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f4f4f4;
+	margin: 0;
+	padding: 0;
 }
 
-th, td {
-	padding: 8px;
-	border: 1px solid #ddd;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	max-width: 150px;
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
 }
-/* 기본 행 스타일 */
-tbody tr {
-	transition: background-color 0.3s ease;
+
+.book-detail {
+	background: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-/* hover 스타일 */
-tbody tr:hover {
-	background-color: #99CCFF;
+
+.book-detail h1 {
+	margin: 0;
+	font-size: 2.5em;
+	color: #333;
+}
+
+.book-detail p {
+	margin: 10px 0;
+	line-height: 1.6;
+}
+
+.book-detail strong {
+	color: #555;
+}
+
+.book-detail img {
+	max-width: 200px;
+	height: auto;
+	border-radius: 8px;
+	margin: 20px 0;
+}
+
+.book-detail a {
+	display: inline-block;
+	padding: 10px 20px;
+	color: #fff;
+	background-color: #007bff;
+	text-decoration: none;
+	border-radius: 5px;
+	font-weight: bold;
+}
+
+.book-detail a:hover {
+	background-color: #0056b3;
+}
+
+.book-detail .edit-link {
+	display: inline-block;
+	padding: 10px 20px;
+	color: #fff;
+	background-color: #007bff; /* Blue for edit */
+	text-decoration: none;
+	border-radius: 5px;
+	font-weight: bold;
+}
+
+.book-detail .edit-link:hover {
+	background-color: #0056b3; /* Darker blue on hover */
+}
+
+.book-detail .delete-link {
+	display: inline-block;
+	padding: 10px 20px;
+	color: #fff;
+	background-color: #dc3545; /* Red for delete */
+	text-decoration: none;
+	border-radius: 5px;
+	font-weight: bold;
+}
+
+.book-detail .delete-link:hover {
+	background-color: #c82333; /* Darker red on hover */
+}
+
+.book-detail .section-header {
+	margin-top: 20px;
+	padding-bottom: 10px;
+	border-bottom: 2px solid #eee;
+	color: #007bff;
 }
 </style>
 </head>
@@ -242,70 +311,57 @@ tbody tr:hover {
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-
-					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">도서 목록</h1>
-
-					<a href="/book/create" class="btn btn-danger">도서 등록하기</a>
-					<!-- DataTales Example -->
-					<div class="card shadow mb-4">
-						<div class="card-body">
-							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-									<thead>
-										<tr>
-											<th>ID</th>
-											<th>분류</th>
-											<th>제목</th>
-											<th>설명</th>
-											<th>작가</th>
-											<th>출판일</th>
-											<th>총재고</th>
-											<th>재고</th>
-											<th>전자책</th>
-											<th>좋아요</th>
-											<th>평점</th>
-											<th>등록일</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="book" items="${bookList}">
-											<tr data-url="/admin/book/detail/${book.id}">
-												<th>${book.id}</th>
-												<th>${book.category}</th>
-												<th>${book.title}</th>
-												<th>${book.description}</th>
-												<th>${book.author}</th>
-												<th>${book.publishDate}</th>
-												<th>${book.totalStock}</th>
-												<th>${book.currentStock}</th>
-												<c:choose>
-													<c:when test="${book.ebook == 0}">
-														<th>종이책</th>
-													</c:when>
-													<c:when test="${book.ebook == 1}">
-														<th>전자책</th>
-													</c:when>
-													<c:otherwise>
-														<th>O</th>
-													</c:otherwise>
-												</c:choose>
-												<th>${book.likes}</th>
-												<th>${book.score}</th>
-												<th><fmt:formatDate value="${book.createdAt}" pattern="yyyy-MM-dd" /></th>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>
+					<div class="container">
+						<div class="book-detail">
+							<h3>${book.title}</h3>
+							<a href="/book/update/${book.id}" class="edit-link">수정하기</a> <a href="/book/delete/${book.id}" class="delete-link" onclick="confirmDelete(event)">삭제하기</a>
+							<div class="section-header"></div>
+							<c:if test="${book.cover != null && book.cover != ''}">
+								<img src="${book.cover}" alt="${book.title}">
+							</c:if>
+							<p>
+								<strong>작가:</strong> ${book.author}
+							</p>
+							<p>
+								<strong>출판사:</strong> ${book.publisher}
+							</p>
+							<p>
+								<strong>분류:</strong> ${book.category}
+							</p>
+							<p>
+								<strong>출판일:</strong> ${book.publishDate}
+							</p>
+							<p>
+								<strong>설명:</strong> ${book.description}
+							</p>
+							<p>
+								<strong>총 재고:</strong> ${book.totalStock}
+							</p>
+							<p>
+								<strong>재고:</strong> ${book.currentStock}
+							</p>
+							<p>
+								<strong>eBook:</strong> ${book.ebook != 0 ? 'Available' : 'Not Available'}
+							</p>
+							<c:if test="${book.ebook == 1}">
+								<a href="${book.ebookPath}">eBook</a>
+							</c:if>
+							<p>
+								<strong>좋아요:</strong> ${book.likes}
+							</p>
+							<p>
+								<strong>평점:</strong> ${book.score}
+							</p>
+							<p>
+								<strong>등록일:</strong>
+								<fmt:formatDate value="${book.createdAt}" pattern="yyyy-MM-dd HH:mm:ss" />
+							</p>
 						</div>
 					</div>
-
 				</div>
-				<!-- /.container-fluid -->
-
+				<!-- End of Main Content -->
 			</div>
-			<!-- End of Main Content -->
+			<!-- /.container-fluid -->
 
 			<!-- Footer -->
 			<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
@@ -341,6 +397,18 @@ tbody tr:hover {
 		</div>
 	</div>
 	<!-- custom JavaScript -->
+	<script type="text/javascript">
+		// JavaScript 함수 정의
+		function confirmDelete(event) {
+			// 확인 메시지 표시
+			var confirmed = confirm("정말 삭제하시겠습니까?");
+
+			// 사용자가 "취소"를 클릭하면 링크의 기본 동작을 막음
+			if (!confirmed) {
+				event.preventDefault(); // 링크 클릭 취소
+			}
+		}
+	</script>
 	<script src="/vendor/datatables/custom.js"></script>
 
 	<!-- Bootstrap core JavaScript-->
@@ -359,7 +427,6 @@ tbody tr:hover {
 
 	<!-- Page level custom scripts -->
 	<script src="/js/demo/datatables-demo.js"></script>
-
 </body>
 
 </html>

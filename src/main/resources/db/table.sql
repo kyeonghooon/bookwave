@@ -26,7 +26,7 @@ CREATE TABLE book_tb (
     description TEXT,
     author VARCHAR(255) NOT NULL,
     publisher VARCHAR(100) NOT NULL,
-    cover VARCHAR(255) COMMENT 'url',
+    cover TEXT COMMENT 'url',
     category VARCHAR(255) NOT NULL,
     publish_date DATE NOT NULL,
     total_stock INT NOT NULL,
@@ -34,8 +34,13 @@ CREATE TABLE book_tb (
     ebook INT DEFAULT 2 COMMENT '0:종이책 1:ebook 2:둘다',
     ebook_path VARCHAR(255),
     likes INT DEFAULT 0,
-    score DOUBLE,
+    score DOUBLE DEFAULT 0,
     created_at TIMESTAMP DEFAULT NOW()
+); 
+
+CREATE TABLE book_category_tb (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50)
 );
 
 CREATE TABLE lend_tb (
@@ -99,6 +104,24 @@ CREATE TABLE balance_history_tb (
     mileage_change INT DEFAULT 0 COMMENT '+는 증가 -는 감소',
     description VARCHAR(255),
     created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE payment_tb (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    payment_key VARCHAR(200),
+    type VARCHAR(20),
+    user_id INT,
+    order_id VARCHAR(64),
+    order_name VARCHAR(100),
+    method VARCHAR(20),
+    total_amount INT,
+    requested_at TIMESTAMP,
+    approved_at TIMESTAMP,
+    status VARCHAR(30),
+    cancel_amount INT,
+    canceled_at TIMESTAMP,
+    cancel_reason VARCHAR(255),
+    cancel_status VARCHAR(20)
 );
 
 CREATE TABLE likes_tb (

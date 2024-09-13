@@ -21,6 +21,9 @@ public interface BookRepository {
 
 	// 카테고리 조회
 	public List<String> readAllBookCategory();
+	
+	// (테이블구조 수정) 카테고리 조회
+	public List<String> readAllBookCategory2();
 
 	// 필터링 걸린 도서 갯수 조회하기
 	public int countAllBook(@Param("category") String category, @Param("search") String search);
@@ -74,4 +77,14 @@ public interface BookRepository {
 
 	// eBook여부조회
 	public int readUserEbook (@Param("userId") Integer userId, @Param("bookId") Integer bookId);
+
+	// 도서 등록
+	public int createBook(Book book);
+	
+	// 도서 수정
+	public int updateBookById(Book book);
+
+	// 도서 삭제
+	public int deleteBookById(Integer bookId);
+
 }

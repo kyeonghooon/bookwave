@@ -44,7 +44,7 @@ public class EmailService {
 			helper.setTo(email);
 			helper.setSubject("이메일 인증 요청");
 			helper.setText(emailContent, true);
-			mailSender.send(message);
+			mailSender.send(message);	
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
