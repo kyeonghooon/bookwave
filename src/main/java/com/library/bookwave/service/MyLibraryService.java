@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.library.bookwave.dto.ReservationDTO;
 import com.library.bookwave.repository.interfaces.MyLibraryRepository;
 import com.library.bookwave.repository.model.MyLibrary;
 
@@ -83,8 +84,8 @@ public class MyLibraryService {
 		return result;
 	}
 
-	public Integer findFirstByBookIdAndStatus(Integer bookId) {
-		Integer result = null;
+	public ReservationDTO findFirstByBookIdAndStatus(Integer bookId) {
+		ReservationDTO result = null;
 		try {
 			result = lendRepository.findFirstByBookIdAndStatus(bookId);
 		} catch (Exception e) {
@@ -170,6 +171,26 @@ public class MyLibraryService {
 		}
 
 		return result;
+	}
+
+	public String findEmailByUserId(Integer userId) {
+		String email = null;
+		try {
+			email = lendRepository.findEmailByUserId(userId);
+		} catch (Exception e) {
+
+		}
+		return email;
+	}
+
+	public String findBookNameByBookId(Integer bookId) {
+		String bookName = null;
+		try {
+			bookName = lendRepository.findBookNameByBookId(bookId);
+		} catch (Exception e) {
+
+		}
+		return bookName;
 	}
 
 }

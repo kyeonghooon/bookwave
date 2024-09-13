@@ -18,8 +18,9 @@
 		FROM lend_tb
 		WHERE id = #{id}
 	</select>
-	<select id="findFirstByBookIdAndStatus" resultType="Integer">
-		SELECT id
+	<select id="findFirstByBookIdAndStatus"
+		resultType="com.library.bookwave.dto.ReservationDTO">
+		SELECT *
 		FROM reservation_tb
 		WHERE status = 0 AND book_id = #{bookId}
 		ORDER BY reservation_date ASC
@@ -46,4 +47,10 @@
 		SET current_stock = current_stock + 1
 		WHERE id = #{bookId}
 	</update>
+	<select id="findEmailByUserId" resultType="String">
+		select email from user_detail_tb where user_id = #{userId}
+	</select>
+	<select id="findBookNameByBookId" resultType="String">
+		select title from book_tb where id = #{bookId}
+	</select>
 </mapper>

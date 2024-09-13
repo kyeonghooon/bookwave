@@ -27,6 +27,7 @@ spring:
       - classpath:db/data.sql
       - classpath:db/ebookData.sql
       - classpath:db/itemsData.sql
+      - classpath:db/test.sql
 
   h2:
     console:

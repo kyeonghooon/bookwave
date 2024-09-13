@@ -44,7 +44,7 @@ public class EmailService {
 			helper.setTo(email);
 			helper.setSubject("이메일 인증 요청");
 			helper.setText(emailContent, true);
-			mailSender.send(message);	
+			mailSender.send(message);
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,7 +53,7 @@ public class EmailService {
 		// 토큰을 서버에 저장하고 5분 후 자동 삭제
 		storeToken(token, email);
 	}
-	
+
 	// 로그인 아이디 찾기 이메일 전송
 	public boolean sendFindLoginIdEmail(String email, String loginId) {
 		// TODO 현재 도메인 없어서 localhost:8080으로 대체
@@ -77,6 +77,31 @@ public class EmailService {
 		}
 	}
 
+	// 예약 알림 이메일 전송
+	public boolean sendReservationEmail(String email, String bookName) {
+		// TODO 현재 도메인 없어서 localhost:8080으로 대체
+		Map<String, String> messageList = new HashMap<>();
+		String domain = "localhost:8080";
+		messageList.put("${bookName}", bookName);
+		messageList.put("${domain}", domain);
+		String path = "template/reservation.html";
+		String emailContent = loadEmailTemplate(messageList, path);
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper;
+		try {
+			helper = new MimeMessageHelper(message, true, "UTF-8");
+			helper.setTo(email);
+			helper.setSubject("예약 알림");
+			helper.setText(emailContent, true);
+			mailSender.send(message);
+			System.err.println("email successfully sent");
+			return true;
+		} catch (MessagingException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	public void storeToken(String token, String email) {
 		tokenStore.put(token, email);
 		scheduler.schedule(() -> tokenStore.remove(token), 5, TimeUnit.MINUTES);
@@ -86,11 +111,11 @@ public class EmailService {
 	public String generateVerificationToken() {
 		return UUID.randomUUID().toString();
 	}
-	
+
 	// 토큰 확인 로직
 	public boolean validateToken(String token) {
-        return tokenStore.containsKey(token);
-    }
+		return tokenStore.containsKey(token);
+	}
 
 	// HTML 템플릿을 로드하여 문자열로 변환하는 메서드
 	private String loadEmailTemplate(Map<String, String> messageList, String path) {

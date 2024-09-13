@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.library.bookwave.dto.ReservationDTO;
 import com.library.bookwave.repository.model.MyLibrary;
+import com.library.bookwave.service.EmailService;
 import com.library.bookwave.service.MyLibraryService;
 
 import jakarta.servlet.http.HttpSession;
@@ -24,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class MyLibraryController {
 
 	private final MyLibraryService libraryService;
+	private final EmailService emailService;
 
 	/**
 	 * 대출 현황 페이지
@@ -52,11 +55,20 @@ public class MyLibraryController {
 
 		Integer bookId = libraryService.findBookIdById(id);
 
-		Integer reservationId = libraryService.findFirstByBookIdAndStatus(bookId);
+		ReservationDTO dto = libraryService.findFirstByBookIdAndStatus(bookId);
 
-		if (reservationId != null) {
+		if (dto != null) {
+			Integer reservationId = dto.getId();
+			Integer userId = dto.getUserId();
+			String email = libraryService.findEmailByUserId(userId);
+			String bookName = libraryService.findBookNameByBookId(bookId);
+
 			libraryService.updateStatusByIdReservation(reservationId);
 			libraryService.updateWaitDateById(reservationId);
+
+			// 이메일 전송
+			emailService.sendReservationEmail(email, bookName);
+
 		} else {
 			libraryService.updateStockByBookId(id);
 		}
