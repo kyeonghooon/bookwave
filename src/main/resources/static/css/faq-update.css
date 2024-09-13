@@ -1,0 +1,54 @@
+@charset "UTF-8";
+
+body {
+	font-family: Arial, sans-serif;
+	margin: 20px;
+}
+
+.form-container {
+	max-width: 600px;
+	margin: auto;
+}
+
+.form-group {
+	margin-bottom: 15px;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+.form-group input, .form-group textarea, .form-group select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+/* content 텍스트 영역의 크기 조정 */
+.form-group textarea {
+	font-size: 1em; /* 글씨 크기 조정 */
+	height: 800px; /* 높이 조정 */
+	resize: vertical; /* 사용자가 세로로 크기를 조절할 수 있도록 함 */
+}
+
+.form-actions {
+	text-align: right;
+}
+
+.form-actions input {
+	padding: 10px 20px;
+	border: none;
+	background-color: #4CAF50;
+	color: white;
+	cursor: pointer;
+}
+/* title 입력 필드의 크기 조정 */
+.form-group input[type="text"] {
+	font-size: 1.2em; /* 글씨 크기 조정 */
+	height: 50px; /* 높이 조정 */
+}
+
+.form-actions input:hover {
+	background-color: #45a049;
+}

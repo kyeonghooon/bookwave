@@ -5,9 +5,6 @@ CREATE TABLE user_tb (
     password VARCHAR(255) NOT NULL,
     name VARCHAR(20) NOT NULL,
     role VARCHAR(20) DEFAULT 'USER' COMMENT 'user, admin',
-    subscribe TINYINT DEFAULT 0 COMMENT '0:비구독 1:구독',
-    wave INT DEFAULT 0,
-    mileage INT DEFAULT 0,
     status INT NOT NULL DEFAULT '0' COMMENT '0:정상 1:탈퇴예정 -1:탈퇴',
     created_at TIMESTAMP DEFAULT NOW()
 );
@@ -15,6 +12,7 @@ CREATE TABLE user_tb (
 CREATE TABLE user_detail_tb (
 	user_id INT PRIMARY KEY,
 	email VARCHAR(100) NOT NULL UNIQUE,
+    birth_date DATE NOT NULL,
     gender TINYINT NOT NULL COMMENT '0:남성 1:여성',
     phone VARCHAR(13) NOT NULL UNIQUE,
     zip VARCHAR(10) DEFAULT NULL,
@@ -28,7 +26,7 @@ CREATE TABLE book_tb (
     description TEXT,
     author VARCHAR(255) NOT NULL,
     publisher VARCHAR(100) NOT NULL,
-    cover VARCHAR(255) COMMENT 'url',
+    cover TEXT COMMENT 'url',
     category VARCHAR(255) NOT NULL,
     publish_date DATE NOT NULL,
     total_stock INT NOT NULL,
@@ -36,8 +34,13 @@ CREATE TABLE book_tb (
     ebook INT DEFAULT 2 COMMENT '0:종이책 1:ebook 2:둘다',
     ebook_path VARCHAR(255),
     likes INT DEFAULT 0,
-    score DOUBLE,
+    score DOUBLE DEFAULT 0,
     created_at TIMESTAMP DEFAULT NOW()
+); 
+
+CREATE TABLE book_category_tb (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50)
 );
 
 CREATE TABLE lend_tb (
@@ -59,35 +62,66 @@ CREATE TABLE reservation_tb (
     status INT DEFAULT 0 COMMENT '0:진행중 -1: 완료 1: 대기'
 );
 
-CREATE TABLE items_tb (
+CREATE TABLE wallet_tb (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    wave INT DEFAULT 0,
+    mileage INT DEFAULT 0
+);
+
+CREATE TABLE item_tb (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     price INT NOT NULL
 );
 
-CREATE TABLE item_purchase_tb (
+
+CREATE TABLE page_tb (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE page_item_tb (
+	item_id INT,
+    page_id INT,
+    PRIMARY KEY (item_id , page_id)
+);
+
+CREATE TABLE purchase_history_tb (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    mileage_amount INT DEFAULT 0,
-    mileage_balance INT,
-    wave_amount INT DEFAULT 0,
-    wave_balance INT,
-    created_at TIMESTAMP DEFAULT NOW()
+    item_id INT NOT NULL,
+    wave_used INT DEFAULT 0,
+    mileage_used INT DEFAULT 0,
+    total_amount INT NOT NULL,
+    purchased_at TIMESTAMP DEFAULT NOW()
 );
 
-CREATE TABLE charge_tb (
+CREATE TABLE balance_history_tb (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    amount INT,
-    status INT DEFAULT 0 COMMENT '0: 정상 -1: 환불됨',
+    wave_change INT DEFAULT 0 COMMENT '+는 증가 -는 감소',
+    mileage_change INT DEFAULT 0 COMMENT '+는 증가 -는 감소',
+    description VARCHAR(255),
     created_at TIMESTAMP DEFAULT NOW()
 );
 
-CREATE TABLE refund_tb (
-	charge_id INT,
+CREATE TABLE payment_tb (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    payment_key VARCHAR(200),
+    type VARCHAR(20),
     user_id INT,
-    created_at TIMESTAMP DEFAULT NOW(),
-    PRIMARY KEY (charge_id, user_id)
+    order_id VARCHAR(64),
+    order_name VARCHAR(100),
+    method VARCHAR(20),
+    total_amount INT,
+    requested_at TIMESTAMP,
+    approved_at TIMESTAMP,
+    status VARCHAR(30),
+    cancel_amount INT,
+    canceled_at TIMESTAMP,
+    cancel_reason VARCHAR(255),
+    cancel_status VARCHAR(20)
 );
 
 CREATE TABLE likes_tb (
@@ -105,7 +139,23 @@ CREATE TABLE favorites_tb (
 CREATE TABLE user_ebook_tb (
     user_id INT NOT NULL,
     book_id INT NOT NULL,
+    subscribe TINYINT NOT NULL DEFAULT 0 COMMENT '0: 구매 1: 구독',
+    last_point DOUBLE DEFAULT 0,
+    last_read_date TIMESTAMP,
+    user_ebook_category_id INT DEFAULT 0 COMMENT '0: 미지정',
     PRIMARY KEY (user_id , book_id)
+);
+
+CREATE TABLE user_ebook_category_tb (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    name VARCHAR(10) NOT NULL,
+    priority INT DEFAULT 0
+);
+
+CREATE TABLE user_ebook_category_limit_tb (
+	user_id INT PRIMARY KEY,
+    limits INT DEFAULT 8
 );
 
 CREATE TABLE review_tb (
@@ -114,7 +164,8 @@ CREATE TABLE review_tb (
     book_id INT NOT NULL,
     score INT NOT NULL,
     content VARCHAR(255),
-    created_at TIMESTAMP DEFAULT NOW()
+    created_at TIMESTAMP DEFAULT NOW(),
+    edited_at TIMESTAMP
 );
 
 CREATE TABLE notice_tb (

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.library.bookwave.repository.interfaces.MyReservedRepository">
+	<select id="findAllByUserId"
+		resultType="com.library.bookwave.repository.model.MyReserved">
+		select * from reservation_tb where user_id = #{userId} AND status != -1
+	</select>
+	<delete id="deleteReservedById">
+		delete from reservation_tb where id = #{id}
+	</delete>
+	<update id="updateStatusById">
+		update reservation_tb set status = -1 where id = #{id}
+	</update>
+	<insert id="createLend" parameterType="com.library.bookwave.dto.LendDTO">
+		INSERT INTO lend_tb (user_id, book_id, lend_date, return_date,
+		returned_date)
+		VALUES (#{userId}, #{bookId}, NOW(), DATEADD('DAY', 7, NOW()), NULL);
+	</insert>
+	<select id="findCountBeforeByUserIdAndBookId" resultType="int">
+		SELECT COUNT(*)
+		FROM reservation_tb
+		WHERE book_id = #{bookId}
+		AND reservation_date <![CDATA[<]]> (
+		SELECT reservation_date
+		FROM reservation_tb
+		WHERE user_id = #{userId}
+		AND book_id = #{bookId}
+		)
+		AND status = 0
+	</select>
+</mapper>

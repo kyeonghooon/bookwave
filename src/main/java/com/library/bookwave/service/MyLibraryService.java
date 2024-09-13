@@ -28,7 +28,9 @@ public class MyLibraryService {
 			e.printStackTrace();
 		}
 		if (list.isEmpty() || list == null) {
-			System.err.println("list not found");
+
+			// TODO delete logging
+			System.err.println("list error");
 		}
 
 		return list;

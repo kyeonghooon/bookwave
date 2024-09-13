@@ -16,13 +16,14 @@ import com.library.bookwave.repository.model.MyLibrary;
 import com.library.bookwave.service.MyLibraryService;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("/my-library")
+@RequiredArgsConstructor
 public class MyLibraryController {
 
-	@Autowired
-	MyLibraryService libraryService;
+	private final MyLibraryService libraryService;
 
 	/**
 	 * 대출 현황 페이지
