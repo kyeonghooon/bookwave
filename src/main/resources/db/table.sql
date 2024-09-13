@@ -208,4 +208,3 @@ CREATE TABLE subscribe_tb (
     start_date TIMESTAMP DEFAULT NOW(),
     end_date TIMESTAMP
 );
-
