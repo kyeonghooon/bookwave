@@ -24,27 +24,53 @@
 <!-- Custom styles for this page -->
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 <style>
-table {
-	width: 100%;
-	border-collapse: collapse;
-}
-
-th, td {
-	padding: 8px;
-	border: 1px solid #ddd;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	max-width: 150px;
-}
-/* 기본 행 스타일 */
-tbody tr {
-	transition: background-color 0.3s ease;
-}
-/* hover 스타일 */
-tbody tr:hover {
-	background-color: #99CCFF;
-}
+body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    .registration-form {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .registration-form h1 {
+        margin: 0;
+        font-size: 2.5em;
+        color: #333;
+    }
+    .registration-form label {
+        display: block;
+        margin: 10px 0 5px;
+        font-weight: bold;
+    }
+    .registration-form input, .registration-form textarea, .registration-form select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .registration-form button {
+        display: inline-block;
+        padding: 10px 20px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .registration-form button:hover {
+        background-color: #0056b3;
+    }
 </style>
 </head>
 
@@ -241,67 +267,58 @@ tbody tr:hover {
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
-				<div class="container-fluid">
 
-					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">도서 목록</h1>
 
-					<a href="/book/create" class="btn btn-danger">도서 등록하기</a>
-					<!-- DataTales Example -->
-					<div class="card shadow mb-4">
-						<div class="card-body">
-							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-									<thead>
-										<tr>
-											<th>ID</th>
-											<th>분류</th>
-											<th>제목</th>
-											<th>설명</th>
-											<th>작가</th>
-											<th>출판일</th>
-											<th>총재고</th>
-											<th>재고</th>
-											<th>전자책</th>
-											<th>좋아요</th>
-											<th>평점</th>
-											<th>등록일</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="book" items="${bookList}">
-											<tr data-url="/admin/book/detail/${book.id}">
-												<th>${book.id}</th>
-												<th>${book.category}</th>
-												<th>${book.title}</th>
-												<th>${book.description}</th>
-												<th>${book.author}</th>
-												<th>${book.publishDate}</th>
-												<th>${book.totalStock}</th>
-												<th>${book.currentStock}</th>
-												<c:choose>
-													<c:when test="${book.ebook == 0}">
-														<th>종이책</th>
-													</c:when>
-													<c:when test="${book.ebook == 1}">
-														<th>전자책</th>
-													</c:when>
-													<c:otherwise>
-														<th>O</th>
-													</c:otherwise>
-												</c:choose>
-												<th>${book.likes}</th>
-												<th>${book.score}</th>
-												<th><fmt:formatDate value="${book.createdAt}" pattern="yyyy-MM-dd" /></th>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
+    <div class="container">
+        <div class="registration-form">
+            <h1>도서 등록</h1>
+            <form action="/book/create" method="post">
+                <label for="title">제목:</label>
+                <input type="text" id="title" name="title" required>
 
-				</div>
+                <label for="author">작가:</label>
+                <input type="text" id="author" name="author" required>
+
+                <label for="publisher">출판사:</label>
+                <input type="text" id="publisher" name="publisher" required>
+				
+                <label for="category">분류:</label>
+                <select id="category" name="category">
+				<c:forEach var="category" items="${categoryList}">
+                    <option value="${category}">${category}</option>
+				</c:forEach>
+                </select>
+                <label for="publishDate">출판일:</label>
+                <input type="date" id="publishDate" name="publishDate" required>
+
+                <label for="description">설명:</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+
+                <label for="totalStock">총재고:</label>
+                <input type="number" id="totalStock" name="totalStock" min="0" required>
+
+                <label for="currentStock">재고:</label>
+                <input type="number" id="currentStock" name="currentStock" min="0" required>
+
+                <label for="ebook">eBook:</label>
+                <select id="ebook" name="ebook">
+                    <option value="2">둘다</option>
+                    <option value="1">전자책</option>
+                    <option value="0">종이책</option>
+                </select>
+
+                <label for="ebookPath">eBook 경로</label>
+                <input type="text" id="ebookPath" name="ebookPath">
+
+                <label for="cover">커버이미지 경로:</label>
+                <input type="text" id="cover" name="cover">
+
+                <button type="submit">등록</button>
+            </form>
+        </div>
+    </div>
+    
+    </div>
 				<!-- /.container-fluid -->
 
 			</div>
@@ -312,7 +329,7 @@ tbody tr:hover {
 
 			<!-- End of Footer -->
 
-		</div>
+	
 		<!-- End of Content Wrapper -->
 
 	</div>

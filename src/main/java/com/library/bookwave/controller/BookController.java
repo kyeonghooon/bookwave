@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,19 +34,17 @@ public class BookController {
 	 * 책리스트 페이지
 	 */
 	@GetMapping("/list")
-	public String showBooks(Model model, @RequestParam(name = "page", defaultValue = "1") int page,
-			@RequestParam(name = "size", defaultValue = "30") int size,
-			@RequestParam(name = "category", defaultValue = "") String category,
-			@RequestParam(name = "search", defaultValue = "") String search) {
+	public String showBooks(Model model, @RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "size", defaultValue = "30") int size,
+			@RequestParam(name = "category", defaultValue = "") String category, @RequestParam(name = "search", defaultValue = "") String search) {
 		// TODO - 임시 userId 삭제예정
 		int userId = 1;
 
 		// 카테고리 불러오기
 		List<String> categoryList = bookService.readAllBookCategory();
-		
+
 		// 책 조회
-		List<BookListDTO> books = bookService.readAllBook(userId, category,search,page , size);
-		
+		List<BookListDTO> books = bookService.readAllBook(userId, category, search, page, size);
+
 		// 필터링 걸린 책 개수 조회
 		int booksCount = bookService.countAllBook(category, search);
 
@@ -53,7 +52,7 @@ public class BookController {
 		int totalPages = (int) Math.ceil((double) booksCount / size);
 		int startBlock = Math.max(1, ((page - 1) / 5) * 5 + 1);
 		int endBlock = Math.min(totalPages, startBlock + 4);
-		
+
 		// 모델에 필요한 정보 추가
 		model.addAttribute("books", books);
 		model.addAttribute("totalPages", totalPages);
@@ -75,13 +74,13 @@ public class BookController {
 	public String showBookDetail(@PathVariable("bookId") int bookId, Model model) {
 		// TODO 임시 userId,user1 삭제예정
 		int userId = 1; // 임시
-		
+
 		// 책 상세보기
 		Book bookDetail = bookService.readBook(bookId);
-		
+
 		// 대여 조회 
 		Lend lend = bookService.readLend(bookId, userId);
-		
+
 		// 유저가 도서를 빌린 갯수
 		int lendBookCount = bookService.countLendByUserId(userId);
 
@@ -90,21 +89,21 @@ public class BookController {
 		boolean isLiked = (checkLike != null);
 		Favorite checkFavorite = bookService.readFavorite(userId, bookId);
 		boolean isFavorited = (checkFavorite != null);
-		
+
 		// 예약 여부 조회
 		Reservation reservation = bookService.findReservationByBookIdAndUserId(userId, bookId);
 		// 유저가 도서를 예약한 횟수
 		int reservationCount = bookService.countReservationByUserId(userId);
-		
+
 		// ebook 등록 여부조회
 		int userEbook = bookService.readUserEbook(userId, bookId);
-		
-		model.addAttribute("userEbook",userEbook);
+
+		model.addAttribute("userEbook", userEbook);
 		model.addAttribute("isFavorited", isFavorited);
 		model.addAttribute("isLiked", isLiked);
-		model.addAttribute("reservation",reservation);
-		model.addAttribute("reservationCount",reservationCount);
-		model.addAttribute("count",bookDetail.getLikes());
+		model.addAttribute("reservation", reservation);
+		model.addAttribute("reservationCount", reservationCount);
+		model.addAttribute("count", bookDetail.getLikes());
 		model.addAttribute("lendBookCount", lendBookCount);
 		model.addAttribute("book", bookDetail);
 		model.addAttribute("lend", lend);
@@ -118,7 +117,7 @@ public class BookController {
 	public String lendBook(@PathVariable("bookId") int bookId, Model model) {
 		// TODO 임시 userId 삭제예정
 		int userId = 1; // 임시
-		
+
 		boolean isLendSuccessful = bookService.lendBook(bookId, userId);
 
 		// TODO - 필요한가
@@ -130,7 +129,7 @@ public class BookController {
 
 		return "redirect:/book/detail/" + bookId;
 	}
-	
+
 	/*
 	 * 예약하기
 	 */
@@ -138,9 +137,9 @@ public class BookController {
 	public String reservationBook(@PathVariable("bookId") int bookId, Model model) {
 		// TODO 임시 userId 삭제예정
 		int userId = 1;
-		
+
 		bookService.createReservation(userId, bookId);
-		
+
 		return "redirect:/book/detail/" + bookId;
 	}
 
@@ -148,16 +147,16 @@ public class BookController {
 	 * eBook 등록
 	 */
 	@GetMapping("/ebook/{bookId}")
-	public String createUserEbook(@PathVariable("bookId") int bookId,  Model model) {
+	public String createUserEbook(@PathVariable("bookId") int bookId, Model model) {
 		// TODO 임시 userId 삭제예정
 		int userId = 1;
-		
+
 		// TODO 유저 불리언값 받아오기
 		// bookService.createUserEbook(userId, bookId, principal.getSubcribe);
-		
+
 		return "redirect:/book/detail/" + bookId;
 	}
-	
+
 	/*
 	 * 좋아요 기능
 	 */
@@ -186,10 +185,10 @@ public class BookController {
 	public String createFavorite(@PathVariable("bookId") int bookId) {
 		// TODO 임시 userId 삭제예정
 		int userId = 1;
-		
+
 		Favorite checkfavorite = bookService.readFavorite(userId, bookId);
-		
-		if(checkfavorite == null) {
+
+		if (checkfavorite == null) {
 			bookService.createFavorite(userId, bookId);
 			return "favorited";
 		} else {
@@ -197,9 +196,46 @@ public class BookController {
 			return "unfavorited";
 		}
 	}
-	
-	
-	
-	
-	
+
+	// 도서 등록 페이지
+	@GetMapping("/create")
+	public String bookCreatePage(Model model) {
+		List<String> categoryList = bookService.readAllBookCategory2();
+		model.addAttribute("categoryList", categoryList);
+		return "book/bookCreate";
+	}
+
+	// 도서 등록
+	@PostMapping("/create")
+	public String bookCreateProc(@ModelAttribute Book book) {
+		bookService.createBook(book);
+		return "redirect:/admin/book";
+	}
+
+	// 도서 수정 페이지
+	@GetMapping("/update/{bookId}")
+	public String bookUpdatePage(@PathVariable("bookId") Integer bookId, Model model) {
+		Book book = bookService.readBook(bookId);
+		List<String> categoryList = bookService.readAllBookCategory2();
+		model.addAttribute("book", book);
+		model.addAttribute("categoryList", categoryList);
+		System.out.println("커버이미지경로1" + book.getCover());
+		return "book/bookUpdate";
+	}
+
+	// 도서 수정
+	@PostMapping("/update/{bookId}")
+	public String bookUpdateProc(@ModelAttribute Book book) {
+		bookService.updateBookById(book);
+		System.out.println("커버이미지경로2" + book.getCover());
+		return "redirect:/admin/book/detail/{bookId}";
+	}
+
+	// 도서 삭제
+	@GetMapping("/delete/{bookId}")
+	public String bookDeleteProc(@PathVariable("bookId") Integer bookId) {
+		bookService.deleteBookById(bookId);
+		return "redirect:/admin/book";
+	}
+
 }

@@ -44,7 +44,6 @@ public class AdminController {
 		return "admin/userList";
 	}
 
-
 	// 관리자 모든 결제 조회 페이지
 	@GetMapping("/payment")
 	public String paymentPage(Model model) {
@@ -63,23 +62,23 @@ public class AdminController {
 
 		return "admin/lendList";
 	}
-	
+
 	// 관리자 도서 관리 페이지
 	@GetMapping("/book")
 	public String bookPage(Model model) {
-		
+
 		List<BookListDTO> bookList = adminService.readAllBook();
 		model.addAttribute("bookList", bookList);
-		
+
 		return "admin/bookList";
 	}
-	
+
 	// 관리자 도서 상세 페이지
 	@GetMapping("/book/detail/{bookId}")
 	public String bookDetailPage(@PathVariable("bookId") int bookId, Model model) {
-		
+
 		Book book = bookService.readBook(bookId);
-		model.addAttribute("book",book);
+		model.addAttribute("book", book);
 		return "admin/bookDetail";
 	}
 
