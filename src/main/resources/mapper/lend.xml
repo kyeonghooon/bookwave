@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.library.bookwave.repository.interfaces.MyLibraryRepository">
+	
+	<select id="findAllByUserId"
+		resultType="com.library.bookwave.repository.model.MyLibrary">
+		select * from lend_tb where user_id = #{userId}
+	</select>
+	<update id="updateStatusById">
+		update lend_tb set status = -1 where id = #{id}
+	</update>
+	<update id="updateReturnDateById">
+		update lend_tb set return_date = #{returnDate} where id = #{id}
+	</update>
+	<select id="getCurrentReturnDateById" resultType="java.sql.Timestamp">
+		SELECT return_date
+		FROM lend_tb
+		WHERE id = #{id}
+	</select>
+</mapper>

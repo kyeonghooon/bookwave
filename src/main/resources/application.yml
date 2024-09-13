@@ -25,7 +25,9 @@ spring:
       - classpath:db/table.sql
       data-locations:
       - classpath:db/data.sql
-  
+      - classpath:db/ebookData.sql
+      - classpath:db/itemsData.sql
+
   h2:
     console:
       enabled: true #H2 데이터 베이스 콘솔을 활성화 합니다.
@@ -33,7 +35,23 @@ spring:
   output:
     ansi:
       enabled: always #콘솔 출력에 ANSI 색상 코드를 사용할 수 있도록 설정
-      
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: dev1email1smtp@gmail.com
+    password: durn wzqw ghqg zetk
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+
 #mybatis 설정
 mybatis:
   mapper-locations:
@@ -44,6 +62,13 @@ mybatis:
     
 logging:
   level:
-    org.apache.ibatis: DEBUG #MyBatis 로깅 레벨을 DEBUG로 설정하여 실행되는 SQL 쿼리와 내부 로깅 정보를 콘솔에 출력한다.
+    org:
+      apache:
+        ibatis: DEBUG #MyBatis 로깅 레벨을 DEBUG로 설정하여 실행되는 SQL 쿼리와 내부 로깅 정보를 콘솔에 출력한다.
     
+# 결제 Key
+payment:
+  clientKey: test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm
+  secretKey: test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6
+  IdempotencyKey: SAAABPQbcqjEXiDL
 # 초기 파라미터 설정

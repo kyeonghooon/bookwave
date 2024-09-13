@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URI;
+import java.sql.Date;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -17,14 +18,16 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.library.bookwave.dto.bookParsing.Book;
 import com.library.bookwave.dto.bookParsing.Item;
 
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
+
 /**
  * 최초 DB 샘플 데이터 구축을 위한 파싱용 유팅클래스
  */
 public class BookAPIParsing {
 	
-	public static void main(String[] args) {
-		parseBooksFromAPI();
-	}
+//	public static void main(String[] args) {
+//		parseBooksFromAPI();
+//	}
 
 	// API를 통해 책 정보를 파싱하고 SQL 쿼리를 파일로 저장하는 메서드
 	private static void parseBooksFromAPI() {
@@ -65,14 +68,19 @@ public class BookAPIParsing {
 				// 응답에서 책 정보를 추출하고 SQL 쿼리를 생성하여 파일에 기록
 				if (book != null && book.getItem() != null) {
 					for (Item item : book.getItem()) {
+						// 날짜 Format
+						Date publishDate = item.getPubDate();
+                        String formattedDate = (publishDate != null) ? publishDate.toString() : "NULL";
+                        
 						String sql = String.format(
-							"insert into book_tb (title, description, author, publisher, cover, category, total_stock, current_stock) values ('%s', '%s', '%s', '%s', '%s', '%s', 1, 1);",
+							"insert into book_tb (title, description, author, publisher, cover, category, publish_date, total_stock, current_stock) values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', 1, 1);",
 							item.getTitle().replace("'", "''"),
 							item.getDescription().replace("'", "''"),
 							item.getAuthor().replace("'", "''"),
 							item.getPublisher().replace("'", "''"),
 							item.getCover().replace("'", "''"),
-							item.getCategoryName().replace("'", "''")
+							item.getCategoryName().replace("'", "''"),
+							formattedDate
 						);
 						// SQL 쿼리를 파일에 기록
 						writer.println(sql); 

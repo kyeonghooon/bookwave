@@ -1,7 +1,6 @@
 HELP.md
 .gradle
 build/
-!gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 
@@ -210,3 +209,6 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,eclipse,java,visualstudiocode
+
+!gradle/wrapper/gradle-wrapper.jar
+src/main/java/com/library/bookwave/utils/LoginAPIUtil.java
