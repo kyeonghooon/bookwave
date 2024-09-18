@@ -51,4 +51,7 @@ public interface EbookRepository {
 	
 	// user_ebook_cate_limit insert
 	Integer createEbookCategoryLimit(Integer userId);
+	
+	// user_ebook 등록 (구독 서비스 이용자)
+	Integer createEbookWithSubscribe(@Param("userId") Integer userId, @Param("bookId") Integer bookId);
 }

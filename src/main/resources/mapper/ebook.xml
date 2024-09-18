@@ -72,5 +72,9 @@
 	<insert id="createEbookCategoryLimit">
 		insert into user_ebook_category_limit_tb (user_id) values (#{userId})
 	</insert>
-
+	
+	<insert id="createEbookWithSubscribe">
+		insert into user_ebook_tb (user_id, book_id, subscribe) values (#{userId}, #{bookId}, 1)
+	</insert>
+	
 </mapper>

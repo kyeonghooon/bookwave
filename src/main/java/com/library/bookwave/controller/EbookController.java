@@ -52,7 +52,7 @@ public class EbookController {
 			new RedirectException("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		ObjectMapper objectMapper = new ObjectMapper();
-		 try {
+		try {
 			String itemsJson = objectMapper.writeValueAsString(items);
 			model.addAttribute("items", itemsJson);
 		} catch (JsonProcessingException e) {
@@ -172,7 +172,8 @@ public class EbookController {
 		int userId = principal == null ? 1 : principal.getUserId();
 		List<EbookReorderDTO> ebookReorderList = new ArrayList<>();
 		for (Map<String, Integer> map : request) {
-			ebookReorderList.add(EbookReorderDTO.builder().categoryId(map.get("categoryId")).priority(map.get("priority")).build());
+			ebookReorderList.add(
+					EbookReorderDTO.builder().categoryId(map.get("categoryId")).priority(map.get("priority")).build());
 		}
 
 		Map<String, Object> response = new HashMap<>();
@@ -207,5 +208,32 @@ public class EbookController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 		}
 	}
-	
+
+	/**
+	 * 구독 서비스 이용자가 ebook을 등록
+	 */
+	@GetMapping("regist/{bookId}")
+	public ResponseEntity<Map<String, Object>> registEbook(@SessionAttribute(value = Define.PRINCIPAL, required = false) PrincipalDTO principal, //
+			@PathVariable(name = "bookId") Integer bookId) {
+		// TODO 테스트용 코드 로그인 구현되면 제거 예정
+		int userId = principal == null ? 1 : principal.getUserId();
+		Map<String, Object> response = new HashMap<>();
+		
+		// TODO 주석 제거 예정
+//		if (!principal.getSubscribe()) {
+//			response.put("success", false);
+//			response.put("message", "구독 서비스 이용자가 아닙니다.");
+//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+//		}
+		
+		if (ebookservice.createEbookWithSubscribe(userId, bookId) == 1) {
+			response.put("success", true);
+			response.put("message", "등록에 성공했습니다. (카테고리 미지정)");
+			return ResponseEntity.ok(response);
+		} else {
+			response.put("success", false);
+			response.put("message", "등록에 실패했습니다.");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+		}
+	}
 }

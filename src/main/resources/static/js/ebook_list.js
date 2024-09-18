@@ -129,7 +129,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	function purchaseExtendCategory(waveInput, mileageInput) {
 		const itemId = items.get("extend-category");
-		// TODO 테스트용
 		const params = new URLSearchParams({
 			wave: waveInput,
 			mileage: mileageInput
