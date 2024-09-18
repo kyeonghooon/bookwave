@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<footer class="footer">
+<footer class="footer mt-5">
 	<div class="container bottom--border">
 		<div class="row">
 			<div class=" col-sm-4 col-md  col-6 col">
