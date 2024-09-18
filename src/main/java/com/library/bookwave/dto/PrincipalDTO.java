@@ -19,5 +19,6 @@ public class PrincipalDTO {
 	private Timestamp createdAt;
 	private Integer wave;
 	private Integer mileage;
+	private Boolean subscribe;
 	
 }
