@@ -20,23 +20,23 @@ import com.library.bookwave.repository.model.Lend;
 import com.library.bookwave.repository.model.Like;
 import com.library.bookwave.repository.model.Reservation;
 import com.library.bookwave.service.BookService;
+import com.library.bookwave.service.EbookService;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("/book")
+@RequiredArgsConstructor
 public class BookController {
 
 	private final BookService bookService;
+	private final EbookService ebookService;
 
-	public BookController(BookService bookService) {
-		this.bookService = bookService;
-	}
-
-	/*
-	 * 책리스트 페이지
-	 */
+	/* 책리스트 페이지 */
 	@GetMapping("/list")
-	public String showBooks(Model model, @RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "size", defaultValue = "30") int size,
-			@RequestParam(name = "category", defaultValue = "") Integer category, @RequestParam(name = "search", defaultValue = "") String search) {
+	public String showBooks(Model model, @RequestParam(name = "page", defaultValue = "1") int page,
+			@RequestParam(name = "size", defaultValue = "30") int size, @RequestParam(name = "category", defaultValue = "") Integer category,
+			@RequestParam(name = "search", defaultValue = "") String search) {
 		// TODO - 임시 userId 삭제예정
 		int userId = 1;
 
@@ -68,9 +68,7 @@ public class BookController {
 		return "book/bookList";
 	}
 
-	/*
-	 * 상세보기 페이지 
-	 */
+	/* 상세보기 페이지 */
 	@GetMapping("/detail/{bookId}")
 	public String showBookDetail(@PathVariable("bookId") int bookId, Model model) {
 		// TODO 임시 userId,user1 삭제예정
@@ -78,14 +76,14 @@ public class BookController {
 
 		// 책 상세보기
 		Book bookDetail = bookService.readBook(bookId);
-		System.out.println("bookDeatil : "+bookDetail);
-		// 대여 조회 
+		System.out.println("bookDeatil : " + bookDetail);
+		// 대여 조회
 		Lend lend = bookService.readLend(bookId, userId);
 
 		// 유저가 도서를 빌린 갯수
 		int lendBookCount = bookService.countLendByUserId(userId);
 
-		// 좋아요, 관심등록 체크여부확인 
+		// 좋아요, 관심등록 체크여부확인
 		Like checkLike = bookService.readLike(userId, bookId);
 		boolean isLiked = (checkLike != null);
 		Favorite checkFavorite = bookService.readFavorite(userId, bookId);
@@ -99,6 +97,9 @@ public class BookController {
 		// ebook 등록 여부조회
 		int userEbook = bookService.readUserEbook(userId, bookId);
 
+		// 상세 페이지에 들어가는 아이템 리스트 세팅
+		String itemsJson = ebookService.findItemsByPageName("bookDetail");
+
 		model.addAttribute("userEbook", userEbook);
 		model.addAttribute("isFavorited", isFavorited);
 		model.addAttribute("isLiked", isLiked);
@@ -108,12 +109,11 @@ public class BookController {
 		model.addAttribute("lendBookCount", lendBookCount);
 		model.addAttribute("book", bookDetail);
 		model.addAttribute("lend", lend);
+		model.addAttribute("items", itemsJson);
 		return "book/bookDetail";
 	}
 
-	/*
-	 * 대여기능 추가
-	 */
+	/* 대여기능 추가 */
 	@GetMapping("/lend/{bookId}")
 	public String lendBook(@PathVariable("bookId") int bookId, Model model) {
 		// TODO 임시 userId 삭제예정
@@ -131,9 +131,7 @@ public class BookController {
 		return "redirect:/book/detail/" + bookId;
 	}
 
-	/*
-	 * 예약하기
-	 */
+	/* 예약하기 */
 	@GetMapping("/reservation/{bookId}")
 	public String reservationBook(@PathVariable("bookId") int bookId, Model model) {
 		// TODO 임시 userId 삭제예정
@@ -144,9 +142,7 @@ public class BookController {
 		return "redirect:/book/detail/" + bookId;
 	}
 
-	/*
-	 * eBook 등록
-	 */
+	/* eBook 등록 */
 	@GetMapping("/ebook/{bookId}")
 	public String createUserEbook(@PathVariable("bookId") int bookId, Model model) {
 		// TODO 임시 userId 삭제예정
@@ -158,9 +154,7 @@ public class BookController {
 		return "redirect:/book/detail/" + bookId;
 	}
 
-	/*
-	 * 좋아요 기능
-	 */
+	/* 좋아요 기능 */
 	@PostMapping("/like/{bookId}")
 	@ResponseBody
 	public String createLike(@PathVariable("bookId") int bookId) {
@@ -178,9 +172,7 @@ public class BookController {
 		}
 	}
 
-	/*
-	 * 관심등록 기능
-	 */
+	/* 관심등록 기능 */
 	@PostMapping("/favorite/{bookId}")
 	@ResponseBody
 	public String createFavorite(@PathVariable("bookId") int bookId) {

@@ -1,9 +1,15 @@
 -- 초기 필수 데이터
 INSERT INTO page_tb (name) VALUES ('ebookList');
+INSERT INTO page_tb (name) VALUES ('bookDetail');
 INSERT INTO item_tb (name, price) VALUES ('extend-category', 500);
+INSERT INTO item_tb (name, price) VALUES ('ebook', 500);
 INSERT INTO page_item_tb VALUES (
 	(SELECT id FROM page_tb WHERE name = 'ebookList'),
     (SELECT id FROM item_tb WHERE name = 'extend-category')
+);
+INSERT INTO page_item_tb VALUES (
+	(SELECT id FROM page_tb WHERE name = 'bookDetail'),
+    (SELECT id FROM item_tb WHERE name = 'ebook')
 );
 
 -- 샘플 데이터
