@@ -7,9 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.library.bookwave.dto.BookListDTO;
 import com.library.bookwave.dto.PrincipalDTO;
+import com.library.bookwave.dto.UserDetailDTO;
 import com.library.bookwave.repository.model.Book;
 import com.library.bookwave.repository.model.Lend;
 import com.library.bookwave.repository.model.Payment;
@@ -42,6 +44,16 @@ public class AdminController {
 		model.addAttribute("userList", userList);
 
 		return "admin/userList";
+	}
+
+	// 관리자 유저 상세보기 페이지
+	@GetMapping("/user-detail")
+	public String AdminUserDetailPage(@RequestParam(name = "id") int userId, Model model) {
+		
+		UserDetailDTO user = adminService.readUserById(userId);
+		model.addAttribute("user", user);
+		System.out.println("user : " + user);
+		return "admin/adminUserDetail";
 	}
 
 	// 관리자 모든 결제 조회 페이지

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.library.bookwave.dto.BookListDTO;
 import com.library.bookwave.dto.PrincipalDTO;
+import com.library.bookwave.dto.UserDetailDTO;
 import com.library.bookwave.repository.interfaces.AdminRepository;
 import com.library.bookwave.repository.model.Lend;
 import com.library.bookwave.repository.model.User;
@@ -85,5 +86,11 @@ public class AdminService {
 		List<BookListDTO> bookList = new ArrayList<>();
 		bookList = adminRepository.readAllBook();
 		return bookList;
+	}
+
+	// 관리자 유저 상세보기
+	@Transactional
+	public UserDetailDTO readUserById(int userId) {
+		return adminRepository.readUserById(userId);
 	}
 }
