@@ -20,6 +20,11 @@
 		#{userDetail.gender}, #{userDetail.phone}, #{userDetail.zip},
 		#{userDetail.addr1}, #{userDetail.addr2})
 	</insert>
+	
+	<!-- TODO wallet 수정 -->
+	<insert id="createWallet">
+		insert into wallet_tb (user_id) values (#{id})
+	</insert>
 
 	<select id="findAll"
 		resultType="com.library.bookwave.repository.model.UserDetail">

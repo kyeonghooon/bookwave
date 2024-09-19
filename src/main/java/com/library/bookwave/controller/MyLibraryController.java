@@ -16,13 +16,14 @@ import com.library.bookwave.repository.model.MyLibrary;
 import com.library.bookwave.service.MyLibraryService;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("/my-library")
+@RequiredArgsConstructor
 public class MyLibraryController {
 
-	@Autowired
-	MyLibraryService libraryService;
+	private final MyLibraryService libraryService;
 
 	/**
 	 * 대출 현황 페이지
@@ -46,10 +47,22 @@ public class MyLibraryController {
 		return "myLibrary/myBooks";
 	}
 
-	@PostMapping("/return/{bookId}")
-	public String returnProc(Model model, @PathVariable(name = "bookId") Integer bookId) {
+	@PostMapping("/return/{id}")
+	public String returnProc(Model model, @PathVariable(name = "id") Integer id) {
 
-		libraryService.updateStatusById(bookId);
+		Integer bookId = libraryService.findBookIdById(id);
+
+		Integer reservationId = libraryService.findFirstByBookIdAndStatus(bookId);
+
+		if (reservationId != null) {
+			libraryService.updateStatusByIdReservation(reservationId);
+			libraryService.updateWaitDateById(reservationId);
+		} else {
+			libraryService.updateStockByBookId(id);
+		}
+
+		libraryService.updateStatusById(id);
+		libraryService.updateReturnedDateById(id);
 
 		return "redirect:/my-library/my-lend";
 	}

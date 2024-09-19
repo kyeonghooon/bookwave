@@ -54,7 +54,7 @@ public class PaymentController {
 
 	// 결제 페이지
 	@GetMapping("/checkout")
-	public String checkoutPage(@RequestParam(name = "amount") Long amount, @RequestParam(name = "orderName") String orderName, Model model) {
+	public String checkoutPage(@RequestParam(name = "amount") Integer amount, @RequestParam(name = "orderName") String orderName, Model model) {
 		// TODO User principal = session.getAttribute("principal");
 		String customerName = "석지웅"; // TODO principal.getName();
 		String customerEmail = "slowman918@gmail.com"; // TODO principal.getEmail();
@@ -144,7 +144,9 @@ public class PaymentController {
 			Gson gson = new Gson();
 			Payment payment = gson.fromJson(jsonObject.toString(), Payment.class);
 			payment.setUserId(1); // TODO payment.setUserId(principal.getId());
-			paymentService.createPayment(payment, Long.parseLong(approvedAmount));
+			// 결제내역 생성 및 wave 증가
+			paymentService.createPayment(payment, Integer.parseInt(approvedAmount));
+
 		} else {
 			// 결제승인 실패시
 			System.out.println("결제승인실패함");
@@ -201,6 +203,7 @@ public class PaymentController {
 
 			// if (response.statusCode() == 200) {
 			payment.setCancelAmount(payment.getTotalAmount());
+			payment.setOrderName("환불");
 			payment.setCancelReason(cancelReason);
 			paymentService.updatePayment(payment);
 			// } else {

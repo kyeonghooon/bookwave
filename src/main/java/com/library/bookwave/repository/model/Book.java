@@ -20,7 +20,8 @@ public class Book {
 	private String author; // 책 저자
 	private String publisher; // 출판사
 	private String cover; // 책 표지 URL
-	private String category; // 카테고리 이름
+	private Integer category; // 카테고리ID
+	private String categoryName; // 카테고리명
 	private String publishDate; // 출판일
 	private int totalStock; // 책 총 갯수
 	private int currentStock; // 남은 책 갯수
@@ -29,5 +30,4 @@ public class Book {
 	private int likes; // 좋아요 수
 	private double score; // 평점
 	private Timestamp createdAt;
-	
 }

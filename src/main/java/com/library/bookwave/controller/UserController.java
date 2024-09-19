@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -103,7 +102,7 @@ public class UserController {
 	public String signInPage() {
 		return "user/signIn";
 	}
-	
+
 	@GetMapping("/find-login") // type 값을 받아온다?..
 	public String findLoginPage(@RequestParam(name = "type") String type, Model model) {
 		System.out.println("type : " + type);
@@ -111,6 +110,7 @@ public class UserController {
 		model.addAttribute("type", type);
 		return "user/findLogin";
 	}
+	
 
 	// 로그인 요청 처리
 	@PostMapping("/sign-in")
@@ -149,11 +149,9 @@ public class UserController {
 		case "naver":
 			System.out.println("11네이버 왔삼");
 			uri = UriComponentsBuilder.fromUriString("https://nid.naver.com/oauth2.0/authorize")
-					.query("response_type=code")
-					.query("client_id=" + loginAPI.getNaverClientId())
-					.query("redirect_uri=" + "http://localhost:8080/user/naver")
-					.query("state=STATE_STRING")
-					.build().toUri();
+					.query("response_type=code").query("client_id=" + loginAPI.getNaverClientId())
+					.query("redirect_uri=" + "http://localhost:8080/user/naver").query("state=STATE_STRING").build()
+					.toUri();
 			System.out.println("uri : " + uri);
 			return "redirect:" + uri;
 		case "kakao":
@@ -165,19 +163,18 @@ public class UserController {
 			System.out.println("uri : " + uri);
 			return "redirect:" + uri;
 		case "google":
-			
+
 			System.out.println("33구글 왔삼");
 			uri = UriComponentsBuilder.fromUriString("https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount")
 					.query("client_id=" + loginAPI.getGoogleClientId())
-					//.query("client_secret=" + loginAPI.getGoogleClientSecret())
-					.query("redirect_uri=http://localhost:8080/user/google")
-					.query("response_type=code")
+					// .query("client_secret=" + loginAPI.getGoogleClientSecret())
+					.query("redirect_uri=http://localhost:8080/user/google").query("response_type=code")
 					.query("scope=openid")
-					//.query("grant_type=" + "authorization_code")
+					// .query("grant_type=" + "authorization_code")
 					.build().toUri();
 			System.out.println("uri : " + uri);
 			return "redirect:" + uri;
-			
+
 		default:
 			break;
 		}
@@ -245,7 +242,6 @@ public class UserController {
 
 	}
 
-
 	// 카카오
 	@GetMapping("/kakao")
 	public String kakao(@RequestParam(name = "code") String code, RedirectAttributes redirectAttributes) {
@@ -302,12 +298,13 @@ public class UserController {
 			session.setAttribute("principal", principal);
 			return "redirect:/"; // TODO 수정 (임시)
 		}
-	
+
 	}
 
 	// 네이버
 	@GetMapping("/naver")
-	public String naver(@RequestParam(name = "code") String code, @RequestParam(name = "state") String state, RedirectAttributes redirectAttributes) {
+	public String naver(@RequestParam(name = "code") String code, @RequestParam(name = "state") String state,
+			RedirectAttributes redirectAttributes) {
 		System.out.println("네이버 들어오세요");
 		System.out.println("code : " + code);
 		System.out.println("state : " + state);
@@ -353,7 +350,7 @@ public class UserController {
 		NaverProfile naverProfile = resposne2.getBody();
 		String socialId = "naver_" + naverProfile.getId();
 		System.out.println(socialId);
-		
+
 		// TODO
 		// 1. 최초 로그인 확인
 		User principal = userService.searchLoginId(socialId);

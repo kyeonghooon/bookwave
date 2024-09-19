@@ -21,26 +21,27 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       </div>
 
       <!-- Form Content -->
+      <!-- /controller-user/find-id -->
       <div class="tab--content active" id="tabContentFindId">
-        <form id="findIdForm" action="/user/find-id" method="post">
+        <form id="findIdForm" onsubmit="return false;" method="post">
           <div class="form--group">
             <input
               type="email"
               name="email"
-              id="email"
+              id="findLoginIdEmail"
               placeholder="이메일"
               required
             />
           </div>
           <div class="btn--wrap">
-            <button type="submit">아이디 찾기</button>
+            <button type="submit" id="findLoginIdBtn">아이디 찾기</button>
           </div>
         </form>
       </div>
       <div class="result--box"></div>
 
       <div class="tab--content" id="tabContentFindPw">
-        <form id="findPwForm" action="/user/find-password" method="post">
+        <form id="findPwForm" onsubmit="return false;" method="post">
           <div class="form--group">
             <input
               type="text"
@@ -54,14 +55,16 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             <input
               type="email"
               name="email"
-              id="email"
+              id="findPasswordEmail"
               placeholder="이메일"
               required
             />
           </div>
           <div class="btn--wrap">
-            <button type="submit">비밀번호 찾기</button>
+            <button type="submit" id="findPasswordBtn">비밀번호 찾기</button>
           </div>
+          <!-- 수정 -->
+          <p class="result--email"></p>
         </form>
       </div>
     </div>
@@ -70,5 +73,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script>
   const type = `${type}`;
+
 </script>
 <script src="/js/find-login.js"></script>

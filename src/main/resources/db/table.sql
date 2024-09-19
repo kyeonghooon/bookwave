@@ -26,16 +26,21 @@ CREATE TABLE book_tb (
     description TEXT,
     author VARCHAR(255) NOT NULL,
     publisher VARCHAR(100) NOT NULL,
-    cover VARCHAR(255) COMMENT 'url',
-    category VARCHAR(255) NOT NULL,
+    cover TEXT COMMENT 'url',
+    category_id INT NOT NULL,
     publish_date DATE NOT NULL,
     total_stock INT NOT NULL,
     current_stock INT NOT NULL,
     ebook INT DEFAULT 2 COMMENT '0:종이책 1:ebook 2:둘다',
     ebook_path VARCHAR(255),
     likes INT DEFAULT 0,
-    score DOUBLE,
+    score DOUBLE DEFAULT 0,
     created_at TIMESTAMP DEFAULT NOW()
+); 
+
+CREATE TABLE book_category_tb (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50)
 );
 
 CREATE TABLE lend_tb (
@@ -101,6 +106,24 @@ CREATE TABLE balance_history_tb (
     created_at TIMESTAMP DEFAULT NOW()
 );
 
+CREATE TABLE payment_tb (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    payment_key VARCHAR(200),
+    type VARCHAR(20),
+    user_id INT,
+    order_id VARCHAR(64),
+    order_name VARCHAR(100),
+    method VARCHAR(20),
+    total_amount INT,
+    requested_at TIMESTAMP,
+    approved_at TIMESTAMP,
+    status VARCHAR(30),
+    cancel_amount INT,
+    canceled_at TIMESTAMP,
+    cancel_reason VARCHAR(255),
+    cancel_status VARCHAR(20)
+);
+
 CREATE TABLE likes_tb (
     user_id INT NOT NULL,
     book_id INT NOT NULL,
@@ -142,7 +165,8 @@ CREATE TABLE review_tb (
     book_id INT NOT NULL,
     score INT NOT NULL,
     content VARCHAR(255),
-    created_at TIMESTAMP DEFAULT NOW()
+    created_at TIMESTAMP DEFAULT NOW(),
+    edited_at TIMESTAMP
 );
 
 CREATE TABLE notice_tb (
@@ -185,4 +209,3 @@ CREATE TABLE subscribe_tb (
     start_date TIMESTAMP DEFAULT NOW(),
     end_date TIMESTAMP
 );
-

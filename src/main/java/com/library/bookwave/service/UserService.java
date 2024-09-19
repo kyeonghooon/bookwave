@@ -143,7 +143,12 @@ public class UserService {
 	 * 아이디, 비번 찾기
 	 */
 	// ID 찾기
-
+	public String eFindByEmail(String email) {
+		return memberRepository.eFindByEmail(email);
+	}
+	
+	   // 이메일로 ID 전송하는 로직
+	
 	// 비번 찾기
 
 	/**
@@ -155,5 +160,7 @@ public class UserService {
 	public User searchLoginId(String socialId) {
 		return userRepository.findBySocialId(socialId);
 	}
+	
+	
 
-}// end of main
+}// end of class

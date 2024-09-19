@@ -1,5 +1,7 @@
 package com.library.bookwave.service;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +28,7 @@ public class PurchaseService {
 	 * 아이템 구매 비지니스 로직 처리 
 	 */
 	@Transactional
-	public boolean purchaseItem(PrincipalDTO principal, Integer itemId, Integer waveUsed, Integer mileageUsed) {
+	public boolean purchaseItem(PrincipalDTO principal, Integer itemId, Integer waveUsed, Integer mileageUsed, Map<String, Integer> request) {
 
 		int waveBalance = principal.getWave() - waveUsed;
 		int mileageBalance = principal.getMileage() - mileageUsed;
@@ -77,35 +79,53 @@ public class PurchaseService {
 		principal.setWave(waveBalance);
 		principal.setMileage(mileageBalance);
 		httpSession.setAttribute("principal", principal);
-		applyItem(itemId, userId);
-		return true;
+		return applyItem(itemId, userId, request);
 	}
 
-	private void applyItem(Integer itemId, Integer userId) {
+	private boolean applyItem(Integer itemId, Integer userId, Map<String, Integer> request) {
 		String item = itemRepository.readItem(itemId);
 		switch (item) {
 		case "extend-category":
-			extendCategory(userId);
-			break;
+			return extendCategory(userId);
+		case "ebook":
+			return ebook(userId, request.get("bookId"));
 
 		default:
-			break;
+			return false;
 		}
 	}
 
-	private void extendCategory(Integer userId) {
+	private boolean extendCategory(Integer userId) {
+		int result = 0;
 		try {
 			int extend = 5; // TODO DEFINE에서 정의 필요
 			int currentLimit = ebookRepository.readEbookCategoryLimit(userId);
 			// 테이블에 userId가 없다면 3이 반환
 			if (currentLimit == 3) {
-				ebookRepository.createEbookCategoryLimit(userId);
+				result = ebookRepository.createEbookCategoryLimit(userId);
 			} else {
-				ebookRepository.updateEbookCategoryLimit(userId, extend);
+				result = ebookRepository.updateEbookCategoryLimit(userId, extend);
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			return false;
 		}
+		if (result == 0) {
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean ebook(Integer userId, Integer bookId) {
+		int result = 0;
+		try {
+			result = ebookRepository.createEbook(userId, bookId);
+		} catch (Exception e) {
+			return false;
+		}
+		if (result == 0) {
+			return false;
+		}
+		return true;
 	}
 
 }

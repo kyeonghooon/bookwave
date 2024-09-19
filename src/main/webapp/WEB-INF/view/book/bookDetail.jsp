@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ include file="../layout/header.jsp"%>
+<%@ include file="../modal/purchase.jsp"%>
 <link href="/css/book-detail.css" rel="stylesheet" type="text/css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/js/book-detail.js"></script>
@@ -18,7 +19,7 @@
 				<dd></dd>
 				<dt>출판일: ${book.publishDate}</dt>
 				<dd></dd>
-				<dt>카테고리: ${book.category}</dt>
+				<dt>카테고리: ${book.categoryName}</dt>
 				<dd></dd>
 				<dt>출판사: ${book.publisher}</dt>
 				<dd></dd>
@@ -77,22 +78,24 @@
 
 				<c:choose>
 					<c:when test="${book.ebook != 0}">
-						<form action="/book/ebook/${book.id}" method="get" style="display: inline;">
+						<c:choose>
+							<c:when test="${userEbook > 0}">
+								<form action="/ebook/view/${book.id}" method="get" style="display: inline;">
+									<button type="submit" class="read--ebook--button">eBook 보기</button>
+							</c:when>
+							<c:when test="${user1.subscribe == true}">
+								<form action="#" method="get" style="display: inline;">
+									<button type="submit" class="sub--ebook--button">eBook 등록</button>
+							</c:when>
+							<c:otherwise>
+								<form action="#" method="get" style="display: inline;">
+									<button type="submit" class="ebook--button">eBook 구매</button>
+							</c:otherwise>
+						</c:choose>
 					</c:when>
 					<c:otherwise>
-						<form action="/book/ebook/${book.id}" method="get" style="display: none;">
+						<form action="#" method="get" style="display: none;">
 					</c:otherwise>
-				</c:choose>
-				<c:choose>
-					<c:when test="${userEbook > 0}">
-						<button type="submit" class="read--ebook--button">eBook 보기</button>
-					</c:when>
-					<c:when test="${user1.subscribe == false}">
-						<button type="submit" class="ebook--button">eBook 구매</button>
-					</c:when>
-					<c:when test="${user1.subscribe == true}">
-						<button type="submit" class="sub--ebook--button">eBook 등록</button>
-					</c:when>
 				</c:choose>
 				</form>
 			</div>
@@ -101,7 +104,7 @@
 
 		</div>
 
-		<a href="/book/list" class="back--link">돌아가기</a>
+		<a href="javascript:history.back()" class="back--link">돌아가기</a>
 
 		<!-- 관심등록 버튼 -->
 		<button type="button" class="favorite--button ${isFavorited ? 'favorited' : ''}" data-book-id="${book.id}" data-favorited="${isFavorited}">&#9733;</button>
@@ -110,4 +113,9 @@
 		<button type="button" class="like--button ${isLiked ? 'liked' : ''}" data-book-id="${book.id}" data-liked="${isLiked}">&#128077;</button>
 
 	</div>
+	<script type="text/javascript">
+		const bookId = ${book.id};
+		const json = ${items};
+		const items = new Map(Object.entries(${items}));
+	</script>
 	<%@ include file="../layout/footer.jsp"%>
