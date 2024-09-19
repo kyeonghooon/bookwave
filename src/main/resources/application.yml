@@ -29,6 +29,7 @@ spring:
       - classpath:db/paymentData.sql
       - classpath:db/ebookData.sql
       - classpath:db/itemsData.sql
+      - classpath:db/likesData.sql
 
   h2:
     console:

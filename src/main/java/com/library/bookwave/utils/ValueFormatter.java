@@ -10,4 +10,9 @@ public abstract class ValueFormatter {
 		return sdf.format(timestamp);
 	}
 	
+	public String timestampToStringDate(Timestamp timestamp) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		return sdf.format(timestamp);
+	}
+	
 }

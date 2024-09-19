@@ -2,6 +2,8 @@ package com.library.bookwave.dto;
 
 import java.sql.Timestamp;
 
+import com.library.bookwave.utils.ValueFormatter;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 @ToString
-public class BookListDTO {
+public class BookListDTO extends ValueFormatter {
 	private int id;
 	private String title; // 책 제목
 	private String description; // 설명

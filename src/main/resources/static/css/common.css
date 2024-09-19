@@ -15,10 +15,6 @@ body {
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
-main.flex-fill {
-	flex: 1 0 auto;
-}
-
 /*footer*/
 .col--white--amrc {
 	color: #FFF;

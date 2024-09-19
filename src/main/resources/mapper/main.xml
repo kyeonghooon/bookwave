@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.bookwave.repository.interfaces.MainRepository">
+
+	<select id="findBooksByMonthlyLikes" resultType="com.library.bookwave.repository.model.Book">
+		SELECT b.*
+		FROM book_tb b
+		JOIN (
+		SELECT l.book_id, COUNT(*) as like_count
+		FROM likes_tb l
+		WHERE l.created_at >= DATEADD('MONTH', -1, PARSEDATETIME(FORMATDATETIME(CURRENT_DATE(), 'yyyy-MM-01'), 'yyyy-MM-dd'))
+		AND l.created_at &lt; PARSEDATETIME(FORMATDATETIME(CURRENT_DATE(), 'yyyy-MM-01'), 'yyyy-MM-dd')
+		GROUP BY l.book_id
+		) likes_summary ON b.id = likes_summary.book_id
+		ORDER BY likes_summary.like_count DESC
+		LIMIT 5
+	</select>
+
+	<select id="findBooksByCurrentMonth" resultType="com.library.bookwave.repository.model.Book">
+		SELECT *
+		FROM book_tb
+		WHERE created_at >= PARSEDATETIME(FORMATDATETIME(CURRENT_DATE(), 'yyyy-MM-01'), 'yyyy-MM-dd')
+		AND created_at &lt; DATEADD('DAY', 1, CURRENT_DATE);
+	</select>
+	
+	<select id="findBooksByScore" resultType="com.library.bookwave.repository.model.Book">
+		SELECT *
+		FROM book_tb
+		ORDER BY score DESC
+		LIMIT 5
+	</select>
+
+</mapper>
