@@ -50,6 +50,9 @@
 					<li class="nav-item"><a class="nav-link" href="/payment/charge" onclick="window.open(this.href, '_blank', 'width=800, height=760'); return false">충전하기</a></li>
 					<c:choose>
 						<c:when test="${principal != null}">
+						<c:if test="${!principal.subscribe}">
+							<li class="nav-item"><a class="nav-link" href="#" id="subscribeBtn">구독하기</a></li>
+						</c:if>
 							<li class="nav-item"><a class="nav-link" href="/user/logout">로그아웃</a></li>
 						</c:when>
 						<c:otherwise>

@@ -21,10 +21,9 @@ public class AuthInterceptor implements HandlerInterceptor {
 
 		HttpSession session = request.getSession();
 		PrincipalDTO principal = (PrincipalDTO) session.getAttribute(Define.PRINCIPAL);
-		// TODO 아직 principal이 완벽하지 않아서 주석처리
-//		if (principal == null) {
-//			throw new UnAuthorizedException("로그인이 필요합니다", HttpStatus.UNAUTHORIZED);
-//		}
+		if (principal == null) {
+			throw new UnAuthorizedException("로그인이 필요합니다", HttpStatus.UNAUTHORIZED);
+		}
 		return true;
 	}
 
