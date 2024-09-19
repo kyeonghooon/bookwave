@@ -118,32 +118,30 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 		openDynamicModal("결제하기", "500을 두 값으로 나누어 입력하세요.", 500, function(waveInput, mileageInput) {
 			const itemId = items.get("ebook");
-			const params = new URLSearchParams({
-				wave: waveInput,
-				mileage: mileageInput
-			});
-			const url = `/purchase/${itemId}?${params.toString()}`;
+			const currentBookId = bookId;
+			const url = `/purchase/${itemId}`;
 			fetch(url, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-			},
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				if (data.success) {
-					// 성공 --> 카테고리 한도를 늘림
-					messageBox.innerText = "";
-					alert(data.message);
-				} else {
-					// 실패
-					messageBox.innerText = data.message;
-				}
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ wave: waveInput, mileage: mileageInput, bookId:currentBookId }),
 			})
-			.catch((error) => {
-				console.error("Error:", error);
-				messageBox.innerText = "구매 중 오류가 발생했습니다.";
-			});
+				.then((response) => response.json())
+				.then((data) => {
+					if (data.success) {
+						// 성공 --> 화면 새로 고침
+						alert(data.message);
+						location.reload();
+					} else {
+						// 실패
+						alert(data.message);
+					}
+				})
+				.catch((error) => {
+					console.error("Error:", error);
+					messageBox.innerText = "구매 중 오류가 발생했습니다.";
+				});
 		});
 	}
 
@@ -173,6 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	if (ebookButton) {
-		ebookButton.addEventListener('click', registEbook);
+		ebookButton.addEventListener('click', purchaseEbook);
 	}
 });

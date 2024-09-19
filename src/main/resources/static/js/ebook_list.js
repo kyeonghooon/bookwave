@@ -129,16 +129,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	function purchaseExtendCategory(waveInput, mileageInput) {
 		const itemId = items.get("extend-category");
-		const params = new URLSearchParams({
-			wave: waveInput,
-			mileage: mileageInput
-		});
-		const url = `/purchase/${itemId}?${params.toString()}`;
+		const url = `/purchase/${itemId}`;
 		fetch(url, {
-			method: "GET",
+			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
+			body: JSON.stringify({ wave: waveInput, mileage: mileageInput }),
 		})
 			.then((response) => response.json())
 			.then((data) => {
@@ -156,11 +153,11 @@ document.addEventListener("DOMContentLoaded", function() {
 				messageBox.innerText = "구매 중 오류가 발생했습니다.";
 			});
 	}
-	
+
 	function openPurchaseModal() {
 		openDynamicModal("결제하기", "500을 두 값으로 나누어 입력하세요.", 500, function(waveInput, mileageInput) {
 			purchaseExtendCategory(waveInput, mileageInput)
-        });
+		});
 	}
 
 	// 카테고리 항목들을 가져오는 함수

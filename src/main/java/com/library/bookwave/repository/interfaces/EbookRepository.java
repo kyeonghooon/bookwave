@@ -54,4 +54,7 @@ public interface EbookRepository {
 	
 	// user_ebook 등록 (구독 서비스 이용자)
 	Integer createEbookWithSubscribe(@Param("userId") Integer userId, @Param("bookId") Integer bookId);
+	
+	// user_ebook 구매 
+	Integer createEbook(@Param("userId") Integer userId, @Param("bookId") Integer bookId);
 }

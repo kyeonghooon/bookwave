@@ -77,4 +77,8 @@
 		insert into user_ebook_tb (user_id, book_id, subscribe) values (#{userId}, #{bookId}, 1)
 	</insert>
 	
+	<insert id="createEbook">
+		insert into user_ebook_tb (user_id, book_id) values (#{userId}, #{bookId})
+	</insert>
+	
 </mapper>

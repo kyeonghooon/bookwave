@@ -36,7 +36,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EbookController {
 
-	private final EbookService ebookservice;
+	private final EbookService ebookService;
 
 	@GetMapping
 	public String listPage(//
@@ -45,22 +45,14 @@ public class EbookController {
 			Model model) {
 		// TODO 테스트용 코드 로그인 구현되면 제거 예정
 		int userId = principal == null ? 1 : principal.getUserId();
-		List<EbookDTO> bookList = ebookservice.findEbookListByUserIdAndCategory(userId, category);
-		List<UserEbookCategory> categoryList = ebookservice.findEbookCategoryListByUserId(userId);
-		Map<String, Integer> items = ebookservice.findItemsByPageName("ebookList");
-		if (items == null) {
-			new RedirectException("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		ObjectMapper objectMapper = new ObjectMapper();
-		try {
-			String itemsJson = objectMapper.writeValueAsString(items);
-			model.addAttribute("items", itemsJson);
-		} catch (JsonProcessingException e) {
-			new RedirectException("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		List<EbookDTO> bookList = ebookService.findEbookListByUserIdAndCategory(userId, category);
+		List<UserEbookCategory> categoryList = ebookService.findEbookCategoryListByUserId(userId);
+		String itemsJson = ebookService.findItemsByPageName("ebookList");
+		
 		model.addAttribute("bookList", bookList);
 		model.addAttribute("selectedCategory", category);
 		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("items", itemsJson);
 		return "ebook/ebookList";
 	}
 
@@ -77,11 +69,11 @@ public class EbookController {
 		int userId = principal == null ? 1 : principal.getUserId();
 
 		// 1. 해당 유저의 해당 ebook에 대한 내역 확인
-		UserEbook userEbook = ebookservice.readUserEbook(userId, bookId);
+		UserEbook userEbook = ebookService.readUserEbook(userId, bookId);
 
 		// 2. 해당 ebook의 path 받아옴
 		// TODO 제목도 받아와야함 model 만들어 지면 추가
-		String ebookPath = ebookservice.findEbookPathByBookId(userId);
+		String ebookPath = ebookService.findEbookPathByBookId(userId);
 		// 3. model에 attribute 추가
 		model.addAttribute("ebook", userEbook);
 		model.addAttribute("ebookPath", ebookPath);
@@ -98,7 +90,7 @@ public class EbookController {
 			@SessionAttribute(value = Define.PRINCIPAL, required = false) PrincipalDTO principal) {
 		// TODO 테스트용 코드 로그인 구현되면 제거 예정
 		int userId = principal == null ? 1 : principal.getUserId();
-		int result = ebookservice.updateUserEbookWithLastPoint(progress, userId, bookId);
+		int result = ebookService.updateUserEbookWithLastPoint(progress, userId, bookId);
 		if (result == 0) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("저장 실패");
 		} else {
@@ -118,15 +110,15 @@ public class EbookController {
 			return ResponseEntity.badRequest().body(response);
 		}
 
-		int limit = ebookservice.findEbookCategoryLimitByUserId(userId);
-		int current = ebookservice.countEbookCategoryByUserId(userId);
+		int limit = ebookService.findEbookCategoryLimitByUserId(userId);
+		int current = ebookService.countEbookCategoryByUserId(userId);
 		if (limit <= current) {
 			response.put("success", "purchase");
 			response.put("message", "결제가 필요합니다.");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 		}
 
-		if (ebookservice.createUserEbookCategory(userId, categoryName)) {
+		if (ebookService.createUserEbookCategory(userId, categoryName)) {
 			response.put("success", "true");
 			response.put("message", "카테고리가 성공적으로 추가되었습니다.");
 			return ResponseEntity.ok(response);
@@ -150,7 +142,7 @@ public class EbookController {
 			response.put("message", "이름은 8글자 이하의 한글, 영어, 숫자만 사용 가능합니다.");
 			return ResponseEntity.badRequest().body(response);
 		}
-		if (ebookservice.updateUserEbookCategoryName(userId, categoryName, categoryId)) {
+		if (ebookService.updateUserEbookCategoryName(userId, categoryName, categoryId)) {
 			response.put("success", "true");
 			response.put("message", "카테고리명이 성공적으로 변경되었습니다.");
 			return ResponseEntity.ok(response);
@@ -177,7 +169,7 @@ public class EbookController {
 		}
 
 		Map<String, Object> response = new HashMap<>();
-		if (ebookservice.updateUserEbookPriority(userId, ebookReorderList)) {
+		if (ebookService.updateUserEbookPriority(userId, ebookReorderList)) {
 			response.put("success", true);
 			return ResponseEntity.ok(response);
 		} else {
@@ -199,7 +191,7 @@ public class EbookController {
 		Integer categoryId = request.get("categoryId");
 
 		Map<String, Object> response = new HashMap<>();
-		if (ebookservice.updateUserEbookCategory(categoryId, userId, bookId) == 1) {
+		if (ebookService.updateUserEbookCategory(categoryId, userId, bookId) == 1) {
 			response.put("success", true);
 			return ResponseEntity.ok(response);
 		} else {
@@ -226,7 +218,7 @@ public class EbookController {
 //			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 //		}
 		
-		if (ebookservice.createEbookWithSubscribe(userId, bookId) == 1) {
+		if (ebookService.createEbookWithSubscribe(userId, bookId) == 1) {
 			response.put("success", true);
 			response.put("message", "등록에 성공했습니다. (카테고리 미지정)");
 			return ResponseEntity.ok(response);

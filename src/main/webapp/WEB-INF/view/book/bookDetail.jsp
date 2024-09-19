@@ -115,5 +115,7 @@
 	</div>
 	<script type="text/javascript">
 		const bookId = ${book.id};
+		const json = ${items};
+		const items = new Map(Object.entries(${items}));
 	</script>
 	<%@ include file="../layout/footer.jsp"%>
