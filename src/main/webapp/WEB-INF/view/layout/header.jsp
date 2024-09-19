@@ -16,7 +16,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <!-- 커스텀 CSS -->
 <link rel="stylesheet" href="/css/common.css" />
-<link href="/img/favicon2.ico" rel="icon">
+<link href="/img/favicon.ico" rel="icon">
 
 </head>
 <body>

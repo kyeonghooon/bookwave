@@ -137,3 +137,36 @@
 .newbook--nav:hover {
 	color: black;
 }
+
+/* 배너 css */
+.banner {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    background-image: url('/img/library3.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    padding-left: 30px;
+    padding-bottom: 50px;
+}
+
+.banner--content {
+    width: 100%;
+}
+
+.banner--text {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+.banner--text h1 {
+    font-size: 3rem;
+}
+
+.banner--text p {
+    font-size: 1.5rem;
+}
