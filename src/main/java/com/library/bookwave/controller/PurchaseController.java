@@ -3,10 +3,10 @@ package com.library.bookwave.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -23,10 +23,9 @@ public class PurchaseController {
 	
 	private final PurchaseService purchaseService;
 	
-	@GetMapping("/{itemId}")
+	@PostMapping("/{itemId}")
 	public Map<String, Object> purchaseItem(@SessionAttribute(value = Define.PRINCIPAL, required = false) PrincipalDTO principal, //
-			@RequestParam(name = "wave") Integer wave, //
-			@RequestParam(name = "mileage") Integer mileage,//
+			@RequestBody Map<String, Integer> request,//
 			@PathVariable(name = "itemId") Integer itemId) {
 		// TODO 테스트 코드 변경 예정
 		if (principal == null) {
@@ -37,6 +36,8 @@ public class PurchaseController {
 					.build();
 		}
 		Map<String, Object> response = new HashMap<>();
+		int wave = request.get("wave");
+		int mileage = request.get("mileage");
 		if (principal.getWave() < wave) {
 			response.put("success", false);
 			response.put("message", "wave 부족");
@@ -45,7 +46,7 @@ public class PurchaseController {
 			response.put("success", false);
 			response.put("message", "mileage 부족");
 		}
-		if (purchaseService.purchaseItem(principal, itemId, wave, mileage)) {
+		if (purchaseService.purchaseItem(principal, itemId, wave, mileage, request)) {
 			response.put("success", true);
 			response.put("message", "구매 성공");
 		} else {

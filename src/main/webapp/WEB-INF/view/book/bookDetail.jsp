@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ include file="../layout/header.jsp"%>
+<%@ include file="../modal/purchase.jsp"%>
 <link href="/css/book-detail.css" rel="stylesheet" type="text/css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/js/book-detail.js"></script>
@@ -77,22 +78,24 @@
 
 				<c:choose>
 					<c:when test="${book.ebook != 0}">
-						<form action="/book/ebook/${book.id}" method="get" style="display: inline;">
+						<c:choose>
+							<c:when test="${userEbook > 0}">
+								<form action="/ebook/view/${book.id}" method="get" style="display: inline;">
+									<button type="submit" class="read--ebook--button">eBook 보기</button>
+							</c:when>
+							<c:when test="${user1.subscribe == true}">
+								<form action="#" method="get" style="display: inline;">
+									<button type="submit" class="sub--ebook--button">eBook 등록</button>
+							</c:when>
+							<c:otherwise>
+								<form action="#" method="get" style="display: inline;">
+									<button type="submit" class="ebook--button">eBook 구매</button>
+							</c:otherwise>
+						</c:choose>
 					</c:when>
 					<c:otherwise>
-						<form action="/book/ebook/${book.id}" method="get" style="display: none;">
+						<form action="#" method="get" style="display: none;">
 					</c:otherwise>
-				</c:choose>
-				<c:choose>
-					<c:when test="${userEbook > 0}">
-						<button type="submit" class="read--ebook--button">eBook 보기</button>
-					</c:when>
-					<c:when test="${user1.subscribe == false}">
-						<button type="submit" class="ebook--button">eBook 구매</button>
-					</c:when>
-					<c:when test="${user1.subscribe == true}">
-						<button type="submit" class="sub--ebook--button">eBook 등록</button>
-					</c:when>
 				</c:choose>
 				</form>
 			</div>
@@ -110,4 +113,9 @@
 		<button type="button" class="like--button ${isLiked ? 'liked' : ''}" data-book-id="${book.id}" data-liked="${isLiked}">&#128077;</button>
 
 	</div>
+	<script type="text/javascript">
+		const bookId = ${book.id};
+		const json = ${items};
+		const items = new Map(Object.entries(${items}));
+	</script>
 	<%@ include file="../layout/footer.jsp"%>

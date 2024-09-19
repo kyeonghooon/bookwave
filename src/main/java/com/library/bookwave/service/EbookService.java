@@ -4,11 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.library.bookwave.dto.EbookDTO;
 import com.library.bookwave.dto.EbookReorderDTO;
+import com.library.bookwave.handler.exception.RedirectException;
 import com.library.bookwave.repository.interfaces.EbookRepository;
 import com.library.bookwave.repository.interfaces.ItemRepository;
 import com.library.bookwave.repository.model.Item;
@@ -204,7 +208,7 @@ public class EbookService {
 	/**
 	 * ebook list 페이지에서 사용되는 item을 세팅
 	 */
-	public Map<String, Integer> findItemsByPageName(String pagename) {
+	public String findItemsByPageName(String pagename) {
 		List<Item> itemList = null;
 		try {
 			itemList = itemRepository.findItemListByPageName(pagename);
@@ -217,6 +221,32 @@ public class EbookService {
 		for (Item item : itemList) {
 			items.put(item.getName(), item.getId());
 		}
-		return items;
+		if (items.isEmpty()) {
+			new RedirectException("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		ObjectMapper objectMapper = new ObjectMapper();
+		String itemsJson = null;
+		try {
+			itemsJson = objectMapper.writeValueAsString(items);
+		} catch (JsonProcessingException e) {
+			new RedirectException("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return itemsJson;
+	}
+
+	/**
+	 * ebook 등록 (구독 서비스 이용자)
+	 */
+	public int createEbookWithSubscribe(int userId, int bookId) {
+		int result = 0;
+		try {
+			result = ebookRepository.createEbookWithSubscribe(userId, bookId);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		if (result == 0) {
+			// TODO : 처리 필요
+		}
+		return result;
 	}
 }
