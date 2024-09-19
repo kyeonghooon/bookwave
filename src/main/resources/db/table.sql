@@ -127,6 +127,7 @@ CREATE TABLE payment_tb (
 CREATE TABLE likes_tb (
     user_id INT NOT NULL,
     book_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
     PRIMARY KEY (user_id , book_id)
 );
 

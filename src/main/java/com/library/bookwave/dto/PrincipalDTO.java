@@ -27,4 +27,5 @@ public class PrincipalDTO {
 	private Integer wave;
 	private Integer mileage;
 	private Boolean subscribe;
+
 }
