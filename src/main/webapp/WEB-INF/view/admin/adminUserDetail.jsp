@@ -14,7 +14,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>BookWave - UserList</title>
+<title>BookWave - BookList</title>
 
 <!-- Custom fonts for this template -->
 <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
@@ -30,22 +30,52 @@
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css"
 	rel="stylesheet">
 <style>
+/* 테이블 기본 스타일 */
 table {
 	width: 100%;
 	border-collapse: collapse;
+	margin: 20px 0;
+	font-size: 18px;
+	text-align: left;
+}
+
+table, th, td {
+	border: 1px solid #ddd;
 }
 
 th, td {
-	padding: 8px;
-	border: 1px solid #ddd;
+	padding: 12px 15px;
 }
-/* 기본 행 스타일 */
-tbody tr {
-	transition: background-color 0.3s ease;
+
+th {
+	background-color: #f4f4f4;
+	font-weight: bold;
 }
-/* hover 스타일 */
-tbody tr:hover {
-	background-color: #99CCFF;
+
+tr:nth-child(even) {
+	background-color: #f9f9f9;
+}
+
+/* 페이지 배경 및 전체 레이아웃 */
+body {
+	font-family: 'Nunito', sans-serif;
+	background-color: #f8f9fc;
+	color: #333;
+}
+
+.container {
+	max-width: 900px;
+	margin: 40px auto;
+	padding: 20px;
+	background-color: #ffffff;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+}
+
+h1 {
+	text-align: center;
+	margin-bottom: 20px;
+	color: #4e73df;
 }
 </style>
 </head>
@@ -77,12 +107,12 @@ tbody tr:hover {
 			<li class="nav-item"><a class="nav-link" href="/admin/main">
 					<i class="fas fa-fw fa-tachometer-alt"></i> <span>대시보드</span>
 			</a></li>
-			<li class="nav-item active"><a class="nav-link"
-				href="/admin/user"> <i class="fas fa-fw fa-table"></i> <span>유저
-						관리</span></a></li>
-			<li class="nav-item"><a class="nav-link" href="/admin/book">
-					<i class="fas fa-fw fa-table"></i> <span>도서 관리</span>
+			<li class="nav-item active"><a class="nav-link" href="/admin/user">
+					<i class="fas fa-fw fa-table"></i> <span>유저 관리</span>
 			</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="/admin/book"> <i class="fas fa-fw fa-table"></i> <span>도서
+						관리</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="/admin/payment">
 					<i class="fas fa-fw fa-table"></i> <span>결제 관리</span>
 			</a></li>
@@ -103,7 +133,6 @@ tbody tr:hover {
 							class="collapse-item" href="/support/qna">1:1 문의 관리</a>
 					</div>
 				</div></li>
-
 
 			<!-- Divider -->
 			<hr class="sidebar-divider">
@@ -286,7 +315,6 @@ tbody tr:hover {
 								</a> <a class="dropdown-item text-center small text-gray-500"
 									href="#">Read More Messages</a>
 							</div></li>
-
 						<div class="topbar-divider d-none d-sm-block"></div>
 
 						<!-- Nav Item - User Information -->
@@ -317,77 +345,95 @@ tbody tr:hover {
 									Logout
 								</a>
 							</div></li>
-
 					</ul>
-
 				</nav>
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
+					<div class="container">
+						<table>
+							<tr>
+								<th>유저 ID</th>
+								<td>${user.userId}</td>
+							</tr>
+							<tr>
+								<th>로그인 ID</th>
+								<td>${user.loginId}</td>
+							</tr>
+							<tr>
+								<th>소셜 ID</th>
+								<td>${user.socialId}</td>
+							</tr>
+							<tr>
+								<th>이름</th>
+								<td>${user.name}</td>
+							</tr>
+							<tr>
+								<th>역할</th>
+								<td>${user.role}</td>
+							</tr>
+							<tr>
+								<th>상태</th>
+								<c:choose>
+									<c:when test="${user.status == 0}">
+										<td>정상</td>
+									</c:when>
+									<c:when test="${user.status == 1}">
+										<td>탈퇴예정</td>
+									</c:when>
+									<c:otherwise>
+										<td>탈퇴</td>
+									</c:otherwise>
 
-					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">유저 목록</h1>
-
-					<!-- DataTales Example -->
-					<div class="card shadow mb-4">
-						<div class="card-body">
-							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0">
-									<thead>
-										<tr>
-											<th>id</th>
-											<th>login_id</th>
-											<th>social_id</th>
-											<th>name</th>
-											<th>role</th>
-											<th>subscribe</th>
-											<th>wave</th>
-											<th>mileage</th>
-											<th>status</th>
-											<th>created_at</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="user" items="${userList}">
-											<tr data-url="/admin/user-detail?id=${user.userId}">
-												<th>${user.userId}</th>
-												<th>${user.loginId}</th>
-												<th>${user.socialId}</th>
-												<th>${user.name}</th>
-												<th>${user.role == 'admin' ? '관리자' : '유저'}</th>
-												<th>${user.subscribe}</th>
-												<th><fmt:formatNumber value="${user.wave}"
-														pattern="#,#00"></fmt:formatNumber></th>
-												<th><fmt:formatNumber value="${user.mileage}"
-														pattern="#,#00"></fmt:formatNumber></th>
-												<c:choose>
-													<c:when test="${user.status == 0}">
-														<th>정상</th>
-													</c:when>
-													<c:when test="${user.status == 1}">
-														<th>탈퇴예정</th>
-													</c:when>
-													<c:otherwise>
-														<th>탈퇴</th>
-													</c:otherwise>
-												</c:choose>
-												<th><fmt:formatDate value="${user.createdAt}"
-														type="both" /></th>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>
-						</div>
+								</c:choose>
+							</tr>
+							<tr>
+								<th>생성일</th>
+								<td><fmt:formatDate value="${user.createdAt}" type="both" /></td>
+							</tr>
+							<tr>
+								<th>이메일</th>
+								<td>${user.email}</td>
+							</tr>
+							<tr>
+								<th>생일</th>
+								<td>${user.birthDate}</td>
+							</tr>
+							<tr>
+								<th>성별</th>
+								<td>${user.gender == false ? '남성' : '여성'}</td>
+							</tr>
+							<tr>
+								<th>휴대폰 번호</th>
+								<td>${user.phone}</td>
+							</tr>
+							<tr>
+								<th>우편번호</th>
+								<td>${user.zip}</td>
+							</tr>
+							<tr>
+								<th>주소</th>
+								<td>${user.addr1}<br>${user.addr2}</td>
+							</tr>
+							<tr>
+								<th>웨이브</th>
+								<td>${user.wave}</td>
+							</tr>
+							<tr>
+								<th>마일리지</th>
+								<td>${user.mileage}</td>
+							</tr>
+							<tr>
+								<th>구독</th>
+								<td><fmt:formatDate value="${user.endDate}" type="both" />까지</td>
+							</tr>
+						</table>
 					</div>
-
 				</div>
-				<!-- /.container-fluid -->
-
+				<!-- End of Main Content -->
 			</div>
-			<!-- End of Main Content -->
+			<!-- /.container-fluid -->
 
 			<!-- Footer -->
 			<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
@@ -428,7 +474,7 @@ tbody tr:hover {
 		</div>
 	</div>
 	<!-- custom JavaScript -->
-	<script src="/vendor/datatables/custom.js"></script>
+	<!-- <script src="/vendor/datatables/custom.js"></script> -->
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="/vendor/jquery/jquery.min.js"></script>
@@ -446,7 +492,6 @@ tbody tr:hover {
 
 	<!-- Page level custom scripts -->
 	<script src="/js/demo/datatables-demo.js"></script>
-
 </body>
 
 </html>

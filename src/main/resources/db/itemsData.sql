@@ -7,5 +7,4 @@ INSERT INTO page_item_tb VALUES (
 );
 
 -- 샘플 데이터
-INSERT INTO wallet_tb (user_id) VALUES (1);
 INSERT INTO balance_history_tb (user_id, wave_change, mileage_change, description) VALUES (1, 5000, 5000, '테스트용 재화 부여');
