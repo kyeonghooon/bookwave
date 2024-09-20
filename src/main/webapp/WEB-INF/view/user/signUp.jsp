@@ -5,6 +5,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <link rel="stylesheet" href="/css/signUp.css" type="text/css" />
+<link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
 <div class="d-flex justify-content-center mt-3">
 	<div class="signup--container">
@@ -33,6 +34,7 @@
 						<label for="password" style="display: none;">비밀번호</label>
 						<input type="password" class="form--control" placeholder="비밀번호 입력" id="password" name="password" style="display: none;" readonly value="${password}" required />
 						<input type="hidden" name="password" value="${password}">
+						
 					</c:when>
 					<c:otherwise>
 						<label for="password">비밀번호</label>
