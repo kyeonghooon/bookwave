@@ -4,6 +4,7 @@ public class Define {
 
 	//  상수
 	public static final String PRINCIPAL = "principal";
+	public static final Integer SUBSCRIBE_PRICE = 9900;
 
 	// 이미지 관련
 	//	public static final String UPLOAD_FILE_DERECTORY = "C:\\work_spring\\upload/";

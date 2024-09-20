@@ -11,12 +11,7 @@ public abstract class ValueFormatter {
 		return sdf.format(timestamp);
 	}
 	
-	public String timestampToString2(Timestamp timestamp) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		return sdf.format(timestamp);
-	}
-	
-	public String timestampToString3(String timestamp) {
+	public String timestampToStringDate(Timestamp timestamp) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		return sdf.format(timestamp);
 	}
@@ -25,4 +20,5 @@ public abstract class ValueFormatter {
 		DecimalFormat df = new DecimalFormat("###,###");
 		return df.format(amount);
 	}
+
 }

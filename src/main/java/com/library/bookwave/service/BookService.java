@@ -2,6 +2,7 @@ package com.library.bookwave.service;
 
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,6 +10,7 @@ import com.library.bookwave.dto.BookDetailReviewDTO;
 import com.library.bookwave.dto.BookListDTO;
 import com.library.bookwave.repository.interfaces.BookRepository;
 import com.library.bookwave.repository.model.Book;
+import com.library.bookwave.repository.model.BookCategory;
 import com.library.bookwave.repository.model.Favorite;
 import com.library.bookwave.repository.model.Lend;
 import com.library.bookwave.repository.model.Like;
@@ -24,12 +26,12 @@ public class BookService {
 	}
 
 	// 도서 목록 조회
-	public List<BookListDTO> readAllBook(Integer userId, String catgory, String search, Integer page, Integer size) {
+	public List<BookListDTO> readAllBook(Integer userId, Integer category, String search, Integer page, Integer size) {
 		List<BookListDTO> books = null;
 		try {
 			int limit = size;
 			int offset = (page - 1) * size;
-			books = bookRepository.readAllBook(userId, catgory, search, limit, offset);
+			books = bookRepository.readAllBook(userId, category, search, limit, offset);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -38,8 +40,8 @@ public class BookService {
 	}
 
 	// 카테고리 조회
-	public List<String> readAllBookCategory() {
-		List<String> categories = null;
+	public List<BookCategory> readAllBookCategory() {
+		List<BookCategory> categories = null;
 		try {
 			categories = bookRepository.readAllBookCategory();
 		} catch (Exception e) {
@@ -48,8 +50,19 @@ public class BookService {
 		return categories;
 	}
 
+	// (테이블구조 수정) 카테고리 조회
+	public List<String> readAllBookCategory2() {
+		List<String> categories = null;
+		try {
+			categories = bookRepository.readAllBookCategory2();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return categories;
+	}
+
 	// 필터링 걸린 도서 갯수 조회하기
-	public int countAllBook(String category, String search) {
+	public int countAllBook(Integer category, String search) {
 		int count = 0;
 		try {
 			count = bookRepository.countAllBook(category, search);
@@ -218,7 +231,7 @@ public class BookService {
 		}
 		return userEbook;
 	}
-	
+
 	public List<BookDetailReviewDTO> readReviewAndUserNameByBookId (Integer bookId) {
 		List<BookDetailReviewDTO> bookDetailReviewDTO = null;
 		try {
@@ -245,4 +258,54 @@ public class BookService {
 			e.printStackTrace();
 		}
 	}
+
+	// 도서 등록
+	@Transactional
+	public void createBook(Book book) {
+		int result = 0;
+		try {
+			result = bookRepository.createBook(book);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result != 1) {
+			System.out.println("도서 수정 실패");
+		}
+	}
+
+	// 도서 수정
+	@Transactional
+	public void updateBookById(Book book) {
+		int result = 0;
+		try {
+			result = bookRepository.updateBookById(book);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result != 1) {
+			System.out.println("도서 수정 실패");
+		}
+	}
+
+	// 도서 삭제
+	@Transactional
+	public void deleteBookById(Integer bookId) {
+		int result = 0;
+		try {
+			result = bookRepository.deleteBookById(bookId);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result != 1) {
+			System.out.println("도서 삭제 실패");
+		}
+
+	}
+
 }

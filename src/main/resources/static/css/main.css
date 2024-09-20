@@ -1,0 +1,139 @@
+@charset "UTF-8";
+
+.book--list {
+	flex: 1;
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 10px;
+	padding: 20px;
+	width: 100%;
+	justify-content: center;
+	overflow: auto;
+}
+
+.book--item {
+	width: 190px;
+	height: 373px;
+	text-align: center;
+	border: 1px solid #ddd;
+	padding: 10px;
+	border-radius: 5px;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	position: relative; /* 부모 요소에 상대적 위치 지정 */
+	transition: background-color 0.3s ease;
+	z-index: 1;
+}
+
+.book--item img {
+	width: 170px;
+	height: 250px;
+	object-fit: cover;
+	border-radius: 5px;
+	transition: opacity 0.3s ease;
+	z-index: 0;
+}
+
+.book--item:hover {
+	background-color: rgba(0, 0, 0, 0.3); /* 어두운 배경 */
+}
+
+.book--item:hover .book--actions {
+	display: flex;
+	justify-content: center;
+}
+
+.book--item:hover img {
+	opacity: 0.1;
+}
+
+.book--details {
+	flex: 1;
+}
+
+.book--title {
+	font-size: 14px;
+	margin-top: 10px;
+	display: inline-block;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.book--actions {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: none; /* 기본적으로 숨김 */
+	z-index: 2;
+	align-items: center;
+}
+
+.book--actions a {
+	padding: 5px 10px;
+	cursor: pointer;
+	border-radius: 4px;
+	text-decoration: none;
+	background-color: #666;
+	color: white;
+	font-size: 14px;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.book--likes {
+	height: 44px;
+	font-size: 14px;
+}
+
+.book--slider {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.newbook--nav {
+    cursor: pointer;
+    font-size: 48px;
+    line-height: 1.8;
+    color: rgba(128, 128, 128, 0.8);
+    padding: 10px;
+    border-radius: 50%;
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) scale(1, 1.5);
+    z-index: 10;
+}
+
+.newbook--nav::before {
+  content: "";
+  position: absolute;
+  top: -20px; /* 위로 20px 확장 */
+  bottom: -20px; /* 아래로 20px 확장 */
+  left: -20px; /* 왼쪽으로 20px 확장 */
+  right: -20px; /* 오른쪽으로 20px 확장 */
+  z-index: -1; /* 실제 버튼 위에 그려지지 않도록 설정 */
+}
+
+.prev {
+    left: -40px;
+}
+
+.next {
+    right: -40px;
+}
+
+.book--slider:hover .newbook--nav {
+    display: inline-block;
+}
+
+.newbook--nav:hover {
+	color: black;
+}

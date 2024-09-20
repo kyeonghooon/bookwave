@@ -32,6 +32,10 @@ table {
 th, td {
 	padding: 8px;
 	border: 1px solid #ddd;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	max-width: 150px;
 }
 /* 기본 행 스타일 */
 tbody tr {
@@ -68,6 +72,7 @@ tbody tr:hover {
 			<li class="nav-item"><a class="nav-link" href="/admin/user"> <i class="fas fa-fw fa-table"></i> <span>유저 관리</span></a></li>
 			<li class="nav-item active"><a class="nav-link" href="/admin/book"> <i class="fas fa-fw fa-table"></i> <span>도서 관리</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="/admin/payment"> <i class="fas fa-fw fa-table"></i> <span>결제 관리</span></a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/lend"> <i class="fas fa-fw fa-table"></i> <span>대출 현황</span></a></li>
 
 			<!-- Nav Item - Pages Collapse Menu -->
 			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i>
@@ -241,6 +246,7 @@ tbody tr:hover {
 					<!-- Page Heading -->
 					<h1 class="h3 mb-2 text-gray-800">도서 목록</h1>
 
+					<a href="/book/create" class="btn btn-danger">도서 등록하기</a>
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
 						<div class="card-body">
@@ -248,31 +254,45 @@ tbody tr:hover {
 								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 									<thead>
 										<tr>
-											<th>id</th>
-											<th>login_id</th>
-											<th>social_id</th>
-											<th>name</th>
-											<th>role</th>
-											<th>subscribe</th>
-											<th>wave</th>
-											<th>mileage</th>
-											<th>status</th>
-											<th>created_at</th>
+											<th>ID</th>
+											<th>분류</th>
+											<th>제목</th>
+											<th>설명</th>
+											<th>작가</th>
+											<th>출판일</th>
+											<th>총재고</th>
+											<th>재고</th>
+											<th>전자책</th>
+											<th>좋아요</th>
+											<th>평점</th>
+											<th>등록일</th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="user" items="${userList}">
-											<tr data-url="/admin/user-detail?id=${user.id}">
-												<th>${user.id}</th>
-												<th>${user.loginId}</th>
-												<th>${user.socialId}</th>
-												<th>${user.name}</th>
-												<th>${user.role}</th>
-												<th>${user.subscribe}</th>
-												<th>${user.wave}</th>
-												<th>${user.mileage}</th>
-												<th>${user.status}</th>
-												<th><fmt:formatDate value="${user.createdAt}" type="both" /></th>
+										<c:forEach var="book" items="${bookList}">
+											<tr data-url="/admin/book/detail/${book.id}">
+												<th>${book.id}</th>
+												<th>${book.categoryName}</th>
+												<th>${book.title}</th>
+												<th>${book.description}</th>
+												<th>${book.author}</th>
+												<th>${book.publishDate}</th>
+												<th>${book.totalStock}</th>
+												<th>${book.currentStock}</th>
+												<c:choose>
+													<c:when test="${book.ebook == 0}">
+														<th>종이책</th>
+													</c:when>
+													<c:when test="${book.ebook == 1}">
+														<th>전자책</th>
+													</c:when>
+													<c:otherwise>
+														<th>가능</th>
+													</c:otherwise>
+												</c:choose>
+												<th>${book.likes}</th>
+												<th>${book.score}</th>
+												<th><fmt:formatDate value="${book.createdAt}" pattern="yyyy-MM-dd" /></th>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -289,7 +309,7 @@ tbody tr:hover {
 
 			<!-- Footer -->
 			<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
-		
+
 			<!-- End of Footer -->
 
 		</div>

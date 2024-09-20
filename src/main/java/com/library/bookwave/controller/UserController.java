@@ -19,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.library.bookwave.dto.PrincipalDTO;
 import com.library.bookwave.dto.SignInDTO;
 import com.library.bookwave.dto.SignUpDTO;
 import com.library.bookwave.dto.api.GoogleOAuthToken;
@@ -50,9 +51,6 @@ public class UserController {
 	@GetMapping("/sign-up")
 	public String signUpPage(Model model) {
 		String socialId = (String) model.asMap().get("socialId");
-//		//TODO 임시값
-//		String password = "298p3047y2w98p4uhtrle";
-//		model.addAttribute("socialPassword", password);
 		model.addAttribute("socialId", socialId);
 		return "user/signUp";
 	}
@@ -105,26 +103,15 @@ public class UserController {
 	public String signInPage() {
 		return "user/signIn";
 	}
-	
-	// 아이디, 비밀번호 찾기 화면 요청
-	@GetMapping("/find-login")
-	public String findLoginPage() {
+
+	@GetMapping("/find-login") // type 값을 받아온다?..
+	public String findLoginPage(@RequestParam(name = "type") String type, Model model) {
+		System.out.println("type : " + type);
+		// TODO 모델에 type 추가
+		model.addAttribute("type", type);
 		return "user/findLogin";
 	}
 	
-//	@PostMapping("/sign-up")
-//	public String findLoginProc(SignUpDTO dto) {
-//		System.out.println("DTO:" + dto);
-//		if (dto.getName() == null || dto.getName().isEmpty()) {
-//			throw new DataDeliveryException("이름을 입력해주세요.", HttpStatus.BAD_REQUEST);
-//		}
-//		if (dto.getEmail() == null || dto.getEmail().isEmpty()) {
-//			throw new DataDeliveryException("email을 입력해주세요.", HttpStatus.BAD_REQUEST);
-//		}
-//
-//		// TODO 수정
-//		return "redirect:/user/sign-in";
-//	}
 
 	// 로그인 요청 처리
 	@PostMapping("/sign-in")
@@ -142,14 +129,14 @@ public class UserController {
 			String[] strs = loginId.split("_");
 			throw new DataDeliveryException("사용할 수 없는 형식입니다. (" + strs[0] + "_)", HttpStatus.BAD_REQUEST);
 		}
-
-		User principal = userService.readUser(dto);
+	
+		PrincipalDTO principal = userService.readUser(dto);
 
 		// 세션 메모리에 등록 처리
 		session.setAttribute("principal", principal);
 
 		// TODO 수정
-		return "redirect:/user/sign-in";
+		return "redirect:/";
 	}
 
 	/*
@@ -163,11 +150,9 @@ public class UserController {
 		case "naver":
 			System.out.println("11네이버 왔삼");
 			uri = UriComponentsBuilder.fromUriString("https://nid.naver.com/oauth2.0/authorize")
-					.query("response_type=code")
-					.query("client_id=" + loginAPI.getNaverClientId())
-					.query("redirect_uri=" + "http://localhost:8080/user/naver")
-					.query("state=STATE_STRING")
-					.build().toUri();
+					.query("response_type=code").query("client_id=" + loginAPI.getNaverClientId())
+					.query("redirect_uri=" + "http://localhost:8080/user/naver").query("state=STATE_STRING").build()
+					.toUri();
 			System.out.println("uri : " + uri);
 			return "redirect:" + uri;
 		case "kakao":
@@ -179,19 +164,18 @@ public class UserController {
 			System.out.println("uri : " + uri);
 			return "redirect:" + uri;
 		case "google":
-			
+
 			System.out.println("33구글 왔삼");
 			uri = UriComponentsBuilder.fromUriString("https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount")
 					.query("client_id=" + loginAPI.getGoogleClientId())
-					//.query("client_secret=" + loginAPI.getGoogleClientSecret())
-					.query("redirect_uri=http://localhost:8080/user/google")
-					.query("response_type=code")
+					// .query("client_secret=" + loginAPI.getGoogleClientSecret())
+					.query("redirect_uri=http://localhost:8080/user/google").query("response_type=code")
 					.query("scope=openid")
-					//.query("grant_type=" + "authorization_code")
+					// .query("grant_type=" + "authorization_code")
 					.build().toUri();
 			System.out.println("uri : " + uri);
 			return "redirect:" + uri;
-			
+
 		default:
 			break;
 		}
@@ -259,7 +243,6 @@ public class UserController {
 
 	}
 
-
 	// 카카오
 	@GetMapping("/kakao")
 	public String kakao(@RequestParam(name = "code") String code, RedirectAttributes redirectAttributes) {
@@ -316,12 +299,13 @@ public class UserController {
 			session.setAttribute("principal", principal);
 			return "redirect:/"; // TODO 수정 (임시)
 		}
-	
+
 	}
 
 	// 네이버
 	@GetMapping("/naver")
-	public String naver(@RequestParam(name = "code") String code, @RequestParam(name = "state") String state, RedirectAttributes redirectAttributes) {
+	public String naver(@RequestParam(name = "code") String code, @RequestParam(name = "state") String state,
+			RedirectAttributes redirectAttributes) {
 		System.out.println("네이버 들어오세요");
 		System.out.println("code : " + code);
 		System.out.println("state : " + state);
@@ -367,7 +351,7 @@ public class UserController {
 		NaverProfile naverProfile = resposne2.getBody();
 		String socialId = "naver_" + naverProfile.getId();
 		System.out.println(socialId);
-		
+
 		// TODO
 		// 1. 최초 로그인 확인
 		User principal = userService.searchLoginId(socialId);
