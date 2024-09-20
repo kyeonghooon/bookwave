@@ -6,6 +6,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.library.bookwave.dto.BookDetailReviewDTO;
 import com.library.bookwave.dto.BookListDTO;
 import com.library.bookwave.repository.interfaces.BookRepository;
 import com.library.bookwave.repository.model.Book;
@@ -229,6 +230,33 @@ public class BookService {
 			e.printStackTrace();
 		}
 		return userEbook;
+	}
+
+	public List<BookDetailReviewDTO> readReviewAndUserNameByBookId (Integer bookId) {
+		List<BookDetailReviewDTO> bookDetailReviewDTO = null;
+		try {
+			bookDetailReviewDTO = bookRepository.readReviewAndUserNameByBookId(bookId);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return bookDetailReviewDTO;
+	}
+	
+	public void deleteReviewById (Integer Id) {
+		try {
+			bookRepository.deleteReviewById(Id);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	@Transactional
+	public void updateReviewById (String content,Integer score, Integer Id) {
+		try {
+			bookRepository.updateReviewById(content,score, Id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	// 도서 등록

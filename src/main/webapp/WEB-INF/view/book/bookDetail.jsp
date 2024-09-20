@@ -5,7 +5,7 @@
 <%@ include file="../modal/purchase.jsp"%>
 <link href="/css/book-detail.css" rel="stylesheet" type="text/css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="/js/book-detail.js"></script>
+
 </head>
 <body>
 	<div class="container">
@@ -97,6 +97,17 @@
 						<form action="#" method="get" style="display: none;">
 					</c:otherwise>
 				</c:choose>
+				<c:choose>
+					<c:when test="${userEbook > 0}">
+						<button type="submit" class="read--ebook--button">eBook 보기</button>
+					</c:when>
+					<c:when test="${user.subscribe == false}">
+						<button type="submit" class="ebook--button">eBook 구매</button>
+					</c:when>
+					<c:when test="${user.subscribe == true}">
+						<button type="submit" class="sub--ebook--button">eBook 등록</button>
+					</c:when>
+				</c:choose>
 				</form>
 			</div>
 
@@ -113,9 +124,96 @@
 		<button type="button" class="like--button ${isLiked ? 'liked' : ''}" data-book-id="${book.id}" data-liked="${isLiked}">&#128077;</button>
 
 	</div>
+	<div class="reviews">
+		<h2>리뷰 목록</h2>
+
+		<c:choose>
+			<c:when test="${empty review}">
+				<div class="no-reviews">리뷰가 없습니다.</div>
+			</c:when>
+			<c:otherwise>
+				<!-- 수정 가능한 리뷰 표시 -->
+				<c:forEach var="review" items="${review}">
+					<c:if test="${review.userId == principal}">
+						<div class="review-item">
+							<div class="review-header">
+								<div class="review-author">작성자: ${review.name}</div>
+								<div class="review-actions">
+									<button type="button" class="edit-review-button" onclick="toggleEdit(${review.id})">수정</button>
+									<form action="/book/deleteReview/${review.id}" method="post" style="display: inline;">
+										<input type="hidden" name="bookId" value="${book.id}">
+										<button type="submit" class="delete-review-button" onclick="return confirm('정말로 이 리뷰를 삭제하시겠습니까?');">삭제</button>
+									</form>
+								</div>
+							</div>
+							<div class="review-score">
+								<c:forEach var="i" begin="1" end="5">
+									<c:choose>
+										<c:when test="${i <= review.score}">
+											<span class="star filled">&#9733;</span>
+										</c:when>
+										<c:otherwise>
+											<span class="star">&#9734;</span>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+							</div>
+							<div class="review-content" id="review-content-${review.id}">${review.content}</div>
+							<div class="edit-review-form" id="edit-review-form-${review.id}" style="display: none;">
+								<form action="/book/updateReview/${review.id}" method="post">
+									<input type="hidden" name="bookId" value="${book.id}">
+									<div class="score-selection">
+										<label>점수:</label>
+										<c:forEach var="j" begin="1" end="5">
+											<input type="radio" name="score" value="${j}" id="score-${j}-${review.id}" style="display: none;" <c:if test="${j == review.score}">checked</c:if>>
+											<label for="score-${j}-${review.id}" class="star" onclick="setScore(${j}, '${review.id}')"> <c:if test="${j <= review.score}">&#9733;</c:if> <c:if
+													test="${j > review.score}">&#9734;</c:if>
+											</label>
+										</c:forEach>
+									</div>
+									<textarea name="content" required>${review.content}</textarea>
+									<button type="submit">저장</button>
+									<button type="button" onclick="toggleEdit(${review.id})">취소</button>
+								</form>
+							</div>
+							<div class="review-date">${review.createdAt}</div>
+						</div>
+					</c:if>
+				</c:forEach>
+
+				<!-- 일반 리뷰 표시 -->
+				<c:forEach var="review" items="${review}">
+					<c:if test="${review.userId != principal}">
+						<div class="review-item">
+							<div class="review-header">
+								<div class="review-author">작성자: ${review.name}</div>
+							</div>
+							<div class="review-score">
+								<c:forEach var="i" begin="1" end="5">
+									<c:choose>
+										<c:when test="${i <= review.score}">
+											<span class="star filled">&#9733;</span>
+										</c:when>
+										<c:otherwise>
+											<span class="star">&#9734;</span>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+							</div>
+							<div class="review-content">${review.content}</div>
+							<div class="review-date">${review.createdAt}</div>
+						</div>
+					</c:if>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
+	</div>
+	
 	<script type="text/javascript">
 		const bookId = ${book.id};
 		const json = ${items};
 		const items = new Map(Object.entries(${items}));
 	</script>
+  <script src="/js/book-detail.js"></script>
 	<%@ include file="../layout/footer.jsp"%>
+
