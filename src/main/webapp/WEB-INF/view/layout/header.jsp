@@ -23,36 +23,30 @@
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light d-flex justify-content-between">
 			<a class="navbar-brand" href="/"> <img class="img--logo" src="/img/logo_bookwave4.png" alt="Book Wave Logo"></a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-				aria-label="Toggle navigation"
-			>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			<div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavDropdown">
-				<ul class="navbar-nav">
-					<li class="nav-item active"><a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a></li>
-					<li class="nav-item"><a class="nav-link" href="#">소개</a></li>
-					<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="book/list" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="false"
-					> 도서 </a>
+			<div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+				<ul class="navbar-nav mr-2">
+					<li class="nav-item "><a class="nav-link" href="/">Home ${homeUrl}<span class="sr-only">(current)</span></a></li>
+					<li class="nav-item "><a class="nav-link" href="/introduce">소개</a></li>
+					<li class="nav-item dropdown "><a class="nav-link dropdown-toggle" href="book/list" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 도서 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 							<a class="dropdown-item" href="book/list">도서 목록</a>
 						</div></li>
-					<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="false"
-					> 내 서재 </a>
+					<li class="nav-item dropdown "><a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 내 서재 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="#">대출 도서 목록</a> <a class="dropdown-item" href="#">예약 도서 목록</a> <a class="dropdown-item" href="#">관심 도서 목록</a> <a class="dropdown-item"
-								href="#"
-							>내 리뷰</a> <a class="dropdown-item" href="#">읽은 내역 통계</a>
+							<a class="dropdown-item" href="/my-library/my-lend">대출 도서 목록</a> <a class="dropdown-item" href="/my-reserved/list">예약 도서 목록</a> <a class="dropdown-item" href="/my-favorite/list">관심 도서 목록</a> <a class="dropdown-item" href="/review/list">내 리뷰</a> <a class="dropdown-item" href="/history/list">읽은 내역 통계</a>
 						</div></li>
 					<li class="nav-item"><a class="nav-link" href="/ebook">eBook</a></li>
 					<li class="nav-item"><a class="nav-link" href="/payment/charge" onclick="window.open(this.href, '_blank', 'width=800, height=760'); return false">충전하기</a></li>
+				</ul>
+				<ul class="navbar-nav personal--active ml-1">
 					<c:choose>
 						<c:when test="${principal != null}">
-						<c:if test="${!principal.subscribe}">
-							<li class="nav-item"><a class="nav-link" href="#" id="subscribeBtn">구독하기</a></li>
-						</c:if>
+							<c:if test="${!principal.subscribe}">
+								<li class="nav-item"><a class="nav-link" href="#" id="subscribeBtn">구독하기</a></li>
+							</c:if>
 							<li class="nav-item"><a class="nav-link" href="/user/logout">로그아웃</a></li>
 						</c:when>
 						<c:otherwise>

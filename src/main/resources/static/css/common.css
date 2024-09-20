@@ -23,14 +23,14 @@ body {
 footer {
 	flex-shrink: 0;
 	width: 100%;
-	background-color: #00498c;
+	background-color: #026ee6;
 	min-height: 250px;
 	padding: 10px 0px 25px 0px;
 }
 
 .pt2 {
-	padding-top: 40px;
-	margin-bottom: 20px;
+	padding-top: 5px;
+	margin-bottom: 15px;
 }
 
 footer p {
@@ -142,10 +142,32 @@ footer p {
 .contact--container p a {
 	color: #fff;
 }
+
 .contact--container p a:hover {
 	text-decoration: none;
 }
+
 .img--logo {
 	width: 225px;
 	height: 50px;
+}
+
+.personal--active {
+	position: relative;
+	z-index: 1;
+}
+
+.personal--active::before {
+	content: '';
+	position: absolute;
+	top: -20px;
+	left: -5px;
+	right: -20px;
+	bottom: -19px;
+	background-color: #026ee6;
+	z-index: -1;
+}
+
+.personal--active li a {
+	color: #f8f9fa !important;
 }

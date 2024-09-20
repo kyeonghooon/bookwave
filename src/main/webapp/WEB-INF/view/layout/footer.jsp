@@ -6,23 +6,21 @@
 			<div class=" col-sm-4 col-md  col-6 col">
 				<h5 class="headin5--amrc col--white--amrc pt2">Quick Links</h5>
 				<ul class="footer--ul--amrc">
-					<li><a href="http://webenlance.com">Image Rectoucing</a></li>
-					<li><a href="http://webenlance.com">Clipping Path</a></li>
-					<li><a href="http://webenlance.com">Hollow Man Montage</a></li>
-					<li><a href="http://webenlance.com">Ebay & Amazon</a></li>
-					<li><a href="http://webenlance.com">Hair Masking/Clipping</a></li>
-					<li><a href="http://webenlance.com">Image Cropping</a></li>
+					<li><a href="/book/list"><i class="fa-solid fa-angle-right"></i>  전체 도서 목록</a></li>
+					<li><a href="/ebook"><i class="fa-solid fa-angle-right"></i>  ebook 목록</a></li>
+					<li><a href="#"><i class="fa-solid fa-angle-right"></i>  마이 페이지</a></li>
+					<li><a href="/my-reserved/list"><i class="fa-solid fa-angle-right"></i>  FAQ</a></li>
+					<li><a href="/facility"><i class="fa-solid fa-angle-right"></i>  시설 이용</a></li>
 				</ul>
 			</div>
 			<div class=" col-sm-4 col-md  col-6 col">
 				<h5 class="headin5--amrc col--white--amrc pt2">Quick links</h5>
 				<ul class="footer--ul--amrc">
-					<li><a href="http://webenlance.com">Remove Background</a></li>
-					<li><a href="http://webenlance.com">Shadows & Mirror Reflection</a></li>
-					<li><a href="http://webenlance.com">Logo Design</a></li>
-					<li><a href="http://webenlance.com">Vectorization</a></li>
-					<li><a href="http://webenlance.com">Hair Masking/Clipping</a></li>
-					<li><a href="http://webenlance.com">Image Cropping</a></li>
+					<li><a href="/my-library/my-lend"><i class="fa-solid fa-angle-right"></i>  대출 도서 목록</a></li>
+					<li><a href="/my-reserved/list"><i class="fa-solid fa-angle-right"></i>  예약 도서 목록</a></li>
+					<li><a href="/my-favorite/list"><i class="fa-solid fa-angle-right"></i>  관심 도서 목록</a></li>
+					<li><a href="/history/list"><i class="fa-solid fa-angle-right"></i>  읽은 내역 통계</a></li>
+					<li><a href="/review/list"><i class="fa-solid fa-angle-right"></i>  내 리뷰</a></li>
 				</ul>
 			</div>
 			<div class=" col-sm-4 col-md col-sm-4  col-12 col contact--container">
@@ -49,15 +47,7 @@
 	</div>
 
 
-	<div class="container">
-		<ul class="foote--bottom--ul--amrc">
-			<li><a href="http://webenlance.com">Home</a></li>
-			<li><a href="http://webenlance.com">About</a></li>
-			<li><a href="http://webenlance.com">Services</a></li>
-			<li><a href="http://webenlance.com">Pricing</a></li>
-			<li><a href="http://webenlance.com">Blog</a></li>
-			<li><a href="http://webenlance.com">Contact</a></li>
-		</ul>
+	<div class="container mt-2">
 		<p class="text-center">2024 BookWave. All rights reserved.</p>
 	</div>
 
