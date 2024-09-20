@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	};
 
+
 	// 이벤트 핸들러 등록
 	if (likeButton) {
 		likeButton.addEventListener('click', handleLikeButtonClick);
@@ -106,3 +107,38 @@ document.addEventListener('DOMContentLoaded', () => {
 		ebookButton.addEventListener('click', handleConfirmation('정말 구매하시겠습니까?'));
 	}
 });
+function toggleEdit(reviewId) {
+	console.log(`Edit button clicked for review ID: ${reviewId}`);
+
+	const contentDiv = document.getElementById(`review-content-${reviewId}`);
+	const editFormDiv = document.getElementById(`edit-review-form-${reviewId}`);
+	const existingScore = document.getElementById(`review-score-${reviewId}`);
+
+	if (editFormDiv) {
+		if (editFormDiv.style.display === "none" || editFormDiv.style.display === "") {
+			editFormDiv.style.display = "block";  // 수정 폼 보이기
+			contentDiv.style.display = "none";     // 내용 숨기기
+			existingScore.style.display = "none"; // 별 숨기기
+		} else {
+			editFormDiv.style.display = "none";    // 수정 폼 숨기기
+			contentDiv.style.display = "block";     // 내용 보이기
+			existingScore.style.display = "block"; // 별 숨기기
+		}
+	} else {
+		console.error(`No edit form found for review ID: ${reviewId}`);
+	}
+}
+function setScore(selectedScore, reviewId) {
+	// 모든 별을 초기화
+	for (let i = 1; i <= 5; i++) {
+		const starLabel = document.querySelector(`label[for='score-${i}-${reviewId}']`);
+		if (starLabel) {
+			starLabel.innerHTML = i <= selectedScore ? '&#9733;' : '&#9734;';
+		}
+		// 라디오 버튼 체크
+		const radioButton = document.getElementById(`score-${i}-${reviewId}`);
+		if (radioButton) {
+			radioButton.checked = (i === selectedScore);
+		}
+	}
+}

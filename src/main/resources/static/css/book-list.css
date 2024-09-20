@@ -102,14 +102,14 @@ body {
     background-color: #f0f0f0;
 }
 
-.container {
+.container--box {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust grid to fill available space */
+    gap: 20px; /* Increased gap for better spacing */
     padding: 20px;
-    width: 100%;
-    justify-content: center;
+    justify-items: center; /* Center items within the grid */
+    align-items: start; /* Align items to the start */
 }
 
 .book--item {

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.library.bookwave.dto.BookDetailReviewDTO;
 import com.library.bookwave.dto.BookListDTO;
 import com.library.bookwave.repository.model.Book;
 import com.library.bookwave.repository.model.Favorite;
@@ -74,4 +75,10 @@ public interface BookRepository {
 
 	// eBook여부조회
 	public int readUserEbook (@Param("userId") Integer userId, @Param("bookId") Integer bookId);
+	
+	public List<BookDetailReviewDTO> readReviewAndUserNameByBookId (Integer bookId);
+	
+	public void deleteReviewById (Integer Id);
+	
+	public void updateReviewById (@Param("content") String content, @Param("score") Integer score, @Param("id") Integer id);
 }

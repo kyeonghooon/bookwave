@@ -3,7 +3,25 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="com.library.bookwave.repository.interfaces.BookRepository">
-
+	
+	<delete id="deleteReviewById">
+	delete from review_tb where id = #{id}
+	</delete>
+	
+	<update id="updateReviewById">
+	update review_tb set content = #{content} , score = #{score} where id = #{id}
+	</update>
+	
+<select id="readReviewAndUserNameByBookId" resultType="com.library.bookwave.dto.BookDetailReviewDTO">
+SELECT 
+ r.*, u.name
+FROM 
+    review_tb r
+JOIN 
+    user_tb u ON r.user_id = u.id
+WHERE 
+    r.book_id = #{bookId}
+</select>
 	<!-- 필터링 걸린 도서 목록 조회  -->
 	<select id="readAllBook" resultType="com.library.bookwave.dto.BookListDTO">
 		SELECT b.*,
@@ -153,4 +171,5 @@
 	<select id="readUserEbook" resultType="int">
 	select count(*) from user_ebook_tb where user_id = #{userId} and book_id = #{bookId}
 	</select>
+	
 </mapper>
