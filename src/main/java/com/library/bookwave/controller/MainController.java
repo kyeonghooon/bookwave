@@ -32,5 +32,10 @@ public class MainController {
 		return "layout/main";
 	}
 	
+	@GetMapping("/introduce")
+	public String introducePage() {
+		return "layout/introduce";
+	}
+	
 	
 }

@@ -31,6 +31,7 @@ import com.library.bookwave.repository.model.User;
 import com.library.bookwave.service.UserService;
 import com.library.bookwave.utils.LoginAPIUtil;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
@@ -136,6 +137,15 @@ public class UserController {
 		session.setAttribute("principal", principal);
 
 		// TODO 수정
+		return "redirect:/";
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate(); // 세션 무효화
+        }
 		return "redirect:/";
 	}
 

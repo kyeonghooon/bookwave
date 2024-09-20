@@ -2,12 +2,15 @@
 <%@ include file="header.jsp"%>
 <link rel="stylesheet" type="text/css" href="/css/main.css">
 <main class="d-flex flex-column">
-	<div class="container py-4">
-		<h1>Welcome to My Web Application</h1>
-		<p>This is the main content of the page.</p>
-		<!-- 여기에 페이지의 주요 콘텐츠를 추가합니다. -->
+	<div class="container-fluid banner">
+		<div class="row banner--content">
+			<div class="col-6 banner--text">
+				<h1 class="display-4">환영합니다!</h1>
+				<p class="lead">BookWave에서 다양한 도서를 만나보세요.</p>
+			</div>
+		</div>
 	</div>
-	<div class="d-flex flex-column ml-auto mr-auto">
+	<div class="d-flex flex-column mt-5 ml-auto mr-auto">
 		<h2>지난 달의 인기도서</h2>
 		<div class="book--list">
 			<c:forEach var="book" items="${montlyBookList}">

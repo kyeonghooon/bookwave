@@ -13,7 +13,7 @@ $(document).ready(function() {
 document.addEventListener("DOMContentLoaded", function() {
 	const subscribeBtn = document.getElementById("subscribeBtn");
 
-	subscribeBtn.addEventListener("click", () => {
+	addEventListenerIfExists(subscribeBtn, "click", () => {
 		const confirmed = confirm("9900 마일리지를 사용하여 구독 하시겠습니까?");
 		if (!confirmed) {
 			return;
@@ -34,4 +34,10 @@ document.addEventListener("DOMContentLoaded", function() {
 				messageBox.innerText = "카테고리 생성 중 오류가 발생했습니다.";
 			});
 	});
+	
+	function addEventListenerIfExists(element, event, handler) {
+    if (element) {
+        element.addEventListener(event, handler);
+    }
+}
 });

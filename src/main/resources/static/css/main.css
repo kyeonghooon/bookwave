@@ -71,7 +71,7 @@
 	top: 40%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	display: none; /* 기본적으로 숨김 */
+	display: none;
 	z-index: 2;
 	align-items: center;
 }
@@ -115,11 +115,11 @@
 .newbook--nav::before {
   content: "";
   position: absolute;
-  top: -20px; /* 위로 20px 확장 */
-  bottom: -20px; /* 아래로 20px 확장 */
-  left: -20px; /* 왼쪽으로 20px 확장 */
-  right: -20px; /* 오른쪽으로 20px 확장 */
-  z-index: -1; /* 실제 버튼 위에 그려지지 않도록 설정 */
+  top: -20px;
+  bottom: -20px;
+  left: -20px;
+  right: -20px;
+  z-index: -1;
 }
 
 .prev {
@@ -136,4 +136,37 @@
 
 .newbook--nav:hover {
 	color: black;
+}
+
+/* 배너 css */
+.banner {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    background-image: url('/img/library.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    padding-left: 30px;
+    padding-bottom: 50px;
+}
+
+.banner--content {
+    width: 100%;
+}
+
+.banner--text {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+.banner--text h1 {
+    font-size: 3rem;
+}
+
+.banner--text p {
+    font-size: 1.5rem;
 }
