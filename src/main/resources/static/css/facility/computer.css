@@ -1,0 +1,96 @@
+/* 제목 스타일 */
+.title--section h1 {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+/* 색상 설명 섹션 스타일 */
+.color--legend {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.legend--item {
+    display: flex;
+    align-items: center;
+}
+
+.legend--color {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+.available--color {
+    background-color: #4CAF50; /* 사용 가능 색상 */
+}
+
+.unavailable--color {
+    background-color: #f44336; /* 사용 불가능 색상 */
+}
+
+.computer--layout {
+    display: flex;
+    position: relative;
+    width: 1000px;
+    height: 600px;
+    background-color: #f0f0f0;
+    border: 2px solid #000;
+}
+
+.computer--grid {
+    display: flex;
+    flex-wrap: wrap;
+    width: 700px;
+    height: 400px;
+    margin-right: 20px;
+}
+
+.computer--column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100px;
+    height: 100%;
+}
+
+.computer {
+    width: 120px;
+    height: 100px;
+    margin: 10px;
+}
+
+.computer--btn {
+    width: 100%;
+    height: 100%;
+    border: 2px solid #000;
+    background-color: #ccc;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.computer--available {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.computer--unavailable {
+    background-color: #f44336;
+    color: white;
+}
+
+.door {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 80px;
+    height: 40px;
+    background-color: brown;
+    text-align: center;
+    line-height: 40px;
+    color: white;
+    font-weight: bold;
+    border: 2px solid #000;
+}

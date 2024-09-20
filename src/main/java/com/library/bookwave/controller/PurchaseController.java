@@ -26,15 +26,15 @@ public class PurchaseController {
 
 	@PostMapping("/{itemId}")
 	public Map<String, Object> purchaseItem(@SessionAttribute(value = Define.PRINCIPAL, required = false) PrincipalDTO principal, //
-			@RequestBody Map<String, Integer> request,//
+			@RequestBody Map<String, String> request,//
 			@PathVariable(name = "itemId") Integer itemId) {
 		// TODO 테스트 코드 변경 예정
 		if (principal == null) {
 			principal = PrincipalDTO.builder().userId(1).wave(5000).mileage(5000).build();
 		}
 		Map<String, Object> response = new HashMap<>();
-		int wave = request.get("wave");
-		int mileage = request.get("mileage");
+		int wave = Integer.parseInt(request.get("wave"));
+		int mileage = Integer.parseInt(request.get("mileage"));
 		if (principal.getWave() < wave) {
 			response.put("success", false);
 			response.put("message", "wave 부족");

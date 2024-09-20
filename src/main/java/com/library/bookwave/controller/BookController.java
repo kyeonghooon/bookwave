@@ -22,6 +22,7 @@ import com.library.bookwave.repository.model.Like;
 import com.library.bookwave.repository.model.Reservation;
 import com.library.bookwave.service.BookService;
 import com.library.bookwave.service.EbookService;
+import com.library.bookwave.service.ItemService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,7 +32,7 @@ import lombok.RequiredArgsConstructor;
 public class BookController {
 
 	private final BookService bookService;
-	private final EbookService ebookService;
+	private final ItemService itemService;
 
 	/* 책리스트 페이지 */
 	@GetMapping("/list")
@@ -108,7 +109,7 @@ public class BookController {
 
 
 		// 상세 페이지에 들어가는 아이템 리스트 세팅
-		String itemsJson = ebookService.findItemsByPageName("bookDetail");
+		String itemsJson = itemService.findItemsByPageName("bookDetail");
 
 		
 

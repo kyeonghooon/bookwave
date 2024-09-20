@@ -3,8 +3,8 @@
 	<div class="purchase--content">
 		<h2 id="purchaseTitle">타이틀</h2>
 		<p id="purchaseDescription">설명 텍스트</p>
-		<input type="number" id="wave--input" placeholder="wave입력" /> 
-		<input type="number" id="mileage--input" placeholder="mileage입력" /> <br />
+		<span>wave:</span><input type="number" id="wave--input" placeholder="wave입력" value="0"/> 
+		<span>mileage:</span><input type="number" id="mileage--input" placeholder="mileage입력" value="0"/> <br />
 		<button class="btn btn-sm btn-primary" id="purchaseConfirmBtn">결정</button>
 		<button class="btn btn-sm btn-danger" onclick="closeModal()">취소</button>
 	</div>
