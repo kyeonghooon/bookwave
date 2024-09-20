@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.library.bookwave.repository.interfaces.MyPageRepository">
+
+
+	<select id="findUserById"
+		resultType="com.library.bookwave.repository.model.User">
+		select * from user_tb where id = #{id}
+	</select>
+
+
+	<select id="findUserDetailById"
+		resultType="com.library.bookwave.dto.UserInfoDTO">
+		SELECT
+		u.id AS user_id,
+		u.name,
+		ud.email,
+		ud.birth_date,
+		ud.zip,
+		ud.addr1,
+		ud.addr2,
+		ud.phone
+		FROM
+		user_tb u
+		JOIN
+		user_detail_tb ud ON
+		u.id = ud.user_id where ud.user_id = #{userId}
+	</select>
+
+	<update id="updateAddress">
+		update user_detail_tb set zip = #{zip}, addr1 =
+		#{addr1}, addr2 = #{addr2} where user_id= #{userId}
+	</update>
+
+	<update id="updatePhone">
+		update user_detail_tb set phone = #{phone} where
+		user_id= #{userId}
+	</update>
+
+	<update id="updateUserByPassword">
+		update user_tb set password = #{password} where id =
+		#{id}
+	</update>
+	
+	<update id="updateUserEmailByUserId">
+		update user_detail_tb set email = #{email} where user_id = #{userId} 
+	</update>
+
+	<select id="countBalanceHistory" resultType="int">
+		<choose>
+			<when test="historyType == 'all'">
+				select count(*) from balance_history_tb where user_id
+				= #{userId}
+			</when>
+			<when test="historyType == 'wave'">
+				select count(*) from balance_history_tb where
+				wave_change != 0 and user_id = #{userId}
+			</when>
+			<otherwise>
+				select count(*) from balance_history_tb where
+				mileage_change != 0 and user_id = #{userId}
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findBalanceHistory"
+		resultType="com.library.bookwave.dto.BalanceHistoryDTO">
+		SELECT *
+		FROM balance_history_tb
+		WHERE
+		<choose>
+			<when test="historyType =='wave'">
+				wave_change != 0
+				and
+			</when>
+			<when test="historyType =='mileage'">
+				mileage_change != 0
+				and
+			</when>
+		</choose>
+		user_id = #{userId}
+		<if test="sortBy != null">
+			ORDER BY
+			<choose>
+				<when test="sortBy == 'mileage'">
+					mileage_change
+				</when>
+				<when test="sortBy == 'wave'">
+					wave_change
+				</when>
+				<when test="sortBy == 'date'">
+					created_at
+				</when>
+			</choose>
+			<choose>
+				<when test="sortOrder == 'asc'">
+					ASC
+				</when>
+				<otherwise>
+					DESC
+				</otherwise>
+			</choose>
+		</if>
+		LIMIT #{limit}
+		OFFSET #{offset}
+	</select>
+
+	<select id="findPaymentByUserId"
+		resultType="com.library.bookwave.dto.PaymentHistroyDTO">
+		SELECT * FROM PAYMENT_TB where user_id = #{userId}
+	</select>
+
+	<select id="findPaymentById"
+		resultType="com.library.bookwave.dto.PaymentHistroyDTO">
+		SELECT * FROM PAYMENT_TB where id = #{id}
+	</select>
+
+	<update id="updatePayment">
+		update payment_tb set cancel_reason =
+		#{cancelReason}, cancel_status = 'REQUEST_CANCEL' where id = #{id}
+	</update>
+	
+	<select id="readAllWalletByUserId" resultType="com.library.bookwave.repository.model.Wallet">
+	SELECT * FROM WALLET_TB where user_id = #{userId}
+	</select>
+	
+	<update id="updateWallet">
+	UPDATE wallet_tb
+SET wave = wave - #{totalAmount}
+WHERE user_id = #{userId}
+	</update>
+
+	<update id="updateUserStatus">
+		UPDATE user_tb
+		SET status = 1
+		WHERE id = #{id};
+	</update>
+
+	<delete id="deleteUserDetail">
+		DELETE FROM user_detail_tb WHERE user_id = #{userId}
+	</delete>
+
+</mapper>

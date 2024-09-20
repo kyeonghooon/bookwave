@@ -1,0 +1,228 @@
+@charset "UTF-8";
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #eef2f5; /* Softer background */
+    margin: 0;
+    padding: 20px;
+    position: relative;
+    min-height: 100vh;
+    color: #333; /* Default text color */
+}
+
+.sidebar {
+    position: fixed;
+    top: 100px;
+    left: 0;
+    width: 250px; /* Slightly wider for better spacing */
+    background-color: #ffffff;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    height: calc(100vh - 100px);
+    transition: all 0.3s ease;
+}
+
+.sidebar h3 {
+    text-align: center;
+    color: #444;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.sidebar a {
+    display: block;
+    padding: 12px;
+    margin-bottom: 10px;
+    color: #444;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 15px;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #e9e9e9;
+    transform: scale(1.02); /* Slightly scale on hover */
+}
+
+.delete-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: #ff4d4d;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.delete-btn:hover {
+    background-color: #e60000;
+    transform: scale(1.05);
+}
+
+.content {
+    margin-left: 270px; /* Updated to accommodate sidebar width */
+    padding: 20px;
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
+.section h2 {
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.button-group a {
+    display: inline-block;
+    padding: 12px 24px;
+    margin: 0 10px;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 6px;
+    background-color: #007bff;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.button-group a:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    border: 1px solid #ddd;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    width: 200px;
+    height: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.positive {
+    color: green;
+}
+
+.negative {
+    color: red;
+}
+
+.neutral {
+    color: #555; /* Adjusted for better readability */
+}
+
+/* Pagination Styles */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pagination a, .pagination span {
+    display: inline-block;
+    padding: 12px 18px;
+    margin: 0 5px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 15px;
+    color: #007bff;
+    text-decoration: none;
+    background-color: #ffffff;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #f1f1f1;
+    border-color: #bbb;
+}
+
+.pagination a.disabled {
+    color: #ccc;
+    pointer-events: none;
+}
+
+.pagination .current {
+    background-color: #007bff;
+    color: #ffffff;
+    border-color: #007bff;
+    font-weight: bold;
+}
+
+.pagination .current:hover {
+    background-color: #0056b3;
+    border-color: #004080;
+}
+
+.sortable {
+    cursor: pointer;
+    align-items: center;
+}
+
+.sortable .arrowup, .sortable .arrowdown {
+    margin-left: 5px;
+    font-size: 14px;
+    color: #ccc;
+    font-weight: bold;
+}
+
+.sortable .arrowup.asc::before {
+    content: "▲";
+    color: #007bff;
+}
+.sortable .arrowdown.asc::before {
+    content: "▼";
+}
+
+.sortable .arrowup.desc::before {
+    content: "▲";
+}
+.sortable .arrowdown.desc::before {
+    content: "▼";
+    color: #007bff;
+}
+
+.sortable .arrowup.default::before  {
+    content: "▲▼";
+    color: #ccc;
+}
+
+/* .sortable.active .arrowup::before,
+.sortable.active .arrowdown::before {
+    color: #007bff;
+} */

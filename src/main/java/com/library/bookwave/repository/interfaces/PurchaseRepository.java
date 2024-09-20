@@ -15,4 +15,5 @@ public interface PurchaseRepository {
 	
 	int updateWallet(@Param("userId") Integer userId, @Param("wave") Integer wave, @Param("mileage") Integer mileage);
 	
+	int createSubscribe(Integer userId);
 }

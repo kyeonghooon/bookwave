@@ -18,6 +18,6 @@ public class PaymentDTO {
 	private String customerMobilePhone;
 	private String orderName;
 	private String orderId;
-	private Long price;
+	private Integer price;
 	private String customerKey;
 }

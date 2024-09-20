@@ -23,22 +23,22 @@ public class EmailController {
 	public String sendVerificationEmail(@RequestParam("email") String email) {
 		// 토큰 생성
 		String token = emailService.generateVerificationToken();
-		
+
 		// 이메일 전송
 		emailService.sendVerificationEmail(email, token);
-		
+
 		return "인증 이메일이 전송되었습니다.";
 	}
-	
+
 	@GetMapping("/validate")
-    public String validateEmail(@RequestParam("token") String token) {
-        if (emailService.validateToken(token)) {
-            // 인증 성공 시 웹소켓을 통해 클라이언트로 전송
-            messagingTemplate.convertAndSend("/topic/verify", "ok");
-            return "인증 성공";
-        } else {
-            return "인증 실패 또는 토큰 만료";
-        }
-    }
-	
+	public String validateEmail(@RequestParam("token") String token) {
+		if (emailService.validateToken(token)) {
+			// 인증 성공 시 웹소켓을 통해 클라이언트로 전송
+			messagingTemplate.convertAndSend("/topic/verify", "ok");
+			return "인증 성공";
+		} else {
+			return "인증 실패 또는 토큰 만료";
+		}
+	}
+
 }

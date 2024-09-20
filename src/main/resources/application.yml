@@ -23,12 +23,11 @@ spring:
     init:
       schema-locations:
       - classpath:db/table.sql
-      - classpath:db/paymentTable.sql
       data-locations:
       - classpath:db/data.sql
-      - classpath:db/paymentData.sql
       - classpath:db/ebookData.sql
       - classpath:db/itemsData.sql
+      - classpath:db/likesData.sql
 
   h2:
     console:

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.library.bookwave.repository.interfaces.MyHistoryRepository">
+
+	<insert id="createReview" parameterType="com.library.bookwave.dto.ReviewDTO">
+		INSERT INTO review_tb (user_id, book_id, score, content)
+		VALUES (#{userId}, #{bookId}, #{score}, #{content});
+	</insert>
+
+	<select id="findAllBookByUserId"
+		resultType="com.library.bookwave.repository.model.MyBookHistory">
+		SELECT b.*, l.user_id, l.lend_date, l.returned_date
+		FROM book_tb AS b
+		LEFT JOIN lend_tb AS l
+		ON b.id = l.book_id
+		WHERE l.user_id = #{userId}
+		AND l.status = -1;
+	</select>
+
+	<select id="findBooksByTitle"
+		resultType="com.library.bookwave.repository.model.MyBookHistory">
+		SELECT b.*, l.user_id, l.lend_date, l.returned_date
+		FROM book_tb AS b
+		LEFT JOIN lend_tb AS l
+		ON b.id = l.book_id
+		WHERE l.user_id = #{userId}
+		AND title LIKE CONCAT('%', #{search}, '%')
+		AND l.status = -1;
+	</select>
+
+	<select id="findAllEbookByUserId"
+		resultType="com.library.bookwave.repository.model.MyEbookHistory">
+		SELECT b.*, e.user_id, e.last_read_date
+		FROM book_tb AS b
+		LEFT JOIN user_ebook_tb AS e
+		ON b.id = e.book_id
+		WHERE e.user_id = #{userId}
+		AND e.last_read_date IS NOT NULL;
+	</select>
+
+	<select id="findEbooksByTitle"
+		resultType="com.library.bookwave.repository.model.MyEbookHistory">
+		SELECT b.*, e.user_id, e.last_read_date
+		FROM book_tb AS b
+		LEFT JOIN user_ebook_tb AS e
+		ON b.id = e.book_id
+		WHERE e.user_id = #{userId}
+		AND title LIKE CONCAT('%', #{search}, '%')
+		AND e.last_read_date IS NOT NULL;
+	</select>
+
+	<select id="findAllBookCategoryByUserId">
+		SELECT DISTINCT category FROM book_tb AS b
+		LEFT JOIN lend_tb AS l
+		ON b.id = l.book_id
+		WHERE l.user_id = #{userId}
+		AND l.status = -1;
+	</select>
+
+	<select id="findAllEbookCategoryByUserId">
+		SELECT DISTINCT category FROM book_tb AS b
+		LEFT JOIN user_ebook_tb AS e
+		ON b.id = e.book_id
+		WHERE e.user_id = #{userId}
+		AND e.last_read_date IS NOT NULL;
+	</select>
+
+	<select id="findAllBookCategoryCountByUserId">
+		SELECT COUNT(*) FROM book_tb AS b
+		LEFT JOIN lend_tb AS l
+		ON b.id = l.book_id
+		WHERE l.user_id = #{userId}
+		AND b.category = #{category}
+		AND l.status = -1;
+	</select>
+
+	<select id="findAllEbookCategoryCountByUserId">
+		SELECT COUNT(*) FROM book_tb AS b
+		LEFT JOIN user_ebook_tb AS e
+		ON b.id = e.book_id
+		WHERE e.user_id = #{userId}
+		AND b.category = #{category}
+		AND e.last_read_date IS NOT NULL;
+	</select>
+
+	<select id="findMonthlyBookLendsByUserId" resultType="map">
+		SELECT FORMATDATETIME(l.lend_date, 'yyyy-MM') as `month`, COUNT(*)
+		FROM book_tb AS b
+		JOIN lend_tb AS l
+		ON b.id = l.book_id
+		WHERE l.user_id = #{userId}
+		AND l.status = -1
+		GROUP BY FORMATDATETIME(l.lend_date, 'yyyy-MM')
+		ORDER BY `month` ASC;
+	</select>
+
+	<select id="findMonthlyEbookLendsByUserId" resultType="map">
+		SELECT FORMATDATETIME(e.last_read_date, 'yyyy-MM') as `month`, COUNT(*)
+		FROM book_tb AS b
+		JOIN user_ebook_tb AS e
+		ON b.id = e.book_id
+		WHERE e.user_id = #{userId}
+		AND e.last_read_date IS NOT NULL
+		GROUP BY FORMATDATETIME(e.last_read_date, 'yyyy-MM')
+		ORDER BY `month` ASC;
+	</select>
+
+	<select id="findReviewedBookIdsByUserId">
+		SELECT book_id
+		FROM review_tb
+		WHERE user_id = #{userId}
+	</select>
+
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.library.bookwave.repository.interfaces.MyReviewRepository">
+	<select id="findAllByUserId"
+		resultType="com.library.bookwave.repository.model.Review">
+		select * from review_tb where user_id = #{userId}
+	</select>
+	<update id="updateById">
+		update review_tb set score = #{score}, content = #{content}, edited_at =
+		now() where id = #{id}
+	</update>
+	<delete id="deleteById">
+		delete from review_tb
+		where id = #{id}
+	</delete>
+	<select id="findDetailById"
+		resultType="com.library.bookwave.repository.model.Review">
+		select * from review_tb where id = #{id}
+	</select>
+</mapper>

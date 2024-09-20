@@ -44,7 +44,7 @@ public class EmailService {
 			helper.setTo(email);
 			helper.setSubject("이메일 인증 요청");
 			helper.setText(emailContent, true);
-			mailSender.send(message);
+			mailSender.send(message);	
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -110,11 +110,11 @@ public class EmailService {
 	public String generateVerificationToken() {
 		return UUID.randomUUID().toString();
 	}
-	
+
 	// 토큰 확인 로직
 	public boolean validateToken(String token) {
-        return tokenStore.containsKey(token);
-    }
+		return tokenStore.containsKey(token);
+	}
 
 	// HTML 템플릿을 로드하여 문자열로 변환하는 메서드
 	private String loadEmailTemplate(Map<String, String> messageList, String path) {
