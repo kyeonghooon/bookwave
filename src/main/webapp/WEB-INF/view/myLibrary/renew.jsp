@@ -65,6 +65,12 @@
 		</form>
 	</div>
 
+	<c:if test="${not empty errorMessage}">
+		<script>
+			alert("${errorMessage}");
+		</script>
+	</c:if>
+
 	<script>
         // JavaScript to update the number display based on the selected day
         const radioButtons = document.querySelectorAll('input[name="day"]');

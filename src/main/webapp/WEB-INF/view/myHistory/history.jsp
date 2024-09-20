@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-
-<!DOCTYPE html>
-<html lang="en">
+<%@ include file="../layout/header.jsp"%>
 <head>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
@@ -187,7 +185,8 @@ body {
 				<a href="<c:url value='/history/list'><c:param name='type' value='ebook'/></c:url>">E-books</a>
 
 				<form action="<c:url value='/history/list'/>" method="get" style="display: flex; align-items: center;">
-					<input type="hidden" name="type" value="${param.type}"> <input type="text" id="searchInput" name="search" placeholder="Search..." value="${param.search}">
+					<input type="hidden" name="type" value="${param.type}"> <input type="text" maxlength="20" id="searchInput" name="search" placeholder="Search..."
+						value="${param.search}">
 					<button type="submit">Search</button>
 				</form>
 			</div>
@@ -207,7 +206,7 @@ body {
 								<a class="review-button disabled">이미 작성하셨습니다</a>
 							</c:when>
 							<c:otherwise>
-								<a href="/history/review/${history.id}">리뷰 작성</a>
+								<a href="/review/create/${history.id}">리뷰 작성</a>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -216,6 +215,9 @@ body {
 
 		</div>
 	</div>
-</body>
-
-</html>
+	<c:if test="${not empty errorMessage}">
+		<script>
+        alert("${errorMessage}");
+    </script>
+	</c:if>
+	<%@ include file="../layout/footer.jsp"%>

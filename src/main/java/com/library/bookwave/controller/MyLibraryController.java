@@ -1,9 +1,5 @@
 package com.library.bookwave.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +7,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
-import com.library.bookwave.repository.model.MyLibrary;
+import com.library.bookwave.dto.PrincipalDTO;
+import com.library.bookwave.service.MyHistoryService;
 import com.library.bookwave.service.MyLibraryService;
+import com.library.bookwave.utils.Define;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -25,32 +23,22 @@ public class MyLibraryController {
 
 	private final MyLibraryService libraryService;
 
-	/**
-	 * 대출 현황 페이지
-	 * 
-	 * @return myBooks.jsp
-	 */
 	@GetMapping("/my-lend")
-	public String myBooksPage(Model model, HttpSession session) {
-
-		List<MyLibrary> list = new ArrayList<>();
-
-		// TODO 테스트용으로 하드코딩
-		// 로그인기능 완성시 세션 id로 변경
-		// int id = (int) session.getAttribute("userId");
-		list = libraryService.readAllById(1);
-
-		model.addAttribute("myLendList", list);
-
-		System.err.println(list.getClass().getName());
-
+	public String myBooksPage(@SessionAttribute(Define.PRINCIPAL) PrincipalDTO principal, Model model) {
+		int userId = principal.getUserId();
+		model.addAttribute("myLendList", libraryService.readAllById(userId));
 		return "myLibrary/myBooks";
 	}
 
 	@PostMapping("/return/{id}")
-	public String returnProc(Model model, @PathVariable(name = "id") Integer id) {
-
+	public String returnProc(@SessionAttribute(Define.PRINCIPAL) PrincipalDTO principal, Model model,
+			@PathVariable(name = "id") Integer id) {
 		Integer bookId = libraryService.findBookIdById(id);
+
+		if (!libraryService.validation(principal.getUserId(), bookId)) {
+			model.addAttribute("errorMessage", "대출하지 않았거나 유효하지 않은 도서입니다.");
+			return "myLibrary/myBooks";
+		}
 
 		Integer reservationId = libraryService.findFirstByBookIdAndStatus(bookId);
 
@@ -63,28 +51,38 @@ public class MyLibraryController {
 
 		libraryService.updateStatusById(id);
 		libraryService.updateReturnedDateById(id);
-
 		return "redirect:/my-library/my-lend";
 	}
 
 	@GetMapping("/renew/{bookId}")
-	public String getMethodName(Model model, @PathVariable(name = "bookId") Integer bookId) {
+	public String renewPage(@SessionAttribute(Define.PRINCIPAL) PrincipalDTO principal, Model model,
+			@PathVariable(name = "bookId") Integer bookId) {
+
+		if (!libraryService.validation(principal.getUserId(), bookId)) {
+			model.addAttribute("errorMessage", "대출하지 않았거나 유효하지 않은 도서입니다.");
+			return "myLibrary/myBooks";
+		}
 		return "myLibrary/renew";
 	}
 
 	@PostMapping("/renew/{bookId}")
-	public String renewProc(Model model, @PathVariable(name = "bookId") Integer bookId,
-			@RequestParam(name = "day") Integer days, @RequestParam(name = "point") Integer point) {
+	public String renewProc(@SessionAttribute(Define.PRINCIPAL) PrincipalDTO principal, Model model,
+			@PathVariable(name = "bookId") Integer bookId, @RequestParam(name = "day", required = false) Integer days,
+			@RequestParam(name = "point", required = false) Integer point) {
 
-		System.err.println("Bookid : " + bookId);
-		System.err.println("Days Selected: " + days);
-		System.err.println("Points: " + point);
+		// Validate if the user has the book
+		if (!libraryService.validation(principal.getUserId(), bookId)) {
+			model.addAttribute("errorMessage", "대출하지 않았거나 유효하지 않은 도서입니다.");
+			return "myLibrary/renew";
+		}
+
+		// Validate request parameters
+		if (days == null || days < 1 || days > 7 || point == null || point != days * 100) {
+			model.addAttribute("errorMessage", "유효하지 않은 요청입니다.");
+			return "myLibrary/renew";
+		}
+
 		libraryService.updateReturnDateById(bookId, days);
-		// TODO 포인트 변경
-		// int id = (int) session.getAttribute("userId");
-		// userService.updatePointById(id, point);
-
 		return "redirect:/my-library/my-lend";
 	}
-
 }

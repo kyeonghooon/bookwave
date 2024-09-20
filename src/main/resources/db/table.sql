@@ -165,7 +165,8 @@ CREATE TABLE review_tb (
     score INT NOT NULL,
     content VARCHAR(255),
     created_at TIMESTAMP DEFAULT NOW(),
-    edited_at TIMESTAMP
+    edited_at TIMESTAMP,
+    status INT DEFAULT 0 COMMENT '0은 마일리지 미수령, 1은 수령 완료'
 );
 
 CREATE TABLE notice_tb (

@@ -1,6 +1,7 @@
 package com.library.bookwave.repository.model;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,5 +23,8 @@ public class Review {
 	private String content;
 	private Timestamp createdAt;
 	private Timestamp editedAt;
+	private Integer status;
+	private Integer daysSinceCreated;
+	private Integer daysUntilClaim;
 
 }

@@ -145,4 +145,12 @@ public class MyHistoryService {
 		return historyRepository.findEbooksByTitle(userId, search);
 	}
 
+	public boolean validation(Integer userId, Integer bookId) {
+		List<MyBookHistory> bookList = findAllBookByUserId(userId);
+		List<MyEbookHistory> ebookList = findAllEbookByUserId(userId);
+
+		return bookList.stream().anyMatch(book -> book.getId().equals(bookId))
+				|| ebookList.stream().anyMatch(ebook -> ebook.getId().equals(bookId));
+	}
+
 }
