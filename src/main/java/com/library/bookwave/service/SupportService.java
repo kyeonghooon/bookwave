@@ -158,10 +158,21 @@ public class SupportService {
 		return qnaListEntity;
 	}
 
-	
 	// qna 검색 카운트
 	@Transactional
 	public int countQnaByKeyword(String keyword) {
 		return supportRepository.countQnaByKeyword();
+	}
+
+	// 답변해야 할 QNA 수
+	@Transactional
+	public int countQna() {
+		int count = 0;
+		try {
+			count = supportRepository.countQna();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return count;
 	}
 }

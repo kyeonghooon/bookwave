@@ -5,11 +5,15 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.library.bookwave.dto.BookListDTO;
+import com.library.bookwave.dto.PaymentMonthDTO;
+import com.library.bookwave.dto.PointDTO;
 import com.library.bookwave.dto.PrincipalDTO;
 import com.library.bookwave.dto.UserDetailDTO;
 import com.library.bookwave.repository.model.Book;
@@ -18,6 +22,7 @@ import com.library.bookwave.repository.model.Payment;
 import com.library.bookwave.service.AdminService;
 import com.library.bookwave.service.BookService;
 import com.library.bookwave.service.PaymentService;
+import com.library.bookwave.service.SupportService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,10 +34,27 @@ public class AdminController {
 	private final AdminService adminService;
 	private final PaymentService paymentService;
 	private final BookService bookService;
+	private final SupportService supportService;
 
 	// 관리자 Home 페이지
 	@GetMapping("/main")
-	public String mainPage() {
+	public String mainPage(Model model) {
+		int bookCount = bookService.countBook();
+		int lendBookCount = bookService.countLendBook();
+		int dueBookCount = bookService.countDueBook();
+		List<PaymentMonthDTO> paymentMonth = paymentService.paymentMonth();
+		Long paymentThisMonth = paymentService.paymentThisMonth();
+		int userCount = adminService.countUser();
+		int subscribeCount = adminService.countSubscribe();
+		int qnaCount = supportService.countQna();
+		model.addAttribute("bookCount", bookCount);
+		model.addAttribute("lendBookCount", lendBookCount);
+		model.addAttribute("dueBookCount", dueBookCount);
+		model.addAttribute("paymentMonth", paymentMonth);
+		model.addAttribute("paymentThisMonth", paymentThisMonth);
+		model.addAttribute("userCount", userCount);
+		model.addAttribute("subscribeCount", subscribeCount);
+		model.addAttribute("qnaCount", qnaCount);
 		return "admin/dashboard";
 	}
 
@@ -49,11 +71,23 @@ public class AdminController {
 	// 관리자 유저 상세보기 페이지
 	@GetMapping("/user-detail")
 	public String AdminUserDetailPage(@RequestParam(name = "id") int userId, Model model) {
-		
+
 		UserDetailDTO user = adminService.readUserById(userId);
 		model.addAttribute("user", user);
-		System.out.println("user : " + user);
 		return "admin/adminUserDetail";
+	}
+
+	// 관리자 전체유저 wave, mileage 지급 페이지
+	@GetMapping("/user-point")
+	public String setPointPage() {
+		return "admin/userPoint";
+	}
+
+	// 관리자 전체유저 wave, mileage 지급
+	@PostMapping("/user-point")
+	public String setPointProc(@ModelAttribute PointDTO point) {
+		adminService.updatePointAllUser(point);
+		return "admin/userPointSuccess";
 	}
 
 	// 관리자 모든 결제 조회 페이지

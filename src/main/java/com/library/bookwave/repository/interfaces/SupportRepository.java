@@ -51,4 +51,7 @@ public interface SupportRepository {
 	// qna 검색 카운트
 	public int countQnaByKeyword();
 
+	// 답변해야 할 qna 수
+	public int countQna();
+
 }

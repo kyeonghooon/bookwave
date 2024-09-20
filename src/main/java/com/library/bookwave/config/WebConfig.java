@@ -58,6 +58,9 @@ public class WebConfig implements WebMvcConfigurer {
 		excludeList.add("/book/list");
 		excludeList.add("/introduce");
 		
+		// TODO 개발용 임시
+		excludeList.add("/**");
+		
 		excludeList.add("/email/sendVerification"); // 회원가입시 이메일 인증용
 		excludeList.add("/email/validate"); // 회원가입시 이메일 인증용
 		

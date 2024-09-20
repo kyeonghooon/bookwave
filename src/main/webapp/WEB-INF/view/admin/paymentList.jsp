@@ -272,7 +272,7 @@ tbody tr:hover {
 												<th>${payment.userId}</th>
 												<th>${payment.orderName}</th>
 												<th>${payment.method}</th>
-												<th>${payment.totalAmount}</th>
+												<th><fmt:formatNumber value="${payment.totalAmount}" type="currency"></fmt:formatNumber></th>
 												<th>${payment.approvedAt}</th>
 												<th>${payment.status}</th>
 												<th>${payment.cancelReason}</th>
@@ -305,11 +305,6 @@ tbody tr:hover {
 
 			</div>
 			<!-- End of Main Content -->
-
-			<!-- Footer -->
-			<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
-
-			<!-- End of Footer -->
 
 		</div>
 		<!-- End of Content Wrapper -->

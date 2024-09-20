@@ -6,6 +6,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.library.bookwave.dto.PaymentMonthDTO;
 import com.library.bookwave.repository.interfaces.PaymentRepository;
 import com.library.bookwave.repository.model.BalanceHistory;
 import com.library.bookwave.repository.model.Payment;
@@ -110,5 +111,29 @@ public class PaymentService {
 		if (result3 != 1) {
 			System.out.println("balance_history 생성 실패");
 		}
+	}
+
+	// 월별 결제 금액
+	@Transactional
+	public List<PaymentMonthDTO> paymentMonth() {
+		List<PaymentMonthDTO> paymentMonthList = null;
+		try {
+			paymentMonthList = paymentRepository.paymentMonth();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return paymentMonthList;
+	}
+
+	// 이번달 결제 금액
+	public Long paymentThisMonth() {
+		Long totalAmount = null;
+		try {
+			totalAmount = paymentRepository.paymentThisMonth();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return totalAmount;
 	}
 }

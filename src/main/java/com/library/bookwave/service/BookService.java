@@ -308,4 +308,40 @@ public class BookService {
 
 	}
 
+	// 총 도서 수
+	@Transactional
+	public int countBook() {
+		int count = 0;
+		try {
+			count = bookRepository.countBook();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+
+	// 대출 중인 도서 수
+	@Transactional
+	public int countLendBook() {
+		int count = 0;
+		try {
+			count = bookRepository.countLendBook();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+
+	// 반납 하루 남은 도서 수
+	@Transactional
+	public int countDueBook() {
+		int count = 0;
+		try {
+			count = bookRepository.countDueBook();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+
 }

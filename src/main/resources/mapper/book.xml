@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="com.library.bookwave.repository.interfaces.BookRepository">
 	
@@ -27,7 +26,7 @@ WHERE
 		SELECT b.*, c.name categoryName,
 		CASE
 		WHEN l.user_id IS NOT NULL THEN TRUE
-		ELSE FALSE END AS is_liked, 
+		ELSE FALSE END AS is_liked,
 		CASE WHEN f.user_id IS NOT NULL THEN TRUE
 		ELSE
 		FALSE END AS is_favorited
@@ -42,17 +41,35 @@ WHERE
 		title LIKE CONCAT('%', #{search}, '%')
 		LIMIT #{limit} OFFSET #{offset}
 	</select>
-	
+
+	<!-- 총 도서 수 -->
+	<select id="countBook" resultType="int">
+		select count(*) from book_tb;
+	</select>
+
+	<!-- 대출 중인 도서 수 -->
+	<select id="countLendBook" resultType="int">
+		select count(*) from lend_tb
+		where status = 0
+	</select>
+
+	<!-- 반납 하루 남은 도서 수 -->
+	<select id="countDueBook" resultType="int">
+		select count(*)
+		from lend_tb
+		where return_date = current_date + interval '1' day;
+	</select>
+
 	<!-- 카테고리를 조회하는 쿼리 -->
 	<select id="readAllBookCategory"
 		resultType="com.library.bookwave.repository.model.BookCategory">
-		select * from book_category_tb 
+		select * from book_category_tb
 	</select>
-	
+
 	<!-- 필터링 걸린 책 갯수를 구하는쿼리 -->
 	<select id="countAllBook" resultType="int">
 		SELECT count(*) FROM book_tb b
-		LEFT JOIN book_category_tb c on b.category_id = c.id 
+		LEFT JOIN book_category_tb c on b.category_id = c.id
 		WHERE (b.category_id = #{category} or #{category} = 0)
 		AND title LIKE
 		CONCAT('%', #{search}, '%')
@@ -64,7 +81,7 @@ WHERE
 		LEFT JOIN book_category_tb c ON b.category_id = c.id
 		WHERE b.id = #{bookId}
 	</select>
-	
+
 	<!-- 책 좋아요 레코드 추가 -->
 	<insert id="createLike">
 		INSERT INTO likes_tb (user_id, book_id) VALUES
@@ -112,7 +129,7 @@ WHERE
 		select * from favorites_tb where user_id = #{userId} and
 		book_id = #{bookId}
 	</select>
-	
+
 	<!-- 책 예약하기 -->
 	<insert id="createReservation">
 		insert into reservation_tb (user_id, book_id ) values
@@ -133,14 +150,14 @@ WHERE
 		reservation_tb WHERE status != -1 and user_id =
 		#{userId}
 	</select>
-	
+
 	<!-- 책 남은 갯수 구하는쿼리 -->
 	<select id="readBookCurrentStock"
 		resultType="int">
 		SELECT current_stock FROM book_tb WHERE id = #{bookId} FOR
 		UPDATE
 	</select>
-	
+
 	<!-- 책의 현재 재고를 업데이트합니다. -->
 	<update id="updateBookCurrentStock">
 		UPDATE book_tb
@@ -152,42 +169,43 @@ WHERE
 	<!-- 대여 기록을 생성합니다. -->
 	<insert id="createLend">
 		INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date)
-    VALUES (#{userId}, #{bookId}, 0, NOW(), DATEADD('DAY', 7, NOW()))
+		VALUES (#{userId}, #{bookId}, 0, NOW(), DATEADD('DAY', 7, NOW()))
 	</insert>
-	
+
 	<!-- 도서 대여 여부 조회 -->
 	<select id="readLend" resultType="com.library.bookwave.repository.model.Lend">
 		select * from lend_tb where book_Id = #{bookId} and user_Id = #{userId}
 	</select>
-	
+
 	<!-- 유저가 대여한 책 개수 구하는 쿼리 -->
 	<select id="countLendByUserId"
 		resultType="int">
 		SELECT count(*) FROM lend_tb WHERE status != -1 and user_id = #{userId}
 	</select>
-	
+
 	<!-- ebook 등록 -->
 	<insert id="createUserEbook">
-	insert into user_ebook_tb (user_id,book_id,subscribe)values (#{userId},#{bookId},#{subscribe})
+		insert into user_ebook_tb (user_id,book_id,subscribe)values (#{userId},#{bookId},#{subscribe})
 	</insert>
-	
+
 	<select id="readUserEbook" resultType="int">
-	select count(*) from user_ebook_tb where user_id = #{userId} and book_id = #{bookId}
+		select count(*) from user_ebook_tb where user_id = #{userId} and book_id = #{bookId}
 	</select>
-	
+
 	<!-- 도서 등록 -->
 	<insert id="createBook">
 		insert into book_tb (title, description, author, publisher, cover, category_id, publish_date, total_stock, current_stock, ebook, ebook_path)
-		values (#{title}, #{description}, #{author}, #{publisher}, #{cover}, #{category}, #{publishDate}, #{totalStock}, #{currentStock}, #{ebook}, #{ebookPath})
+		values (#{title}, #{description}, #{author}, #{publisher}, #{cover}, #{category}, #{publishDate}, #{totalStock}, #{currentStock}, #{ebook},
+		#{ebookPath})
 	</insert>
-	
+
 	<!-- 도서 수정 -->
 	<update id="updateBookById">
 		update book_tb set cover = #{cover}, title = #{title}, author = #{author}, publisher = #{publisher}, category_id = #{category},
 		publish_date = #{publishDate}, description = #{description}, total_stock = #{totalStock}, current_stock = #{currentStock},
 		ebook = #{ebook}, ebook_path = #{ebookPath} where id = #{id}
 	</update>
-	
+
 	<!-- 도서 삭제 -->
 	<delete id="deleteBookById">
 		delete from book_tb where id = #{bookId}

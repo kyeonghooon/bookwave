@@ -417,11 +417,6 @@ button[type="submit"]:hover {
 			</div>
 			<!-- /.container-fluid -->
 
-			<!-- Footer -->
-			<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
-
-			<!-- End of Footer -->
-
 		</div>
 		<!-- End of Content Wrapper -->
 
