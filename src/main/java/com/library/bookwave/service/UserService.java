@@ -32,6 +32,8 @@ public class UserService {
 	private final SubscribeRepository subscribeRepository;
 
 	private final PasswordEncoder passwordEncoder;
+	// 테스트
+	private final MemberService memberService;
 
 	/**
 	 * 회원가입 처리
@@ -87,6 +89,7 @@ public class UserService {
 	}
 
 	// user_detail_tb에 사용자 상세 정보 삽입 메서드
+	@Transactional
 	private void createUserDetail(Integer id, SignUpDTO signUpDTO) {
 		try {
 			UserDetail userDetail = signUpDTO.detailUser();
@@ -95,6 +98,7 @@ public class UserService {
 			if (result != 1) {
 				throw new DataDeliveryException("사용자 상세 정보 저장에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 			}
+			userRepository.createWallet(id);
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 			throw new DataDeliveryException("오류로 사용자 상세 정보 저장에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -167,6 +171,15 @@ public class UserService {
 	// 이메일로 ID 전송하는 로직
 
 	// 비번 찾기
+	// TODO 암호화
+	public Integer eFindByIdAndEmail(String loginId, String email) {
+		return memberRepository.eFindByIdAndEmail(loginId, email);
+	}
+
+	// 새로운 비밀번호 랜덤발급 후 저장
+	public int newPassword(String loginId, String password) {
+		return memberRepository.newPassword(loginId, password);
+	}
 
 	/**
 	 * (소셜) socialID 확인

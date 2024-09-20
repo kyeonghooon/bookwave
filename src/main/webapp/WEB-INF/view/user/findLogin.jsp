@@ -46,7 +46,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             <input
               type="text"
               name="loginId"
-              id="loginId"
+              id="findPasswordId"
               placeholder="아이디"
               required
             />
@@ -63,8 +63,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
           <div class="btn--wrap">
             <button type="submit" id="findPasswordBtn">비밀번호 찾기</button>
           </div>
-          <!-- 수정 -->
-          <p class="result--email"></p>
+ 
         </form>
       </div>
     </div>
