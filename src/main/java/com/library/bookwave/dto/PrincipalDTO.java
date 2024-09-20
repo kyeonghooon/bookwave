@@ -29,7 +29,8 @@ public class PrincipalDTO {
 	private Integer wave;
 	private Integer mileage;
 	private Boolean subscribe;
-	
+	private Timestamp endDate;
+
 	public PrincipalDTO(User user) {
 		this.userId = user.getId();
 		this.loginId = user.getLoginId();

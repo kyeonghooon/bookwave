@@ -29,6 +29,15 @@ public interface BookRepository {
 	// 필터링 걸린 도서 갯수 조회하기
 	public int countAllBook(@Param("category") Integer category, @Param("search") String search);
 
+	// 총 도서 수
+	public int countBook();
+
+	// 대출 중인 도서수 
+	public int countLendBook();
+
+	// 반납 하루 남은 도서 수
+	public int countDueBook();
+
 	// 도서 아이디로 도서 조회하기
 	public Book readBook(int bookId);
 
