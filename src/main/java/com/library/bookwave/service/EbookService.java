@@ -206,35 +206,6 @@ public class EbookService {
 	}
 
 	/**
-	 * ebook list 페이지에서 사용되는 item을 세팅
-	 */
-	public String findItemsByPageName(String pagename) {
-		List<Item> itemList = null;
-		try {
-			itemList = itemRepository.findItemListByPageName(pagename);
-		} catch (Exception e) {
-			// TODO: handle exception
-			return null;
-		}
-		// 아이템 리스트를 Map구조로 변환
-		Map<String, Integer> items = new HashMap<>();
-		for (Item item : itemList) {
-			items.put(item.getName(), item.getId());
-		}
-		if (items.isEmpty()) {
-			new RedirectException("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		ObjectMapper objectMapper = new ObjectMapper();
-		String itemsJson = null;
-		try {
-			itemsJson = objectMapper.writeValueAsString(items);
-		} catch (JsonProcessingException e) {
-			new RedirectException("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		return itemsJson;
-	}
-
-	/**
 	 * ebook 등록 (구독 서비스 이용자)
 	 */
 	public int createEbookWithSubscribe(int userId, int bookId) {

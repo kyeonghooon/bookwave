@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.bookwave.repository.interfaces.FacilityRepository">
+
+	<select id="readAllComputers" resultType="com.library.bookwave.repository.model.Computer">
+		select * from computer_tb
+	</select>
+
+	<select id="findComputerReservationByDateAndComputerId" resultType="com.library.bookwave.repository.model.ComputerReservation">
+		SELECT *
+		FROM computer_reservation_tb
+		WHERE computer_id = #{computerId}
+		AND CAST(start_time AS DATE) =
+		#{date}
+		AND CAST(end_time AS DATE) = #{date}
+	</select>
+
+	<select id="countComputerReservationByComputerIdAndTime" resultType="int">
+		SELECT COUNT(*)
+		FROM computer_reservation_tb
+		WHERE computer_id = #{computerId}
+		AND (
+		(start_time &lt;
+		#{endTime} AND end_time > #{startTime})
+		)
+		OR (user_id = #{userId}
+		AND (start_time &lt; #{endTime} AND end_time > #{startTime}))
+	</select>
+
+	<insert id="createComputerReservation">
+		INSERT INTO computer_reservation_tb (computer_id, user_id, start_time, end_time)
+		VALUES (#{computerId}, #{userId}, #{startTime}, #{endTime})
+	</insert>
+
+</mapper>
