@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp"%>
 <%@ include file="../modal/purchase.jsp"%>
-<link rel="stylesheet" type="text/css" href="/css/ebook_list.css">
+<link rel="stylesheet" type="text/css" href="/css/ebook/ebook_list.css">
 <div class="d-flex">
 	<div class="sidebar">
 		<a href="/ebook" class="${selectedCategory == -1 ? 'active' : ''}">전체</a>
@@ -64,5 +64,5 @@
 	const json = ${items};
 	const items = new Map(Object.entries(${items}));
 </script>
-<script src="/js/ebook_list.js"></script>
+<script src="/js/ebook/ebook_list.js"></script>
 <%@ include file="../layout/footer.jsp"%>

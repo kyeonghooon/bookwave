@@ -1,21 +1,16 @@
 package com.library.bookwave.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.library.bookwave.dto.EbookDTO;
 import com.library.bookwave.dto.EbookReorderDTO;
-import com.library.bookwave.handler.exception.RedirectException;
+import com.library.bookwave.repository.interfaces.BookRepository;
 import com.library.bookwave.repository.interfaces.EbookRepository;
 import com.library.bookwave.repository.interfaces.ItemRepository;
-import com.library.bookwave.repository.model.Item;
+import com.library.bookwave.repository.model.Book;
 import com.library.bookwave.repository.model.UserEbook;
 import com.library.bookwave.repository.model.UserEbookCategory;
 
@@ -27,6 +22,7 @@ public class EbookService {
 
 	private final EbookRepository ebookRepository;
 	private final ItemRepository itemRepository;
+	private final BookRepository bookRepository;
 
 	/**
 	 * 해당 ebook 상세 내역 조회
@@ -47,11 +43,13 @@ public class EbookService {
 	/**
 	 * ebook path 조회
 	 */
-	public String findEbookPathByBookId(int bookId) {
-		String ebookPath = null;
-		ebookPath = ebookRepository.findEbookPathByBookId(bookId);
+	public Book findEbookPathByBookId(int bookId) {
+		Book bookEntity = null;
+		bookEntity = bookRepository.readBook(bookId);
 		// TODO 테스트 코드 변경 예정
-		return ebookPath == null ? "/ebooks/2.epub/" : ebookPath;
+		String ebookPath = bookEntity.getEbookPath() == null ? "/ebooks/2.epub/" : bookEntity.getEbookPath();
+		bookEntity.setEbookPath(ebookPath);
+		return bookEntity;
 	}
 
 	/**

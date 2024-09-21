@@ -18,12 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.library.bookwave.dto.EbookDTO;
 import com.library.bookwave.dto.EbookReorderDTO;
 import com.library.bookwave.dto.PrincipalDTO;
-import com.library.bookwave.handler.exception.RedirectException;
+import com.library.bookwave.repository.model.Book;
 import com.library.bookwave.repository.model.UserEbook;
 import com.library.bookwave.repository.model.UserEbookCategory;
 import com.library.bookwave.service.EbookService;
@@ -43,10 +41,9 @@ public class EbookController {
 	@GetMapping
 	public String listPage(//
 			@RequestParam(name = "category", defaultValue = "-1") Integer category, //
-			@SessionAttribute(value = Define.PRINCIPAL, required = false) PrincipalDTO principal, //
+			@SessionAttribute(value = Define.PRINCIPAL) PrincipalDTO principal, //
 			Model model) {
-		// TODO 테스트용 코드 로그인 구현되면 제거 예정
-		int userId = principal == null ? 1 : principal.getUserId();
+		int userId = principal.getUserId();
 		List<EbookDTO> bookList = ebookService.findEbookListByUserIdAndCategory(userId, category);
 		List<UserEbookCategory> categoryList = ebookService.findEbookCategoryListByUserId(userId);
 		String itemsJson = itemService.findItemsByPageName("ebookList");
@@ -59,7 +56,7 @@ public class EbookController {
 	}
 
 	/**
-	 * Ebook view 페이지 호출 // TODO 주소 제거 예정 localhost:8080/ebook/view/2
+	 * Ebook view 페이지 호출
 	 * 
 	 * @return
 	 */
@@ -67,18 +64,17 @@ public class EbookController {
 	public String viewPage(@PathVariable(name = "bookId") Integer bookId, //
 			@SessionAttribute(value = Define.PRINCIPAL, required = false) PrincipalDTO principal, //
 			Model model) {
-		// TODO 테스트용 코드 로그인 구현되면 제거 예정
-		int userId = principal == null ? 1 : principal.getUserId();
+		int userId = principal.getUserId();
 
 		// 1. 해당 유저의 해당 ebook에 대한 내역 확인
 		UserEbook userEbook = ebookService.readUserEbook(userId, bookId);
 
 		// 2. 해당 ebook의 path 받아옴
-		// TODO 제목도 받아와야함 model 만들어 지면 추가
-		String ebookPath = ebookService.findEbookPathByBookId(userId);
+		Book book = ebookService.findEbookPathByBookId(bookId);
 		// 3. model에 attribute 추가
 		model.addAttribute("ebook", userEbook);
-		model.addAttribute("ebookPath", ebookPath);
+		model.addAttribute("ebookPath", book.getEbookPath());
+		model.addAttribute("ebookTitle", book.getTitle());
 		return "ebook/ebookRead";
 	}
 
