@@ -32,7 +32,9 @@ import lombok.RequiredArgsConstructor;
 public class BookController {
 
 	private final BookService bookService;
+
 	private final ItemService itemService;
+
 
 	/* 책리스트 페이지 */
 	@GetMapping("/list")
@@ -99,6 +101,7 @@ public class BookController {
 		// ebook 등록 여부조회
 		int userEbook = bookService.readUserEbook(userId, bookId);
 
+
 		
 		List<BookDetailReviewDTO> review = bookService.readReviewAndUserNameByBookId(bookId);
 		
@@ -112,6 +115,7 @@ public class BookController {
 		String itemsJson = itemService.findItemsByPageName("bookDetail");
 
 		
+
 
 		model.addAttribute("isFavorited", isFavorited);
 		model.addAttribute("isLiked", isLiked);

@@ -40,6 +40,7 @@ public class EbookController {
 	private final EbookService ebookService;
 	private final ItemService itemService;
 
+
 	@GetMapping
 	public String listPage(//
 			@RequestParam(name = "category", defaultValue = "-1") Integer category, //
@@ -50,6 +51,7 @@ public class EbookController {
 		List<EbookDTO> bookList = ebookService.findEbookListByUserIdAndCategory(userId, category);
 		List<UserEbookCategory> categoryList = ebookService.findEbookCategoryListByUserId(userId);
 		String itemsJson = itemService.findItemsByPageName("ebookList");
+
 		
 		model.addAttribute("bookList", bookList);
 		model.addAttribute("selectedCategory", category);

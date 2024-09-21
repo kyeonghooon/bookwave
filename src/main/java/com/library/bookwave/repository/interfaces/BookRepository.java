@@ -39,6 +39,7 @@ public interface BookRepository {
 	// 반납 하루 남은 도서 수
 	public int countDueBook();
 
+
 	// 도서 아이디로 도서 조회하기
 	public Book readBook(int bookId);
 
@@ -87,7 +88,6 @@ public interface BookRepository {
 	public void createUserEbook(@Param("userId") Integer userId, @Param("bookId") Integer bookId, @Param("subscribe") Boolean subscribe);
 
 	// eBook여부조회
-
 	public int readUserEbook (@Param("userId") Integer userId, @Param("bookId") Integer bookId);
 	
 	public List<BookDetailReviewDTO> readReviewAndUserNameByBookId (Integer bookId);
@@ -95,6 +95,7 @@ public interface BookRepository {
 	public void deleteReviewById (Integer Id);
 	
 	public void updateReviewById (@Param("content") String content, @Param("score") Integer score, @Param("id") Integer id);
+
 
 
 

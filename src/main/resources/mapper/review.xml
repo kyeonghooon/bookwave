@@ -18,4 +18,19 @@
 		resultType="com.library.bookwave.repository.model.Review">
 		select * from review_tb where id = #{id}
 	</select>
+	<update id="updateWalletByUserId">
+		update wallet_tb set mileage = mileage + #{amount} where id = #{id}
+	</update>
+	<insert id="createBalanceHistoryByUserId">
+		insert into balance_history_tb(user_id, wave_change, mileage_change,
+		description) values(#{userId}, #{waveChange}, #{mileageChange},
+		#{description});
+	</insert>
+	<update id="updateStatusById">
+		update review_tb set status = 1 where id = #{id}
+	</update>
+	<select id="selectReviewById"
+		resultType="com.library.bookwave.repository.model.Review">
+		select * from review_tb where id = #{id}
+	</select>
 </mapper>

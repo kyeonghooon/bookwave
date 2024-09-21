@@ -51,36 +51,40 @@
 	</select>
 
 	<select id="findAllBookCategoryByUserId">
-		SELECT DISTINCT category FROM book_tb AS b
-		LEFT JOIN lend_tb AS l
-		ON b.id = l.book_id
+		SELECT DISTINCT bc.name AS category
+		FROM book_tb AS b
+		LEFT JOIN lend_tb AS l ON b.id = l.book_id
+		LEFT JOIN book_category_tb AS bc ON b.category_id = bc.id
 		WHERE l.user_id = #{userId}
 		AND l.status = -1;
 	</select>
 
 	<select id="findAllEbookCategoryByUserId">
-		SELECT DISTINCT category FROM book_tb AS b
-		LEFT JOIN user_ebook_tb AS e
-		ON b.id = e.book_id
+		SELECT DISTINCT bc.name AS category
+		FROM book_tb AS b
+		LEFT JOIN user_ebook_tb AS e ON b.id = e.book_id
+		LEFT JOIN book_category_tb AS bc ON b.category_id = bc.id
 		WHERE e.user_id = #{userId}
 		AND e.last_read_date IS NOT NULL;
 	</select>
 
 	<select id="findAllBookCategoryCountByUserId">
-		SELECT COUNT(*) FROM book_tb AS b
-		LEFT JOIN lend_tb AS l
-		ON b.id = l.book_id
+		SELECT COUNT(*)
+		FROM book_tb AS b
+		LEFT JOIN lend_tb AS l ON b.id = l.book_id
+		LEFT JOIN book_category_tb AS bc ON b.category_id = bc.id
 		WHERE l.user_id = #{userId}
-		AND b.category = #{category}
+		AND bc.name = #{category}
 		AND l.status = -1;
 	</select>
 
 	<select id="findAllEbookCategoryCountByUserId">
-		SELECT COUNT(*) FROM book_tb AS b
-		LEFT JOIN user_ebook_tb AS e
-		ON b.id = e.book_id
+		SELECT COUNT(*)
+		FROM book_tb AS b
+		LEFT JOIN user_ebook_tb AS e ON b.id = e.book_id
+		LEFT JOIN book_category_tb AS bc ON b.category_id = bc.id
 		WHERE e.user_id = #{userId}
-		AND b.category = #{category}
+		AND bc.name = #{category}
 		AND e.last_read_date IS NOT NULL;
 	</select>
 

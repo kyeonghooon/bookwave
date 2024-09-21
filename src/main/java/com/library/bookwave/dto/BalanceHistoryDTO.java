@@ -1,5 +1,6 @@
 package com.library.bookwave.dto;
 
+
 import java.sql.Timestamp;
 
 import com.library.bookwave.utils.ValueFormatter;
@@ -22,5 +23,5 @@ public class BalanceHistoryDTO extends ValueFormatter {
     private Integer mileageChange; // mileage 변화량 (증가감소)
     private String description; // 설명
     private Timestamp createdAt;
-    
+
 }

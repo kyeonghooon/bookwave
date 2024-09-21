@@ -18,6 +18,10 @@ INSERT INTO page_item_tb VALUES (
     (SELECT id FROM item_tb WHERE name = 'computer'),
     (SELECT id FROM page_tb WHERE name = 'computerReservation')
 );
+INSERT INTO page_item_tb VALUES (
+	(SELECT id FROM page_tb WHERE name = 'bookDetail'),
+    (SELECT id FROM item_tb WHERE name = 'ebook')
+);
 
 -- 샘플 데이터
 INSERT INTO balance_history_tb (user_id, wave_change, mileage_change, description) VALUES (1, 5000, 5000, '테스트용 재화 부여');
