@@ -25,13 +25,10 @@ public class PurchaseController {
 	private final PurchaseService purchaseService;
 
 	@PostMapping("/{itemId}")
-	public Map<String, Object> purchaseItem(@SessionAttribute(value = Define.PRINCIPAL, required = false) PrincipalDTO principal, //
+	public Map<String, Object> purchaseItem(@SessionAttribute(value = Define.PRINCIPAL) PrincipalDTO principal, //
 			@RequestBody Map<String, String> request,//
 			@PathVariable(name = "itemId") Integer itemId) {
-		// TODO 테스트 코드 변경 예정
-		if (principal == null) {
-			principal = PrincipalDTO.builder().userId(1).wave(5000).mileage(5000).build();
-		}
+		
 		Map<String, Object> response = new HashMap<>();
 		int wave = Integer.parseInt(request.get("wave"));
 		int mileage = Integer.parseInt(request.get("mileage"));
@@ -56,11 +53,7 @@ public class PurchaseController {
 	}
 
 	@GetMapping("/subscribe")
-	public Map<String, Object> subscribe(@SessionAttribute(value = Define.PRINCIPAL, required = false) PrincipalDTO principal) {
-		// TODO 테스트 코드 변경 예정
-		if (principal == null) {
-			principal = PrincipalDTO.builder().userId(1).wave(5000).mileage(5000).build();
-		}
+	public Map<String, Object> subscribe(@SessionAttribute(value = Define.PRINCIPAL) PrincipalDTO principal) {
 		Map<String, Object> response = new HashMap<>();
 		if (principal.getWave() < Define.SUBSCRIBE_PRICE) {
 			response.put("success", false);
