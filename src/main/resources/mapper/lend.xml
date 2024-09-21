@@ -4,7 +4,7 @@
 	namespace="com.library.bookwave.repository.interfaces.MyLibraryRepository">
 	<select id="findAllByUserId"
 		resultType="com.library.bookwave.repository.model.MyLibrary">
-		select * from lend_tb where user_id = #{userId}
+		select l.*, b.title from lend_tb as l left join book_tb as b on l.book_id = b.id where user_id = #{userId}
 		AND status != -1
 	</select>
 	<update id="updateStatusById">

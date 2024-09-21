@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 @Builder
-
 public class BalanceHistoryDTO extends ValueFormatter {
 	private Integer id;
     private Integer userId;

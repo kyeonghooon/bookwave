@@ -22,5 +22,6 @@ public class MyLibrary {
 	private Timestamp lendDate;
 	private Timestamp returnDate; // dueDate
 	private Timestamp returnedDate;
+	private String title;
 
 }

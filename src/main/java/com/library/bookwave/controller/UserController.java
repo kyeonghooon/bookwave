@@ -112,7 +112,6 @@ public class UserController {
 		model.addAttribute("type", type);
 		return "user/findLogin";
 	}
-	
 
 	// 로그인 요청 처리
 	@PostMapping("/sign-in")
@@ -130,7 +129,7 @@ public class UserController {
 			String[] strs = loginId.split("_");
 			throw new DataDeliveryException("사용할 수 없는 형식입니다. (" + strs[0] + "_)", HttpStatus.BAD_REQUEST);
 		}
-	
+
 		PrincipalDTO principal = userService.readUser(dto);
 
 		// 세션 메모리에 등록 처리
@@ -139,13 +138,13 @@ public class UserController {
 		// TODO 수정
 		return "redirect:/";
 	}
-	
+
 	@GetMapping("/logout")
 	public String logout(HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate(); // 세션 무효화
-        }
+		if (session != null) {
+			session.invalidate(); // 세션 무효화
+		}
 		return "redirect:/";
 	}
 

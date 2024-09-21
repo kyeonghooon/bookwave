@@ -14,6 +14,25 @@ INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_
 VALUES (1, 22, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
 VALUES (1, 23, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date) 
+VALUES (1, 32, 0, now(), DATEADD(DAY, 7, now()));
+INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date) 
+VALUES (1, 33, 0, now(), DATEADD(DAY, 7, now()));
+INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date) 
+VALUES (1, 42, 0, now(), DATEADD(DAY, 7, now()));
+INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date) 
+VALUES (1, 43, 0, now(), DATEADD(DAY, 7, now()));
+INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date) 
+VALUES (1, 52, 0, now(), DATEADD(DAY, 7, now()));
+INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date) 
+VALUES (1, 53, 0, now(), DATEADD(DAY, 7, now()));
+
+INSERT INTO reservation_tb (user_id, book_id, status)
+VALUES (1, 77, 0);
+INSERT INTO reservation_tb (user_id, book_id, status)
+VALUES (1, 78, 0);
+INSERT INTO reservation_tb (user_id, book_id, status)
+VALUES (1, 79, 1);
 
 INSERT INTO user_ebook_tb (user_id, book_id, last_read_date)
 VALUES 

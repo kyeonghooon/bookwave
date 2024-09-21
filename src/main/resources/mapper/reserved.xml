@@ -4,7 +4,7 @@
 	namespace="com.library.bookwave.repository.interfaces.MyReservedRepository">
 	<select id="findAllByUserId"
 		resultType="com.library.bookwave.repository.model.MyReserved">
-		select * from reservation_tb where user_id = #{userId} AND status != -1
+		select r.*, b.title from reservation_tb as r join book_tb as b on r.book_id = b.id where user_id = #{userId} AND status != -1
 	</select>
 	<delete id="deleteReservedById">
 		delete from reservation_tb where id = #{id}

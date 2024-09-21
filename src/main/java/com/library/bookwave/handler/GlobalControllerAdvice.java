@@ -1,7 +1,5 @@
 package com.library.bookwave.handler;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,17 +13,16 @@ import com.library.bookwave.handler.exception.UnAuthorizedException;
 public class GlobalControllerAdvice {
 
 	/**
-	 * (개발시에 많이 활용)
-	 * 모든 예외 클래스를 알 수 없기 때문에 로깅으로 확인할 수 있도록 설정
-	 * 로깅처리 - 동기적 방식(System.out.println), @slf4j (비동기 처리 됨)
+	 * (개발시에 많이 활용) 모든 예외 클래스를 알 수 없기 때문에 로깅으로 확인할 수 있도록 설정 로깅처리 - 동기적
+	 * 방식(System.out.println), @slf4j (비동기 처리 됨)
 	 */
 
-	//	@ExceptionHandler(value = Exception.class)
-	//	@ResponseBody
-	//	public ResponseEntity<Object> handleResourceNotFoundException(Exception e) {
-	//		System.out.println("GlobalControllerAdvice : 오류 확인 : ");
-	//		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-	//	}
+	// @ExceptionHandler(value = Exception.class)
+	// @ResponseBody
+	// public ResponseEntity<Object> handleResourceNotFoundException(Exception e) {
+	// System.out.println("GlobalControllerAdvice : 오류 확인 : ");
+	// return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+	// }
 
 	@ExceptionHandler(Exception.class)
 	public void exception(Exception e) {
@@ -61,10 +58,8 @@ public class GlobalControllerAdvice {
 	}
 
 	/*
-	 * 에러 페이지로 이동 처리
-	 * JSP로 이동시 데이터를 담아서 보내는 방법
-	 * ModelAndView, Model 사용 가능
-	 * throw new RedirectException('페이지 없음', 404);
+	 * 에러 페이지로 이동 처리 JSP로 이동시 데이터를 담아서 보내는 방법 ModelAndView, Model 사용 가능 throw new
+	 * RedirectException('페이지 없음', 404);
 	 */
 	@ExceptionHandler(RedirectException.class)
 	public ModelAndView redirectException(RedirectException e) {
