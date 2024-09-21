@@ -30,9 +30,9 @@
 				<ul class="navbar-nav mr-2">
 					<li class="nav-item "><a class="nav-link" href="/">Home ${homeUrl}<span class="sr-only">(current)</span></a></li>
 					<li class="nav-item "><a class="nav-link" href="/introduce">소개</a></li>
-					<li class="nav-item dropdown "><a class="nav-link dropdown-toggle" href="book/list" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 도서 </a>
+					<li class="nav-item dropdown "><a class="nav-link dropdown-toggle" href="/book/list" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 도서 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="book/list">도서 목록</a>
+							<a class="dropdown-item" href="/book/list">도서 목록</a>
 						</div></li>
 					<li class="nav-item dropdown "><a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 내 서재 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

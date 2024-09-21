@@ -133,27 +133,27 @@ public class UserService {
 			}
 
 		} catch (DataDeliveryException e) {
-			e.printStackTrace();
 			throw new DataDeliveryException("잘못된 처리 입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new RedirectException("알 수 없는 오류", HttpStatus.SERVICE_UNAVAILABLE);
 		}
 
-		// principal 세팅
-		principalDTO = new PrincipalDTO(userEntity);
+		return getPrincipal(userEntity);
+	}
+	
+	public PrincipalDTO getPrincipal(User user) {
+		PrincipalDTO principalDTO = new PrincipalDTO(user);
 		Wallet wallet = walletRepository.findWalletByUserId(principalDTO.getUserId());
 		principalDTO.setWave(wallet.getWave());
 		principalDTO.setMileage(wallet.getMileage());
 		try {
 			principalDTO.setSubscribe(subscribeRepository.findSubscribeByUserId(principalDTO.getUserId()) != null);
 		} catch (Exception e) {
-			e.printStackTrace();
-			// TODO: handle exception
+			throw new RedirectException("알 수 없는 오류", HttpStatus.SERVICE_UNAVAILABLE);
 		}
 		return principalDTO;
 	}
-
+	
 	// ID 중복확인
 	public User readUserId(String loginId) {
 

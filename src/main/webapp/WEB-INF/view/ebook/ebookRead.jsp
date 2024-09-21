@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp"%>
-<link rel="stylesheet" href="/css/ebook.css" />
-<div class="d-flex justify-content-center mt-3">
-	<h2>제목</h2>
+<link rel="stylesheet" href="/css/ebook/ebook.css" />
+<div class="d-flex justify-content-center mt-3 mb-1">
+	<h2>${ebookTitle}</h2>
 </div>
 <div class="d-flex justify-content-center">
 	<div id="viewer">
@@ -13,7 +13,7 @@
 		</div>
 	</div>
 </div>
-<div class="toolbar--container">
+<div class="toolbar--container mt-2">
 	<div class="toolbar--circle" id="toolbar">
 		<button id="toolbarButton" class="toolbar--btn">≡</button>
 		<div id="toolbarContent" class="toolbar--content">
@@ -33,7 +33,10 @@
 			</div>
 		</div>
 	</div>
-	<div class="toolbar--btn" id="savePage">저장</div>
+	<div class="d-flex toolbar--right">
+		<div class="toolbar--btn mr-2" id="back">뒤로가기</div>
+		<div class="toolbar--btn" id="savePage">저장</div>
+	</div>
 </div>
 
 <script type="text/javascript">
@@ -45,5 +48,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/epubjs@latest/dist/epub.min.js"></script>
-<script src="/js/ebook.js"></script>
+<script src="/js/ebook/ebook.js"></script>
 <%@ include file="../layout/footer.jsp"%>

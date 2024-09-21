@@ -120,7 +120,7 @@
   }
 }
 
-#savePage {
+.toolbar--right {
   margin-top: 10px;
   margin-right: calc(50% - 535px);
 }
