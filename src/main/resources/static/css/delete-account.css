@@ -1,0 +1,81 @@
+  @charset "UTF-8";
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .content {
+            width: 500px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: #2a76cc;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        p {
+            color: red; /* Adjusted for better readability */
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="password"]:focus {
+            border-color: #2a76cc;
+            outline: none;
+        }
+
+        .btn {
+            background-color: #2a76cc;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            text-decoration: none; /* Remove underline from links */
+            display: inline-block; /* Allow padding to work on links */
+        }
+
+        .btn:hover {
+            background-color: #1d5aa6;
+        }
+
+        .cancel-btn {
+            background-color: #ddd;
+            color: #333;
+            margin-top: 10px;
+        }
+
+        .cancel-btn:hover {
+            background-color: #ccc;
+        }

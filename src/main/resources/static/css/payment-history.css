@@ -1,0 +1,190 @@
+@charset "UTF-8";
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+    position: relative; /* Allows for positioning of child elements */
+    min-height: 100vh; /* Ensures the body covers at least the viewport height */
+    
+}
+.section {
+    margin-bottom: 20px;
+}
+
+.section h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.button-group a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0 10px;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    transition: background-color 0.3s;
+}
+
+.button-group a:hover {
+    background-color: #0056b3;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    position: fixed; /* Fixed position on the left */
+    top: 100px;
+    left: 0;
+    width: 200px;
+    background-color: #ffffff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 4px;
+    height: calc(100vh - 100px); /* Adjust height to fit the viewport */
+}
+
+.sidebar h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 10px;
+    margin-bottom: 10px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #e1e1e1;
+}
+
+.delete-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: #ff4d4d; /* Red background */
+    color: white; /* White text */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.delete-btn:hover {
+    background-color: #e60000; /* Darker red */
+}
+
+/* Header Style */
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Table Styles */
+table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: 0 auto 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: #555;
+    width: 120px;
+}
+
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Status Highlight */
+.highlight {
+    color: red;
+    font-weight: bold;
+}
+
+/* Button Styles */
+.btn {
+    background-color: #ffffff; /* White background */
+    color: #333; /* Dark text */
+    padding: 4px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border: 1px solid #ddd; /* Border */
+    border-radius: 4px;
+}
+
+.btn:hover {
+    background-color: #f1f1f1; /* Light gray background */
+}
+
+/* Content Styles */
+.content {
+    margin-left: 220px; /* Space for the sidebar */
+    padding: 20px;
+}
+
+/* Input Styles */
+input {
+    background-color: transparent;
+    border-radius: 4px;
+    margin: 2px auto;
+}
+
+input:focus {
+    outline: none; /* Remove outline on focus */
+}
+.refund-button {
+    background-color: #007bff; /* Light blue background */
+    color: white; /* White text */
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.refund-button:hover {
+    background-color: #0056b3; /* Darker blue */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.refund-button:focus {
+    outline: none; /* Remove outline on focus */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Shadow for focus */
+}
+
+

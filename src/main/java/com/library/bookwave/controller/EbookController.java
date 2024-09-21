@@ -27,6 +27,7 @@ import com.library.bookwave.handler.exception.RedirectException;
 import com.library.bookwave.repository.model.UserEbook;
 import com.library.bookwave.repository.model.UserEbookCategory;
 import com.library.bookwave.service.EbookService;
+import com.library.bookwave.service.ItemService;
 import com.library.bookwave.utils.Define;
 
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,8 @@ import lombok.RequiredArgsConstructor;
 public class EbookController {
 
 	private final EbookService ebookService;
+	private final ItemService itemService;
+
 
 	@GetMapping
 	public String listPage(//
@@ -47,7 +50,8 @@ public class EbookController {
 		int userId = principal == null ? 1 : principal.getUserId();
 		List<EbookDTO> bookList = ebookService.findEbookListByUserIdAndCategory(userId, category);
 		List<UserEbookCategory> categoryList = ebookService.findEbookCategoryListByUserId(userId);
-		String itemsJson = ebookService.findItemsByPageName("ebookList");
+		String itemsJson = itemService.findItemsByPageName("ebookList");
+
 		
 		model.addAttribute("bookList", bookList);
 		model.addAttribute("selectedCategory", category);

@@ -295,11 +295,6 @@
 			</div>
 			<!-- End of Main Content -->
 
-			<!-- Footer -->
-			<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
-
-			<!-- End of Footer -->
-
 		</div>
 		<!-- End of Content Wrapper -->
 

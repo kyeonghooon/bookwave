@@ -127,6 +127,7 @@ CREATE TABLE payment_tb (
 CREATE TABLE likes_tb (
     user_id INT NOT NULL,
     book_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
     PRIMARY KEY (user_id , book_id)
 );
 
@@ -208,4 +209,18 @@ CREATE TABLE subscribe_tb (
 	user_id INT,
     start_date TIMESTAMP DEFAULT NOW(),
     end_date TIMESTAMP
+);
+
+CREATE TABLE computer_tb (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    status BOOLEAN DEFAULT true
+);
+
+CREATE TABLE computer_reservation_tb (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    computer_id INT NOT NULL,
+    user_id INT NOT NULL,
+    start_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP NOT NULL,
+    status BOOLEAN DEFAULT true
 );

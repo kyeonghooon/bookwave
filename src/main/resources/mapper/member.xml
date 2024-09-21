@@ -11,5 +11,17 @@
 	select u.login_id from user_detail_tb as ud join user_tb as u on u.id = ud.user_id where email = #{email}
 </select>
 
+<!-- 비밀번호 찾기 -->
+<select id="eFindByIdAndEmail" resultType="int">
+select count(*) from user_tb as us
+join user_detail_tb as de  on us.id = de.user_id
+where us.login_id = #{loginId} and de.email = #{email}
+</select>
+
+<!-- 새로운 비밀번호 랜덤발급 후 저장 --> 
+<!-- newPassword --> 
+<update id="newPassword">
+update user_tb set password = #{password} where login_id = #{loginId} 
+</update>
 
 </mapper>

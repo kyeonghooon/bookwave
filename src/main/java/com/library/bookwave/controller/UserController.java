@@ -19,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.library.bookwave.dto.PrincipalDTO;
 import com.library.bookwave.dto.SignInDTO;
 import com.library.bookwave.dto.SignUpDTO;
 import com.library.bookwave.dto.api.GoogleOAuthToken;
@@ -30,6 +31,7 @@ import com.library.bookwave.repository.model.User;
 import com.library.bookwave.service.UserService;
 import com.library.bookwave.utils.LoginAPIUtil;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
@@ -128,14 +130,23 @@ public class UserController {
 			String[] strs = loginId.split("_");
 			throw new DataDeliveryException("사용할 수 없는 형식입니다. (" + strs[0] + "_)", HttpStatus.BAD_REQUEST);
 		}
-
-		User principal = userService.readUser(dto);
+	
+		PrincipalDTO principal = userService.readUser(dto);
 
 		// 세션 메모리에 등록 처리
 		session.setAttribute("principal", principal);
 
 		// TODO 수정
-		return "redirect:/user/sign-in";
+		return "redirect:/";
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate(); // 세션 무효화
+        }
+		return "redirect:/";
 	}
 
 	/*

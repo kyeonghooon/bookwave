@@ -125,6 +125,10 @@ document.addEventListener("DOMContentLoaded", function() {
 	passwordInput.addEventListener("input", checkPasswordsMatch);
 	confirmPasswordInput.addEventListener("input", checkPasswordsMatch);
 
+	// 비밀번호 숨기기/표시 테스트
+	
+	
+
 	// 비밀번호 공백X (비밀번호, 비밀번호 확인 칸)
 	passwordInput.addEventListener("keydown", function(event) {
 		if (event.key === " ") {

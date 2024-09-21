@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.library.bookwave.dto.BookListDTO;
+import com.library.bookwave.dto.PointDTO;
 import com.library.bookwave.dto.PrincipalDTO;
+import com.library.bookwave.dto.UserDetailDTO;
 import com.library.bookwave.repository.interfaces.AdminRepository;
 import com.library.bookwave.repository.model.Lend;
 import com.library.bookwave.repository.model.User;
@@ -85,5 +87,63 @@ public class AdminService {
 		List<BookListDTO> bookList = new ArrayList<>();
 		bookList = adminRepository.readAllBook();
 		return bookList;
+	}
+
+	// 관리자 유저 상세보기
+	@Transactional
+	public UserDetailDTO readUserById(int userId) {
+		return adminRepository.readUserById(userId);
+	}
+
+	// 회원 수 조회
+	@Transactional
+	public int countUser() {
+		int count = 0;
+		try {
+			count = adminRepository.countUser();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+
+	// 구독자 수 조회
+	@Transactional
+	public int countSubscribe() {
+		int count = 0;
+		try {
+			count = adminRepository.countSubscribe();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+
+	// 모든 유저에게 wave, mileage 지급
+	@Transactional
+	public void updatePointAllUser(PointDTO point) {
+		int result1 = 0;
+		try {
+			result1 = adminRepository.updateWallet(point);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result1 != 1) {
+			System.out.println("wallet 수정 실패");
+		}
+
+		int result2 = 0;
+		try {
+			result2 = adminRepository.createBalanceHisotry(point);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result2 != 1) {
+			System.out.println("balance_history 추가 실패");
+		}
 	}
 }

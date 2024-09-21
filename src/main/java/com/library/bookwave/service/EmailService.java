@@ -76,6 +76,30 @@ public class EmailService {
 			return false;
 		}
 	}
+	
+	// 로그인 비밀번호 찾기 이메일 전송
+	// TODO 임시비밀번호 발급
+	public boolean sendFindLoginPwdEmail(String email, String newPassword) {
+		// TODO 현재 도메인 없어서 localhost:8080으로 대체
+		Map<String, String> messageList = new HashMap<>();
+		messageList.put("${newPassword}", newPassword);
+		String path = "template/findLoginPwd.html";
+		String emailContent = loadEmailTemplate(messageList, path);
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper;
+		try {
+			helper = new MimeMessageHelper(message, true, "UTF-8");
+			helper.setTo(email);
+			helper.setSubject("비밀번호 찾기");
+			helper.setText(emailContent, true);
+			mailSender.send(message);
+			return true;
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	public void storeToken(String token, String email) {
 		tokenStore.put(token, email);

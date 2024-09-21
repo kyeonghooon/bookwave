@@ -23,7 +23,7 @@
 	
 	<!-- TODO wallet 수정 -->
 	<insert id="createWallet">
-		insert into wallet_tb (user_id) values (#{id})
+		insert into wallet_tb (user_id) values (#{userId})
 	</insert>
 
 	<select id="findAll"

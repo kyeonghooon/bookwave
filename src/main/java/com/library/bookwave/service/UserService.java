@@ -7,14 +7,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.library.bookwave.dto.PrincipalDTO;
 import com.library.bookwave.dto.SignInDTO;
 import com.library.bookwave.dto.SignUpDTO;
 import com.library.bookwave.handler.exception.DataDeliveryException;
 import com.library.bookwave.handler.exception.RedirectException;
 import com.library.bookwave.repository.interfaces.MemberRepository;
+import com.library.bookwave.repository.interfaces.SubscribeRepository;
 import com.library.bookwave.repository.interfaces.UserRepository;
+import com.library.bookwave.repository.interfaces.WalletRepository;
 import com.library.bookwave.repository.model.User;
 import com.library.bookwave.repository.model.UserDetail;
+import com.library.bookwave.repository.model.Wallet;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,10 +27,13 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
 	private final UserRepository userRepository;
-
 	private final MemberRepository memberRepository;
+	private final WalletRepository walletRepository;
+	private final SubscribeRepository subscribeRepository;
 
 	private final PasswordEncoder passwordEncoder;
+	// 테스트
+	private final MemberService memberService;
 
 	/**
 	 * 회원가입 처리
@@ -82,6 +89,7 @@ public class UserService {
 	}
 
 	// user_detail_tb에 사용자 상세 정보 삽입 메서드
+	@Transactional
 	private void createUserDetail(Integer id, SignUpDTO signUpDTO) {
 		try {
 			UserDetail userDetail = signUpDTO.detailUser();
@@ -90,6 +98,7 @@ public class UserService {
 			if (result != 1) {
 				throw new DataDeliveryException("사용자 상세 정보 저장에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 			}
+			userRepository.createWallet(id);
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 			throw new DataDeliveryException("오류로 사용자 상세 정보 저장에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -104,10 +113,10 @@ public class UserService {
 	 * @param dto
 	 * @return
 	 */
-	public User readUser(SignInDTO dto) {
+	public PrincipalDTO readUser(SignInDTO dto) {
 
 		User userEntity = null;
-
+		PrincipalDTO principalDTO = null;
 		try {
 
 			userEntity = userRepository.findById(dto.getLoginId());
@@ -131,7 +140,18 @@ public class UserService {
 			throw new RedirectException("알 수 없는 오류", HttpStatus.SERVICE_UNAVAILABLE);
 		}
 
-		return userEntity;
+		// principal 세팅
+		principalDTO = new PrincipalDTO(userEntity);
+		Wallet wallet = walletRepository.findWalletByUserId(principalDTO.getUserId());
+		principalDTO.setWave(wallet.getWave());
+		principalDTO.setMileage(wallet.getMileage());
+		try {
+			principalDTO.setSubscribe(subscribeRepository.findSubscribeByUserId(principalDTO.getUserId()) != null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		return principalDTO;
 	}
 
 	// ID 중복확인
@@ -139,6 +159,7 @@ public class UserService {
 
 		return memberRepository.readUserId(loginId);
 	}
+
 	/**
 	 * 아이디, 비번 찾기
 	 */
@@ -146,10 +167,19 @@ public class UserService {
 	public String eFindByEmail(String email) {
 		return memberRepository.eFindByEmail(email);
 	}
-	
-	   // 이메일로 ID 전송하는 로직
-	
+
+	// 이메일로 ID 전송하는 로직
+
 	// 비번 찾기
+	// TODO 암호화
+	public Integer eFindByIdAndEmail(String loginId, String email) {
+		return memberRepository.eFindByIdAndEmail(loginId, email);
+	}
+
+	// 새로운 비밀번호 랜덤발급 후 저장
+	public int newPassword(String loginId, String password) {
+		return memberRepository.newPassword(loginId, password);
+	}
 
 	/**
 	 * (소셜) socialID 확인
@@ -160,7 +190,5 @@ public class UserService {
 	public User searchLoginId(String socialId) {
 		return userRepository.findBySocialId(socialId);
 	}
-	
-	
 
 }// end of class

@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 body {
 	font-family: Arial, sans-serif;
 	background-color: #f4f4f4;
@@ -62,7 +63,8 @@ body {
 	text-decoration: underline;
 }
 
-.lend--button, .sub--ebook--button, .ebook--button, .read--ebook--button{
+.lend--button, .sub--ebook--button, .ebook--button, .read--ebook--button
+	{
 	background-color: #218838;
 	display: inline-block;
 	margin-top: 20px;
@@ -98,30 +100,30 @@ body {
 }
 
 .reserve--button {
-    background-color: #218838; /* 기본 색상 */
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 14px;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    cursor: pointer;
-    border: none; /* Remove default border */
+	background-color: #218838; /* 기본 색상 */
+	display: inline-block;
+	margin-top: 20px;
+	padding: 10px 20px;
+	font-size: 14px;
+	color: #fff;
+	text-decoration: none;
+	border-radius: 5px;
+	cursor: pointer;
+	border: none; /* Remove default border */
 }
 
 .reserve--button:hover {
-    background-color: #1e7e34; /* 예약 버튼 호버 색상 */
+	background-color: #1e7e34; /* 예약 버튼 호버 색상 */
 }
 
 .reserve--button.reserving {
-    background-color: #FFA500; /* 예약 중 색상 */
-    cursor: default;
+	background-color: #FFA500; /* 예약 중 색상 */
+	cursor: default;
 }
 
 .reserve--button.unavailable {
-    background-color: #dc3545; /* 예약 불가 색상 (빨간색) */
-    cursor: default;
+	background-color: #dc3545; /* 예약 불가 색상 (빨간색) */
+	cursor: default;
 }
 
 .button--group {
@@ -133,26 +135,26 @@ body {
 }
 
 .favorite--button {
-    position: absolute;
-    bottom: 20px;
-    right: 80px;
-    width: 40px;
-    height: 40px;
-    background-color: #fff; /* 노란색 배경 */
-    border: 2px solid #FFD700; /* 노란색 테두리 */
-    border-radius: 50%;
-    color: #222; /* 흰색 글씨 */
-    font-size: 20px;
-    text-align: center;
-    line-height: 36px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+	position: absolute;
+	bottom: 20px;
+	right: 80px;
+	width: 40px;
+	height: 40px;
+	background-color: #fff; /* 노란색 배경 */
+	border: 2px solid #FFD700; /* 노란색 테두리 */
+	border-radius: 50%;
+	color: #222; /* 흰색 글씨 */
+	font-size: 20px;
+	text-align: center;
+	line-height: 36px;
+	cursor: pointer;
+	transition: background-color 0.3s, color 0.3s;
 }
 
 .favorite--button.favorited {
-    background-color: #FFC107; /* 선택된 상태의 노란색 */
-    color: #fff; /* 흰색 글씨 */
-    border-color: #FFC107; /* 선택된 상태의 노란색 테두리 */
+	background-color: #FFC107; /* 선택된 상태의 노란색 */
+	color: #fff; /* 흰색 글씨 */
+	border-color: #FFC107; /* 선택된 상태의 노란색 테두리 */
 }
 
 .like--button {
@@ -176,4 +178,159 @@ body {
 	background-color: #007bff;
 	color: #fff;
 	border-color: #007bff;
+}
+
+/* 리뷰 관련 스타일 수정 */
+.reviews {
+	max-width: 900px;
+	margin: 30px auto;
+	padding: 20px;
+	border-radius: 8px;
+	background-color: #ffffff; /* White background for contrast */
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	border: 1px solid #e1e1e1; /* Subtle border */
+	width: 100%; /* Match width of container */
+	box-sizing: border-box;
+	/* Ensure padding and border are included in width */
+}
+
+.reviews h2 {
+	font-size: 26px;
+	margin-bottom: 20px;
+	color: #333;
+	border-bottom: 2px solid #007bff; /* Underline effect */
+	padding-bottom: 10px;
+}
+
+.review-item {
+	position: relative; /* Enables absolute positioning of child elements */
+	background-color: #f9f9f9; /* Light background for each review */
+	border-radius: 5px;
+	padding: 15px;
+	margin-bottom: 15px;
+	transition: transform 0.2s, box-shadow 0.2s;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.review-item:hover {
+	transform: translateY(-2px); /* Slight lift effect on hover */
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.review-header {
+	display: flex;
+	justify-content: space-between; /* Aligns author and actions */
+	align-items: center; /* Centers items vertically */
+}
+
+.review-actions {
+	position: absolute; /* Position buttons relative to review-item */
+	top: 10px; /* Space from the top */
+	right: 10px; /* Space from the right */
+	display: flex; /* Use flexbox for button alignment */
+	gap: 10px; /* Space between buttons */
+}
+
+.edit-review-button, .delete-review-button {
+	background-color: #007bff; /* Blue background for buttons */
+	color: #fff; /* White text */
+	border: none; /* Remove default border */
+	border-radius: 5px; /* Rounded corners */
+	padding: 5px 10px; /* Padding for better size */
+	cursor: pointer; /* Pointer cursor on hover */
+	transition: background-color 0.3s; /* Transition for hover effect */
+}
+
+.edit-review-button:hover, .delete-review-button:hover {
+	background-color: #0056b3; /* Darker blue on hover */
+}
+
+.delete-review-button {
+	background-color: #dc3545; /* Red background for delete */
+}
+
+.delete-review-button:hover {
+	background-color: #c82333; /* Darker red on hover */
+}
+
+.review-score {
+	font-size: 16px;
+	color: #f39c12; /* Gold color for score */
+	font-weight: bold;
+}
+
+.review-author {
+	font-size: 14px;
+	color: #555;
+	margin-top: 5px;
+}
+
+.review-date {
+	text-align: right;
+	font-size: 12px;
+	color: #aaa;
+	margin-top: 5px;
+}
+
+.review-content {
+	margin-top: 10px;
+	font-size: 15px;
+	color: #444;
+	line-height: 1.6; /* Improved readability */
+	border-left: 4px solid #007bff; /* Left border to emphasize content */
+	padding-left: 10px;
+	background-color: #f1f1f1; /* Light gray background for content */
+	border-radius: 3px; /* Rounded corners for content */
+	padding: 10px; /* Added padding for better spacing */
+}
+
+.star {
+	font-size: 20px; /* Size of the stars */
+	color: #FFD700; /* Gold color for filled stars */
+}
+
+.star.half {
+	color: #ccc; /* Color for half-filled stars */
+}
+
+.edit-review-form {
+	margin-top: 10px; /* 상단 여백 추가 */
+	padding: 15px; /* 내부 여백 추가 */
+	background-color: #f9f9f9; /* 밝은 배경색 */
+	border-radius: 5px; /* 둥근 모서리 */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+.edit-review-form textarea {
+	width: 100%; /* 너비 100%로 설정 */
+	padding: 10px; /* 내부 여백 추가 */
+	border: 1px solid #ccc; /* 연한 회색 테두리 */
+	border-radius: 5px; /* 둥근 모서리 */
+	font-size: 15px; /* 글자 크기 설정 */
+	resize: vertical; /* 세로 방향으로만 크기 조절 가능 */
+	margin-bottom: 10px; /* 하단 여백 추가 */
+}
+
+.edit-review-form button {
+	background-color: #007bff; /* 파란색 배경 */
+	color: #fff; /* 흰색 글씨 */
+	border: none; /* 기본 테두리 제거 */
+	border-radius: 5px; /* 둥근 모서리 */
+	padding: 10px 15px; /* 내부 여백 추가 */
+	cursor: pointer; /* 포인터 커서 */
+	transition: background-color 0.3s; /* 배경색 변화 효과 */
+}
+
+.edit-review-form button:hover {
+	background-color: #0056b3; /* 호버 시 어두운 파란색 */
+}
+
+.score-selection .star {
+	font-size: 24px; /* 별 크기 조정 */
+	cursor: pointer; /* 마우스 커서 변경 */
+	color: gold; /* 채워진 별 색상 */
+}
+
+.score-selection .star:hover {
+	color: orange; /* 마우스 오버 시 색상 변경 */
 }

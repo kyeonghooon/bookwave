@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.library.bookwave.dto.BookDetailReviewDTO;
 import com.library.bookwave.dto.BookListDTO;
 import com.library.bookwave.repository.model.Book;
 import com.library.bookwave.repository.model.BookCategory;
@@ -21,6 +22,7 @@ import com.library.bookwave.repository.model.Like;
 import com.library.bookwave.repository.model.Reservation;
 import com.library.bookwave.service.BookService;
 import com.library.bookwave.service.EbookService;
+import com.library.bookwave.service.ItemService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,7 +32,9 @@ import lombok.RequiredArgsConstructor;
 public class BookController {
 
 	private final BookService bookService;
-	private final EbookService ebookService;
+
+	private final ItemService itemService;
+
 
 	/* 책리스트 페이지 */
 	@GetMapping("/list")
@@ -97,10 +101,22 @@ public class BookController {
 		// ebook 등록 여부조회
 		int userEbook = bookService.readUserEbook(userId, bookId);
 
-		// 상세 페이지에 들어가는 아이템 리스트 세팅
-		String itemsJson = ebookService.findItemsByPageName("bookDetail");
 
-		model.addAttribute("userEbook", userEbook);
+		
+		List<BookDetailReviewDTO> review = bookService.readReviewAndUserNameByBookId(bookId);
+		
+		
+		model.addAttribute("principal",userId);
+		model.addAttribute("review",review);
+		model.addAttribute("userEbook",userEbook);
+
+
+		// 상세 페이지에 들어가는 아이템 리스트 세팅
+		String itemsJson = itemService.findItemsByPageName("bookDetail");
+
+		
+
+
 		model.addAttribute("isFavorited", isFavorited);
 		model.addAttribute("isLiked", isLiked);
 		model.addAttribute("reservation", reservation);
@@ -111,6 +127,24 @@ public class BookController {
 		model.addAttribute("lend", lend);
 		model.addAttribute("items", itemsJson);
 		return "book/bookDetail";
+	}
+	
+	@PostMapping("/deleteReview/{id}")
+	public String deleteReview(@PathVariable("id") int id,@RequestParam(name = "bookId") int bookId) {
+		bookService.deleteReviewById(id);
+		return "redirect:/book/detail/" + bookId;
+	}
+	
+	@PostMapping("/updateReview/{id}")
+	public String updateReview(@PathVariable("id") int id, @RequestParam(name = "content") String content,@RequestParam(name = "score") Integer score,@RequestParam(name = "bookId") int bookId) {
+		System.out.println(id+"서치원삼");
+		System.out.println(content);
+		try {
+			bookService.updateReviewById(content,score,id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/book/detail/" + bookId;
 	}
 
 	/* 대여기능 추가 */
@@ -190,6 +224,7 @@ public class BookController {
 		}
 	}
 
+
 	// 도서 등록 페이지
 	@GetMapping("/create")
 	public String bookCreatePage(Model model) {
@@ -228,5 +263,6 @@ public class BookController {
 		bookService.deleteBookById(bookId);
 		return "redirect:/admin/book";
 	}
+
 
 }

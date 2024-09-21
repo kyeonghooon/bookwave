@@ -28,7 +28,11 @@ VALUES
 INSERT INTO user_tb VALUES (1, 'slowman', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '석지웅', 'admin', 0, now());
 INSERT INTO wallet_tb VALUES (1, 1, 40000, 5000);
 INSERT INTO subscribe_tb VALUES (1, 1, '2024-09-01 15:00:00', '2024-10-01 14:59:59');
-INSERT INTO user_detail_tb VALUES (1, 'kred730036@gmail.com', now(), 0, '010-1111-1111', null, null, null);
+INSERT INTO user_detail_tb VALUES (1, 'kred730036@gmail.com', now(), 0, '010-1111-1111', '12345', '부산광역시 부산진구', '그린아파트101동 101호');
+
+INSERT INTO user_tb VALUES (2, 'a2', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '유저다', 'user', 0, now());
+INSERT INTO wallet_tb VALUES (2, 2, 100000, 10000);
+INSERT INTO user_detail_tb VALUES (2, 'aaa@gmail.com', '1991-12-23', 1, '010-2222-2222', '23456', '부산광역시 부산진구', '그린아파트202동 202호');
 
 -- qna 샘플 데이터 추가
 INSERT INTO question_tb VALUES (1, 5, '문의제목1', '문의내용1', 1, now());
@@ -64,8 +68,15 @@ INSERT INTO faq_tb (title, content, category) VALUES
 
 -- 결제내역 샘플 데이터 추가
 insert into payment_tb(id, payment_key, type, user_id, order_id, order_name, method, total_amount, requested_at, approved_at, status, canceled_at, cancel_reason, cancel_status)
-values (1, 'ppppp11111', 'NORMAL', 1, 'ooooo11111', '충전', '카드', 10000, '2024-09-01 11:11:11', '2024-09-01 11:11:12', 'DONE', NULL, NULL, NULL),
-             (2, 'ppppp22222', 'NORMAL', 1, 'ooooo22222', '충전', '카드', 30000, '2024-09-02 11:11:11', '2024-09-02 11:11:12', 'DONE', NULL, '단순 변심', 'REQUEST_CANCEL');
+values (1, 'ppppp11111', 'NORMAL', 1, 'ooooo11111', '충전', '카드', 70000, '2024-01-11 11:11:11', '2024-01-11 11:11:12', 'DONE', NULL, NULL, NULL),
+             (2, 'ppppp22222', 'NORMAL', 1, 'ooooo22222', '충전', '카드', 50000, '2024-02-02 11:11:11', '2024-02-02 11:11:12', 'DONE', NULL, NULL, NULL),
+             (3, 'ppppp33333', 'NORMAL', 1, 'ooooo33333', '충전', '카드', 80000, '2024-03-22 11:11:11', '2024-03-22 11:11:12', 'DONE', NULL, NULL, NULL),
+             (4, 'ppppp44444', 'NORMAL', 1, 'ooooo44444', '충전', '카드', 100000, '2024-04-09 11:11:11', '2024-04-09 11:11:12', 'DONE', NULL, NULL, NULL),
+             (5, 'ppppp55555', 'NORMAL', 1, 'ooooo55555', '충전', '카드', 75000, '2024-05-12 11:11:11', '2024-05-12 11:11:12', 'DONE', NULL, NULL, NULL),
+             (6, 'ppppp66666', 'NORMAL', 1, 'ooooo66666', '충전', '카드', 40000, '2024-06-14 11:11:11', '2024-06-14 11:11:12', 'DONE', NULL, NULL, NULL),
+             (7, 'ppppp77777', 'NORMAL', 1, 'ooooo77777', '충전', '카드', 75000, '2024-07-03 11:11:11', '2024-07-03 11:11:12', 'DONE', NULL, NULL, NULL),
+             (8, 'ppppp88888', 'NORMAL', 1, 'ooooo88888', '충전', '카드', 140000, '2024-08-28 11:11:11', '2024-08-28 11:11:12', 'DONE', NULL, NULL, NULL),
+             (9, 'ppppp99999', 'NORMAL', 1, 'ooooo99999', '충전', '카드', 120000, '2024-09-16 11:11:11', '2024-09-16 11:11:12', 'DONE', NULL, '단순 변심', 'REQUEST_CANCEL');
 
 -- 카테고리 추가
 INSERT INTO book_category_tb (name) VALUES

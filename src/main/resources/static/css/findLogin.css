@@ -15,10 +15,13 @@ body {
 	justify-content: center;
 }
 
-/* Blue color theme */
 .tab--list--wrap {
 	background-color: #007BFF;
 	color: white;
+}
+
+.tabs{
+	    margin-top: 0px;
 }
 
 .container--wrapper {
@@ -28,7 +31,6 @@ body {
 	height: 100vh;
 }
 
-/* Centered and styled container for the login/form */
 .contents--wrap.login {
 	background-color: #fff;
 	padding: 0px;
@@ -39,7 +41,6 @@ body {
 	height: 70%;
 }
 
-/* Tab navigation */
 .tab--list--wrap ul {
 	list-style: none;
 	padding: 0;
@@ -60,7 +61,6 @@ body {
 	background-color: #0056b3;
 }
 
-/* Input form styling */
 .form--group {
 	margin-bottom: 15px;
 	display: flex;
@@ -76,13 +76,12 @@ body {
 	font-size: 16px;
 }
 
-/* Button styling */
 .btn--wrap {
 	text-align: center;
 }
 
 .btn--wrap button {
-	padding: 10px 20px;
+	padding: 15px 20px;
 	background-color: #007BFF;
 	border: none;
 	color: white;
@@ -95,10 +94,9 @@ body {
 	background-color: #0056b3;
 }
 
-/* Tab content styling */
 .tab--content {
 	display: none;
-	padding: 20px;
+	padding: 15px;
 }
 
 .tab--content.active {

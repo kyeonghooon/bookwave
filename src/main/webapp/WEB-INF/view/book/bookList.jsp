@@ -26,7 +26,7 @@
 		<div class="main--content">
 			<c:choose>
 				<c:when test="${not empty books}">
-					<div class="container">
+					<div class="container--box">
 						<c:forEach var="book" items="${books}">
 							<div class="book--item" data-book-id="${book.id}">
 								<a href="/book/detail/${book.id}" class="book--link">

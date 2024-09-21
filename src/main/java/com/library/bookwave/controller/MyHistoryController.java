@@ -33,11 +33,13 @@ public class MyHistoryController {
 			@RequestParam(value = "search", required = false) String search, Model model) {
 
 		int userId = principal.getUserId();
+    
 		List<Object> list = new ArrayList<>();
 		final Map<String, Integer> categoryData = new HashMap<>();
 		final Map<String, Integer> monthlyData = new HashMap<>();
 		Integer totalCountCategory = null;
 		Integer totalCountMonth = null;
+
 
 		// Validate search parameter
 		if (search != null && search.length() > 20) {
@@ -50,6 +52,7 @@ public class MyHistoryController {
 			model.addAttribute("errorMessage", "유효하지 않은 타입입니다.");
 			return "myHistory/history";
 		}
+
 
 		List<Integer> reviewedBookIds = historyService.getReviewedBookIdsByUserId(userId);
 
@@ -65,6 +68,7 @@ public class MyHistoryController {
 			list.addAll(bookList);
 			list.addAll(ebookList);
 
+
 			Map<String, Integer> bookCategoryData = historyService.findBookCategoryDataByUserId(userId);
 			Map<String, Integer> ebookCategoryData = historyService.findEbookCategoryDataByUserId(userId);
 			bookCategoryData.forEach((k, v) -> categoryData.merge(k, v, Integer::sum));
@@ -73,30 +77,36 @@ public class MyHistoryController {
 			Map<String, Integer> bookMonthlyData = historyService.findMonthlyBookLendsByUserId(userId);
 			Map<String, Integer> ebookMonthlyData = historyService.findMonthlyEbookLendsByUserId(userId);
 			bookMonthlyData.forEach((k, v) -> monthlyData.merge(k, v, Integer::sum));
+
 			ebookMonthlyData.forEach((k, v) -> monthlyData.merge(k, v, Integer::sum));
 
 			totalCountCategory = list.size();
 			totalCountMonth = list.size();
 
 		} else if (type.equals("book")) {
+
 			List<MyBookHistory> bookList = (search != null && !search.isEmpty())
 					? historyService.findBooksByTitle(userId, search)
 					: historyService.findAllBookByUserId(userId);
 			list.addAll(bookList);
+
 			categoryData.putAll(historyService.findBookCategoryDataByUserId(userId));
 			totalCountCategory = list.size();
 			monthlyData.putAll(historyService.findMonthlyBookLendsByUserId(userId));
 			totalCountMonth = list.size();
 		} else if (type.equals("ebook")) {
+
 			List<MyEbookHistory> ebookList = (search != null && !search.isEmpty())
 					? historyService.findEbooksByTitle(userId, search)
 					: historyService.findAllEbookByUserId(userId);
 			list.addAll(ebookList);
+
 			categoryData.putAll(historyService.findEbookCategoryDataByUserId(userId));
 			totalCountCategory = list.size();
 			monthlyData.putAll(historyService.findMonthlyEbookLendsByUserId(userId));
 			totalCountMonth = list.size();
 		}
+
 
 		model.addAttribute("myHistoryList", list);
 		model.addAttribute("categoryData", categoryData);

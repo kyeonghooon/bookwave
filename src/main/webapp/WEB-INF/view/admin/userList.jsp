@@ -41,6 +41,24 @@ tbody tr {
 tbody tr:hover {
 	background-color: #99CCFF;
 }
+
+.btn-point {
+	display: inline-block;
+	padding: 10px 20px;
+	background-color: #4CAF50; /* Green background */
+	color: white; /* White text */
+	text-align: center; /* Centered text */
+	text-decoration: none; /* Remove underline */
+	border-radius: 5px; /* Rounded corners */
+	font-size: 16px; /* Font size */
+	transition: background-color 0.3s, transform 0.3s;
+	/* Transition effects */
+}
+
+.btn-point:hover {
+	background-color: #45a049; /* Darker green on hover */
+	transform: scale(1.05); /* Slightly increase size */
+}
 </style>
 </head>
 
@@ -64,19 +82,30 @@ tbody tr:hover {
 			<hr class="sidebar-divider my-0">
 
 			<!-- Nav Item - Dashboard -->
-			<li class="nav-item"><a class="nav-link" href="/admin/main"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>대시보드</span></a></li>
-			<li class="nav-item active"><a class="nav-link" href="/admin/user"> <i class="fas fa-fw fa-table"></i> <span>유저 관리</span></a></li>
-			<li class="nav-item"><a class="nav-link" href="/admin/book"> <i class="fas fa-fw fa-table"></i> <span>도서 관리</span></a></li>
-			<li class="nav-item"><a class="nav-link" href="/admin/payment"> <i class="fas fa-fw fa-table"></i> <span>결제 관리</span></a></li>
-			<li class="nav-item"><a class="nav-link" href="/admin/lend"> <i class="fas fa-fw fa-table"></i> <span>대출 현황</span></a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/main">
+					<i class="fas fa-fw fa-tachometer-alt"></i> <span>대시보드</span>
+				</a></li>
+			<li class="nav-item active"><a class="nav-link" href="/admin/user">
+					<i class="fas fa-fw fa-table"></i> <span>유저 관리</span>
+				</a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/book">
+					<i class="fas fa-fw fa-table"></i> <span>도서 관리</span>
+				</a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/payment">
+					<i class="fas fa-fw fa-table"></i> <span>결제 관리</span>
+				</a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/lend">
+					<i class="fas fa-fw fa-table"></i> <span>대출 현황</span>
+				</a></li>
 
 			<!-- Nav Item - Pages Collapse Menu -->
-			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i>
-					<span>고객 지원</span>
-			</a>
+			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+					<i class="fas fa-fw fa-cog"></i> <span>고객 지원</span>
+				</a>
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="/support/faq">FAQ 관리</a> <a class="collapse-item" href="/support/qna">1:1 문의 관리</a>
+						<a class="collapse-item" href="/support/faq">FAQ 관리</a>
+						<a class="collapse-item" href="/support/qna">1:1 문의 관리</a>
 					</div>
 				</div></li>
 
@@ -88,13 +117,15 @@ tbody tr:hover {
 			<div class="sidebar-heading">Interface</div>
 
 			<!-- Nav Item - Utilities Collapse Menu -->
-			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities"> <i
-					class="fas fa-fw fa-wrench"></i> <span>Utilities</span>
-			</a>
+			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+					<i class="fas fa-fw fa-wrench"></i> <span>Utilities</span>
+				</a>
 				<div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Custom Utilities:</h6>
-						<a class="collapse-item" href="utilities-color.html">Colors</a> <a class="collapse-item" href="utilities-border.html">Borders</a> <a class="collapse-item" href="utilities-animation.html">Animations</a>
+						<a class="collapse-item" href="utilities-color.html">Colors</a>
+						<a class="collapse-item" href="utilities-border.html">Borders</a>
+						<a class="collapse-item" href="utilities-animation.html">Animations</a>
 						<a class="collapse-item" href="utilities-other.html">Other</a>
 					</div>
 				</div></li>
@@ -106,24 +137,31 @@ tbody tr:hover {
 			<div class="sidebar-heading">Addons</div>
 
 			<!-- Nav Item - Pages Collapse Menu -->
-			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages"> <i
-					class="fas fa-fw fa-folder"></i> <span>Pages</span>
-			</a>
+			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+					<i class="fas fa-fw fa-folder"></i> <span>Pages</span>
+				</a>
 				<div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Login Screens:</h6>
-						<a class="collapse-item" href="login.html">Login</a> <a class="collapse-item" href="register.html">Register</a> <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+						<a class="collapse-item" href="login.html">Login</a>
+						<a class="collapse-item" href="register.html">Register</a>
+						<a class="collapse-item" href="forgot-password.html">Forgot Password</a>
 						<div class="collapse-divider"></div>
 						<h6 class="collapse-header">Other Pages:</h6>
-						<a class="collapse-item" href="404.html">404 Page</a> <a class="collapse-item" href="blank.html">Blank Page</a>
+						<a class="collapse-item" href="404.html">404 Page</a>
+						<a class="collapse-item" href="blank.html">Blank Page</a>
 					</div>
 				</div></li>
 
 			<!-- Nav Item - Charts -->
-			<li class="nav-item"><a class="nav-link" href="charts.html"> <i class="fas fa-fw fa-chart-area"></i> <span>Charts</span></a></li>
+			<li class="nav-item"><a class="nav-link" href="charts.html">
+					<i class="fas fa-fw fa-chart-area"></i> <span>Charts</span>
+				</a></li>
 
 			<!-- Nav Item - Tables -->
-			<li class="nav-item"><a class="nav-link" href="tables.html"> <i class="fas fa-fw fa-table"></i> <span>Tables</span></a></li>
+			<li class="nav-item"><a class="nav-link" href="tables.html">
+					<i class="fas fa-fw fa-table"></i> <span>Tables</span>
+				</a></li>
 
 			<!-- Divider -->
 			<hr class="sidebar-divider d-none d-md-block">
@@ -166,9 +204,9 @@ tbody tr:hover {
 					<ul class="navbar-nav ml-auto">
 
 						<!-- Nav Item - Search Dropdown (Visible Only XS) -->
-						<li class="nav-item dropdown no-arrow d-sm-none"><a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false"> <i class="fas fa-search fa-fw"></i>
-						</a> <!-- Dropdown - Messages -->
+						<li class="nav-item dropdown no-arrow d-sm-none"><a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="fas fa-search fa-fw"></i>
+							</a> <!-- Dropdown - Messages -->
 							<div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
 								<form class="form-inline mr-auto w-100 navbar-search">
 									<div class="input-group">
@@ -184,8 +222,10 @@ tbody tr:hover {
 
 						<!-- Nav Item - Alerts -->
 						<li class="nav-item dropdown no-arrow mx-1"><a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="fas fa-bell fa-fw"></i> <!-- Counter - Alerts --> <span class="badge badge-danger badge-counter">3+</span>
-						</a> <!-- Dropdown - Alerts -->
+								<i class="fas fa-bell fa-fw"></i>
+								<!-- Counter - Alerts -->
+								<span class="badge badge-danger badge-counter">3+</span>
+							</a> <!-- Dropdown - Alerts -->
 							<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
 								<h6 class="dropdown-header">Alerts Center</h6>
 								<a class="dropdown-item d-flex align-items-center" href="#">
@@ -198,13 +238,16 @@ tbody tr:hover {
 										<div class="small text-gray-500">December 12, 2019</div>
 										<span class="font-weight-bold">A new monthly report is ready to download!</span>
 									</div>
-								</a> <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+								</a>
+								<a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
 							</div></li>
 
 						<!-- Nav Item - Messages -->
-						<li class="nav-item dropdown no-arrow mx-1"><a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false"> <i class="fas fa-envelope fa-fw"></i> <!-- Counter - Messages --> <span class="badge badge-danger badge-counter">7</span>
-						</a> <!-- Dropdown - Messages -->
+						<li class="nav-item dropdown no-arrow mx-1"><a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="fas fa-envelope fa-fw"></i>
+								<!-- Counter - Messages -->
+								<span class="badge badge-danger badge-counter">7</span>
+							</a> <!-- Dropdown - Messages -->
 							<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
 								<h6 class="dropdown-header">Message Center</h6>
 								<a class="dropdown-item d-flex align-items-center" href="#">
@@ -216,22 +259,29 @@ tbody tr:hover {
 										<div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
 										<div class="small text-gray-500">Emily Fowler Â· 58m</div>
 									</div>
-								</a> <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+								</a>
+								<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
 							</div></li>
 
 						<div class="topbar-divider d-none d-sm-block"></div>
 
 						<!-- Nav Item - User Information -->
-						<li class="nav-item dropdown no-arrow"><a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span
-								class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span> <img class="img-profile rounded-circle" src="/img/undraw_profile.svg">
-						</a> <!-- Dropdown - User Information -->
+						<li class="nav-item dropdown no-arrow"><a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span> <img class="img-profile rounded-circle" src="/img/undraw_profile.svg">
+							</a> <!-- Dropdown - User Information -->
 							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="#"> <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile
-								</a> <a class="dropdown-item" href="#"> <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> Settings
-								</a> <a class="dropdown-item" href="#"> <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> Activity Log
+								<a class="dropdown-item" href="#">
+									<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile
+								</a>
+								<a class="dropdown-item" href="#">
+									<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> Settings
+								</a>
+								<a class="dropdown-item" href="#">
+									<i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> Activity Log
 								</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
+								<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+									<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
 								</a>
 							</div></li>
 
@@ -245,6 +295,9 @@ tbody tr:hover {
 
 					<!-- Page Heading -->
 					<h1 class="h3 mb-2 text-gray-800">유저 목록</h1>
+					<a href="javascript:void(0);" onclick="window.open('/admin/user-point', 'wavePopup', 'width=600,height=400')" class="btn-point">포인트 지급</a>
+
+
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
@@ -273,7 +326,7 @@ tbody tr:hover {
 												<th>${user.socialId}</th>
 												<th>${user.name}</th>
 												<th>${user.role == 'admin' ? '관리자' : '유저'}</th>
-												<th>${user.subscribe}</th>
+												<th>${user.subscribe == true ? '활성화' : '비활성화'}</th>
 												<th><fmt:formatNumber value="${user.wave}" pattern="#,#00"></fmt:formatNumber></th>
 												<th><fmt:formatNumber value="${user.mileage}" pattern="#,#00"></fmt:formatNumber></th>
 												<c:choose>
@@ -302,11 +355,6 @@ tbody tr:hover {
 			</div>
 			<!-- End of Main Content -->
 
-			<!-- Footer -->
-			<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
-		
-			<!-- End of Footer -->
-
 		</div>
 		<!-- End of Content Wrapper -->
 
@@ -314,7 +362,8 @@ tbody tr:hover {
 	<!-- End of Page Wrapper -->
 
 	<!-- Scroll to Top Button-->
-	<a class="scroll-to-top rounded" href="#page-top"> <i class="fas fa-angle-up"></i>
+	<a class="scroll-to-top rounded" href="#page-top">
+		<i class="fas fa-angle-up"></i>
 	</a>
 
 	<!-- Logout Modal-->

@@ -4,27 +4,54 @@
 	namespace="com.library.bookwave.repository.interfaces.AdminRepository">
 
 	<select id="readAllUser" resultType="com.library.bookwave.dto.PrincipalDTO">
-		select u.id userId, u.*,case
-        when s.end_date > now() THEN '활성화'
-        else '비활성화' end as subscribe, w.wave, w.mileage from user_tb u
+		select u.id userId, *, case when s.end_date > now() THEN true
+		else false end as subscribe from user_tb u
 		left join subscribe_tb s on u.id = s.user_id
 		left join wallet_tb w on u.id = w.user_id
 	</select>
-	
-	<select id="readAllLend" resultType="com.library.bookwave.repository.model.Lend">
+
+	<select id="countUser" resultType="int">
+		select count(*) from user_tb
+	</select>
+
+	<select id="countSubscribe" resultType="int">
+		select count(*) from subscribe_tb
+		where end_date > current_date
+	</select>
+
+	<select id="readAllLend"
+		resultType="com.library.bookwave.repository.model.Lend">
 		select * from lend_tb
 	</select>
-	
+
 	<select id="readAllBook" resultType="com.library.bookwave.dto.BookListDTO">
 		select b.*, c.name categoryName from book_tb b
 		left join book_category_tb c on b.category_id = c.id
 	</select>
-	
+
 	<update id="updateLendStatus">
 		update lend_tb set status = 1
 		where EXTRACT(DAY FROM return_date) = EXTRACT(DAY FROM NOW()) - 1
 		AND EXTRACT(MONTH FROM return_date) = EXTRACT(MONTH FROM NOW())
 		AND EXTRACT(YEAR FROM return_date) = EXTRACT(YEAR FROM NOW())
 	</update>
-	
+
+	<select id="readUserById">
+		select * from user_tb u
+		left join user_detail_tb ud on u.id = ud.user_id
+		left join subscribe_tb s on u.id = s.user_id
+		left join wallet_tb w on u.id = w.user_id
+		where u.id = #{userId}
+	</select>
+
+	<update id="updateWallet">
+		update wallet_tb set wave = wave + #{wave}, mileage = mileage + #{mileage}
+	</update>
+
+	<insert id="createBalanceHisotry">
+		insert into balance_history_tb (user_id, wave_change, mileage_change, description, created_at)
+		select id, #{wave}, #{mileage}, '지급', NOW()
+		FROM user_tb;
+	</insert>
+
 </mapper>
