@@ -206,8 +206,11 @@ public class EbookService {
 	/**
 	 * ebook 등록 (구독 서비스 이용자)
 	 */
+
 	public boolean createEbookWithSubscribe(int userId, int bookId) {
+
 		int result = 0;
+
 		try {
 			result = ebookRepository.createEbookWithSubscribe(userId, bookId);
 		} catch (Exception e) {

@@ -34,7 +34,9 @@ import lombok.RequiredArgsConstructor;
 public class BookController {
 
 	private final BookService bookService;
+
 	private final ItemService itemService;
+
 
 	/* 책리스트 페이지 */
 	@GetMapping("/list")

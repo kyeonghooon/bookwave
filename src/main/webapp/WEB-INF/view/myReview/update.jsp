@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
-<html>
+<%@ include file="../layout/header.jsp"%>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -12,5 +11,9 @@
 		<textarea name="content" id="content" rows="10" cols="30">${review.content}</textarea>
 		<button type="submit">Submit</button>
 	</form>
-</body>
-</html>
+	<c:if test="${not empty errorMessage}">
+		<script>
+			alert("${errorMessage}");
+		</script>
+	</c:if>
+	<%@ include file="../layout/footer.jsp"%>

@@ -1,19 +1,19 @@
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
-VALUES (1, 16, 0, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+VALUES (1, 16, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
-VALUES (1, 17, 0, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+VALUES (1, 17, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
-VALUES (1, 18, 0, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+VALUES (1, 18, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
-VALUES (1, 19, 0, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+VALUES (1, 19, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
-VALUES (1, 20, 0, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+VALUES (1, 20, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
-VALUES (1, 21, 0, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+VALUES (1, 21, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
-VALUES (1, 22, 0, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+VALUES (1, 22, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
-VALUES (1, 23, 0, '2024-09-14', '2024-09-21', DATEADD(DAY, 7, now()));
+VALUES (1, 23, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
 
 INSERT INTO user_ebook_tb (user_id, book_id, last_read_date)
 VALUES 

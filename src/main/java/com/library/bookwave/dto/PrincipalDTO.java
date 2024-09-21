@@ -41,4 +41,5 @@ public class PrincipalDTO {
 		this.status = user.getStatus();
 		this.createdAt = user.getCreatedAt();
 	}
+
 }

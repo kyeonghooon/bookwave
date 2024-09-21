@@ -197,6 +197,7 @@ WHERE
 		insert into book_tb (title, description, author, publisher, cover, category_id, publish_date, total_stock, current_stock, ebook, ebook_path)
 		values (#{title}, #{description}, #{author}, #{publisher}, #{cover}, #{category}, #{publishDate}, #{totalStock}, #{currentStock}, #{ebook},
 		#{ebookPath})
+
 	</insert>
 
 	<!-- 도서 수정 -->

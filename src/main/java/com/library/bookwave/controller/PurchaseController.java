@@ -3,7 +3,6 @@ package com.library.bookwave.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,11 +26,14 @@ public class PurchaseController {
 	@PostMapping("/{itemId}")
 	public Map<String, Object> purchaseItem(@SessionAttribute(value = Define.PRINCIPAL) PrincipalDTO principal, //
 			@RequestBody Map<String, String> request,//
+
 			@PathVariable(name = "itemId") Integer itemId) {
 		
 		Map<String, Object> response = new HashMap<>();
+
 		int wave = Integer.parseInt(request.get("wave"));
 		int mileage = Integer.parseInt(request.get("mileage"));
+
 		if (principal.getWave() < wave) {
 			response.put("success", false);
 			response.put("message", "wave 부족");

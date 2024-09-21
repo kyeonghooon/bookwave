@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
-<html>
+<%@ include file="../layout/header.jsp"%>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Review List</title>
 </head>
 <body>
 	<table border="1">
@@ -12,11 +11,12 @@
 			<tr>
 				<th>User ID</th>
 				<th>Book ID</th>
-				<th>score</th>
-				<th>content</th>
-				<th>created_at</th>
-				<th>edited_at</th>
+				<th>Score</th>
+				<th>Content</th>
+				<th>Created At</th>
+				<th>Edited At</th>
 				<th>Actions</th>
+				<th>마일리지 받기</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -32,9 +32,26 @@
 						<form action="/review/delete/${review.id}" method="post">
 							<button type="submit">Delete</button>
 						</form></td>
+					<td><c:choose>
+							<c:when test="${review.status == 1}">
+								<span>이미 마일리지를 받으셨습니다.</span>
+							</c:when>
+							<c:when test="${review.daysSinceCreated >= 7}">
+								<form action="/review/claim/${review.id}" method="post">
+									<button type="submit">마일리지 받기</button>
+								</form>
+							</c:when>
+							<c:otherwise>
+								<span>${review.daysUntilClaim}일 후 받으실 수 있습니다.</span>
+							</c:otherwise>
+						</c:choose></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
-</body>
-</html>
+	<c:if test="${not empty errorMessage}">
+		<script>
+			alert("${errorMessage}");
+		</script>
+	</c:if>
+	<%@ include file="../layout/footer.jsp"%>

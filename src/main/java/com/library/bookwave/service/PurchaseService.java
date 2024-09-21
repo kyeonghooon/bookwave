@@ -1,5 +1,6 @@
 package com.library.bookwave.service;
 
+
 import java.sql.Timestamp;
 import java.util.Map;
 
@@ -33,7 +34,7 @@ public class PurchaseService {
 	 */
 	@Transactional
 	public boolean purchaseItem(PrincipalDTO principal, Integer itemId, Integer waveUsed, Integer mileageUsed, Map<String, String> request) {
-		
+
 		int waveBalance = principal.getWave() - waveUsed;
 		int mileageBalance = principal.getMileage() - mileageUsed;
 		int userId = principal.getUserId();
@@ -83,12 +84,15 @@ public class PurchaseService {
 		return applyItem(itemId, userId, request);
 	}
 
+
 	private boolean applyItem(Integer itemId, Integer userId, Map<String, String> request) {
+
 		String item = itemRepository.readItem(itemId);
 		switch (item) {
 		case "extend-category":
 			return extendCategory(userId);
 		case "ebook":
+
 			return ebook(userId, Integer.parseInt(request.get("bookId")));
 		case "computer":
 			return computer(userId, request);

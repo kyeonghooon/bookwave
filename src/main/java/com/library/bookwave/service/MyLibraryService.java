@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.library.bookwave.repository.interfaces.MyLibraryRepository;
+import com.library.bookwave.repository.model.MyBookHistory;
+import com.library.bookwave.repository.model.MyEbookHistory;
 import com.library.bookwave.repository.model.MyLibrary;
 
 import lombok.RequiredArgsConstructor;
@@ -172,6 +174,12 @@ public class MyLibraryService {
 		}
 
 		return result;
+	}
+
+	public boolean validation(Integer userId, Integer bookId) {
+		List<MyLibrary> bookList = readAllById(userId);
+
+		return bookList.stream().anyMatch(book -> book.getId().equals(bookId));
 	}
 
 }
