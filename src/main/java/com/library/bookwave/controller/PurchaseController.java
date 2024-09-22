@@ -27,11 +27,9 @@ public class PurchaseController {
 	@PostMapping("/{itemId}")
 	public Map<String, Object> purchaseItem(@SessionAttribute(value = Define.PRINCIPAL) PrincipalDTO principal, //
 			@RequestBody Map<String, String> request,//
-
 			@PathVariable(name = "itemId") Integer itemId) {
-		
-		Map<String, Object> response = new HashMap<>();
 
+		Map<String, Object> response = new HashMap<>();
 		int wave = Integer.parseInt(request.get("wave"));
 		int mileage = Integer.parseInt(request.get("mileage"));
 

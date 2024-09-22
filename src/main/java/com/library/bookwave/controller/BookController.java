@@ -45,7 +45,7 @@ public class BookController {
 			@SessionAttribute(value = Define.PRINCIPAL) PrincipalDTO principal,//
 			@RequestParam(name = "page", defaultValue = "1") int page,//
 			@RequestParam(name = "size", defaultValue = "30") int size,//
-			@RequestParam(name = "category", defaultValue = "") Integer category,//
+			@RequestParam(name = "category", defaultValue = "0") Integer category,//
 			@RequestParam(name = "search", defaultValue = "") String search) {
 
 		int userId = principal.getUserId();

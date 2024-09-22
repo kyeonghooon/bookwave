@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.library.bookwave.dto.PrincipalDTO;
-import com.library.bookwave.service.MyHistoryService;
+import com.library.bookwave.service.ItemService;
 import com.library.bookwave.service.MyLibraryService;
 import com.library.bookwave.utils.Define;
 
@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class MyLibraryController {
 
 	private final MyLibraryService libraryService;
+	private final ItemService itemService;
 
 	@GetMapping("/my-lend")
 	public String myBooksPage(@SessionAttribute(Define.PRINCIPAL) PrincipalDTO principal, Model model) {
@@ -62,6 +63,9 @@ public class MyLibraryController {
 			model.addAttribute("errorMessage", "대출하지 않았거나 유효하지 않은 도서입니다.");
 			return "myLibrary/myBooks";
 		}
+		String itemsJson = itemService.findItemsByPageName("renew");
+		model.addAttribute("bookId", bookId);
+		model.addAttribute("items", itemsJson);
 		return "myLibrary/renew";
 	}
 

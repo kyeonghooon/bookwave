@@ -50,10 +50,10 @@ public class WebConfig implements WebMvcConfigurer {
 		excludeList.add("/img/**");
 		excludeList.add("/scss/**");
 		excludeList.add("/vendor/**");
-
+		excludeList.add("/favicon.ico");
+		
 		// 로그인 안해도 이용할 수 있는 페이지
 		excludeList.add("/user/**");
-		excludeList.add("/book/list");
 		excludeList.add("/introduce");
 
 		excludeList.add("/email/sendVerification"); // 회원가입시 이메일 인증용
