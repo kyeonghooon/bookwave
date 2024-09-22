@@ -66,15 +66,12 @@ tbody tr:hover {
 			<hr class="sidebar-divider my-0">
 
 			<!-- Nav Item - Dashboard -->
-			<li class="nav-item"><a class="nav-link" href="/admin/main"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>대시보드</span>
-			</a></li>
-			<li class="nav-item"><a class="nav-link" href="/admin/user"> <i class="fas fa-fw fa-table"></i> <span>유저 관리</span>
-			</a></li>
-			<li class="nav-item"><a class="nav-link" href="/admin/book"> <i class="fas fa-fw fa-table"></i> <span>도서 관리</span>
-			</a></li>
-			<li class="nav-item active"><a class="nav-link" href="/admin/payment"> <i class="fas fa-fw fa-table"></i> <span>결제 관리</span>
-			</a></li>
-			<li class="nav-item"><a class="nav-link" href="/admin/lend"> <i class="fas fa-fw fa-table"></i> <span>대출 현황</span>
+			<li class="nav-item"><a class="nav-link" href="/admin/main"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>대시보드</span></a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/user"> <i class="fas fa-fw fa-table"></i> <span>유저 관리</span></a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/book"> <i class="fas fa-fw fa-table"></i> <span>도서 관리</span></a></li>
+			<li class="nav-item active"><a class="nav-link" href="/admin/payment"> <i class="fas fa-fw fa-table"></i> <span>결제 관리</span></a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/lend"> <i class="fas fa-fw fa-table"></i> <span>대출 현황</span></a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/printer"> <i class="fas fa-fw fa-table"></i> <span>프린트 요청</span>
 			</a></li>
 
 			<!-- Nav Item - Pages Collapse Menu -->

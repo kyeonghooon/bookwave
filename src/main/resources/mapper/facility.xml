@@ -32,5 +32,25 @@
 		INSERT INTO computer_reservation_tb (computer_id, user_id, start_time, end_time)
 		VALUES (#{computerId}, #{userId}, #{startTime}, #{endTime})
 	</insert>
-
+	
+	<insert id="createPrinter">
+		INSERT INTO printer_tb (user_id, origin_file_name, upload_file_name, pages)
+		VALUES (#{userId}, #{originFileName}, #{uploadFileName}, #{pages})
+	</insert>
+	
+	<select id="readPrinter" resultType="com.library.bookwave.repository.model.Printer">
+		SELECT *
+		FROM printer_tb
+		WHERE id = #{id}
+	</select>
+	
+	<select id="readAllPrinter" resultType="com.library.bookwave.repository.model.Printer">
+		SELECT *
+		FROM printer_tb
+	</select>
+	
+	<update id="updatePrinterStatusById">
+		update printer_tb set status = 1 where id = #{id}
+	</update>
+	
 </mapper>

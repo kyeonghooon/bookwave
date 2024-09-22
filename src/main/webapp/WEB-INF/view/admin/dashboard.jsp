@@ -55,6 +55,9 @@
 			</a></li>
 			<li class="nav-item"><a class="nav-link" href="/admin/lend"> <i class="fas fa-fw fa-table"></i> <span>대출 현황</span>
 			</a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/printer"> <i class="fas fa-fw fa-table"></i> <span>프린트 요청</span>
+			</a></li>
+
 
 			<!-- Nav Item - Pages Collapse Menu -->
 			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i> <span>고객 지원</span>

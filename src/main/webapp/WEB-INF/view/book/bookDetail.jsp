@@ -4,7 +4,7 @@
 <link href="/css/book-detail.css" rel="stylesheet" type="text/css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<div class="container">
+<div class="my--container">
 	<img src="${book.cover}" alt="${book.title} Cover" class="book--cover" />
 
 	<div class="book--details">
