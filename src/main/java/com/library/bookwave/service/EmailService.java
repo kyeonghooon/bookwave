@@ -44,7 +44,7 @@ public class EmailService {
 			helper.setTo(email);
 			helper.setSubject("이메일 인증 요청");
 			helper.setText(emailContent, true);
-			mailSender.send(message);	
+			mailSender.send(message);
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,7 +53,7 @@ public class EmailService {
 		// 토큰을 서버에 저장하고 5분 후 자동 삭제
 		storeToken(token, email);
 	}
-	
+
 	// 로그인 아이디 찾기 이메일 전송
 	public boolean sendFindLoginIdEmail(String email, String loginId) {
 		// TODO 현재 도메인 없어서 localhost:8080으로 대체
@@ -76,7 +76,7 @@ public class EmailService {
 			return false;
 		}
 	}
-	
+
 	// 로그인 비밀번호 찾기 이메일 전송
 	// TODO 임시비밀번호 발급
 	public boolean sendFindLoginPwdEmail(String email, String newPassword) {
