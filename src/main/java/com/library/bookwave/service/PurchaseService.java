@@ -1,7 +1,8 @@
 package com.library.bookwave.service;
 
-
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -11,8 +12,10 @@ import com.library.bookwave.dto.PrincipalDTO;
 import com.library.bookwave.repository.interfaces.EbookRepository;
 import com.library.bookwave.repository.interfaces.FacilityRepository;
 import com.library.bookwave.repository.interfaces.ItemRepository;
+import com.library.bookwave.repository.interfaces.MyLibraryRepository;
 import com.library.bookwave.repository.interfaces.PurchaseRepository;
 import com.library.bookwave.repository.model.BalanceHistory;
+import com.library.bookwave.repository.model.MyLibrary;
 import com.library.bookwave.repository.model.PurchaseHistory;
 import com.library.bookwave.utils.Define;
 
@@ -28,6 +31,7 @@ public class PurchaseService {
 	private final EbookRepository ebookRepository;
 	private final HttpSession httpSession;
 	private final FacilityRepository facilityRepository;
+	private final MyLibraryRepository myLibraryRepository;
 
 	/**
 	 * 아이템 구매 비지니스 로직 처리
@@ -84,7 +88,6 @@ public class PurchaseService {
 		return applyItem(itemId, userId, request);
 	}
 
-
 	private boolean applyItem(Integer itemId, Integer userId, Map<String, String> request) {
 
 		String item = itemRepository.readItem(itemId);
@@ -92,14 +95,15 @@ public class PurchaseService {
 		case "extend-category":
 			return extendCategory(userId);
 		case "ebook":
-
 			return ebook(userId, Integer.parseInt(request.get("bookId")));
 		case "computer":
 			return computer(userId, request);
-			
-		default:
-			return false;
 		}
+		if (item.startsWith("renew")) {
+			String day = item.substring(item.length() - 1);
+			return renew(userId, day, Integer.parseInt(request.get("bookId")));
+		}
+		return false;
 	}
 
 	private boolean extendCategory(Integer userId) {
@@ -134,14 +138,13 @@ public class PurchaseService {
 		}
 		return true;
 	}
-	
+
 	@Transactional
 	private boolean computer(Integer userId, Map<String, String> request) {
 		int computerId = Integer.parseInt(request.get("computerId"));
-		System.out.println(request.get("startTime"));
 		Timestamp startTime = Timestamp.valueOf(request.get("startTime"));
 		Timestamp endTime = Timestamp.valueOf(request.get("endTime"));
-		
+
 		// 해당 시간에 예약가능 한지 다시 조회
 		if (facilityRepository.countComputerReservationByComputerIdAndTime(userId, computerId, startTime, endTime) > 0) {
 			return false;
@@ -155,6 +158,22 @@ public class PurchaseService {
 		return true;
 	}
 
+	@Transactional
+	private boolean renew(Integer userId, String day, Integer bookId) {
+		try {
+			MyLibrary myLibrary = myLibraryRepository.findByUserIdAndBookId(userId, bookId);
+			LocalDateTime currentReturnDate = myLibrary.getReturnDate().toLocalDateTime();
+			LocalDateTime updatedReturnDate = currentReturnDate.plusDays(Long.parseLong(day));
+			if (updatedReturnDate.toLocalDate().isBefore(LocalDate.now())) {
+				myLibraryRepository.updateReturnDateAndStatusById(myLibrary.getId(), Timestamp.valueOf(updatedReturnDate), 1);
+			} else {
+				myLibraryRepository.updateReturnDateAndStatusById(myLibrary.getId(), Timestamp.valueOf(updatedReturnDate), 0);
+			}
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
 
 	@Transactional
 	public boolean subscribe(PrincipalDTO principal) {
@@ -199,7 +218,7 @@ public class PurchaseService {
 			e.printStackTrace();
 			return false;
 		}
-		
+
 		try {
 			purchaseRepository.createSubscribe(userId);
 		} catch (Exception e) {

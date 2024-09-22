@@ -12,12 +12,15 @@ import com.library.bookwave.repository.model.MyLibrary;
 public interface MyLibraryRepository {
 
 	public List<MyLibrary> findAllByUserId(Integer userId);
-
+	
+	public MyLibrary findByUserIdAndBookId(@Param("userId") Integer userId, @Param("bookId") Integer bookId);
+	
 	// updates status in lend_tb
 	public Integer updateStatusById(Integer id);
 
 	// 연장시 사용될 코드
 	public Integer updateReturnDateById(@Param("id") Integer id, @Param("returnDate") Timestamp returnDate);
+	public Integer updateReturnDateAndStatusById(@Param("id") Integer id, @Param("returnDate") Timestamp returnDate, @Param("status") Integer status);
 
 	public Timestamp getCurrentReturnDateById(Integer id);
 
