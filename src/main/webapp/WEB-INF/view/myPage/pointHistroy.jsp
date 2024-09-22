@@ -165,7 +165,7 @@
 
 							</c:choose>
 							<td>${balance.description}</td>
-							<td>${balance.timestampToString2(balance.createdAt)}</td>
+							<td>${balance.timestampToStringDate(balance.createdAt)}</td>
 						</tr>
 					</c:forEach>
 				</tbody>

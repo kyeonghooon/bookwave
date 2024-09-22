@@ -108,7 +108,6 @@ public class UserController {
 	// 로그인 요청 처리
 	@PostMapping("/sign-in")
 	public String signInProc(SignInDTO dto) {
-		System.out.println("DTO:" + dto);
 
 		if (dto.getLoginId() == null || dto.getLoginId().isEmpty()) {
 			throw new DataDeliveryException("아이디를 입력해주세요.", HttpStatus.BAD_REQUEST);
