@@ -62,6 +62,7 @@ public class AdminService {
 	//	}
 
 	// 매일 자정에 실행
+	// 연체기간 지나면 연체로 상태 바꾸기
 	@Scheduled(cron = "0 0 0 * * *")
 	@Transactional
 	public void updateLendStatusAtMidnight() {

@@ -23,6 +23,7 @@ import com.library.bookwave.repository.model.Printer;
 import com.library.bookwave.service.AdminService;
 import com.library.bookwave.service.BookService;
 import com.library.bookwave.service.FacilityService;
+import com.library.bookwave.service.EmailService;
 import com.library.bookwave.service.PaymentService;
 import com.library.bookwave.service.SupportService;
 
@@ -137,5 +138,11 @@ public class AdminController {
 		List<Printer> printList = facilityService.readAllPrinter();
 		model.addAttribute("printList", printList);
 		return "admin/printList";
+
+	// 관리자 시설관리 페이지
+	@GetMapping("/facility")
+	public String facilityPage() {
+
+		return "admin/facility";
 	}
 }

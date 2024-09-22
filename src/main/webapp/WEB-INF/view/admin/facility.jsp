@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>BookWave - FAQ</title>
+<title>BookWave - Facility</title>
 
 <!-- Custom fonts for this template -->
 <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -25,50 +25,6 @@
 
 <!-- Custom styles for this page -->
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-<style>
-.form-container {
-	margin: 20px;
-}
-
-.form-group {
-	margin-bottom: 15px;
-}
-
-.form-group label {
-	display: block;
-	margin-bottom: 5px;
-	font-weight: bold;
-}
-
-.form-group input[type="text"], .form-group textarea {
-	width: 100%;
-	padding: 10px;
-	border: 1px solid #ced4da;
-	border-radius: 0.25rem;
-}
-
-.form-group textarea {
-	height: 150px; /* 높이 조정 */
-	resize: vertical; /* 수직으로만 크기 조절 가능 */
-}
-
-.form-actions {
-	margin-top: 20px;
-}
-
-.form-actions input[type="submit"] {
-	background-color: #4e73df;
-	color: #fff;
-	border: none;
-	padding: 10px 20px;
-	border-radius: 0.25rem;
-	cursor: pointer;
-}
-
-.form-actions input[type="submit"]:hover {
-	background-color: #2e59d9;
-}
-</style>
 </head>
 
 <body id="page-top">
@@ -103,15 +59,15 @@
 			</a></li>
 
 			<!-- Nav Item - Pages Collapse Menu -->
-			<li class="nav-item active"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i> <span>고객 지원</span>
+			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i> <span>고객 지원</span>
 			</a>
-				<div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item active" href="/support/faq">FAQ 관리</a> <a class="collapse-item" href="/support/qna">1:1 문의 관리</a>
+						<a class="collapse-item" href="/support/faq">FAQ 관리</a> <a class="collapse-item" href="/support/qna">1:1 문의 관리</a>
 					</div>
 				</div></li>
 
-			<li class="nav-item"><a class="nav-link" href="/admin/facility"> <i class="fas fa-fw fa-wrench"></i> <span>시설 관리</span>
+			<li class="nav-item active"><a class="nav-link" href="/admin/facility"> <i class="fas fa-fw fa-wrench"></i> <span>시설 관리</span>
 			</a></li>
 
 			<!-- Divider -->
@@ -143,36 +99,13 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-
-					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">FAQ 수정하기</h1>
-					<div class="form-container">
-						<form action="/support/faq-update?id=${faq.id}" method="post">
-							<div class="form-group">
-								<label for="category">Category:</label> <select id="category" name="category">
-									<c:forEach var="category" items="${categoryList}">
-										<option value="${category}" ${category == faq.category ? 'selected' : ''}>${category}</option>
-									</c:forEach>
-								</select>
-							</div>
-							<div class="form-group">
-								<label for="title">Title:</label> <input type="text" id="title" name="title" value="${faq.title}" required>
-							</div>
-							<div class="form-group">
-								<label for="content">Content:</label>
-								<textarea id="content" name="content" required>${faq.content}</textarea>
-							</div>
-							<div class="form-actions">
-								<input type="submit" value="수정하기">
-							</div>
-						</form>
+					<div class="container">
+						프린트 인쇄하기
 					</div>
-
 				</div>
-				<!-- /.container-fluid -->
-
+				<!-- End of Main Content -->
 			</div>
-			<!-- End of Main Content -->
+			<!-- /.container-fluid -->
 
 		</div>
 		<!-- End of Content Wrapper -->
@@ -203,6 +136,18 @@
 		</div>
 	</div>
 	<!-- custom JavaScript -->
+	<script type="text/javascript">
+		// JavaScript 함수 정의
+		function confirmDelete(event) {
+			// 확인 메시지 표시
+			var confirmed = confirm("정말 삭제하시겠습니까?");
+
+			// 사용자가 "취소"를 클릭하면 링크의 기본 동작을 막음
+			if (!confirmed) {
+				event.preventDefault(); // 링크 클릭 취소
+			}
+		}
+	</script>
 	<script src="/vendor/datatables/custom.js"></script>
 
 	<!-- Bootstrap core JavaScript-->
@@ -221,7 +166,6 @@
 
 	<!-- Page level custom scripts -->
 	<script src="/js/demo/datatables-demo.js"></script>
-
 </body>
 
 </html>
