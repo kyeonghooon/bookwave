@@ -27,7 +27,7 @@
 					<td><form action="/my-library/return/${books.id}" method="post">
 							<button type="submit">반납</button>
 						</form></td>
-					<td><a href="/my-library/renew/${books.id}">연장</a></td>
+					<td><a href="/my-library/renew/${books.bookId}">연장</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>

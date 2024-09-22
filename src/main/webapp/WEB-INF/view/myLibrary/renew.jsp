@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Select Day and Submit</title>
+<%@ include file="../layout/header.jsp"%>
+<%@ include file="../modal/purchase.jsp"%>
 <style>
 /* Style the container box */
 .day-selector-container {
@@ -34,15 +30,13 @@
 	margin-top: 50px;
 }
 </style>
-</head>
-<body>
 	<div class="form-container">
 		<h2>연장할 기간을 선택하세요</h2>
-		<form action="/my-library/renew/${bookId}" method="POST">
+		<form onsubmit="return false;">
 			<!-- Container for the radio buttons -->
 			<div class="day-selector-container">
 				<!-- Radio buttons for selecting a day -->
-				<label> <input type="radio" name="day" value="1" required> 1일
+				<label> <input type="radio" name="day" value="1" required checked> 1일
 				</label> <label> <input type="radio" name="day" value="2"> 2일
 				</label> <label> <input type="radio" name="day" value="3"> 3일
 				</label> <label> <input type="radio" name="day" value="4"> 4일
@@ -53,15 +47,15 @@
 			</div>
 
 			<!-- Hidden input to store the calculated point -->
-			<input type="hidden" id="point" name="point" value="0">
+			<input type="hidden" id="point" name="point" value="100">
 
 			<!-- Display for the calculated number -->
 			<div class="number-display">
-				사용되는 포인트: <span id="calculated-value">0</span>
+				사용되는 포인트: <span id="calculated-value">100</span>
 			</div>
 
 			<!-- Submit button -->
-			<button type="submit">확인</button>
+			<button type="submit" id="checkBtn">확인</button>
 		</form>
 	</div>
 
@@ -71,20 +65,12 @@
 		</script>
 	</c:if>
 
-	<script>
-        // JavaScript to update the number display based on the selected day
-        const radioButtons = document.querySelectorAll('input[name="day"]');
-        const calculatedValueDisplay = document.getElementById('calculated-value');
-        const pointInput = document.getElementById('point');
+	<script type="text/javascript">
+		const json = ${items};
+		const items = new Map(Object.entries(${items}));
+		const bookId = ${bookId};
+	</script>
 
-        radioButtons.forEach(radio => {
-            radio.addEventListener('change', () => {
-                const selectedDay = radio.value;
-                const calculatedValue = selectedDay * 100;
-                calculatedValueDisplay.textContent = calculatedValue;
-                pointInput.value = calculatedValue; // Update the hidden input
-            });
-        });
-    </script>
+	<script src="/js/renew.js"></script>
 </body>
 </html>

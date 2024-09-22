@@ -179,7 +179,7 @@ public class MyLibraryService {
 	public boolean validation(Integer userId, Integer bookId) {
 		List<MyLibrary> bookList = readAllById(userId);
 
-		return bookList.stream().anyMatch(book -> book.getId().equals(bookId));
+		return bookList.stream().anyMatch(book -> book.getBookId().equals(bookId));
 	}
 
 }
