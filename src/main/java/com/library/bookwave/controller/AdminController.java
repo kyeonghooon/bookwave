@@ -21,6 +21,7 @@ import com.library.bookwave.repository.model.Lend;
 import com.library.bookwave.repository.model.Payment;
 import com.library.bookwave.service.AdminService;
 import com.library.bookwave.service.BookService;
+import com.library.bookwave.service.EmailService;
 import com.library.bookwave.service.PaymentService;
 import com.library.bookwave.service.SupportService;
 
@@ -128,4 +129,10 @@ public class AdminController {
 		return "admin/bookDetail";
 	}
 
+	// 관리자 시설관리 페이지
+	@GetMapping("/facility")
+	public String facilityPage() {
+
+		return "admin/facility";
+	}
 }

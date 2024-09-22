@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>BookWave - LendList</title>
+<title>BookWave - Facility</title>
 
 <!-- Custom fonts for this template -->
 <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -25,25 +25,6 @@
 
 <!-- Custom styles for this page -->
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-<style>
-table {
-	width: 100%;
-	border-collapse: collapse;
-}
-
-th, td {
-	padding: 8px;
-	border: 1px solid #ddd;
-}
-/* 기본 행 스타일 */
-tbody tr {
-	transition: background-color 0.3s ease;
-}
-/* hover 스타일 */
-tbody tr:hover {
-	background-color: #99CCFF;
-}
-</style>
 </head>
 
 <body id="page-top">
@@ -74,7 +55,7 @@ tbody tr:hover {
 			</a></li>
 			<li class="nav-item"><a class="nav-link" href="/admin/payment"> <i class="fas fa-fw fa-table"></i> <span>결제 관리</span>
 			</a></li>
-			<li class="nav-item active"><a class="nav-link" href="/admin/lend"> <i class="fas fa-fw fa-table"></i> <span>대출 현황</span>
+			<li class="nav-item"><a class="nav-link" href="/admin/lend"> <i class="fas fa-fw fa-table"></i> <span>대출 현황</span>
 			</a></li>
 
 			<!-- Nav Item - Pages Collapse Menu -->
@@ -86,7 +67,7 @@ tbody tr:hover {
 					</div>
 				</div></li>
 
-			<li class="nav-item"><a class="nav-link" href="/admin/facility"> <i class="fas fa-fw fa-wrench"></i> <span>시설 관리</span>
+			<li class="nav-item active"><a class="nav-link" href="/admin/facility"> <i class="fas fa-fw fa-wrench"></i> <span>시설 관리</span>
 			</a></li>
 
 			<!-- Divider -->
@@ -118,55 +99,13 @@ tbody tr:hover {
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-
-					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">대출 현황 목록</h1>
-
-					<!-- DataTales Example -->
-					<div class="card shadow mb-4">
-						<div class="card-body">
-							<div class="table-responsive">
-								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-									<thead>
-										<tr>
-											<th>id</th>
-											<th>user_id</th>
-											<th>book_id</th>
-											<th>status</th>
-											<th>대출일</th>
-											<th>반납일</th>
-											<th>반납된 날짜</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="lend" items="${lendList}">
-											<tr data-url="/admin/lend-detail?id=${lend.id}">
-												<th>${lend.id}</th>
-												<th>${lend.userId}</th>
-												<th>${lend.bookId}</th>
-												<th><c:choose>
-														<c:when test="${lend.status == 1}">
-															<span style="color: red">연체</span>
-														</c:when>
-														<c:when test="${lend.status == -1}">반납완료</c:when>
-														<c:otherwise>정상</c:otherwise>
-													</c:choose></th>
-												<th><fmt:formatDate value="${lend.lendDate}" pattern="yyyy-MM-dd hh:mm:ss" /></th>
-												<th><fmt:formatDate value="${lend.returnDate}" pattern="yyyy-MM-dd hh:mm:ss" /></th>
-												<th><fmt:formatDate value="${lend.returnedDate}" pattern="yyyy-MM-dd hh:mm:ss" /></th>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>
-						</div>
+					<div class="container">
+						프린트 인쇄하기
 					</div>
-
 				</div>
-				<!-- /.container-fluid -->
-
+				<!-- End of Main Content -->
 			</div>
-			<!-- End of Main Content -->
+			<!-- /.container-fluid -->
 
 		</div>
 		<!-- End of Content Wrapper -->
@@ -197,7 +136,19 @@ tbody tr:hover {
 		</div>
 	</div>
 	<!-- custom JavaScript -->
-	<!-- <script src="/vendor/datatables/custom.js"></script> -->
+	<script type="text/javascript">
+		// JavaScript 함수 정의
+		function confirmDelete(event) {
+			// 확인 메시지 표시
+			var confirmed = confirm("정말 삭제하시겠습니까?");
+
+			// 사용자가 "취소"를 클릭하면 링크의 기본 동작을 막음
+			if (!confirmed) {
+				event.preventDefault(); // 링크 클릭 취소
+			}
+		}
+	</script>
+	<script src="/vendor/datatables/custom.js"></script>
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="/vendor/jquery/jquery.min.js"></script>
@@ -215,7 +166,6 @@ tbody tr:hover {
 
 	<!-- Page level custom scripts -->
 	<script src="/js/demo/datatables-demo.js"></script>
-
 </body>
 
 </html>
