@@ -46,7 +46,6 @@
 					<li class="nav-item dropdown "><a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 시설 이용 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 							<a class="dropdown-item" href="/facility/computer">pc 이용</a> 
-							<a class="dropdown-item" href="/facility/studyroom">스터리 룸 이용</a> 
 							<a class="dropdown-item" href="/facility/printer">프린트 이용</a> 
 						</div></li>
 					<li class="nav-item"><a class="nav-link" href="/payment/charge" onclick="window.open(this.href, '_blank', 'width=800, height=760'); return false">충전하기</a></li>
@@ -57,6 +56,7 @@
 							<c:if test="${!principal.subscribe}">
 								<li class="nav-item"><a class="nav-link" href="#" id="subscribeBtn">구독하기</a></li>
 							</c:if>
+							<li class="nav-item"><a class="nav-link" href="/user-info/mypageAuth">마이 페이지</a></li>
 							<li class="nav-item"><a class="nav-link" href="/user/logout">로그아웃</a></li>
 						</c:when>
 						<c:otherwise>

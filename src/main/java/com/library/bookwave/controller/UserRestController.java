@@ -32,7 +32,6 @@ public class UserRestController {
 	// ID 중복 확인
 	@GetMapping("/check-userId")
 	public boolean getUserId(@RequestParam(name = "loginId") String loginId) {
-		// return userService.confirmUid(loginId);
 		System.out.println(loginId);
 		boolean isUse = userService.readUserId(loginId) == null ? true : false;
 		return isUse;
