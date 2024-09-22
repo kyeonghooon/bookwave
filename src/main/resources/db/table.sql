@@ -224,3 +224,13 @@ CREATE TABLE computer_reservation_tb (
     end_time TIMESTAMP NOT NULL,
     status BOOLEAN DEFAULT true
 );
+
+CREATE TABLE printer_tb(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    origin_file_name VARCHAR(255) NOT NULL,
+    upload_file_name VARCHAR(255) NOT NULL,
+    pages INT NOT NULL DEFAULT 1,
+    status INT NOT NULL DEFAULT 0 COMMENT '0: 미처리, 1: 처리',
+    created_at TIMESTAMP DEFAULT NOW()
+);

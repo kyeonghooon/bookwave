@@ -6,9 +6,9 @@ public class Define {
 	public static final String PRINCIPAL = "principal";
 	public static final Integer SUBSCRIBE_PRICE = 9900;
 
-	// 이미지 관련
-	//	public static final String UPLOAD_FILE_DERECTORY = "C:\\work_spring\\upload/";
-	//	public static final int MAX_FILE_SIZE = 1024 * 1024 * 20; // 20MB
+	// 파일 관련
+	public static final String UPLOAD_FILE_DERECTORY = "C:\\bookwave\\upload/";
+	public static final int MAX_FILE_SIZE = 1024 * 1024 * 20; // 20MB
 
 	// User
 	public static final String ENTER_YOUR_LOGIN = "로그인이 필요합니다.";

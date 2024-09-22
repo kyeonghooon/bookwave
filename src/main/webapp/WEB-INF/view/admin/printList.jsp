@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>BookWave - UserList</title>
+<title>BookWave - PrintList</title>
 
 <!-- Custom fonts for this template -->
 <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -41,6 +41,24 @@ tbody tr {
 tbody tr:hover {
 	background-color: #99CCFF;
 }
+
+.btn-point {
+	display: inline-block;
+	padding: 10px 20px;
+	background-color: #4CAF50; /* Green background */
+	color: white; /* White text */
+	text-align: center; /* Centered text */
+	text-decoration: none; /* Remove underline */
+	border-radius: 5px; /* Rounded corners */
+	font-size: 16px; /* Font size */
+	transition: background-color 0.3s, transform 0.3s;
+	/* Transition effects */
+}
+
+.btn-point:hover {
+	background-color: #45a049; /* Darker green on hover */
+	transform: scale(1.05); /* Slightly increase size */
+}
 </style>
 </head>
 
@@ -64,12 +82,17 @@ tbody tr:hover {
 			<hr class="sidebar-divider my-0">
 
 			<!-- Nav Item - Dashboard -->
-			<li class="nav-item"><a class="nav-link" href="/admin/main"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>대시보드</span></a></li>
-			<li class="nav-item"><a class="nav-link" href="/admin/user"> <i class="fas fa-fw fa-table"></i> <span>유저 관리</span></a></li>
-			<li class="nav-item"><a class="nav-link" href="/admin/book"> <i class="fas fa-fw fa-table"></i> <span>도서 관리</span></a></li>
-			<li class="nav-item"><a class="nav-link" href="/admin/payment"> <i class="fas fa-fw fa-table"></i> <span>결제 관리</span></a></li>
-			<li class="nav-item active"><a class="nav-link" href="/admin/lend"> <i class="fas fa-fw fa-table"></i> <span>대출 현황</span></a></li>
-			<li class="nav-item"><a class="nav-link" href="/admin/printer"> <i class="fas fa-fw fa-table"></i> <span>프린트 요청</span>
+			<li class="nav-item"><a class="nav-link" href="/admin/main"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>대시보드</span>
+			</a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/user"> <i class="fas fa-fw fa-table"></i> <span>유저 관리</span>
+			</a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/book"> <i class="fas fa-fw fa-table"></i> <span>도서 관리</span>
+			</a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/payment"> <i class="fas fa-fw fa-table"></i> <span>결제 관리</span>
+			</a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/lend"> <i class="fas fa-fw fa-table"></i> <span>대출 현황</span>
+			</a></li>
+			<li class="nav-item active"><a class="nav-link" href="/admin/printer"> <i class="fas fa-fw fa-table"></i> <span>프린트 요청</span>
 			</a></li>
 
 			<!-- Nav Item - Pages Collapse Menu -->
@@ -118,10 +141,12 @@ tbody tr:hover {
 				</div></li>
 
 			<!-- Nav Item - Charts -->
-			<li class="nav-item"><a class="nav-link" href="charts.html"> <i class="fas fa-fw fa-chart-area"></i> <span>Charts</span></a></li>
+			<li class="nav-item"><a class="nav-link" href="charts.html"> <i class="fas fa-fw fa-chart-area"></i> <span>Charts</span>
+			</a></li>
 
 			<!-- Nav Item - Tables -->
-			<li class="nav-item"><a class="nav-link" href="tables.html"> <i class="fas fa-fw fa-table"></i> <span>Tables</span></a></li>
+			<li class="nav-item"><a class="nav-link" href="tables.html"> <i class="fas fa-fw fa-table"></i> <span>Tables</span>
+			</a></li>
 
 			<!-- Divider -->
 			<hr class="sidebar-divider d-none d-md-block">
@@ -238,40 +263,44 @@ tbody tr:hover {
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">대출 현황 목록</h1>
+					<h1 class="h3 mb-2 text-gray-800">프린트 요청 목록</h1>
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
 						<div class="card-body">
-							<div class="table-responsive">
 								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 									<thead>
 										<tr>
 											<th>id</th>
 											<th>user_id</th>
-											<th>book_id</th>
+											<th>origin_file_name</th>
+											<th>pages</th>
 											<th>status</th>
-											<th>대출일</th>
-											<th>반납일</th>
-											<th>반납된 날짜</th>
+											<th>created_at</th>
+											<th> </th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="lend" items="${lendList}">
-											<tr data-url="/admin/lend-detail?id=${lend.id}">
-												<th>${lend.id}</th>
-												<th>${lend.userId}</th>
-												<th>${lend.bookId}</th>
-												<th><c:choose>
-														<c:when test="${lend.status == 1}">
-															<span style="color: red">연체</span>
+										<c:forEach var="printer" items="${printList}">
+											<tr>
+												<th>${printer.id}</th>
+												<th>${printer.userId}</th>
+												<th>${printer.originFileName}</th>
+												<th>${printer.pages}</th>
+												<th>${printer.status == 0 ? '미처리' : '완료'}</th>
+												<th><fmt:formatDate value="${printer.createdAt}" type="both" /></th>
+												<th>
+													<!-- status가 0인 경우에만 버튼 생성 --> 
+													<c:choose>
+														<c:when test="${printer.status == 0}">
+															<button type="button" class="btn--print" data-id="${printer.id}">프린트</button>
+															<a href="/facility/printer-done/${printer.id}" class="btn--done">완료</a>
 														</c:when>
-														<c:when test="${lend.status == -1}">반납완료</c:when>
-														<c:otherwise>정상</c:otherwise>
-													</c:choose></th>
-												<th><fmt:formatDate value="${lend.lendDate}" pattern="yyyy-MM-dd hh:mm:ss" /></th>
-												<th><fmt:formatDate value="${lend.returnDate}" pattern="yyyy-MM-dd hh:mm:ss" /></th>
-												<th><fmt:formatDate value="${lend.returnedDate}" pattern="yyyy-MM-dd hh:mm:ss" /></th>
+														<c:otherwise>
+											                -
+											            </c:otherwise>
+													</c:choose>
+												</th>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -314,8 +343,6 @@ tbody tr:hover {
 			</div>
 		</div>
 	</div>
-	<!-- custom JavaScript -->
-	<!-- <script src="/vendor/datatables/custom.js"></script> -->
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="/vendor/jquery/jquery.min.js"></script>
@@ -333,7 +360,7 @@ tbody tr:hover {
 
 	<!-- Page level custom scripts -->
 	<script src="/js/demo/datatables-demo.js"></script>
-
+	<script src="/js/admin_print.js"></script>
 </body>
 
 </html>

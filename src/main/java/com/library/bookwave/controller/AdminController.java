@@ -19,8 +19,10 @@ import com.library.bookwave.dto.UserDetailDTO;
 import com.library.bookwave.repository.model.Book;
 import com.library.bookwave.repository.model.Lend;
 import com.library.bookwave.repository.model.Payment;
+import com.library.bookwave.repository.model.Printer;
 import com.library.bookwave.service.AdminService;
 import com.library.bookwave.service.BookService;
+import com.library.bookwave.service.FacilityService;
 import com.library.bookwave.service.PaymentService;
 import com.library.bookwave.service.SupportService;
 
@@ -35,7 +37,8 @@ public class AdminController {
 	private final PaymentService paymentService;
 	private final BookService bookService;
 	private final SupportService supportService;
-
+	private final FacilityService facilityService;
+	
 	// 관리자 Home 페이지
 	@GetMapping("/main")
 	public String mainPage(Model model) {
@@ -127,5 +130,12 @@ public class AdminController {
 		model.addAttribute("book", book);
 		return "admin/bookDetail";
 	}
-
+	
+	// 프린트 요청 리스트 페이지
+	@GetMapping("/printer")
+	public String printerPage(Model model) {
+		List<Printer> printList = facilityService.readAllPrinter();
+		model.addAttribute("printList", printList);
+		return "admin/printList";
+	}
 }

@@ -1,0 +1,49 @@
+@charset "UTF-8";
+.title--section h1 {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+/* 폼 라벨과 입력 필드 스타일 */
+form label {
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+form input[type="file"],
+form input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color 0.2s ease-in-out;
+}
+
+form input[type="file"]:focus,
+form input[type="number"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* 버튼 스타일링 */
+#submitBtn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    color: white;
+    background-color: #007bff; /* 기본 사이트 색상 */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#submitBtn:hover {
+    background-color: #0056b3; /* 버튼 hover 시 어두운 색상 */
+}
