@@ -155,4 +155,21 @@ public class AdminService {
 		count = adminRepository.countAge(age);
 		return count;
 	}
+
+	// 회원 정지
+	@Transactional
+	public void updateUserStopById(Integer userId) {
+		int result = 0;
+		try {
+			result = adminRepository.updateUserStopById(userId);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (result != 1) {
+			System.out.println("회원 정보 수정 실패");
+		}
+
+	}
 }

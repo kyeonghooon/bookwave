@@ -23,7 +23,6 @@ import com.library.bookwave.repository.model.Printer;
 import com.library.bookwave.service.AdminService;
 import com.library.bookwave.service.BookService;
 import com.library.bookwave.service.FacilityService;
-import com.library.bookwave.service.EmailService;
 import com.library.bookwave.service.PaymentService;
 import com.library.bookwave.service.SupportService;
 
@@ -62,9 +61,9 @@ public class AdminController {
 		model.addAttribute("userCount", userCount);
 		model.addAttribute("subscribeCount", subscribeCount);
 		model.addAttribute("qnaCount", qnaCount);
-		model.addAttribute("countAge10",countAge10);
-		model.addAttribute("countAge20",countAge20);
-		model.addAttribute("countAge30",countAge30);
+		model.addAttribute("countAge10", countAge10);
+		model.addAttribute("countAge20", countAge20);
+		model.addAttribute("countAge30", countAge30);
 		return "admin/dashboard";
 	}
 
@@ -144,6 +143,13 @@ public class AdminController {
 		List<Printer> printList = facilityService.readAllPrinter();
 		model.addAttribute("printList", printList);
 		return "admin/printList";
+	}
+
+	@PostMapping("/user-stop/{userId}")
+	public String userStopProc(@PathVariable("userId") Integer userId) {
+		//회원 정지 로직
+		adminService.updateUserStopById(userId);
+		return "redirect:/admin/user-detail?id=" + userId;
 	}
 
 }

@@ -59,5 +59,9 @@
 		from
 		user_detail_tb where ((year(now())-year(birth_date)+1)/10) = #{age};
 	</select>
+	
+	<update id="updateUserStopById">
+		update user_tb set status = -1 where id = #{userId}
+	</update>
 
 </mapper>
