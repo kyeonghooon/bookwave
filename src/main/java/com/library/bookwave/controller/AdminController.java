@@ -140,10 +140,4 @@ public class AdminController {
 		return "admin/printList";
 	}
 
-	// 관리자 시설관리 페이지
-	@GetMapping("/facility")
-	public String facilityPage() {
-
-		return "admin/facility";
-	}
 }

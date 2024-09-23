@@ -78,7 +78,7 @@ input[type="submit"]:hover {
 </head>
 <body>
 	<div class="container">
-		<h1>포인트 지급</h1>
+		<h1>전체 포인트 지급</h1>
 		<form action="/admin/user-point" method="post" onsubmit="confirmAndClose(event);" onsubmit="this.submit(); alert('포인트가 지급되었습니다.'); window.close();">
 			<input type="hidden" value="지급" name="description">
 			<div class="form-group">
