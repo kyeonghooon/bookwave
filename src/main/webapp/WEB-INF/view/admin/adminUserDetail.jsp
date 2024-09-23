@@ -112,20 +112,19 @@ h1 {
 					<i class="fas fa-fw fa-table"></i> <span>대출 현황</span>
 				</a></li>
 			<li class="nav-item"><a class="nav-link" href="/admin/printer">
-				<i class="fas fa-fw fa-table"></i> <span>프린트 요청</span>
+					<i class="fas fa-fw fa-wrench"></i> <span>프린트 요청</span>
 				</a></li>
 
 			<!-- Nav Item - Pages Collapse Menu -->
-			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i> <span>고객 지원</span>
-			</a>
+			<li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+					<i class="fas fa-fw fa-cog"></i> <span>고객 지원</span>
+				</a>
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="/support/faq">FAQ 관리</a> <a class="collapse-item" href="/support/qna">1:1 문의 관리</a>
+						<a class="collapse-item" href="/support/faq">FAQ 관리</a>
+						<a class="collapse-item" href="/support/qna">1:1 문의 관리</a>
 					</div>
 				</div></li>
-
-			<li class="nav-item"><a class="nav-link" href="/admin/facility"> <i class="fas fa-fw fa-wrench"></i> <span>시설 관리</span>
-			</a></li>
 
 			<!-- Divider -->
 			<hr class="sidebar-divider">
@@ -145,11 +144,13 @@ h1 {
 
 				<!-- Topbar -->
 				<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-					<a class="navbar-brand" href="/admin/main"> <img class="img--logo" src="/img/logo_bookwave4.png" alt="Book Wave Logo" style="height: 40px;">
+					<a class="navbar-brand" href="/admin/main">
+						<img class="img--logo" src="/img/logo_bookwave4.png" alt="Book Wave Logo" style="height: 40px;">
 					</a>
 					<ul class="navbar-nav ml-auto">
-						<li class="nav-item"><a class="nav-link logout-btn" href="/user/logout"> <i class="fas fa-sign-out-alt"></i> <span>로그아웃</span>
-						</a></li>
+						<li class="nav-item"><a class="nav-link logout-btn" href="/user/logout">
+								<i class="fas fa-sign-out-alt"></i> <span>로그아웃</span>
+							</a></li>
 					</ul>
 				</nav>
 				<!-- End of Topbar -->
@@ -258,24 +259,6 @@ h1 {
 		<i class="fas fa-angle-up"></i>
 	</a>
 
-	<!-- Logout Modal-->
-	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">Ã</span>
-					</button>
-				</div>
-				<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-					<a class="btn btn-primary" href="login.html">Logout</a>
-				</div>
-			</div>
-		</div>
-	</div>
 	<!-- custom JavaScript -->
 	<!-- <script src="/vendor/datatables/custom.js"></script> -->
 
