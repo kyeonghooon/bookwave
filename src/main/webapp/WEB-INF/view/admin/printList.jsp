@@ -175,7 +175,7 @@ tbody tr:hover {
 												<!-- status가 0인 경우에만 버튼 생성 --> <c:choose>
 													<c:when test="${printer.status == 0}">
 														<button type="button" class="btn--print" data-id="${printer.id}">프린트</button>
-														<a href="/facility/printer-done/${printer.id}" class="btn--done">완료</a>
+														<a href="/facility/printer-done/${printer.id}" class="btn--done"> 완료처리</a>
 													</c:when>
 													<c:otherwise>
 											                -
