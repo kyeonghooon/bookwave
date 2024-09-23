@@ -51,6 +51,9 @@ public class AdminController {
 		int userCount = adminService.countUser();
 		int subscribeCount = adminService.countSubscribe();
 		int qnaCount = supportService.countQna();
+		int countAge10 = adminService.countAge(1);
+		int countAge20 = adminService.countAge(2);
+		int countAge30 = adminService.countAge(3);
 		model.addAttribute("bookCount", bookCount);
 		model.addAttribute("lendBookCount", lendBookCount);
 		model.addAttribute("dueBookCount", dueBookCount);
@@ -59,6 +62,9 @@ public class AdminController {
 		model.addAttribute("userCount", userCount);
 		model.addAttribute("subscribeCount", subscribeCount);
 		model.addAttribute("qnaCount", qnaCount);
+		model.addAttribute("countAge10",countAge10);
+		model.addAttribute("countAge20",countAge20);
+		model.addAttribute("countAge30",countAge30);
 		return "admin/dashboard";
 	}
 

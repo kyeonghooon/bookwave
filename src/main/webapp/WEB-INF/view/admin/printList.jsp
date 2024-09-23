@@ -153,12 +153,12 @@ tbody tr:hover {
 							<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 								<thead>
 									<tr>
-										<th>id</th>
-										<th>user_id</th>
-										<th>origin_file_name</th>
-										<th>pages</th>
-										<th>status</th>
-										<th>created_at</th>
+										<th>번호</th>
+										<th>회원 ID</th>
+										<th>파일명</th>
+										<th>페이지</th>
+										<th>상태</th>
+										<th>요청일</th>
 										<th></th>
 									</tr>
 								</thead>

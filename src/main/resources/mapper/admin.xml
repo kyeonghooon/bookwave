@@ -54,4 +54,10 @@
 		FROM user_tb;
 	</insert>
 
+	<select id="countAge" resultType="int">
+		select count(*)
+		from
+		user_detail_tb where ((year(now())-year(birth_date)+1)/10) = #{age};
+	</select>
+
 </mapper>

@@ -138,8 +138,9 @@ tbody tr:hover {
 								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 									<thead>
 										<tr>
-											<th>결제방식</th>
-											<th>주문고객번호</th>
+											<th>번호</th>
+											<th>회원 ID</th>
+											<th>종류</th>
 											<th>주문상품</th>
 											<th>결제수단</th>
 											<th>결제금액</th>
@@ -153,8 +154,9 @@ tbody tr:hover {
 									<tbody>
 										<c:forEach var="payment" items="${paymentList}">
 											<tr>
-												<th>${payment.type}</th>
+												<th>${payment.id}</th>
 												<th>${payment.userId}</th>
+												<th>${payment.type}</th>
 												<th>${payment.orderName}</th>
 												<th>${payment.method}</th>
 												<th><fmt:formatNumber value="${payment.totalAmount}" type="currency"></fmt:formatNumber></th>
@@ -206,7 +208,7 @@ tbody tr:hover {
 	<!-- <script src="/vendor/datatables/custom.js"></script> -->
 	<script type="text/javascript">
 		function confirmCancel(event) {
-			var confirmed = confirm("정말 취소하시겠습니까?");
+			var confirmed = confirm("결제취소를 승인 하시겠습니까?");
 			if (!confirmed) {
 				event.preventDefault();
 			}

@@ -1,27 +1,35 @@
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
-VALUES (1, 16, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+VALUES (1, 16, -1, '2024-09-01', DATEADD(DAY, 7, '2024-09-01'), DATEADD(DAY, 3, '2024-09-01'));
+
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
-VALUES (1, 17, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+VALUES (1, 17, -1, '2024-09-06', DATEADD(DAY, 7, '2024-09-06'), DATEADD(DAY, 5, '2024-09-01'));
+
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
-VALUES (1, 18, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+VALUES (2, 18, -1, '2024-09-10', DATEADD(DAY, 7, '2024-09-10'), DATEADD(DAY, 6, '2024-09-10'));
+
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
-VALUES (1, 19, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+VALUES (3, 19, -1, '2024-09-11', DATEADD(DAY, 7, '2024-09-11'), DATEADD(DAY, 4, '2024-09-11'));
+
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
-VALUES (1, 20, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+VALUES (4, 20, -1, '2024-09-14', DATEADD(DAY, 7, '2024-09-14'), DATEADD(DAY, 3, '2024-09-14'));
+
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
-VALUES (1, 21, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+VALUES (5, 21, -1, '2024-09-16', DATEADD(DAY, 7, '2024-09-16'), DATEADD(DAY, 6, '2024-09-16'));
+
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
-VALUES (1, 22, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+VALUES (2, 22, -1, '2024-09-16', DATEADD(DAY, 7, '2024-09-16'), DATEADD(DAY, 7, '2024-09-16'));
+
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date, returned_date) 
-VALUES (1, 23, -1, now(), DATEADD(DAY, 7, now()), DATEADD(DAY, 7, now()));
+VALUES (3, 23, -1, '2024-09-18', DATEADD(DAY, 7, '2024-09-18'), DATEADD(DAY, 3, '2024-09-18'));
+
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date) 
-VALUES (1, 32, 0, now(), DATEADD(DAY, 7, now()));
+VALUES (1, 32, 0, '2024-09-19', DATEADD(DAY, 7, '2024-09-19'));
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date) 
-VALUES (1, 33, 0, now(), DATEADD(DAY, 7, now()));
+VALUES (1, 33, 0, '2024-09-21', DATEADD(DAY, 7, '2024-09-21'));
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date) 
-VALUES (1, 42, 0, now(), DATEADD(DAY, 7, now()));
+VALUES (1, 42, 0, '2024-09-21', DATEADD(DAY, 7, '2024-09-21'));
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date) 
-VALUES (1, 43, 0, now(), DATEADD(DAY, 7, now()));
+VALUES (1, 43, 0, '2024-09-22', DATEADD(DAY, 7, '2024-09-22'));
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date) 
 VALUES (1, 52, 0, now(), DATEADD(DAY, 7, now()));
 INSERT INTO lend_tb (user_id, book_id, status, lend_date, return_date) 
@@ -44,34 +52,56 @@ VALUES
 
 -- 샘플 데이터 sql
 
-INSERT INTO user_tb VALUES (1, 'slowman', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '북웨이브관리자', 'admin', 0, now());
+INSERT INTO user_tb VALUES (1, 'slowman', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '북웨이브관리자', 'admin', 0, '2024-09-01 09:00:00');
 INSERT INTO wallet_tb VALUES (1, 1, 40000, 5000);
 INSERT INTO subscribe_tb VALUES (1, 1, '2024-09-01 15:00:00', '2024-10-01 14:59:59');
-INSERT INTO user_detail_tb VALUES (1, 'kred730036@gmail.com', now(), 0, '010-1111-1111', '12345', '부산광역시 부산진구', '그린아파트101동 101호');
+INSERT INTO user_detail_tb VALUES (1, 'kred730036@gmail.com', '2000-01-01', 0, '010-1111-1111', '12345', '부산광역시 부산진구', '그린아파트101동 101호');
 
-INSERT INTO user_tb VALUES (2, 'a2', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '이재용', 'user', 0, now());
+INSERT INTO user_tb VALUES (2, 'a2', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '이재용', 'user', 0, '2024-09-03 12:31:21');
 INSERT INTO wallet_tb VALUES (2, 2, 100000, 10000);
 INSERT INTO user_detail_tb VALUES (2, 'a2@nate.com', '1999-09-12', 0, '010-2222-2222', '23456', '부산광역시 부산진구', '그린아파트202동 202호');
 
-INSERT INTO user_tb VALUES (3, 'a3', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '박상혁', 'user', 0, now());
+INSERT INTO user_tb VALUES (3, 'a3', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '박상혁', 'user', 0, '2024-09-05 13:31:44');
 INSERT INTO wallet_tb VALUES (3, 3, 200000, 30000);
 INSERT INTO user_detail_tb VALUES (3, 'a3@naver.com', '1995-04-11', 0, '010-3333-3333', '34567', '부산광역시 부산진구', '그린아파트301동 104호');
 
-INSERT INTO user_tb VALUES (4, 'a4', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '김민지', 'user', 0, now());
+INSERT INTO user_tb VALUES (4, 'a4', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '김민지', 'user', 0, '2024-09-05 16:11:54');
 INSERT INTO wallet_tb VALUES (4, 4, 50000, 3000);
 INSERT INTO user_detail_tb VALUES (4, 'a4@gmail.com', '1998-07-15', 1, '010-4444-4444', '45678', '부산광역시 부산진구', '그린아파트402동 1101호');
 
-INSERT INTO user_tb VALUES (5, 'a5', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '서지영', 'user', 0, now());
+INSERT INTO user_tb VALUES (5, 'a5', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '서지영', 'user', 0, '2024-09-08 02:11:54');
 INSERT INTO wallet_tb VALUES (5, 5, 150000, 20000);
 INSERT INTO subscribe_tb VALUES (2, 5, '2024-09-11 12:00:00', '2024-10-11 11:59:59');
 INSERT INTO user_detail_tb VALUES (5, 'a5@naver.com', '1995-02-19', 1, '010-5555-5555', '56789', '부산광역시 부산진구', '그린아파트501동 1502호');
 
+INSERT INTO user_tb VALUES (6, 'a6', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '김기수', 'user', 0, '2024-09-11 11:35:41');
+INSERT INTO wallet_tb VALUES (6, 6, 500000, 100000);
+INSERT INTO user_detail_tb VALUES (6, 'a6@gmail.com', '1989-04-19', 0, '010-6666-6666', '67890', '부산광역시 부산진구', '그린아파트601동 1902호');
+
+INSERT INTO user_tb VALUES (7, 'a7', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '권지현', 'user', 0, '2024-09-12 21:15:55');
+INSERT INTO wallet_tb VALUES (7, 7, 100000, 5000);
+INSERT INTO user_detail_tb VALUES (7, 'a7@naver.com', '2009-04-19', 1, '010-7777-7777', '78901', '부산광역시 부산진구', '그린아파트703동 201호');
+
+INSERT INTO user_tb VALUES (8, 'a8', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '강태석', 'user', 0, '2024-09-15 03:59:11');
+INSERT INTO wallet_tb VALUES (8, 8, 10000, 0);
+INSERT INTO subscribe_tb VALUES (3, 8, '2024-09-18 12:00:00', '2024-10-18 11:59:59');
+INSERT INTO user_detail_tb VALUES (8, 'a8@naver.com', '2001-04-11', 0, '010-8888-8888', '89012', '부산광역시 부산진구', '그린아파트801동 402호');
+
+INSERT INTO user_tb VALUES (9, 'a9', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '임수종', 'user', 0, '2024-09-18 11:21:55');
+INSERT INTO wallet_tb VALUES (9, 9, 40000, 2000);
+INSERT INTO subscribe_tb VALUES (4, 9, '2024-09-20 15:00:00', '2024-10-20 14:59:59');
+INSERT INTO user_detail_tb VALUES (9, 'a9@gmail.com', '2000-09-15', 0, '010-9999-9999', '90123', '부산광역시 부산진구', '그린아파트903동 901호');
+
+INSERT INTO user_tb VALUES (10, 'a10', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '김혜진', 'user', 0, '2024-09-21 08:17:33');
+INSERT INTO wallet_tb VALUES (10, 10, 120000, 5000);
+INSERT INTO user_detail_tb VALUES (10, 'a10@naver.com', '1996-03-12', 0, '010-0000-0000', '01234', '부산광역시 부산진구', '그린아파트1001동 1001호');
+
 -- qna 샘플 데이터 추가
-INSERT INTO question_tb VALUES (1, 5, '문의제목1', '문의내용1', 1, now());
-INSERT INTO question_tb VALUES (2, 6, '문의제목2', '문의내용2', 2, now());
-INSERT INTO question_tb VALUES (3, 7, '문의제목3', '문의내용3', null, now());
-INSERT INTO answer_tb VALUES (1, 1, 1, '답변내용1', now());
-INSERT INTO answer_tb VALUES (2, 2, 1, '답변내용2', now());
+INSERT INTO question_tb VALUES (1, 5, '문의합니다', '사용자는 어떤 권한을 가지나요?', 1, '2024-09-01 11:43:20');
+INSERT INTO question_tb VALUES (2, 2, '대출기간이..?', '도서 대출 기간은 어떻게 설정되나요?', 2, '2024-09-13 13:20:11');
+INSERT INTO question_tb VALUES (3, 3, '궁금합니다', '비밀번호를 잊어버렸을 때 어떻게 하나요?', null, '2024-09-22 14:00:19');
+INSERT INTO answer_tb VALUES (1, 1, 1, '일반 사용자는 도서 검색 및 대출/반납 기능을 사용할 수 있으며, 관리자 권한을 가진 사용자는 도서 등록, 삭제 및 사용자 관리 기능을 수행할 수 있습니다.', '2024-09-01 16:22:10');
+INSERT INTO answer_tb VALUES (2, 2, 1, '기본 대출 기간은 1주로 설정되어 있으며, 필요에 따라 연장 요청을 통해 추가로 연장할 수 있습니다.', '2024-09-14 09:11:32');
 
 
 insert into review_tb(user_id, book_id, score, content) values(1, 15, 9, 'ㅁㄴㅇㄹ');
@@ -95,15 +125,15 @@ INSERT INTO faq_tb (title, content, category) VALUES
 
 -- 결제내역 샘플 데이터 추가
 insert into payment_tb(id, payment_key, type, user_id, order_id, order_name, method, total_amount, requested_at, approved_at, status, canceled_at, cancel_reason, cancel_status)
-values (1, 'ppppp11111', 'NORMAL', 1, 'ooooo11111', '충전', '카드', 70000, '2024-01-11 11:11:11', '2024-01-11 11:11:12', 'DONE', NULL, NULL, NULL),
-             (2, 'ppppp22222', 'NORMAL', 1, 'ooooo22222', '충전', '카드', 50000, '2024-02-02 11:11:11', '2024-02-02 11:11:12', 'DONE', NULL, NULL, NULL),
-             (3, 'ppppp33333', 'NORMAL', 1, 'ooooo33333', '충전', '카드', 80000, '2024-03-22 11:11:11', '2024-03-22 11:11:12', 'DONE', NULL, NULL, NULL),
-             (4, 'ppppp44444', 'NORMAL', 1, 'ooooo44444', '충전', '카드', 100000, '2024-04-09 11:11:11', '2024-04-09 11:11:12', 'DONE', NULL, NULL, NULL),
-             (5, 'ppppp55555', 'NORMAL', 1, 'ooooo55555', '충전', '카드', 75000, '2024-05-12 11:11:11', '2024-05-12 11:11:12', 'DONE', NULL, NULL, NULL),
-             (6, 'ppppp66666', 'NORMAL', 1, 'ooooo66666', '충전', '카드', 40000, '2024-06-14 11:11:11', '2024-06-14 11:11:12', 'DONE', NULL, NULL, NULL),
-             (7, 'ppppp77777', 'NORMAL', 1, 'ooooo77777', '충전', '카드', 75000, '2024-07-03 11:11:11', '2024-07-03 11:11:12', 'DONE', NULL, NULL, NULL),
-             (8, 'ppppp88888', 'NORMAL', 1, 'ooooo88888', '충전', '카드', 140000, '2024-08-28 11:11:11', '2024-08-28 11:11:12', 'DONE', NULL, NULL, NULL),
-             (9, 'ppppp99999', 'NORMAL', 1, 'ooooo99999', '충전', '카드', 120000, '2024-09-16 11:11:11', '2024-09-16 11:11:12', 'DONE', NULL, '단순 변심', 'REQUEST_CANCEL');
+values (1, 'ppppp11111', 'NORMAL', 1, 'aw4835we-43qf-4f34-9e15-14da43b1at4ec', '충전', '카드', 70000, '2024-01-12 13:09:43', '2024-01-12 13:09:44', 'DONE', NULL, NULL, NULL),
+             (2, 'ppppp22222', 'NORMAL', 2, 'bqa413we-11qf-64s4-6a46-sd56sdf454a', '충전', '카드', 50000, '2024-02-02 10:43:54', '2024-02-02 10:43:55', 'DONE', NULL, NULL, NULL),
+             (3, 'ppppp33333', 'NORMAL', 3, 'ooooo33333', '충전', '카드', 80000, '2024-03-21 15:02:10', '2024-03-21 15:02:11', 'DONE', NULL, NULL, NULL),
+             (4, 'ppppp44444', 'NORMAL', 4, 'ooooo44444', '충전', '카드', 100000, '2024-04-09 13:44:12', '2024-04-09 13:44:13', 'DONE', NULL, NULL, NULL),
+             (5, 'ppppp55555', 'NORMAL', 5, 'ooooo55555', '충전', '카드', 75000, '2024-05-12 11:08:53', '2024-05-12 11:08:54', 'DONE', NULL, NULL, NULL),
+             (6, 'ppppp66666', 'NORMAL', 2, 'ooooo66666', '충전', '카드', 40000, '2024-06-14 19:00:33', '2024-06-14 19:00:34', 'DONE', NULL, NULL, NULL),
+             (7, 'ppppp77777', 'NORMAL', 3, 'ooooo77777', '충전', '카드', 75000, '2024-07-03 01:34:21', '2024-07-03 01:34:22', 'DONE', NULL, NULL, NULL),
+             (8, 'ppppp88888', 'NORMAL', 4, 'ooooo88888', '충전', '카드', 140000, '2024-08-28 12:11:15', '2024-08-28 12:11:16', 'DONE', NULL, NULL, NULL),
+             (9, 'ppppp99999', 'NORMAL', 5, 'ooooo99999', '충전', '카드', 120000, '2024-09-16 18:14:10', '2024-09-16 18:14:11', 'DONE', NULL, '단순 변심', 'REQUEST_CANCEL');
 
 -- 카테고리 추가
 INSERT INTO book_category_tb (name) VALUES

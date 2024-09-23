@@ -43,4 +43,7 @@ public interface AdminRepository {
 	// BalanceHistory 추가
 	public int createBalanceHisotry(PointDTO point);
 
+	// 연령 10대 회원수 조회
+	public int countAge(int age);
+
 }

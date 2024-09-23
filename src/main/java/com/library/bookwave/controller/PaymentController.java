@@ -29,8 +29,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.google.gson.Gson;
 import com.library.bookwave.config.ApiConfig;
 import com.library.bookwave.dto.PaymentDTO;
+import com.library.bookwave.dto.PrincipalDTO;
 import com.library.bookwave.repository.model.Payment;
-import com.library.bookwave.service.AdminService;
 import com.library.bookwave.service.PaymentService;
 
 import jakarta.servlet.http.HttpSession;
@@ -42,7 +42,6 @@ import lombok.RequiredArgsConstructor;
 public class PaymentController {
 
 	private final ApiConfig apiConfig;
-	private final AdminService adminService;
 	private final PaymentService paymentService;
 	private final HttpSession session;
 
@@ -55,10 +54,10 @@ public class PaymentController {
 	// 결제 페이지
 	@GetMapping("/checkout")
 	public String checkoutPage(@RequestParam(name = "amount") Integer amount, @RequestParam(name = "orderName") String orderName, Model model) {
-		// TODO User principal = session.getAttribute("principal");
-		String customerName = "석지웅"; // TODO principal.getName();
-		String customerEmail = "slowman918@gmail.com"; // TODO principal.getEmail();
-		String customerMobilePhone = "01027203220"; // TODO principal.getPhone();
+		PrincipalDTO principal = (PrincipalDTO) session.getAttribute("principal");
+		String customerName = principal.getName(); // TODO principal.getName();
+		String customerEmail = "asd123@gmail.com"; // TODO principal.getEmail();
+		String customerMobilePhone = "01011111111"; // TODO principal.getPhone();
 		String customerKey = UUID.randomUUID().toString();
 		String orderId = UUID.randomUUID().toString();
 
@@ -91,6 +90,7 @@ public class PaymentController {
 	@PostMapping("/confirm")
 	public ResponseEntity<JSONObject> confirmPayment(@RequestBody String jsonBody) throws Exception {
 
+		PrincipalDTO principal = (PrincipalDTO) session.getAttribute("principal");
 		JSONParser parser = new JSONParser();
 		String orderId;
 		String approvedAmount;
@@ -143,7 +143,7 @@ public class PaymentController {
 			// 결제 승인 성공시
 			Gson gson = new Gson();
 			Payment payment = gson.fromJson(jsonObject.toString(), Payment.class);
-			payment.setUserId(1); // TODO payment.setUserId(principal.getId());
+			payment.setUserId(principal.getUserId());
 			// 결제내역 생성 및 wave 증가
 			paymentService.createPayment(payment, Integer.parseInt(approvedAmount));
 

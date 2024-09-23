@@ -147,4 +147,12 @@ public class AdminService {
 			System.out.println("balance_history 추가 실패");
 		}
 	}
+
+	// 연령대 회원수 조회
+	@Transactional
+	public int countAge(int age) {
+		int count = 0;
+		count = adminRepository.countAge(age);
+		return count;
+	}
 }
