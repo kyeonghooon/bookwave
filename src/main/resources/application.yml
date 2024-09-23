@@ -26,7 +26,6 @@ spring:
       data-locations:
       - classpath:db/data.sql
       - classpath:db/ebookData.sql
-      - classpath:db/itemsData.sql
       - classpath:db/likesData.sql
       - classpath:db/facilityData.sql
 

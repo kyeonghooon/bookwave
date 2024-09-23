@@ -21,5 +21,6 @@ public class MyReserved {
 	private Timestamp reservationDate;
 	private Timestamp waitDate;
 	private Integer status; // '0:진행중 -1: 완료 1: 대기'
+	private String title;
 
 }

@@ -5,21 +5,11 @@
 <head>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-	// Load the Visualization API and the corechart package.
-	google.charts.load('current', {
-		'packages' : [ 'corechart' ]
-	});
-
-	// Set a callback to run when the Google Visualization API is loaded.
+	google.charts.load('current', {'packages' : [ 'corechart' ]});
 	google.charts.setOnLoadCallback(drawChart);
 	google.charts.setOnLoadCallback(drawChart2);
 
-	// Callback that creates and populates a data table,
-	// instantiates the pie chart, passes in the data and
-	// draws it.
 	function drawChart() {
-
-		// Create the data table.
 		var data = new google.visualization.DataTable();
 		data.addColumn('string', '카테고리');
 		data.addColumn('number', '수');
@@ -27,23 +17,19 @@
             <c:forEach var="item" items="${categoryData}">
               ['${item.key}', ${item.value}],
             </c:forEach>
-          ]);
+        ]);
 
-		// Set chart options
 		var options = {
 			'title' : '카테고리 별 차트 (총 데이터 수: ${totalCountCategory})',
 			'width' : 600,
-			'height' : 450
+			'height' : 250
 		};
 
-		// Instantiate and draw our chart, passing in some options.
-		var chart = new google.visualization.PieChart(document
-				.getElementById('chart_div'));
+		var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
 		chart.draw(data, options);
 	}
-	function drawChart2() {
 
-		// Create the data table.
+	function drawChart2() {
 		var data = new google.visualization.DataTable();
 		data.addColumn('string', '월');
 		data.addColumn('number', '수');
@@ -51,18 +37,15 @@
             <c:forEach var="item" items="${monthlyData}">
               ['${item.key}', ${item.value}],
             </c:forEach>
-          ]);
+        ]);
 
-		// Set chart options
 		var options = {
 			'title' : '월 별 차트 (총 데이터 수: ${totalCountMonth})',
 			'width' : 600,
-			'height' : 450
+			'height' : 250
 		};
 
-		// Instantiate and draw our chart, passing in some options.
-		var chart = new google.visualization.PieChart(document
-				.getElementById('chart_div2'));
+		var chart = new google.visualization.PieChart(document.getElementById('chart_div2'));
 		chart.draw(data, options);
 	}
 </script>
@@ -169,6 +152,49 @@ body {
 	flex: 1;
 }
 
+.button {
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px; /* Added horizontal padding */
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    margin-right: 10px; /* Add margin between buttons */
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.button:hover {
+    background-color: #555;
+}
+
+.search--form {
+	display: flex;
+	align-items: center;
+}
+
+.search--form input[type="text"] {
+	padding: 10px;
+	margin-right: 5px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+}
+
+.search--form button {
+	background-color: #333;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	padding: 10px 15px; /* Adjust padding for the search button */
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.search--form button:hover {
+	background-color: #555;
+}
+
 .disabled-button {
 	pointer-events: none;
 	color: gray;
@@ -178,22 +204,23 @@ body {
 </head>
 <body>
 	<div class="page--wrapper">
-
 		<div class="main--content">
-			<div style="display: flex; flex-direction: row;">
-				<a href="<c:url value='/history/list'><c:param name='type' value='all'/></c:url>">All</a> <a href="<c:url value='/history/list'><c:param name='type' value='book'/></c:url>">Books</a>
-				<a href="<c:url value='/history/list'><c:param name='type' value='ebook'/></c:url>">E-books</a>
-
-				<form action="<c:url value='/history/list'/>" method="get" style="display: flex; align-items: center;">
-					<input type="hidden" name="type" value="${param.type}"> <input type="text" maxlength="20" id="searchInput" name="search" placeholder="Search..."
-						value="${param.search}">
-					<button type="submit">Search</button>
-				</form>
-			</div>
-
 			<div style="display: flex; flex-direction: row;">
 				<div id="chart_div"></div>
 				<div id="chart_div2"></div>
+			</div>
+			
+			<div class="container">
+			    <div style="display: flex; align-items: center; margin-bottom: 20px;">
+			        <a href="<c:url value='/history/list'><c:param name='type' value='all'/></c:url>" class="button">전체</a>
+			        <a href="<c:url value='/history/list'><c:param name='type' value='book'/></c:url>" class="button">책</a>
+			        <a href="<c:url value='/history/list'><c:param name='type' value='ebook'/></c:url>" class="button">전자책</a>
+			        <form action="<c:url value='/history/list'/>" method="get" class="search--form" style="margin-left: auto;">
+			            <input type="hidden" name="type" value="${param.type}">
+			            <input type="text" maxlength="20" id="searchInput" name="search" placeholder="Search..." value="${param.search}">
+			            <button type="submit" class="button">검색</button>
+			        </form>
+			    </div>
 			</div>
 
 			<div class="container">
@@ -212,12 +239,11 @@ body {
 					</div>
 				</c:forEach>
 			</div>
-
 		</div>
 	</div>
 	<c:if test="${not empty errorMessage}">
 		<script>
-        alert("${errorMessage}");
-    </script>
+			alert("${errorMessage}");
+		</script>
 	</c:if>
 	<%@ include file="../layout/footer.jsp"%>
