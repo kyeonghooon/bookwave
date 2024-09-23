@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			.then(response => response.json())
 			.then(data => {
 				if (data.success) {
-					alert(data.message);
+					alert("예약 성공");
 					fetchTimeTable(date, computerId); // 예약 후 시간표 갱신
 				} else {
 					alert(data.message);

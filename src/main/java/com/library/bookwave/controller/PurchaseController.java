@@ -31,11 +31,10 @@ public class PurchaseController {
 	public Map<String, Object> purchaseItem(@SessionAttribute(value = Define.PRINCIPAL) PrincipalDTO principal, //
 			@RequestBody Map<String, String> request,//
 			@PathVariable(name = "itemId") Integer itemId) {
-
+		System.out.println(request);
 		Map<String, Object> response = new HashMap<>();
 		int wave = Integer.parseInt(request.get("wave"));
 		int mileage = Integer.parseInt(request.get("mileage"));
-
 		if (principal.getWave() < wave) {
 			response.put("success", false);
 			response.put("message", "wave 부족");

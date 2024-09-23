@@ -24,10 +24,12 @@ document.getElementById("submitBtn").addEventListener("click", function() {
 			body: formData
 		})
 			.then(response => {
-				if (response.status === 403) {
-					throw new Error('접근이 허용되지 않은 IP입니다.');
-				} else {
-					throw new Error('서버 오류가 발생했습니다. 상태 코드: ' + response.status);
+				if (!response.ok) {
+					if (response.status === 403) {
+						throw new Error('접근이 허용되지 않은 IP입니다.');
+					} else {
+						throw new Error('서버 오류가 발생했습니다. 상태 코드: ' + response.status);
+					}
 				}
 			})  // 응답 텍스트를 가져옴
 			.then(data => {

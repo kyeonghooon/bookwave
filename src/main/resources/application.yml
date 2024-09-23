@@ -27,6 +27,7 @@ spring:
       - classpath:db/data.sql
       - classpath:db/ebookData.sql
       - classpath:db/likesData.sql
+      - classpath:db/itemsData.sql
       - classpath:db/facilityData.sql
 
   h2:
