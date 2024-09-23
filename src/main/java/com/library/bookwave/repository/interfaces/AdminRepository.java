@@ -46,4 +46,7 @@ public interface AdminRepository {
 	// 연령 10대 회원수 조회
 	public int countAge(int age);
 
+	// 회원 정지
+	public int updateUserStopById(Integer userId);
+
 }

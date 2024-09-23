@@ -241,6 +241,11 @@ h1 {
 									</c:otherwise>
 								</c:choose>
 							</tr>
+							<tr>
+								<form action="/admin/user-stop/${user.userId}" method="post">
+									<button type="submit">정지</button>
+								</form>
+							</tr>
 						</table>
 					</div>
 				</div>
