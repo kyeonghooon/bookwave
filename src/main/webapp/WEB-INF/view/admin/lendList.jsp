@@ -138,10 +138,10 @@ tbody tr:hover {
 								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 									<thead>
 										<tr>
-											<th>id</th>
-											<th>user_id</th>
-											<th>book_id</th>
-											<th>status</th>
+											<th>번호</th>
+											<th>회원 ID</th>
+											<th>BOOK ID</th>
+											<th>상태</th>
 											<th>대출일</th>
 											<th>반납일</th>
 											<th>반납된 날짜</th>
@@ -158,11 +158,11 @@ tbody tr:hover {
 															<span style="color: red">연체</span>
 														</c:when>
 														<c:when test="${lend.status == -1}">반납완료</c:when>
-														<c:otherwise>정상</c:otherwise>
+														<c:otherwise>대출중</c:otherwise>
 													</c:choose></th>
-												<th><fmt:formatDate value="${lend.lendDate}" pattern="yyyy-MM-dd hh:mm:ss" /></th>
-												<th><fmt:formatDate value="${lend.returnDate}" pattern="yyyy-MM-dd hh:mm:ss" /></th>
-												<th><fmt:formatDate value="${lend.returnedDate}" pattern="yyyy-MM-dd hh:mm:ss" /></th>
+												<th><fmt:formatDate value="${lend.lendDate}" pattern="yyyy-MM-dd" /></th>
+												<th><fmt:formatDate value="${lend.returnDate}" pattern="yyyy-MM-dd" /></th>
+												<th><fmt:formatDate value="${lend.returnedDate}" pattern="yyyy-MM-dd" /></th>
 											</tr>
 										</c:forEach>
 									</tbody>

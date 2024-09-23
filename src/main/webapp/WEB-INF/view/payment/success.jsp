@@ -27,22 +27,24 @@
 			</div>
 			<div class="p-grid-col text--right" id="orderId"></div>
 		</div>
-		<div class="p-grid typography--p" style="margin-top: 10px">
+		
+		
+		<!-- <div class="p-grid typography--p" style="margin-top: 10px">
 			<div class="p-grid-col text--left">
 				<b>paymentKey</b>
 			</div>
 			<div class="p-grid-col text--right" id="paymentKey" style="white-space: initial; width: 250px"></div>
-		</div>
-		<div class="p-grid" style="margin-top: 30px">
+		</div> -->
+		<!-- <div class="p-grid" style="margin-top: 30px">
 			<button class="button p-grid-col5" onclick="location.href='https://docs.tosspayments.com/guides/v2/payment-widget/integration';">연동 문서</button>
 			<button class="button p-grid-col5" onclick="location.href='https://discord.gg/A4fRFXQhRu';" style="background-color: #e8f3ff; color: #1b64da">실시간 문의</button>
-		</div>
+		</div> -->
 	</div>
 
-	<div class="box_section" style="width: 600px; text-align: left">
+	<!-- <div class="box_section" style="width: 600px; text-align: left">
 		<b>Response Data :</b>
 		<div id="response" style="white-space: initial"></div>
-	</div>
+	</div> -->
 
 	<script>
 		// 쿼리 파라미터 값이 결제 요청할 때 보낸 데이터와 동일한지 반드시 확인하세요.

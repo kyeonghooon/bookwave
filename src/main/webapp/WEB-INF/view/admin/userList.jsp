@@ -123,16 +123,16 @@
 								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 									<thead>
 										<tr>
-											<th>id</th>
-											<th>login_id</th>
-											<th>social_id</th>
-											<th>name</th>
-											<th>role</th>
-											<th>subscribe</th>
+											<th>번호</th>
+											<th>로그인 ID</th>
+											<th>소셜 ID</th>
+											<th>이름</th>
+											<th>권한</th>
+											<th>구독</th>
 											<th>wave</th>
 											<th>mileage</th>
-											<th>status</th>
-											<th>created_at</th>
+											<th>상태</th>
+											<th>가입일</th>
 										</tr>
 									</thead>
 									<tbody>

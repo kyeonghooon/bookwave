@@ -128,7 +128,7 @@ th, td {
 								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 									<thead>
 										<tr>
-											<th>ID</th>
+											<th>번호</th>
 											<th>분류</th>
 											<th>제목</th>
 											<th>설명</th>
