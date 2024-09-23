@@ -11,7 +11,7 @@
 
 	<select id="findById"
 		resultType="com.library.bookwave.repository.model.User">
-		select * from user_tb where login_id = #{loginId}
+		select * from user_tb where login_id = #{loginId} and status = 0
 	</select>
 
 	<insert id="createUserDetail">
@@ -58,7 +58,7 @@
 	
 	<!-- 카카오톡 -->
 	<select id="findBySocialId" resultType="com.library.bookwave.repository.model.User">
-		select * from user_tb where social_id = #{loginId}
+		select * from user_tb where social_id = #{loginId} and status = 0
 	</select>
 	
 </mapper>

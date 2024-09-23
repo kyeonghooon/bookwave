@@ -20,7 +20,7 @@ public interface EbookRepository {
 	String findEbookPathByBookId(Integer bookId);
 	
 	// user_ebook lastPoint 업데이트
-	int updateUserEbookWithLastPoint(@Param("lastPoint") Double lastPoint, @Param("userId") Integer userId, @Param("bookId") Integer bookId);
+	Integer updateUserEbookWithLastPoint(@Param("lastPoint") Double lastPoint, @Param("userId") Integer userId, @Param("bookId") Integer bookId);
 	
 	// 해당 유저의 ebookList 조회 (카테고리 필터 포함)
 	List<EbookDTO> findEbookListByUserIdAndCategory(@Param("userId") Integer userId, @Param("category") Integer category);

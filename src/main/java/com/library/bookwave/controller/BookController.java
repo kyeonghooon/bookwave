@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.library.bookwave.dto.BookDetailReviewDTO;
 import com.library.bookwave.dto.BookListDTO;
+import com.library.bookwave.dto.PrincipalDTO;
 import com.library.bookwave.repository.model.Book;
 import com.library.bookwave.repository.model.BookCategory;
 import com.library.bookwave.repository.model.Favorite;
@@ -21,8 +23,8 @@ import com.library.bookwave.repository.model.Lend;
 import com.library.bookwave.repository.model.Like;
 import com.library.bookwave.repository.model.Reservation;
 import com.library.bookwave.service.BookService;
-import com.library.bookwave.service.EbookService;
 import com.library.bookwave.service.ItemService;
+import com.library.bookwave.utils.Define;
 
 import lombok.RequiredArgsConstructor;
 
@@ -38,11 +40,15 @@ public class BookController {
 
 	/* 책리스트 페이지 */
 	@GetMapping("/list")
-	public String showBooks(Model model, @RequestParam(name = "page", defaultValue = "1") int page,
-			@RequestParam(name = "size", defaultValue = "30") int size, @RequestParam(name = "category", defaultValue = "") Integer category,
+	public String showBooks(//
+			Model model,//
+			@SessionAttribute(value = Define.PRINCIPAL) PrincipalDTO principal,//
+			@RequestParam(name = "page", defaultValue = "1") int page,//
+			@RequestParam(name = "size", defaultValue = "30") int size,//
+			@RequestParam(name = "category", defaultValue = "0") Integer category,//
 			@RequestParam(name = "search", defaultValue = "") String search) {
-		// TODO - 임시 userId 삭제예정
-		int userId = 1;
+
+		int userId = principal.getUserId();
 
 		// 카테고리 불러오기
 		List<BookCategory> categoryList = bookService.readAllBookCategory();
@@ -74,13 +80,15 @@ public class BookController {
 
 	/* 상세보기 페이지 */
 	@GetMapping("/detail/{bookId}")
-	public String showBookDetail(@PathVariable("bookId") int bookId, Model model) {
-		// TODO 임시 userId,user1 삭제예정
-		int userId = 1; // 임시
+	public String showBookDetail(//
+			@PathVariable("bookId") int bookId,//
+			@SessionAttribute(value = Define.PRINCIPAL) PrincipalDTO principal,//
+			Model model) {
+
+		int userId = principal.getUserId();
 
 		// 책 상세보기
 		Book bookDetail = bookService.readBook(bookId);
-		System.out.println("bookDeatil : " + bookDetail);
 		// 대여 조회
 		Lend lend = bookService.readLend(bookId, userId);
 
@@ -101,21 +109,14 @@ public class BookController {
 		// ebook 등록 여부조회
 		int userEbook = bookService.readUserEbook(userId, bookId);
 
-
-		
 		List<BookDetailReviewDTO> review = bookService.readReviewAndUserNameByBookId(bookId);
-		
-		
-		model.addAttribute("principal",userId);
-		model.addAttribute("review",review);
-		model.addAttribute("userEbook",userEbook);
 
+		model.addAttribute("principal", principal);
+		model.addAttribute("review", review);
+		model.addAttribute("userEbook", userEbook);
 
 		// 상세 페이지에 들어가는 아이템 리스트 세팅
 		String itemsJson = itemService.findItemsByPageName("bookDetail");
-
-		
-
 
 		model.addAttribute("isFavorited", isFavorited);
 		model.addAttribute("isLiked", isLiked);
@@ -128,62 +129,45 @@ public class BookController {
 		model.addAttribute("items", itemsJson);
 		return "book/bookDetail";
 	}
-	
+
 	@PostMapping("/deleteReview/{id}")
-	public String deleteReview(@PathVariable("id") int id,@RequestParam(name = "bookId") int bookId) {
+	public String deleteReview(@PathVariable("id") int id, @RequestParam(name = "bookId") int bookId) {
 		bookService.deleteReviewById(id);
 		return "redirect:/book/detail/" + bookId;
 	}
-	
+
 	@PostMapping("/updateReview/{id}")
-	public String updateReview(@PathVariable("id") int id, @RequestParam(name = "content") String content,@RequestParam(name = "score") Integer score,@RequestParam(name = "bookId") int bookId) {
-		System.out.println(id+"서치원삼");
-		System.out.println(content);
-		try {
-			bookService.updateReviewById(content,score,id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public String updateReview(//
+			@PathVariable("id") Integer id,//
+			@RequestParam(name = "content") String content,//
+			@RequestParam(name = "score") Integer score,//
+			@RequestParam(name = "bookId") Integer bookId) {
+		bookService.updateReviewById(content, score, id);
 		return "redirect:/book/detail/" + bookId;
 	}
 
 	/* 대여기능 추가 */
 	@GetMapping("/lend/{bookId}")
-	public String lendBook(@PathVariable("bookId") int bookId, Model model) {
-		// TODO 임시 userId 삭제예정
-		int userId = 1; // 임시
+	public String lendBook(//
+			@PathVariable("bookId") int bookId,//
+			@SessionAttribute(value = Define.PRINCIPAL) PrincipalDTO principal) {
 
-		boolean isLendSuccessful = bookService.lendBook(bookId, userId);
+		Integer userId = principal.getUserId();
 
-		// TODO - 필요한가
-		if (isLendSuccessful) {
-			model.addAttribute("message", "책이 성공적으로 대여되었습니다.");
-		} else {
-			model.addAttribute("message", "대여에 실패했습니다. 재고가 부족합니다.");
-		}
+		bookService.lendBook(bookId, userId);
 
 		return "redirect:/book/detail/" + bookId;
 	}
 
 	/* 예약하기 */
 	@GetMapping("/reservation/{bookId}")
-	public String reservationBook(@PathVariable("bookId") int bookId, Model model) {
-		// TODO 임시 userId 삭제예정
-		int userId = 1;
+	public String reservationBook(//
+			@PathVariable("bookId") int bookId,//
+			@SessionAttribute(value = Define.PRINCIPAL) PrincipalDTO principal) {
+
+		Integer userId = principal.getUserId();
 
 		bookService.createReservation(userId, bookId);
-
-		return "redirect:/book/detail/" + bookId;
-	}
-
-	/* eBook 등록 */
-	@GetMapping("/ebook/{bookId}")
-	public String createUserEbook(@PathVariable("bookId") int bookId, Model model) {
-		// TODO 임시 userId 삭제예정
-		int userId = 1;
-
-		// TODO 유저 불리언값 받아오기
-		// bookService.createUserEbook(userId, bookId, principal.getSubcribe);
 
 		return "redirect:/book/detail/" + bookId;
 	}
@@ -191,9 +175,11 @@ public class BookController {
 	/* 좋아요 기능 */
 	@PostMapping("/like/{bookId}")
 	@ResponseBody
-	public String createLike(@PathVariable("bookId") int bookId) {
-		// TODO 임시 userId 삭제예정
-		int userId = 1;
+	public String createLike(//
+			@PathVariable("bookId") int bookId,//
+			@SessionAttribute(value = Define.PRINCIPAL) PrincipalDTO principal) {
+
+		Integer userId = principal.getUserId();
 
 		Like checkLike = bookService.readLike(userId, bookId);
 
@@ -209,9 +195,11 @@ public class BookController {
 	/* 관심등록 기능 */
 	@PostMapping("/favorite/{bookId}")
 	@ResponseBody
-	public String createFavorite(@PathVariable("bookId") int bookId) {
-		// TODO 임시 userId 삭제예정
-		int userId = 1;
+	public String createFavorite(//
+			@PathVariable("bookId") int bookId,//
+			@SessionAttribute(value = Define.PRINCIPAL) PrincipalDTO principal) {
+
+		Integer userId = principal.getUserId();
 
 		Favorite checkfavorite = bookService.readFavorite(userId, bookId);
 
@@ -223,7 +211,6 @@ public class BookController {
 			return "unfavorited";
 		}
 	}
-
 
 	// 도서 등록 페이지
 	@GetMapping("/create")
@@ -263,6 +250,5 @@ public class BookController {
 		bookService.deleteBookById(bookId);
 		return "redirect:/admin/book";
 	}
-
 
 }

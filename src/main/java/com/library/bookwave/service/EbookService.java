@@ -1,23 +1,22 @@
 package com.library.bookwave.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.library.bookwave.dto.EbookDTO;
 import com.library.bookwave.dto.EbookReorderDTO;
+import com.library.bookwave.handler.exception.DataDeliveryException;
 import com.library.bookwave.handler.exception.RedirectException;
+import com.library.bookwave.repository.interfaces.BookRepository;
 import com.library.bookwave.repository.interfaces.EbookRepository;
-import com.library.bookwave.repository.interfaces.ItemRepository;
-import com.library.bookwave.repository.model.Item;
+import com.library.bookwave.repository.model.Book;
 import com.library.bookwave.repository.model.UserEbook;
 import com.library.bookwave.repository.model.UserEbookCategory;
+import com.library.bookwave.utils.Define;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class EbookService {
 
 	private final EbookRepository ebookRepository;
-	private final ItemRepository itemRepository;
+	private final BookRepository bookRepository;
 
 	/**
 	 * 해당 ebook 상세 내역 조회
@@ -35,11 +34,10 @@ public class EbookService {
 		UserEbook userEbookEntity = null;
 		try {
 			userEbookEntity = ebookRepository.readUserEbook(userId, bookId);
+		} catch (DataAccessException e) {
+			throw new DataDeliveryException(Define.FAILED_PROCESSING, HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		if (userEbookEntity == null) {
-			// TODO : 처리 필요
+			throw new RedirectException(Define.UNKNOWN, HttpStatus.SERVICE_UNAVAILABLE);
 		}
 		return userEbookEntity;
 	}
@@ -47,28 +45,33 @@ public class EbookService {
 	/**
 	 * ebook path 조회
 	 */
-	public String findEbookPathByBookId(int bookId) {
-		String ebookPath = null;
-		ebookPath = ebookRepository.findEbookPathByBookId(bookId);
-		// TODO 테스트 코드 변경 예정
-		return ebookPath == null ? "/ebooks/2.epub/" : ebookPath;
+	public Book findEbookPathByBookId(int bookId) {
+		Book bookEntity = null;
+		try {
+			bookEntity = bookRepository.readBook(bookId);
+		} catch (DataAccessException e) {
+			throw new DataDeliveryException(Define.FAILED_PROCESSING, HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (Exception e) {
+			throw new RedirectException(Define.UNKNOWN, HttpStatus.SERVICE_UNAVAILABLE);
+		}
+		
+		// 현재 ebook은 하나 밖에 없어서 임시로 작성됨
+		String ebookPath = bookEntity.getEbookPath() == null ? "/ebooks/2.epub/" : bookEntity.getEbookPath();
+		bookEntity.setEbookPath(ebookPath);
+		return bookEntity;
 	}
 
 	/**
 	 * ebook의 마지막 읽은 위치 저장
 	 */
 	@Transactional
-	public int updateUserEbookWithLastPoint(double lastPoint, int userId, int bookId) {
-		int result = 0;
+	public boolean updateUserEbookWithLastPoint(double lastPoint, int userId, int bookId) {
 		try {
-			result = ebookRepository.updateUserEbookWithLastPoint(lastPoint, userId, bookId);
+			ebookRepository.updateUserEbookWithLastPoint(lastPoint, userId, bookId);
 		} catch (Exception e) {
-			// TODO: handle exception
+			return false;
 		}
-		if (result == 0) {
-			// TODO : 처리 필요
-		}
-		return result;
+		return true;
 	}
 
 	/**
@@ -78,11 +81,10 @@ public class EbookService {
 		List<EbookDTO> bookList = null;
 		try {
 			bookList = ebookRepository.findEbookListByUserIdAndCategory(userId, category);
+		} catch (DataAccessException e) {
+			throw new DataDeliveryException(Define.FAILED_PROCESSING, HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		if (bookList.isEmpty()) {
-			// TODO : 처리 필요
+			throw new RedirectException(Define.UNKNOWN, HttpStatus.SERVICE_UNAVAILABLE);
 		}
 		return bookList;
 	}
@@ -94,11 +96,10 @@ public class EbookService {
 		List<UserEbookCategory> categoryList = null;
 		try {
 			categoryList = ebookRepository.findEbookCategoryListByUserId(userId);
+		} catch (DataAccessException e) {
+			throw new DataDeliveryException(Define.FAILED_PROCESSING, HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		if (categoryList.isEmpty()) {
-			// TODO : 처리 필요
+			throw new RedirectException(Define.UNKNOWN, HttpStatus.SERVICE_UNAVAILABLE);
 		}
 		return categoryList;
 	}
@@ -110,12 +111,10 @@ public class EbookService {
 		int result = 0;
 		try {
 			result = ebookRepository.readEbookCategoryLimit(userId);
+		} catch (DataAccessException e) {
+			throw new DataDeliveryException(Define.FAILED_PROCESSING, HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		if (result == 0) {
-			// TODO : 처리 필요
+			throw new RedirectException(Define.UNKNOWN, HttpStatus.SERVICE_UNAVAILABLE);
 		}
 		return result;
 	}
@@ -127,11 +126,10 @@ public class EbookService {
 		int result = 0;
 		try {
 			result = ebookRepository.countEbookCategoryByUserId(userId);
+		} catch (DataAccessException e) {
+			throw new DataDeliveryException(Define.FAILED_PROCESSING, HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		if (result == 0) {
-			// TODO : 처리 필요
+			throw new RedirectException(Define.UNKNOWN, HttpStatus.SERVICE_UNAVAILABLE);
 		}
 		return result;
 	}
@@ -192,34 +190,35 @@ public class EbookService {
 	 * user ebook의 카테고리 변경
 	 */
 	@Transactional
-	public int updateUserEbookCategory(int categoryId, int userId, int bookId) {
+	public boolean updateUserEbookCategory(int categoryId, int userId, int bookId) {
 		int result = 0;
 		try {
 			result = ebookRepository.updateUserEbookCategory(categoryId, userId, bookId);
 		} catch (Exception e) {
-			// TODO: handle exception
+			return false;
 		}
 		if (result == 0) {
-			// TODO : 처리 필요
+			return false;
 		}
-		return result;
+		return true;
 	}
 
 	/**
 	 * ebook 등록 (구독 서비스 이용자)
 	 */
 
-	public int createEbookWithSubscribe(int userId, int bookId) {
+	public boolean createEbookWithSubscribe(int userId, int bookId) {
+
 		int result = 0;
 
 		try {
 			result = ebookRepository.createEbookWithSubscribe(userId, bookId);
 		} catch (Exception e) {
-			// TODO: handle exception
+			return false;
 		}
 		if (result == 0) {
-			// TODO : 처리 필요
+			return false;
 		}
-		return result;
+		return true;
 	}
 }

@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	if (readEbookButton) {
-		subEbookButton.addEventListener('click', handleConfirmation('페이지를 이동하시겠습니까?'));
+		readEbookButton.addEventListener('click', handleConfirmation('페이지를 이동하시겠습니까?'));
 	}
 
 	if (subEbookButton) {

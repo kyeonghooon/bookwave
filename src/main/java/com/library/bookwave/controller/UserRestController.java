@@ -3,7 +3,6 @@ package com.library.bookwave.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,32 +23,27 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/controller-user")
 @RequiredArgsConstructor
 public class UserRestController {
-	
+
 	private final UserService userService;
 	private final EmailService emailService;
 	private final MemberService memberService;
-	
 	private final PasswordEncoder passwordEncoder;
-	// 주소
-	// http://localhost:8080/controller-user/check-userId
+
 	// ID 중복 확인
 	@GetMapping("/check-userId")
 	public boolean getUserId(@RequestParam(name = "loginId") String loginId) {
-		// return userService.confirmUid(loginId);
 		System.out.println(loginId);
 		boolean isUse = userService.readUserId(loginId) == null ? true : false;
 		return isUse;
 
 	}
 
-	// TODO 이메일
 	// 데이터 전송.. email을 추출해서 서버에 데이터 전송해야 됨 -> 사용자의 ID을 찾는다
 	@PostMapping("/find-id")
-	public ResponseEntity<Map<String, Object>> eFindByEmail(@RequestBody Map<String, String> request) {
+	public ResponseEntity<?> eFindByEmail(@RequestBody Map<String, String> request) {
 		// 이메일 추출
 		String email = request.get("email");
 		// String loginId = request.get("loginId");
-		System.out.println("받은 이메일: " + email);
 
 		Map<String, Object> response = new HashMap<>();
 
@@ -82,20 +76,16 @@ public class UserRestController {
 
 		// 성공 응답 반환
 	}
-	
-	// TODO 비밀번호
+
 	@PostMapping("/find-pw")
-	public ResponseEntity<Map<String, Object>> eFindByIdAndEmail(@RequestBody Map<String, String> request) {
+	public ResponseEntity<?> eFindByIdAndEmail(@RequestBody Map<String, String> request) {
 		// 이메일 추출
 		String loginId = request.get("loginId");
 		String email = request.get("email");
 
-		System.out.println("받은 ID: " + loginId);
-		System.out.println("받은 이메일: " + email);
-
 		Map<String, Object> response = new HashMap<>();
 
-		//유효성 검사
+		// 유효성 검사
 		if (loginId == null || loginId.isEmpty()) {
 			response.put("success", false);
 			response.put("message", "아이디를 입력해주세요.");
@@ -108,32 +98,25 @@ public class UserRestController {
 		}
 
 		// 이메일로 사용자 조회
-		System.out.println("여기까지 오나???????????????????ㄴ");
-		if (userService.eFindByIdAndEmail(loginId, email) > 0) {
-			// TODO 비밀번호 재발급 로직
-		} else {
+		if (userService.eFindByIdAndEmail(loginId, email) == 0) {
 			response.put("success", false);
 			response.put("message", "해당 이메일로 사용자를 찾을 수 없습니다.");
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-			
 		}
-		
+
 		// 랜덤 비밀번호 생성
 		String newPassword = memberService.getRamdomPassword(10);
 		System.out.println(newPassword);
-		
-		   //비밀번호 암호화 
-		// TODO 여기서 암호화가 안되고 있음
+
+		// 비밀번호 암호화
 		String encryptedPassword = passwordEncoder.encode(newPassword);
-		System.out.println("원래 비밀번호: " + newPassword);  // 암호화 전 비밀번호 출력
-		System.out.println("암호화된 비밀번호: " + encryptedPassword);  // 암호화된 비밀번호 출력
-	    
-	    // 비밀번호 업데이트
-	     if (userService.newPassword(loginId, encryptedPassword) > 0) {
-	    	 // TODO 이메일 보내기
-	     } else {
-	    	 // TODO 뭔가 또 오류
-	     }
+
+		// 비밀번호 업데이트
+		if (userService.newPassword(loginId, encryptedPassword) == 0) {
+			response.put("success", false);
+			response.put("message", "비밀번호 발급 중 오류 발생");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+		}
 
 		// 이메일 보내는 로직 필요
 		if (emailService.sendFindLoginPwdEmail(email, newPassword)) {

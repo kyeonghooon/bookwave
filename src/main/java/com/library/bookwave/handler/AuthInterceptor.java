@@ -22,6 +22,8 @@ public class AuthInterceptor implements HandlerInterceptor {
 		HttpSession session = request.getSession();
 		PrincipalDTO principal = (PrincipalDTO) session.getAttribute(Define.PRINCIPAL);
 		if (principal == null) {
+			String requestURI = request.getRequestURI();
+	        session.setAttribute("redirectURI", requestURI);
 			throw new UnAuthorizedException("로그인이 필요합니다", HttpStatus.UNAUTHORIZED);
 		}
 		return true;

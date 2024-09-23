@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	const searchCounter = document.getElementById("searchCounter");
 	const endSearchBtn = document.getElementById("endSearch");
 	const saveBtn = document.getElementById("savePage");
+	const backBtn = document.getElementById("back");
 	const book = ePub(ebookPath);
 	let searchResults = [];
 	let currentSearchIndex = 0;
@@ -261,4 +262,8 @@ document.addEventListener("DOMContentLoaded", function() {
 			progressBar.classList.remove('completed');
 		}
 	}
+	
+	backBtn.addEventListener("click",() => {
+		history.back();
+	});
 });

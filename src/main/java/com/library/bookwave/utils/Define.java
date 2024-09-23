@@ -6,9 +6,9 @@ public class Define {
 	public static final String PRINCIPAL = "principal";
 	public static final Integer SUBSCRIBE_PRICE = 9900;
 
-	// 이미지 관련
-	//	public static final String UPLOAD_FILE_DERECTORY = "C:\\work_spring\\upload/";
-	//	public static final int MAX_FILE_SIZE = 1024 * 1024 * 20; // 20MB
+	// 파일 관련
+	public static final String UPLOAD_FILE_DERECTORY = "C:\\bookwave\\upload/";
+	public static final int MAX_FILE_SIZE = 1024 * 1024 * 20; // 20MB
 
 	// User
 	public static final String ENTER_YOUR_LOGIN = "로그인이 필요합니다.";
@@ -18,10 +18,11 @@ public class Define {
 	public static final String NOT_AN_AUTHENTICATED_ADMIN = "관리자만 접근할 수 있습니다.";
 
 	// Support
-
+	
 	// etc
 	public static final String NOT_AN_AUTHENTICATED_USER = "인증된 사용자가 아닙니다.";
 	public static final String INVALID_INPUT = "잘못된 입력입니다.";
+	public static final String INVALID_REQUEST = "잘못된 요청입니다.";
 	public static final String UNKNOWN = "알 수 없는 동작입니다";
 	public static final String FAILED_PROCESSING = "정상 처리 되지 않았습니다.";
 

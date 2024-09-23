@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.library.bookwave.repository.model.Computer;
 import com.library.bookwave.repository.model.ComputerReservation;
+import com.library.bookwave.repository.model.Printer;
 
 @Mapper
 public interface FacilityRepository {
@@ -30,4 +31,15 @@ public interface FacilityRepository {
 			@Param("computerId") Integer computerId,//
 			@Param("startTime") Timestamp startTime,//
 			@Param("endTime") Timestamp endTime);
+	
+	Integer createPrinter(//
+			@Param("userId") Integer userId,//
+			@Param("originFileName") String originFileName,//
+			@Param("uploadFileName") String uploadFileName,//
+			@Param("pages") Integer pages);
+	
+	Printer readPrinter(Integer id);
+	List<Printer> readAllPrinter();
+
+	void updatePrinterStatusById(Integer id);
 }

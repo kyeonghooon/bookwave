@@ -20,15 +20,14 @@ if (btnId) {
 		}
 
 		const url =
-			"/controller-user/check-userId?loginId=" + encodeURIComponent(inputId);
+			"/controller-user/check-userId?loginId=" + loginId;
 		console.log("url", url);
-		fetch(url)
-			.then((response) => {
-				if (!response.ok) {
-					throw new Error("Network response was not ok");
-				}
-				return response.json();
-			})
+		fetch(url, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
 			.then((isUse) => {
 				console.log("결과 확인", isUse);
 				if (isUse) {
@@ -126,8 +125,8 @@ document.addEventListener("DOMContentLoaded", function() {
 	confirmPasswordInput.addEventListener("input", checkPasswordsMatch);
 
 	// 비밀번호 숨기기/표시 테스트
-	
-	
+
+
 
 	// 비밀번호 공백X (비밀번호, 비밀번호 확인 칸)
 	passwordInput.addEventListener("keydown", function(event) {
