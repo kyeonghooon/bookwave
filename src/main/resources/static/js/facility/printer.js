@@ -2,7 +2,7 @@ document.getElementById("submitBtn").addEventListener("click", function() {
 	const fileInput = document.getElementById("file");
 	const pagesInput = document.getElementById("pages").value;
 	const file = fileInput.files[0];
-	
+
 	const allowedExtension = /\.pdf$/i;  // PDF 파일만 허용
 	if (!allowedExtension.test(file.name)) {
 		alert("PDF 파일만 업로드 가능합니다.");
@@ -23,14 +23,20 @@ document.getElementById("submitBtn").addEventListener("click", function() {
 			method: "POST",
 			body: formData
 		})
-			.then(response => response.json())  // 응답 텍스트를 가져옴
+			.then(response => {
+				if (response.status === 403) {
+					throw new Error('접근이 허용되지 않은 IP입니다.');
+				} else {
+					throw new Error('서버 오류가 발생했습니다. 상태 코드: ' + response.status);
+				}
+			})  // 응답 텍스트를 가져옴
 			.then(data => {
 				alert("요청이 완료되었습니다. 원하실 때 데스크로 찾아와주세요.");
 				location.reload();
 			})
 			.catch(error => {
 				console.error("Error:", error);
-				alert("구매 중 오류가 발생했습니다.");
+				alert(error.message || "구매 중 오류 발생");
 			});
 	});
 });
