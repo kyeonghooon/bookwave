@@ -46,9 +46,7 @@ public class MyLibraryController {
 	@GetMapping("/my-lend")
 	public String myBooksPage(@SessionAttribute(Define.PRINCIPAL) PrincipalDTO principal, Model model) {
 		int userId = principal.getUserId();
-		
-		
-		
+
 		model.addAttribute("myLendList", libraryService.readAllById(userId));
 		return "myLibrary/myBooks";
 	}
@@ -77,24 +75,28 @@ public class MyLibraryController {
 		return "redirect:/my-library/my-lend";
 	}
 
-	@GetMapping("/renew/{bookId}")
+	@GetMapping("/renew/{id}")
 	public String renewPage(@SessionAttribute(Define.PRINCIPAL) PrincipalDTO principal, Model model,
-			@PathVariable(name = "bookId") Integer bookId) {
+			@PathVariable(name = "id") Integer id) {
+
+		Integer bookId = libraryService.findBookIdById(id);
 
 		if (!libraryService.validation(principal.getUserId(), bookId)) {
 			model.addAttribute("errorMessage", "대출하지 않았거나 유효하지 않은 도서입니다.");
 			return "myLibrary/myBooks";
 		}
 		String itemsJson = itemService.findItemsByPageName("renew");
-		model.addAttribute("bookId", bookId);
+		model.addAttribute("id", id);
 		model.addAttribute("items", itemsJson);
 		return "myLibrary/renew";
 	}
 
-	@PostMapping("/renew/{bookId}")
+	@PostMapping("/renew/{id}")
 	public String renewProc(@SessionAttribute(Define.PRINCIPAL) PrincipalDTO principal, Model model,
-			@PathVariable(name = "bookId") Integer bookId, @RequestParam(name = "day", required = false) Integer days,
+			@PathVariable(name = "id") Integer id, @RequestParam(name = "day", required = false) Integer days,
 			@RequestParam(name = "point", required = false) Integer point) {
+
+		Integer bookId = libraryService.findBookIdById(id);
 
 		// Validate if the user has the book
 		if (!libraryService.validation(principal.getUserId(), bookId)) {
@@ -108,7 +110,7 @@ public class MyLibraryController {
 			return "myLibrary/renew";
 		}
 
-		libraryService.updateReturnDateById(bookId, days);
+		libraryService.updateReturnDateById(id, days);
 		return "redirect:/my-library/my-lend";
 	}
 }

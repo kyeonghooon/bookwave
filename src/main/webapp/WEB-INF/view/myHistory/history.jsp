@@ -203,13 +203,16 @@ body {
 </style>
 </head>
 <body>
+			<div class="container">
+				<h1 class="mb-4">대출 내역</h1>
+			</div>
 	<div class="page--wrapper">
 		<div class="main--content">
 			<div style="display: flex; flex-direction: row;">
 				<div id="chart_div"></div>
 				<div id="chart_div2"></div>
 			</div>
-			
+
 			<div class="container">
 			    <div style="display: flex; align-items: center; margin-bottom: 20px;">
 			        <a href="<c:url value='/history/list'><c:param name='type' value='all'/></c:url>" class="button">전체</a>
@@ -230,7 +233,7 @@ body {
 						<div class="book--title">${history.title}</div>
 						<c:choose>
 							<c:when test="${fn:contains(reviewedBookIds, history.id)}">
-								<a class="review-button disabled">이미 작성하셨습니다</a>
+								<a class="disabled-button">이미 작성하셨습니다</a>
 							</c:when>
 							<c:otherwise>
 								<a href="/review/create/${history.id}">리뷰 작성</a>

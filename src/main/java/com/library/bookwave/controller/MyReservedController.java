@@ -47,9 +47,9 @@ public class MyReservedController {
 		return "myLibrary/reservedBooks";
 	}
 
-	@PostMapping("/lend/{id}")
+	@PostMapping("/lend/{bookId}")
 	public String lendProc(@SessionAttribute(value = Define.PRINCIPAL) PrincipalDTO principal,
-			@PathVariable("id") int id, @RequestParam(value = "bookId", required = false) Integer bookId, Model model) {
+			@PathVariable("bookId") Integer bookId, @RequestParam("id") Integer id, Model model) {
 		int userId = principal.getUserId();
 
 		if (bookId == null || bookId <= 0) {
@@ -59,7 +59,7 @@ public class MyReservedController {
 
 		// Validate if the user has reserved the book
 		List<MyReserved> list = reservedService.readAllById(userId);
-		if (!list.stream().anyMatch(book -> book.getId() == bookId)) {
+		if (!list.stream().anyMatch(book -> book.getBookId().equals(bookId))) {
 			model.addAttribute("errorMessage", "예약하지 않았거나 유효하지 않은 도서입니다.");
 			return "myLibrary/reservedBooks";
 		}
@@ -77,7 +77,7 @@ public class MyReservedController {
 
 		// Validate if the user has reserved the book
 		List<MyReserved> list = reservedService.readAllById(userId);
-		if (!list.stream().anyMatch(book -> book.getId() == bookId)) {
+		if (!list.stream().anyMatch(book -> book.getId().equals(bookId))) {
 			model.addAttribute("errorMessage", "예약하지 않았거나 유효하지 않은 도서입니다.");
 			return "myLibrary/reservedBooks";
 		}

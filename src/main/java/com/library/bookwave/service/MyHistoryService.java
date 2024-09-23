@@ -145,7 +145,6 @@ public class MyHistoryService {
 		return historyRepository.findEbooksByTitle(userId, search);
 	}
 
-
 	public boolean validation(Integer userId, Integer bookId) {
 		List<MyBookHistory> bookList = findAllBookByUserId(userId);
 		List<MyEbookHistory> ebookList = findAllEbookByUserId(userId);

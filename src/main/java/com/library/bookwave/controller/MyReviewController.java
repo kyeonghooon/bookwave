@@ -45,7 +45,7 @@ public class MyReviewController {
 		return "myReview/create";
 	}
 
-	@PostMapping("/review/{bookId}")
+	@PostMapping("/create/{bookId}")
 	public String postReview(@SessionAttribute(value = Define.PRINCIPAL) PrincipalDTO principal,
 			@PathVariable("bookId") int bookId, @RequestParam(name = "score") Integer score,
 			@RequestParam(name = "content") String content, Model model) {

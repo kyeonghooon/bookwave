@@ -1,14 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="../layout/header.jsp"%>
-<head>
-    <meta charset="UTF-8">
-    <title>Review List</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        body {
-            padding: 20px;
-        }
         .table th, .table td {
             vertical-align: middle;
         }
@@ -28,7 +21,6 @@
             outline: none; /* Remove focus outline */
         }
     </style>
-</head>
 <body>
     <div class="container">
         <h1 class="mb-4">리뷰 관리</h1>
@@ -83,8 +75,5 @@
             alert("${errorMessage}");
         </script>
     </c:if>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <%@ include file="../layout/footer.jsp"%>
 </body>

@@ -177,9 +177,17 @@ public class MyLibraryService {
 	}
 
 	public boolean validation(Integer userId, Integer bookId) {
-		List<MyLibrary> bookList = readAllById(userId);
+	    System.err.println("Starting validation for userId: " + userId + ", bookId: " + bookId);
+	    
+	    List<MyLibrary> bookList = readAllById(userId);
+	    System.err.println("Retrieved book list for userId " + userId + ": " + bookList);
 
-		return bookList.stream().anyMatch(book -> book.getBookId().equals(bookId));
+	    boolean isValid = bookList.stream().anyMatch(book -> book.getBookId().equals(bookId));
+	    
+	    System.err.println("Validation result for userId " + userId + ", bookId " + bookId + ": " + isValid);
+	    
+	    return isValid;
 	}
+
 
 }
