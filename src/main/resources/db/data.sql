@@ -44,14 +44,27 @@ VALUES
 
 -- 샘플 데이터 sql
 
-INSERT INTO user_tb VALUES (1, 'slowman', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '석지웅', 'admin', 0, now());
+INSERT INTO user_tb VALUES (1, 'slowman', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '북웨이브관리자', 'admin', 0, now());
 INSERT INTO wallet_tb VALUES (1, 1, 40000, 5000);
 INSERT INTO subscribe_tb VALUES (1, 1, '2024-09-01 15:00:00', '2024-10-01 14:59:59');
 INSERT INTO user_detail_tb VALUES (1, 'kred730036@gmail.com', now(), 0, '010-1111-1111', '12345', '부산광역시 부산진구', '그린아파트101동 101호');
 
-INSERT INTO user_tb VALUES (2, 'a2', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '유저다', 'user', 0, now());
+INSERT INTO user_tb VALUES (2, 'a2', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '이재용', 'user', 0, now());
 INSERT INTO wallet_tb VALUES (2, 2, 100000, 10000);
-INSERT INTO user_detail_tb VALUES (2, 'aaa@gmail.com', '1991-12-23', 1, '010-2222-2222', '23456', '부산광역시 부산진구', '그린아파트202동 202호');
+INSERT INTO user_detail_tb VALUES (2, 'a2@nate.com', '1999-09-12', 0, '010-2222-2222', '23456', '부산광역시 부산진구', '그린아파트202동 202호');
+
+INSERT INTO user_tb VALUES (3, 'a3', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '박상혁', 'user', 0, now());
+INSERT INTO wallet_tb VALUES (3, 3, 200000, 30000);
+INSERT INTO user_detail_tb VALUES (3, 'a3@naver.com', '1995-04-11', 0, '010-3333-3333', '34567', '부산광역시 부산진구', '그린아파트301동 104호');
+
+INSERT INTO user_tb VALUES (4, 'a4', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '김민지', 'user', 0, now());
+INSERT INTO wallet_tb VALUES (4, 4, 50000, 3000);
+INSERT INTO user_detail_tb VALUES (4, 'a4@gmail.com', '1998-07-15', 1, '010-4444-4444', '45678', '부산광역시 부산진구', '그린아파트402동 1101호');
+
+INSERT INTO user_tb VALUES (5, 'a5', null, '$2a$10$6527leRiRQZIaLBeEyjm7usXS61zbm356LgO7PDEOmytGkdc.L1cK', '서지영', 'user', 0, now());
+INSERT INTO wallet_tb VALUES (5, 5, 150000, 20000);
+INSERT INTO subscribe_tb VALUES (2, 5, '2024-09-11 12:00:00', '2024-10-11 11:59:59');
+INSERT INTO user_detail_tb VALUES (5, 'a5@naver.com', '1995-02-19', 1, '010-5555-5555', '56789', '부산광역시 부산진구', '그린아파트501동 1502호');
 
 -- qna 샘플 데이터 추가
 INSERT INTO question_tb VALUES (1, 5, '문의제목1', '문의내용1', 1, now());
@@ -69,21 +82,16 @@ INSERT INTO faq_tb (title, content, category) VALUES
 취소하려는 결제 정보 우측의 체크박스에 선택을 체크 후 [결제취소/재결제] 버튼을 클릭하면 전체/부분취소가 완료됩니다.','결제');
 
 INSERT INTO faq_tb (title, content, category) VALUES
-('결제취소는 어떻게 하나요?2','결제취소는 마이페이지> 결제내역 메뉴에서 확인가능합니다.
-결제내역페이지의 결제한 내역을 확인하고 <결제번호>를 클릭합니다.
-취소하려는 결제 정보 우측의 체크박스에 선택을 체크 후 [결제취소/재결제] 버튼을 클릭하면 전체/부분취소가 완료됩니다.2','결제');
-
-INSERT INTO faq_tb (title, content, category) VALUES
 ('무통장입금로 결제할 경우, 언제 입금 확인이 되나요?','가상계좌로 입금한 내역은 결제 후 실시간으로 입금완료 확인이 가능합니다.
 단, 은행업무 마감시간은 이체 및 입금확인이 불가능합니다.
 ※ 은행 마감 시간 : 22:00~24:00
 (은행별 차이가 있을 수 있음)','입금');
 
 INSERT INTO faq_tb (title, content, category) VALUES
-('무통장입금로 결제할 경우2, 언제 입금 확인이 되나요?','가상계좌로 입금한 내역은 결제 후 실시간으로 입금완료 확인이 가능합니다.
-단, 은행업무 마감시간은 이체 및 입금확인이 불가능합니다.
-※ 은행 마감 시간 : 22:00~24:00
-(은행별 차이가 있을 수 있음)2','입금');
+('회원 가입은 어떻게 하나요?','홈페이지 오른쪽 상단의 회원 가입 메뉴에서 필요한 정보를 입력한 후, 회원가입 버튼을 클릭하면 됩니다. 소셜 회원으로 가입하려면 로그인 메뉴에서 해당 소셜 버튼을 눌러주세요','회원');
+
+INSERT INTO faq_tb (title, content, category) VALUES
+('대출 가능한 도서 수는 어떻게 확인하나요?','도서 목록에서 각 도서의 대출 가능 수량을 확인할 수 있으며, 대출 시 실시간으로 업데이트됩니다.','도서');
 
 -- 결제내역 샘플 데이터 추가
 insert into payment_tb(id, payment_key, type, user_id, order_id, order_name, method, total_amount, requested_at, approved_at, status, canceled_at, cancel_reason, cancel_status)

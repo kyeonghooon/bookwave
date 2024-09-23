@@ -91,28 +91,35 @@
 			<hr class="sidebar-divider my-0">
 
 			<!-- Nav Item - Dashboard -->
-			<li class="nav-item"><a class="nav-link" href="/admin/main"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>대시보드</span>
-			</a></li>
-			<li class="nav-item"><a class="nav-link" href="/admin/user"> <i class="fas fa-fw fa-table"></i> <span>유저 관리</span>
-			</a></li>
-			<li class="nav-item"><a class="nav-link" href="/admin/book"> <i class="fas fa-fw fa-table"></i> <span>도서 관리</span>
-			</a></li>
-			<li class="nav-item"><a class="nav-link" href="/admin/payment"> <i class="fas fa-fw fa-table"></i> <span>결제 관리</span>
-			</a></li>
-			<li class="nav-item"><a class="nav-link" href="/admin/lend"> <i class="fas fa-fw fa-table"></i> <span>대출 현황</span>
-			</a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/main">
+					<i class="fas fa-fw fa-tachometer-alt"></i> <span>대시보드</span>
+				</a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/user">
+					<i class="fas fa-fw fa-table"></i> <span>유저 관리</span>
+				</a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/book">
+					<i class="fas fa-fw fa-table"></i> <span>도서 관리</span>
+				</a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/payment">
+					<i class="fas fa-fw fa-table"></i> <span>결제 관리</span>
+				</a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/lend">
+					<i class="fas fa-fw fa-table"></i> <span>대출 현황</span>
+				</a></li>
+			<li class="nav-item"><a class="nav-link" href="/admin/printer">
+					<i class="fas fa-fw fa-wrench"></i> <span>프린트 요청</span>
+				</a></li>
 
 			<!-- Nav Item - Pages Collapse Menu -->
-			<li class="nav-item active"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i> <span>고객 지원</span>
-			</a>
+			<li class="nav-item active"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+					<i class="fas fa-fw fa-cog"></i> <span>고객 지원</span>
+				</a>
 				<div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item active" href="/support/faq">FAQ 관리</a> <a class="collapse-item" href="/support/qna">1:1 문의 관리</a>
+						<a class="collapse-item active" href="/support/faq">FAQ 관리</a>
+						<a class="collapse-item" href="/support/qna">1:1 문의 관리</a>
 					</div>
 				</div></li>
-
-			<li class="nav-item"><a class="nav-link" href="/admin/facility"> <i class="fas fa-fw fa-wrench"></i> <span>시설 관리</span>
-			</a></li>
 
 			<!-- Divider -->
 			<hr class="sidebar-divider">
@@ -132,11 +139,13 @@
 
 				<!-- Topbar -->
 				<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-					<a class="navbar-brand" href="/admin/main"> <img class="img--logo" src="/img/logo_bookwave4.png" alt="Book Wave Logo" style="height: 40px;">
+					<a class="navbar-brand" href="/admin/main">
+						<img class="img--logo" src="/img/logo_bookwave4.png" alt="Book Wave Logo" style="height: 40px;">
 					</a>
 					<ul class="navbar-nav ml-auto">
-						<li class="nav-item"><a class="nav-link logout-btn" href="/user/logout"> <i class="fas fa-sign-out-alt"></i> <span>로그아웃</span>
-						</a></li>
+						<li class="nav-item"><a class="nav-link logout-btn" href="/user/logout">
+								<i class="fas fa-sign-out-alt"></i> <span>로그아웃</span>
+							</a></li>
 					</ul>
 				</nav>
 				<!-- End of Topbar -->
@@ -149,14 +158,16 @@
 					<div class="form-container">
 						<form action="/support/faq-update?id=${faq.id}" method="post">
 							<div class="form-group">
-								<label for="category">Category:</label> <select id="category" name="category">
+								<label for="category">Category:</label>
+								<select id="category" name="category">
 									<c:forEach var="category" items="${categoryList}">
 										<option value="${category}" ${category == faq.category ? 'selected' : ''}>${category}</option>
 									</c:forEach>
 								</select>
 							</div>
 							<div class="form-group">
-								<label for="title">Title:</label> <input type="text" id="title" name="title" value="${faq.title}" required>
+								<label for="title">Title:</label>
+								<input type="text" id="title" name="title" value="${faq.title}" required>
 							</div>
 							<div class="form-group">
 								<label for="content">Content:</label>
@@ -181,7 +192,8 @@
 	<!-- End of Page Wrapper -->
 
 	<!-- Scroll to Top Button-->
-	<a class="scroll-to-top rounded" href="#page-top"> <i class="fas fa-angle-up"></i>
+	<a class="scroll-to-top rounded" href="#page-top">
+		<i class="fas fa-angle-up"></i>
 	</a>
 
 	<!-- Logout Modal-->
