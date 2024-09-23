@@ -60,6 +60,8 @@ public class WebConfig implements WebMvcConfigurer {
 
 		excludeList.add("/email/sendVerification"); // 회원가입시 이메일 인증용
 		excludeList.add("/email/validate"); // 회원가입시 이메일 인증용
+		
+		excludeList.add("/my-library/session");
 
 		registry.addInterceptor(authInterceptor).addPathPatterns("/**").excludePathPatterns(excludeList);
 		registry.addInterceptor(printerIpInterceptor).addPathPatterns("/purchase/**");
