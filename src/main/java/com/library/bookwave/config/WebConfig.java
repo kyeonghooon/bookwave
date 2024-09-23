@@ -12,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.library.bookwave.handler.AuthInterceptor;
+import com.library.bookwave.handler.PrinterIpInterceptor;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class WebConfig implements WebMvcConfigurer {
 
 	private final AuthInterceptor authInterceptor;
+	private final PrinterIpInterceptor printerIpInterceptor;
 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
@@ -60,6 +62,7 @@ public class WebConfig implements WebMvcConfigurer {
 		excludeList.add("/email/validate"); // 회원가입시 이메일 인증용
 
 		registry.addInterceptor(authInterceptor).addPathPatterns("/**").excludePathPatterns(excludeList);
+		registry.addInterceptor(printerIpInterceptor).addPathPatterns("/purchase/**");
 	}
 
 }
