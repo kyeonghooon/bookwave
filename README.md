@@ -7,7 +7,7 @@
 BookWave 프로젝트는 온라인 도서관 시스템으로, 도서 검색, 대출, 예약 등의 기능을 제공하는 웹 기반 서비스입니다. 실시간 예약 및 대출 시스템을 구현하였으며, eBook 및 포인트 시스템을 통해 다양한 기능을 지원합니다.
 
 - **프로젝트 URL**: [BookWave GitHub](https://github.com/kyeonghooon/bookwave)
-
+- **노션 URL**: [BookWave Notion](https://bookwave.notion.site)
 ---
 
 ## 목차
@@ -17,7 +17,8 @@ BookWave 프로젝트는 온라인 도서관 시스템으로, 도서 검색, 대
 3. [서비스 환경](#서비스-환경)
 4. [사용 라이브러리 및 외부 API](#사용-라이브러리-및-외부-api)
 5. [사이트맵](#사이트맵)
-6. [주요 기능 소개](#주요-기능-소개)
+6. [ERD 다이어그램](#ERD-다이어그램)
+7. [주요 기능 소개](#주요-기능-소개)
 
 ---
 
@@ -59,4 +60,30 @@ BookWave 프로젝트는 온라인 도서관 시스템으로, 도서 검색, 대
 ### 외부 API
 
 | 기능         | API 명          | 설명                      |
-|--------------|----------------|--------------
+|--------------|----------------|---------------------------|
+| 로그인         | 카카오/네이버/구글 로그인 | 소셜 로그인 API 연동          |
+| 이메일 인증      | Gmail STMP     | 사용자 이메일 인증             |
+| 결제          | 토스 페이먼츠       | 사용자 결제 승인 및 취소 처리     |
+
+---
+
+## 사이트맵
+
+### 유저용 사이트맵 
+![image](https://github.com/user-attachments/assets/18017028-db44-454f-94bb-b6642d21f42f)
+
+### 관리자용 사이트맵
+![image](https://github.com/user-attachments/assets/a11165b7-3531-4370-9806-0cfe991e6f8e)
+
+---
+
+## ERD 다이어그램
+![image](https://github.com/user-attachments/assets/86e1a508-b1bf-438c-873d-36ff83c62e44)
+![image](https://github.com/user-attachments/assets/2201c137-08e5-4452-a771-fa8e3dd0247b)
+
+---
+
+## 주요 기능 소개
+[파이널 2조 BookWave 프로젝트 보고서.pdf](https://github.com/user-attachments/files/17275008/2.BookWave.pdf)
+
+---
